@@ -6,10 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
 {
-    //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'nome', 'cnpj', 'valor_km', 'saldo', 'unidades_id'
+    ];
+    
+    /** Consulta a Solicitacao da Despesa
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
 
-    public function cliente(){
+    public function unidade(){
 
-    	return $this->hasMany('App\User');
+    	return $this->belongsTo('App\Unidade','unidades_id');
     }
 }

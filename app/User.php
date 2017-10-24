@@ -17,6 +17,22 @@ class User extends Authenticatable
     protected $fillable = [
         'nome', 'email', 'password','codigo','cpf','telefone','area_atuacoes_id','unidades_id'
     ];
+    
+    /** Consulta a area de atuação do usuário
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+     public function area_atuacao()
+    {
+        return $this->belongsTo('App\AreaAtuacao','area_atuacoes_id');
+    }
+
+    /** Consulta a unidade do usuário
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+     public function unidades()
+    {
+        return $this->belongsTo('App\Unidades','unidades_id');
+    }    
 
     /**
      * The attributes that should be hidden for arrays.

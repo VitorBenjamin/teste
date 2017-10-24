@@ -11,16 +11,16 @@ class Unidade extends Model
      *
      * @var array
      */
-    protected $fillable = ['nome','cep','endereco'];
+    protected $fillable = ['localidade'];
 	
 	//Retornar os usuários da unidade
     public function users(){
 
-    	return $this->hasMany('App\User');
+    	return $this->hasMany('App\User','unidades_id');
     }
     //Retornar os clientes da unidade
     public function clientes(){
 
-    	return $this->hasMany('App\User');
+    	return $this->hasMany('App\User','unidades_id');
     }
 }
