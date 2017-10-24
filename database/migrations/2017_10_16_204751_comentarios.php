@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AreaAtuacoes extends Migration
+class Comentarios extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,17 @@ class AreaAtuacoes extends Migration
      */
     public function up()
     {
-        Schema::create('area_atuacoes', function (Blueprint $table) {
+        Schema::create('comentarios', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tipo');
+            $table->string('status');
+            $table->boolean('publico')->default(true);
+            $table->string('comentario');
+            $table->integer('users_id')->unsigned();
+            $table->integer('solicitacoes_id')->unsigned();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -27,8 +31,6 @@ class AreaAtuacoes extends Migration
      */
     public function down()
     {
-        Schema::table('area_atuacoes', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('comentarios');
     }
 }

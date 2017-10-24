@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AreaAtuacoes extends Migration
+class SolicitacoesStatus extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class AreaAtuacoes extends Migration
      */
     public function up()
     {
-        Schema::create('area_atuacoes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('tipo');
+        Schema::create('solicitacoes_status', function (Blueprint $table) {
+            $table->integer('solicitacoes_id')->unsigned();
+            $table->integer('status_id')->unsigned();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -27,8 +27,6 @@ class AreaAtuacoes extends Migration
      */
     public function down()
     {
-        Schema::table('area_atuacoes', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('solicitacoes_status');
     }
 }

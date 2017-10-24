@@ -13,8 +13,18 @@ class Translados extends Migration
      */
     public function up()
     {
-        Schema::table('translados', function (Blueprint $table) {
-            //
+        Schema::create('translados', function (Blueprint $table) {
+           // 
+            $table->increments('id');
+            $table->date('data');
+            $table->string('observacao')->nullable();
+            $table->string('origem');
+            $table->string('destino');
+            $table->boolean('ida_volta')->nullable();
+            $table->integer('distancia')->nullable();
+            $table->integer('solicitacoes_id')->unsigned();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

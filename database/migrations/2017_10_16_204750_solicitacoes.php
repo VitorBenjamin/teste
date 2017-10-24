@@ -13,9 +13,10 @@ class Solicitacoes extends Migration
      */
     public function up()
     {
-        Schema::table('solicitacoes', function (Blueprint $table) {
+        Schema::create('solicitacoes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('codigo');
+            $table->boolean('urgente')->default(false);
             $table->string('tipo');
             $table->string('origem_despesa');
             $table->integer('area_atuacoes_id')->unsigned();

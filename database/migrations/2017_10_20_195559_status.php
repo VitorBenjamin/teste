@@ -15,7 +15,7 @@ class Status extends Migration
     {
         Schema::create('status', function (Blueprint $table) {
             $table->increments('id');
-            $table->varchar('descricao');
+            $table->string('descricao');
             $table->timestamps();
             $table->softDeletes();
         });

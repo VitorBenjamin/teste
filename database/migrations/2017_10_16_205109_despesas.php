@@ -13,8 +13,16 @@ class Despesas extends Migration
      */
     public function up()
     {
-        Schema::table('despesas', function (Blueprint $table) {
-            //
+        Schema::create('despesas', function (Blueprint $table) {
+            //DB::statement("ALTER TABLE despesas ADD anexo_comprovante LONGBLOB");
+            $table->increments('id');
+            $table->string('descricao');
+            $table->datetime('data');
+            $table->string('tipo_comprovante');
+            $table->decimal('valor', 10,2);
+            $table->integer('solicitacoes_id')->unsigned();      
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

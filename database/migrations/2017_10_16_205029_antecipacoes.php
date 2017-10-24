@@ -13,8 +13,15 @@ class Antecipacoes extends Migration
      */
     public function up()
     {
-        Schema::table('antecipacoes', function (Blueprint $table) {
-            //
+        Schema::create('antecipacoes', function (Blueprint $table) {
+            //DB::statement("ALTER TABLE antecipacoes ADD anexo_comprovante LONGBLOB");
+            $table->increments('id');
+            $table->string('descricao');
+            $table->datetime('data_recebimento');
+            $table->decimal('valor_solicitado', 10, 2);
+            $table->integer('solicitacoes_id')->unsigned();      
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

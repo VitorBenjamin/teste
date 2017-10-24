@@ -13,10 +13,9 @@ class Compras extends Migration
      */
     public function up()
     {
-        Schema::table('compras', function (Blueprint $table) {
+        Schema::create('compras', function (Blueprint $table) {
             //
             $table->increments('id');
-            $table->boolean('urgente')->default(false);
             $table->date('data');
             $table->string('descricao');
             $table->integer('quantidade');

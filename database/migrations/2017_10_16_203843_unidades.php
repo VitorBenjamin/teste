@@ -13,7 +13,8 @@ class Unidades extends Migration
      */
     public function up()
     {
-         Schema::table('unidades', function (Blueprint $table) {
+         Schema::create('unidades', function (Blueprint $table) {
+            
             $table->increments('id');
             $table->string('localidade',50);
             $table->timestamps();

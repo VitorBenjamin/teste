@@ -13,10 +13,10 @@ class Processos extends Migration
      */
     public function up()
     {
-         Schema::table('processos', function (Blueprint $table) {
+         Schema::create('processos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('codigo');
-            $table->interger('clientes_id')->unsigned();
+            $table->integer('clientes_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });

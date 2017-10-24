@@ -13,14 +13,14 @@ class Viagens extends Migration
      */
     public function up()
     {
-        Schema::table('viagens', function (Blueprint $table) {
+        Schema::create('viagens', function (Blueprint $table) {
             //
             $table->increments('id');
-            $table->boolean('urgente')->default(false);
+            $table->string('observacao')->nullable();
             $table->string('origem');
             $table->string('destino');
-            $table->datetime('ida');
-            $table->datetime('volta');
+            $table->datetime('data_ida');
+            $table->datetime('data_volta');
             $table->boolean('hospedagem')->nullable();
             $table->boolean('bagagem')->nullable();
             $table->boolean('locacao')->nullable();

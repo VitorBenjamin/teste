@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Cotacoes extends Migration
+class AntecipacoesComprovantes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class Cotacoes extends Migration
      */
     public function up()
     {
-        Schema::create('cotacoes', function (Blueprint $table) {
-            //DB::statement("ALTER TABLE cotacoes ADD anexo_comprovante LONGBLOB");
+        Schema::create('antecipacoes_comprovantes', function (Blueprint $table) {
+            //DB::statement("ALTER TABLE antecipacoes_comprovantes ADD anexo_comprovante LONGBLOB");
             $table->increments('id');
-            $table->date('data');
             $table->string('descricao');
-            $table->string('fornecedor');
-            $table->integer('quantidade');
-            $table->integer('compras_id')->unsigned();
+            $table->datetime('data');
+            $table->string('tipo_comprovante');
+            $table->decimal('valor_aprovado', 10,2);
+            $table->integer('antecipacoes_id')->unsigned();      
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,7 +33,7 @@ class Cotacoes extends Migration
      */
     public function down()
     {
-        Schema::table('cotacoes', function (Blueprint $table) {
+        Schema::table('antecipacoes_comprovantes', function (Blueprint $table) {
             //
         });
     }

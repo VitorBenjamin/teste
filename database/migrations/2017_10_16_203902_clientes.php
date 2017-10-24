@@ -14,12 +14,12 @@ class Clientes extends Migration
     public function up()
     {
         //
-         Schema::table('clientes', function (Blueprint $table) {
+         Schema::create('clientes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome',100);
             $table->string('cnpj');
-            $table->decimal('valor_km', 4, 2)nullable()->default(null);
-            $table->decimal('saldo', 10, 2)nullable()->default(null);
+            $table->decimal('valor_km', 4, 2)->nullable()->default(null);
+            $table->decimal('saldo', 10, 2)->nullable()->default(null);
             $table->integer('unidades_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

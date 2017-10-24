@@ -13,17 +13,16 @@ class ViagemComprovante extends Migration
      */
     public function up()
     {
-        Schema::table('viagem_comprovantes', function (Blueprint $table) {
-            //DB::statement("ALTER TABLE chamados ADD img LONGBLOB");
+        Schema::create('viagens_comprovantes', function (Blueprint $table) {
+            //DB::statement("ALTER TABLE viagem_comprovantes ADD anexo_passagem LONGBLOB");
+            //DB::statement("ALTER TABLE viagem_comprovantes ADD anexo_hospedagem LONGBLOB");
+            //DB::statement("ALTER TABLE viagem_comprovantes ADD anexo_locacao LONGBLOB");
             $table->increments('id');
-            $table->boolean('urgente')->default(false);
+            $table->string('observacao');
             $table->datetime('data_compra');
             $table->decimal('custo_passagem', 10, 2);
-            $table->decimal('custo_hospedagem', 10, 2);
-            $table->decimal('custo_locacao', 10, 2);
-            $table->binary('anexo_passagem');
-            $table->binary('anexo_hospedagem');
-            $table->binary('anexo_locacao');
+            $table->decimal('custo_hospedagem', 10, 2)->nullable();
+            $table->decimal('custo_locacao', 10, 2)->nullable();
             $table->integer('viagens_id')->unsigned();            
             $table->timestamps();
             $table->softDeletes();

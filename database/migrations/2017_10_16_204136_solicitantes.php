@@ -13,7 +13,7 @@ class Solicitantes extends Migration
      */
     public function up()
     {
-         Schema::table('solicitantes', function (Blueprint $table) {
+         Schema::create('solicitantes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
             $table->string('cpf');

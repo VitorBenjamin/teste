@@ -13,8 +13,13 @@ class TipoGuias extends Migration
      */
     public function up()
     {
-        Schema::table('tipo_guias', function (Blueprint $table) {
+        Schema::create('tipo_guias', function (Blueprint $table) {
             //
+            $table->increments('id');
+            $table->enum('tipo',['trabalhista','civil','criminal']);
+            $table->string('descricao',20);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
