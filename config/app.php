@@ -226,6 +226,28 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+
+        'AreaAtuacao' => App\AreaAtuacao::class,
+        'Antecipacao' => App\Antecipacao::class,
+        'Cliente' => App\Cliente::class,
+        'Compra' => App\Compra::class,
+        'Cotacao' => App\Cotacao::class,
+        'Despesa' => App\Despesa::class,        
+        'Guia' => App\Guia::class,
+        'Processo' => App\Processo::class,        
+        'Solicitacao' => App\Solicitacao::class,
+        'Solicitante' => App\Solicitante::class,
+        'Status' => App\Status::class,
+        'TipoGuia' => App\TipoGuia::class,
+        'Translado' => App\Translado::class,
+        'Unidade' => App\Unidade::class,
+        'User' => App\User::class,
+        'ViagemComprovante' => App\ViagemComprovante::class,
+
+
+
+
+
     ],
 
 ];
