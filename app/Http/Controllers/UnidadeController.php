@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Unidade;
 
 class UnidadeController extends Controller
 {
-    
+    //buscando todas as informações das Unidades e enviando para a view de listagem das unidades
     public function index(){
     	
-    	//buscando todas as informações das Unidades
-    	$unidades = \App\Unidades::orderBy('id');
+    	$unidades = Unidade::orderBy('localidade');
     	return view('unidade.index',compact('unidades'));
     }
 
+    //Retorna a View de cadastro da unidade
     public function cadastrar(){
     	return view('unidade.cadastrar');	
     }
-
+   
+    //Cadatra uma unidade e redireciona novamente para um tela de cadastro
     public function salvar(\App\Http\Requests\UnidadeRequest $request){
-    	\App\Unidade::create($request->all());
+    	Unidade::create($request->all());
 
     	\Session::flash('flash_message',[
     		'msg'=>"Cadastro do Unidade realizado com sucesso!!!",
@@ -28,9 +30,10 @@ class UnidadeController extends Controller
 
     	return redirect()->route('unidade.cadastrar');
     }
-
+   
+    //Retorna a View de edição da unidade
     public function editar($id){
-    	$unidade = \App\Unidade::find($id);
+    	$unidade = Unidade::find($id);
     	if(!$unidade){
     		\Session::flash('flash_message',[
     		'msg'=>"Não existe essa Unidade cadastrada!!! Deseja cadastrar uma nova Unidade?",
@@ -41,35 +44,33 @@ class UnidadeController extends Controller
     	return view('unidade.editar',compact('unidade'));
     }
 
+     //Atualiza uma unidade e redireciona para a tela de listagem de unidades
      public function atualizar(Request $request,$id){
-    		\App\Unidade::find($id)->update($request->all());
+    		Unidade::find($id)->update($request->all());
     	
     		\Session::flash('flash_message',[
     		'msg'=>"Unidade atualizado com sucesso!!!",
     		'class'=>"alert-success"
     		]);
-    		return redirect()->route('unidade.index');
-    	
+    		return redirect()->route('unidade.index');    	
     }
 
+    //Deleta ou Não uma unidade e redireciona para a tela de listagem de unidades
     public function deletar($id){
-    		$unidade = \App\Unidade::find($id);
-
-    		//if($Unidade->deletarUnidade()){
-    		//	\Session::flash('flash_message',[
-    		//'msg'=>"Registro não pode ser deletado!!!",
-    		//'class'=>"alert-danger"
-    		//]);
-    		//return redirect()->route('Unidade.index');
-    	    //}
-    		
+    		$unidade = Unidade::find($id);
+    		if(!$Unidade->deletarUnidade()){
+    			\Session::flash('flash_message',[
+    		'msg'=>"Registro não pode ser deletado!!!",
+    		'class'=>"alert-danger"
+    		]);
+    		return redirect()->route('Unidade.index');
+    	    }
     		$unidade->delete();
     	
     		\Session::flash('flash_message',[
     		'msg'=>"Unidade apagada com sucesso!!!",
     		'class'=>"alert-danger"
     		]);
-    		return redirect()->route('unidade.index');
-    	
+    		return redirect()->route('unidade.index');    	
     }
 }
