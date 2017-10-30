@@ -16,7 +16,7 @@ class Compras extends Migration
         Schema::create('compras', function (Blueprint $table) {
             //
             $table->increments('id');
-            $table->date('data');
+            $table->date('data_compra');
             $table->string('descricao');
             $table->integer('quantidade');
             $table->integer('solicitacoes_id')->unsigned();

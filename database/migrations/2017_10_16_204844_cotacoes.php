@@ -16,7 +16,7 @@ class Cotacoes extends Migration
         Schema::create('cotacoes', function (Blueprint $table) {
             //DB::statement("ALTER TABLE cotacoes ADD anexo_comprovante LONGBLOB");
             $table->increments('id');
-            $table->date('data');
+            $table->date('data_cotacao');
             $table->string('descricao');
             $table->string('fornecedor');
             $table->integer('quantidade');

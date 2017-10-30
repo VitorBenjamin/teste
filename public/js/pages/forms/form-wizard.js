@@ -61,9 +61,16 @@ $(function () {
             form.validate().settings.ignore = ':disabled';
             return form.valid();
         },
-        onFinished: function (event, currentIndex) {
-            swal("Good job!", "Submitted!", "success");
-        }
+       onFinished: function(e, currentIndex) {
+                // Uncomment the following line to submit the form using the defaultSubmit() method
+                //$('#wizard_with_validation').formValidation('defaultSubmit');
+                $( "#wizard_with_validation" ).submit();
+                // For testing purpose
+                //$('#welcomeModal').modal();
+            }
+        // onFinished: function (event, currentIndex) {
+        //     swal("Good job!", "Submitted!", "success");
+        // }
     });
 
     form.validate({

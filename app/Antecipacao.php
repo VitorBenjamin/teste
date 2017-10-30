@@ -5,7 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Antecipacao extends Model
+
 {
+    protected $table = 'antecipacoes';
     protected $fillable = [
         'descricao', 'data_recebimento', 'valor_solicitado','anexo_comprovante', 'solicitacoes_id'
     ];
@@ -19,7 +21,7 @@ class Antecipacao extends Model
     }
 
     /** Consulta os comprovantes da Antecipacão
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
      public function antecipacao_comprovante()
     {

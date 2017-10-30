@@ -11,14 +11,16 @@ class Cotacao extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'descricao', 'data', 'fornecedor', 'quantidade', 'anexo_comprovante', 'compras_id'
+     protected $table = 'cotacoes';
+
+     protected $fillable = [
+        'descricao', 'data_cotacao', 'fornecedor', 'quantidade', 'anexo_comprovante', 'compras_id'
     ];
     
     /** Consulta a Solicitacao da Despesa
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-     public function compra()
+    public function compra()
     {
         return $this->belongsTo('App\Compra','compras_id');
     }

@@ -18,10 +18,12 @@ class Solicitacoes extends Migration
             $table->integer('codigo');
             $table->boolean('urgente')->default(false);
             $table->string('tipo');
+            $table->string('contrato');
             $table->string('origem_despesa');
             $table->integer('area_atuacoes_id')->unsigned();
-            $table->integer('clientes_id')->unsigned();
-            $table->integer('processos_id')->unsigned();
+            $table->integer('solicitantes_id')->unsigned()->nullable();
+            $table->integer('clientes_id')->unsigned()->nullable();
+            $table->integer('processos_id')->unsigned()->nullable();
             $table->integer('users_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

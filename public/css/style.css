@@ -1,6 +1,11 @@
 ﻿/* Navbar ====================================== */
 @import url(materialize.css);
 
+@media (min-width: 900px) {
+  .modal-lg {
+    width: 90%;
+  }
+}
 legend {
     display: inline-block;
     width: 100%;

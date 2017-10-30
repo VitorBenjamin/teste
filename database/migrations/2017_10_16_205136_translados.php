@@ -16,7 +16,7 @@ class Translados extends Migration
         Schema::create('translados', function (Blueprint $table) {
            // 
             $table->increments('id');
-            $table->date('data');
+            $table->date('data_translado');
             $table->string('observacao')->nullable();
             $table->string('origem');
             $table->string('destino');
