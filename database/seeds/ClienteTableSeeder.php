@@ -12,7 +12,7 @@ class ClienteTableSeeder extends Seeder
     public function run()
     {
     	Cliente::create([
-    		'nome' => 'Veracel',
+    		'nome' => 'VERACEL',
     		'cnpj' => '652143',
     		'valor_km' => 5,
     		'saldo' => 2000,
@@ -20,7 +20,7 @@ class ClienteTableSeeder extends Seeder
     	]);
 
     	Cliente::create([
-    		'nome' => 'Brasmosto',
+    		'nome' => 'BRASMOTO',
     		'cnpj' => '142365',
     		'valor_km' => 3,
     		'saldo' => 5000,
@@ -28,7 +28,7 @@ class ClienteTableSeeder extends Seeder
     	]);
 
     	Cliente::create([
-    		'nome' => 'Fiat',
+    		'nome' => 'FIAT',
     		'cnpj' => '613254',
     		'valor_km' => 2,
     		'saldo' => 3562,
@@ -36,7 +36,7 @@ class ClienteTableSeeder extends Seeder
     	]);
 
     	Cliente::create([
-    		'nome' => 'Vilaca',
+    		'nome' => 'VILACA',
     		'cnpj' => '451623',
     		'valor_km' => 1,
     		'saldo' => 50000,

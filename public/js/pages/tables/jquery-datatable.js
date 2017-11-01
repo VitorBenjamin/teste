@@ -1,6 +1,18 @@
 $(function () {
-    $('.js-basic-example').DataTable({
-        responsive: true
+
+    $('.js-basic-example').DataTable({        
+        responsive: {
+            details: {
+                type: 'column',
+                target: 'tr'
+            }
+        },
+        columnDefs: [ {
+            className: 'control',
+            orderable: false,
+            targets:   0
+        } ],
+        order: [ 1, 'asc' ]
     });
 
     //Exportable table
@@ -8,7 +20,7 @@ $(function () {
         dom: 'Bfrtip',
         responsive: true,
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+        'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
 });

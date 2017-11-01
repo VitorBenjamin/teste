@@ -24,6 +24,7 @@ class Solicitacoes extends Migration
             $table->integer('solicitantes_id')->unsigned()->nullable();
             $table->integer('clientes_id')->unsigned()->nullable();
             $table->integer('processos_id')->unsigned()->nullable();
+            $table->integer('unidades_id')->unsigned();
             $table->integer('users_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

@@ -101,6 +101,12 @@ class CreateFks extends Migration
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes');
             $table->foreign('status_id')->references('id')->on('status');
         });
+    
+    //Foreign Keys Tabela limites_unidades
+        Schema::table('limites_unidades', function (Blueprint $table) {
+            $table->foreign('limites_id')->references('id')->on('limites');
+            $table->foreign('unidades_id')->references('id')->on('unidades');
+        });        
     }
     /**
      * Reverse the migrations.

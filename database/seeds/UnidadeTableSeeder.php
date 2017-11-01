@@ -12,32 +12,32 @@ class UnidadeTableSeeder extends Seeder
     public function run()
     {
         Unidade::create([
-            'localidade' => 'Eunápolis',
+            'localidade' => 'EUNÁPOLIS',
             
         ]);
 
         Unidade::create([
-            'localidade' => 'Porto Seguro',
+            'localidade' => 'PORTO SEGURO',
             
         ]);
 
         Unidade::create([
-            'localidade' => 'Texeira de Freitas',
+            'localidade' => 'TEXEIRA DE FREITAS',
             
         ]);
 
         Unidade::create([
-            'localidade' => 'Salvador',
+            'localidade' => 'SALVADOR',
             
         ]);
 
         Unidade::create([
-            'localidade' => 'Nanuque',
+            'localidade' => 'NANUQUE',
             
         ]);
 
         Unidade::create([
-            'localidade' => 'Guarapari',
+            'localidade' => 'GUARAPARI',
             
         ]);        
 

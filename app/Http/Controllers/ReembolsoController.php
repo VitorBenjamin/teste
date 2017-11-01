@@ -24,7 +24,8 @@ class ReembolsoController extends Controller
 
 
     //Retorna a View de cadastro da unidade
-    public function cadastrar(){
+    public function cadastrar()
+    {
     	$clientes = Cliente::all('id','nome');
     	$areas = AreaAtuacao::all('id','tipo'); 
     	$solicitantes = Solicitante::all('id','nome');
@@ -34,11 +35,10 @@ class ReembolsoController extends Controller
     //Cadatra uma nova Solicitação e redireciona para a tela de edição
     public function salvar(Request $request)
     {
-
         $solicitacao = Solicitacao::create(
             [   
                 'codigo' => 13224,
-                'urgente' => true,
+                'urgente' => $request->urgente,
                 'tipo' => 'Reembolso',
                 'origem_despesa' => $request->origem_despesa,
                 'contrato' => $request->contrato,
@@ -47,61 +47,26 @@ class ReembolsoController extends Controller
                 'solicitantes_id' => $request->solicitantes_id,
                 'users_id' => 1,
             ]
-        );
+        );        
         
         $status = Status::where('descricao',config('constantes.status_aberto'))->first();
-        //$status = Status::where('descricao','ABERTO')->orWhere('descricao' , 'ANDAMENTO')->get();
-        
+        //$status = Status::where('descricao','ABERTO')->orWhere('descricao' , 'ANDAMENTO')->get();        
         $solicitacao->status()->attach($status);
-
-        dd($solicitacao->status()->get());
-        foreach ($solicitacao->status()->get() as $status) {
-            //dd($status->descricao);
-        }
-        // $status = Status::where('descricao','ABERTO')->first();
-        // $solicitacao->status()->detach($status);
-        // dd($solicitacao->status()->get());
-        $translado = Translado::create(
-            [   
-                'data_translado' => $request->data_translado,
-                'observacao' => $request->observacao,
-                'origem' => $request->origem,
-                'destino' => $request->destino,
-                'ida_volta' => $request->ida_volta,
-                'distancia'=>$request->distancia,
-                'solicitacoes_id' => $solicitacao->id,
-            ]
-        );
-
-        $file = $request->file('anexo_comprovante');
-        $extension = $request->anexo_comprovante->extension();
-        $path_name = $file->getPathName();
-        $file = base64_encode(file_get_contents($path_name));
-        $src  = 'data: image/'.$extension.';base64,'.$file;
-        $despesa = Despesa::create(
-            [   
-                'descricao' => $request->descricao,
-                'data_despesa' => $request->data_despesa,
-                'tipo_comprovante' => $request->tipo_comprovante,
-                'valor' => $request->valor,
-                'anexo_comprovante' => base64_encode($request->anexo_comprovante),
-                'solicitacoes_id' => $solicitacao->id,
-            ]
-        );
-
         \Session::flash('flash_message',[
             'msg'=>"Cadastro do Unidade realizado com sucesso!!!",
             'class'=>"alert-success"
         ]);
+
         $clientes = Cliente::all('id','nome');
         $areas = AreaAtuacao::all('id','tipo'); 
         $solicitantes = Solicitante::all('id','nome');
-        return view('reembolso.editar', compact('src','clientes','areas','solicitantes'));
+        return view('reembolso.editar', compact('clientes','areas','solicitantes'));
     }
 
     //Adcionar um novo translado a uma solicitação
-        public function addTranslado(Request $request,$id)
+    public function addTranslado(Request $request,$id)
     {
+        $solicitacao = Solicitacao::with('despesa','translado')->where('id',$id)->first();        
 
         $translado = Translado::create(
             [   
@@ -124,14 +89,16 @@ class ReembolsoController extends Controller
         $areas = AreaAtuacao::all('id','tipo'); 
         $solicitantes = Solicitante::all('id','nome');
         
-        return view('reembolso.editar', compact('src','clientes','areas','solicitantes'));
+        return redirect()->route('reembolso.editar',$id);
     }
 
-        //Adcionar uma nova despesa a solicitação
-        public function addDespesa(Request $request,$id)
+    //Adcionar uma nova despesa a solicitação
+    public function addDespesa(Request $request,$id)
     {
-
+        $solicitacao = Solicitacao::with('despesa','translado')->where('id',$id)->first();
+        
         $file = $request->file('anexo_comprovante');
+        dd($file);
         $extension = $request->anexo_comprovante->extension();
         $path_name = $file->getPathName();
         $file = base64_encode(file_get_contents($path_name));
@@ -142,23 +109,18 @@ class ReembolsoController extends Controller
                 'data_despesa' => $request->data_despesa,
                 'tipo_comprovante' => $request->tipo_comprovante,
                 'valor' => $request->valor,
-                // 'mime' => $extension,
+            //  'mime' => $extension,
                 'anexo_comprovante' => $file,
                 'solicitacoes_id' => $solicitacao->id,
             ]
         );
-
 
         \Session::flash('flash_message',[
             'msg'=>"Cadastro da Despesa realizado com sucesso!!!",
             'class'=>"alert-success"
         ]);
         
-        $clientes = Cliente::all('id','nome');
-        $areas = AreaAtuacao::all('id','tipo'); 
-        $solicitantes = Solicitante::all('id','nome');
-        
-        return view('reembolso.editar', compact('src','clientes','areas','solicitantes'));
+        return redirect()->route('reembolso.editar',$id);
     }
 
     //Retorna a View de edição da unidade
@@ -166,12 +128,6 @@ class ReembolsoController extends Controller
     {
 
         $solicitacao = Solicitacao::with('despesa','translado')->where('id',$id)->first();
-        
-        // dd($solicitacao->despesa[0]->descricao);
-
-        // foreach ($solicitacao->despesa()->get() as $key) {
-        //     dd($key);        
-        // }
         if(!$solicitacao){
             \Session::flash('flash_message',[
                 'msg'=>"Não existe essa Unidade cadastrada!!! Deseja cadastrar uma nova Unidade?",
@@ -186,32 +142,116 @@ class ReembolsoController extends Controller
         return view('reembolso.editar', compact('solicitacao','clientes','areas','solicitantes'));
     }
 
+
+
     //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
-    public function atualizar(Request $request,$id)
-    {
+    public function editarTranslado($id)
+    {   
         Solicitacao::find($id)->update($request->all());
+        $solicitacao = Solicitacao::with('despesa','translado')->where('id',$id)->first();
 
         \Session::flash('flash_message',[
             'msg'=>"Unidade atualizado com sucesso!!!",
             'class'=>"alert-success"
         ]);
-        return redirect()->route('reembolso.index');    	
+        return redirect()->route('reembolso.editar',$id);
+    }
+    //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
+    public function editarDespesa($id)
+    {   
+        $despesa = Despesa::find($id);
+        $extension = $despesa->anexo_comprovante;
+        $file = $despesa->anexo_comprovante;
+        $src  = 'data: image/jpeg;base64,'.$file;
+
+        return view('reembolso.despesa', compact('despesa','src'));
+    }
+
+    //Atualiza uma Despesa e redireciona para a tela de edição da Solicitação
+    public function atualizarDespesa(Request $request,$id)
+    {   
+        $despesa = Despesa::find($id);
+        //dd($request->hasFile('anexo_comprovante'));
+        if ($request->hasFile('anexo_comprovante')) {
+
+            $file = $request->file('anexo_comprovante');
+            $extension = $request->anexo_comprovante->extension();
+            $path_name = $file->getPathName();
+            $file = base64_encode(file_get_contents($path_name));
+            //$src  = 'data: image/'.$extension.';base64,'.$file;
+        }else{
+            $file = $despesa->anexo_comprovante;
+        }
+        ini_set('memory_limit', '256M');
+        Despesa::where('id',$id)->update(
+            [   
+                'descricao' => $request->descricao,
+                'data_despesa' => $request->data_despesa,
+                'tipo_comprovante' => $request->tipo_comprovante,
+                'valor' => $request->valor,
+              //'mime' => $extension,
+                'anexo_comprovante' => $file,
+            ]
+        );
+        
+        
+        \Session::flash('flash_message',[
+            'msg'=>"Despesa atualizada com sucesso!!!",
+            'class'=>"alert-success"
+        ]);
+        return redirect()->route('reembolso.editar', $despesa->solicitacoes_id);
+    }
+
+    //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
+    public function atualizar(Request $request,$id)
+    {   
+        Solicitacao::find($id)->update($request->all());
+
+        \Session::flash('flash_message',[
+            'msg'=>"Solicitação atualizada com sucesso!!!",
+            'class'=>"alert-success"
+        ]);
+        return redirect()->route('reembolso.editar',$id);
     }
 
     //Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
-    public function deletar($id){
+    public function deletarTranslado($id)
+    {        
+
+        $translado = Translado::find($id);
+        //dd($translado);
+        $s_id = $translado->solicitacoes_id;
+        $translado->delete();
+        \Session::flash('flash_message',[
+            'msg'=>"Translado removido com sucesso!!!",
+            'class'=>"alert-danger"
+        ]);
+        return redirect()->route('reembolso.editar',$s_id);       
+    }
+
+    //Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
+    public function deletarDespesa($id)
+    {
+
+        $despesa = Despesa::find($id);
+        $s_id = $despesa->solicitacoes_id;
+        $despesa->delete();
+        \Session::flash('flash_message',[
+            'msg'=>"Despesas removida com sucesso!!!",
+            'class'=>"alert-danger"
+        ]);
+        return redirect()->route('reembolso.editar',$s_id);       
+    }
+
+    //Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
+    public function deletar($id)
+    {
+
         $unidade = Solicitacao::find($id);
-        if(!$Unidade->deletarUnidade()){
-            \Session::flash('flash_message',[
-              'msg'=>"Registro não pode ser deletado!!!",
-              'class'=>"alert-danger"
-          ]);
-            return redirect()->route('reembolso.index');
-        }
         $unidade->delete();
 
         \Session::flash('flash_message',[
-            'msg'=>"Unidade apagada com sucesso!!!",
+            'msg'=>"Reembolso removido com sucesso!!!",
             'class'=>"alert-danger"
         ]);
         return redirect()->route('reembolso.index');    	

@@ -31,8 +31,8 @@
   <!-- JQuery DataTable Css -->
   <!-- <link href="../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">-->  
   {!! Html::style('plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') !!}
+  {!! Html::style('https://cdn.datatables.net/responsive/2.2.0/css/responsive.dataTables.min.css') !!}
 
-  
 
   <!-- Bootstrap Material Datetime Picker Css -->
   <!-- <link href="../../plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" /> -->
@@ -40,6 +40,7 @@
 
   <!-- Dropzone Css -->
   {!! Html::style('/plugins/dropzone/dropzone.css') !!}
+  
   <!-- Wait Me Css -->
   <!-- <link href="../../plugins/waitme/waitMe.css" rel="stylesheet" /> -->
   {!! Html::style('plugins/waitme/waitMe.css') !!}
@@ -53,7 +54,7 @@
 
   <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
   <!-- <link href="css/themes/all-themes.css" rel="stylesheet" />-->
-  {!! Html::style('css/themes/all-themes.css') !!}
+  {!! Html::style('css/themes/theme-black.css') !!}
 
 </head>
 <body id="app-layout" class="theme-black">
@@ -90,7 +91,7 @@
 
 
 
-  @if(Session::has('flash_message'))
+<!--   @if(Session::has('flash_message'))
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -101,7 +102,7 @@
      </div>
    </div>
  </div>
- @endif
+ @endif -->
 
  @yield('content')
 
@@ -152,6 +153,7 @@
  <!-- Jquery DataTable Plugin Js -->
  {!! Html::script('/plugins/jquery-datatable/jquery.dataTables.js') !!}
  {!! Html::script('/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') !!}
+ {!! Html::script('https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js')!!}
  {!! Html::script('/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js') !!}
  {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.flash.min.js') !!}
  {!! Html::script('/plugins/jquery-datatable/extensions/export/jszip.min.js') !!}
