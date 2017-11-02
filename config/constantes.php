@@ -15,5 +15,9 @@ return [
 	'status_devolvido' => 'DEVOLVIDO',
 	'status_devolvido_financeiro' => 'DEVOLVIDO-FINANCEIRO',
 	'status_finalizado' => 'FINALIZADO',
-
+	'tipo_reembolso' => 'REEMBOLSO',
+	'tipo_viagem' => 'VIAGEM',
+	'tipo_guia' => 'GUIA',
+	'tipo_compra' => 'COMPRA',
+	'tipo_antecipacao' => 'ANTECIPAÇÃO',
 ];

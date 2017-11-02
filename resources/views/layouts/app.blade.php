@@ -117,7 +117,7 @@
  {!! Html::script('/plugins/bootstrap/js/bootstrap.js') !!}
 
  <!-- Dropzone Plugin Js -->
- {!! Html::script('/plugins/dropzone/dropzone.js') !!}
+<!--  {!! Html::script('/plugins/dropzone/dropzone.js') !!} -->
 
  <!-- Select Plugin Js -->
  {!! Html::script('/plugins/bootstrap-select/js/bootstrap-select.js') !!}
@@ -163,8 +163,8 @@
  {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.print.min.js') !!}
 
  <!-- Sparkline Chart Plugin Js -->
- {!! Html::script('/plugins/jquery-sparkline/jquery.sparkline.js') !!}
-
+<!--  {!! Html::script('/plugins/jquery-sparkline/jquery.sparkline.js') !!}
+ -->
  <!-- Custom Js -->
 
  {!! Html::script('/js/admin.js') !!} 
@@ -174,8 +174,8 @@
  {!! Html::script('/js/pages/forms/advanced-form-elements.js') !!}
  {!! Html::script('/js/pages/ui/modals.js') !!}
 
- {!! Html::script('/js/pages/index.js') !!}
-
+<!--  {!! Html::script('/js/pages/index.js') !!}
+ -->
 
 
  <!-- Demo Js -->

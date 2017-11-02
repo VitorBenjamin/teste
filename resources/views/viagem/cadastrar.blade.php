@@ -4,7 +4,7 @@
 
 <section class="content">
 	<div class="block-header">
-		<h2>Cadastro De Reembolso</h2>
+		<h2>Cadastro De Viagem</h2>
 	</div>
 	<form id="form_validation" action="{{ route('reembolso.salvar')}}" method="POST">
 		<div class="row clearfix">

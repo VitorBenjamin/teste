@@ -70,15 +70,18 @@
 									</div>								
 								</div>											
 							</div>
-							<div class="form-group ">
-								<button class="btn btn-info">Cadastrar</button>
+							<div class="form-group">
+								<button class="btn btn-info">
+									<i class="material-icons">save</i>
+									<span>ATUALIZAR DESPESA</span> 
+								</button>
 							</div>
 							<div class="container">
 								<div class="row">
 									<div class="col-md-offset-1 col-md-10">
 										<!--Colocar a imagem-->  
-										<a href="{{$src}}" download="COMPROVANTE {{$despesa->data_despesa}} {{$despesa->tipo_comprovante}}">
-											<img border="0" src="{{$src}}" alt="Comprovante Despesa" width="200" height="200">
+										<a href="{{$despesa->anexo_comprovante}}" download="COMPROVANTE {{$despesa->tipo_comprovante}} {{$despesa->data_despesa}} ">
+											<img border="0" src="{{$despesa->anexo_comprovante}}" alt="Comprovante Despesa" width="200" height="200">
 										</a>
 									</div>  
 								</div>

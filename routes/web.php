@@ -17,6 +17,7 @@ Route::get('/', function () {
 });
 
 Route::get('/unidade', ['uses' => 'UnidadeController@index', 'as' => 'unidade.index']);
+
 Route::group(['prefix' => 'solicitacao'],function(){
 
 
@@ -35,6 +36,34 @@ Route::group(['prefix' => 'solicitacao'],function(){
     Route::get('/reembolso/editar-despesa/{id}', ['uses' => 'ReembolsoController@editarDespesa', 'as' => 'reembolso.editarDespesa']);
     Route::put('/reembolso/add-translado/{id}', ['uses' => 'ReembolsoController@addTranslado', 'as' => 'reembolso.addTranslado']);
     Route::put('/reembolso/add-despesa/{id}', ['uses' => 'ReembolsoController@addDespesa', 'as' => 'reembolso.addDespesa']);
+
+
+    // Rotas para Tabela unidade    
+    // Route::get('/unidade/cadastrar', ['uses' => 'UnidadeController@cadastrar', 'as' => 'unidade.cadastrar']);
+    // Route::post('/unidade/salvar', ['uses' => 'UnidadeController@salvar', 'as' => 'unidade.salvar']);
+    // Route::get('/unidade/editar/{id}', ['uses' => 'UnidadeController@editar', 'as' => 'unidade.editar']);
+    // Route::put('/unidade/atualizar/{id}', ['uses' => 'UnidadeController@atualizar', 'as' => 'unidade.atualizar']);
+    // Route::get('/unidade/deletar/{id}', ['uses' => 'UnidadeController@deletar', 'as' => 'unidade.deletar']);
+});
+
+Route::group(['prefix' => 'solicitacao'],function(){
+
+
+    // Rotas para controle de Reembolso
+    Route::get('viagem', ['uses' => 'ViagemController@index', 'as' => 'viagem.index']);
+    Route::get('/viagem/cadastrar', ['uses' => 'ViagemController@cadastrar', 'as' => 'viagem.cadastrar']);
+    Route::post('/viagem/salvar', ['uses' => 'ViagemController@salvar', 'as' => 'viagem.salvar']);
+    Route::get('/viagem/editar-viagem/{id}', ['uses' => 'ViagemController@editar', 'as' => 'viagem.editar']);
+    Route::put('/viagem/atualizar/{id}', ['uses' => 'ViagemController@atualizar', 'as' => 'viagem.atualizar']);
+    Route::put('/viagem/atualizar-despesa/{id}', ['uses' => 'ViagemController@atualizarDespesa', 'as' => 'viagem.atualizarDespesa']);
+    Route::put('/viagem/atualizar-translado/{id}', ['uses' => 'ViagemController@atualizarTranslado', 'as' => 'viagem.atualizarTranslado']);
+    Route::get('/viagem/deletar/{id}', ['uses' => 'ViagemController@deletar', 'as' => 'viagem.deletar']);
+    Route::get('/viagem/deletar-translado/{id}', ['uses' => 'ViagemController@deletarTranslado', 'as' => 'viagem.deletarTranslado']); 
+    Route::get('/viagem/editar-translado/{id}', ['uses' => 'ViagemController@editarTranslado', 'as' => 'viagem.editarTranslado']);        
+    Route::get('/viagem/deletar-despesa/{id}', ['uses' => 'ViagemController@deletarDespesa', 'as' => 'viagem.deletarDespesa']);
+    Route::get('/viagem/editar-despesa/{id}', ['uses' => 'ViagemController@editarDespesa', 'as' => 'viagem.editarDespesa']);
+    Route::put('/viagem/add-translado/{id}', ['uses' => 'ViagemController@addTranslado', 'as' => 'viagem.addTranslado']);
+    Route::put('/viagem/add-despesa/{id}', ['uses' => 'ViagemController@addDespesa', 'as' => 'viagem.addDespesa']);
 
 
     // Rotas para Tabela unidade    

@@ -1,11 +1,11 @@
 $(function () {
-    $('.colorpicker').colorpicker();
+    // $('.colorpicker').colorpicker();
 
     //Dropzone
-    Dropzone.options.frmFileUpload = {
-        paramName: "file",
-        maxFilesize: 2
-    };
+    // Dropzone.options.frmFileUpload = {
+    //     paramName: "file",
+    //     maxFilesize: 2
+    // };
 
     //Masked Input ============================================================================================================================
     var $demoMaskedInput = $('.demo-masked-input');
@@ -33,7 +33,11 @@ $(function () {
     $demoMaskedInput.find('.datetime').inputmask('d/m/y h:s', { placeholder: '__/__/____ __:__', alias: "datetime", hourFormat: '24' });
 
     //Mobile Phone Number
-    $demoMaskedInput.find('.mobile-phone-number').inputmask('+99 (999) 999-99-99', { placeholder: '+__ (___) ___-__-__' });
+    $demoMaskedInput.find('.mobile-phone-number').inputmask('(99) 99999-9999', { placeholder: '(__) _____-____' });
+
+    //Numero de Processo
+    $demoMaskedInput.find('.processo').inputmask('9999999-99.9999.9.99.9999', { placeholder: '_______-__.____._.__.____' });
+
     //Phone Number
     $demoMaskedInput.find('.phone-number').inputmask('+99 (999) 999-99-99', { placeholder: '+__ (___) ___-__-__' });
 
@@ -57,32 +61,32 @@ $(function () {
     //===========================================================================================================================================
 
     //Multi-select
-    $('#optgroup').multiSelect({ selectableOptgroup: true });
+    // $('#optgroup').multiSelect({ selectableOptgroup: true });
 
     //noUISlider
-    var sliderBasic = document.getElementById('nouislider_basic_example');
-    noUiSlider.create(sliderBasic, {
-        start: [30],
-        connect: 'lower',
-        step: 1,
-        range: {
-            'min': [0],
-            'max': [100]
-        }
-    });
-    getNoUISliderValue(sliderBasic, true);
+    // var sliderBasic = document.getElementById('nouislider_basic_example');
+    // noUiSlider.create(sliderBasic, {
+    //     start: [30],
+    //     connect: 'lower',
+    //     step: 1,
+    //     range: {
+    //         'min': [0],
+    //         'max': [100]
+    //     }
+    // });
+    // getNoUISliderValue(sliderBasic, true);
 
-    //Range Example
-    var rangeSlider = document.getElementById('nouislider_range_example');
-    noUiSlider.create(rangeSlider, {
-        start: [32500, 62500],
-        connect: true,
-        range: {
-            'min': 25000,
-            'max': 100000
-        }
-    });
-    getNoUISliderValue(rangeSlider, false);
+    // //Range Example
+    // var rangeSlider = document.getElementById('nouislider_range_example');
+    // noUiSlider.create(rangeSlider, {
+    //     start: [32500, 62500],
+    //     connect: true,
+    //     range: {
+    //         'min': 25000,
+    //         'max': 100000
+    //     }
+    // });
+    // getNoUISliderValue(rangeSlider, false);
 });
 
 //Get noUISlider Value and write on

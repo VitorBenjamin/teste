@@ -4,6 +4,23 @@
     });
 });
 
+$('#origem_despesa').change(function() {
+      console.log('teste');
+      var value = $(this).val();
+            console.log(value);
+
+      if (value == "ESCRITÓRIO") {
+        $('#clientes_id').prop("disabled", true );
+       // $('#clientes_id').attr("disabled", "disabled");
+        console.log('value');
+      }else{
+      //$('#solicitante_id').addClass("disabled")
+       $('#clientes_id').removeAttr('disabled');
+        console.log('false');
+      }
+  });
+
+
 var inputElement = document.getElementById("anexo_comprovante");
 var cancelButton = document.getElementById("pseudoCancel");
 var numFiles = 0;

@@ -13,7 +13,7 @@ class Solicitacao extends Model
      */ 
     protected $table = 'solicitacoes';
     protected $fillable = [
-        'codigo', 'urgente', 'tipo','origem_despesa','contrato','area_atuacoes_id','clientes_id','solicitantes_id','processos_id','users_id'
+        'codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato', 'area_atuacoes_id', 'clientes_id', 'solicitantes_id', 'processos_id', 'users_id'
     ];
     
     /** Consulta os status de  solicitação

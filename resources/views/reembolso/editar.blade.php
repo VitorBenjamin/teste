@@ -80,11 +80,18 @@
 									@endforeach
 								</select>
 							</div>
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="form-line">
-										<label for="processos_id">Número de Processo</label>
-										<input type="text" id="processos_id" value="{{$solicitacao->processos_id}}" name="processos_id" class="form-control" placeholder="N°" />
+							<div class="demo-masked-input">
+								<div class="col-sm-4">
+									<b>Número de Processo</b>
+									<div class="input-group">
+										<div class="form-line">
+											@if($solicitacao->processo != null)
+											<input type="text" name="processo" value="{{$solicitacao->processo->codigo}}" class="form-control processo" placeholder="Ex: 9999999-99.9999.9.99.9999" />
+											@else
+											<input type="text" name="processo" class="form-control processo" placeholder="Ex: 9999999-99.9999.9.99.9999" />
+											@endif
+
+										</div>
 									</div>
 								</div>
 							</div>
@@ -465,32 +472,23 @@
 														</div>
 													</div>								
 												</div>
-												<div class="file-field input-field">
-													<div class="btn">
-														<span>File</span>
-														<input type="file">
-													</div>
-													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text">
-													</div>
-												</div>
 											</div>
+										</div>
+										<div class="modal-footer">
+											<div class="form-group">
+												<button class="btn btn-info">
+													<i class="material-icons">save</i>
+													<span>ADD DESPESA</span>
+												</button>
+											</div>
+											<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+											<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- FIM SESSÃO DESPESA -->
-						<div class="modal-footer">
-							<div class="form-group">
-								<button class="btn btn-info">
-									<i class="material-icons">save</i>
-									<span>ADD DESPESA</span>
-								</button>
-							</div>
-							<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
-							<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
-						</div>
+						<!-- FIM SESSÃO DESPESA -->						
 					</form> 
 				</div>
 			</div>
