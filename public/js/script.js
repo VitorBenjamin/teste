@@ -3,6 +3,18 @@ $(function() {
     $('input:text').keyup(function() {
         this.value = this.value.toLocaleUpperCase()
     });
+    
+});
+$( window ).load(function() {
+
+  var value = $('#origem_despesa').val();
+   
+    if (value == "ESCRITÓRIO") {
+      
+         $('#clientes').attr("disabled", true);
+         $('#clientes').selectpicker('refresh');
+      
+      }
 });
 
 //Desativa o select de CLIENTES Caso Origem da despesa seja = Escritório
@@ -13,12 +25,12 @@ $('#origem_despesa').change(function() {
       if (value == "ESCRITÓRIO") {
       
          $('#clientes').attr("disabled", true);
-         $('.selectpicker').selectpicker('refresh');
+         $('#clientes').selectpicker('refresh');
       
       }else{
        
        $('#clientes').removeAttr('disabled',false);
-       $('.selectpicker').selectpicker('refresh');
+       $('#clientes').selectpicker('refresh');
       
       }
 });

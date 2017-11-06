@@ -3,15 +3,16 @@
 		<div class="col-md-2">
 			<label for="origem_despesa">Origem de Despesa</label>
 			<select id="origem_despesa" name="origem_despesa" class="form-control show-tick">
-				<option value="{{$solicitacao->origem_despesa}}">{{$solicitacao->origem_despesa}}</option>
-				<option value="CLIENTE">CLIENTE</option>
-				<option value="ESCRITÓRIO">ESCRITÓRIO</option>
+				<option value="CLIENTE" {{ $solicitacao->origem_despesa == "CLIENTE" ? 'selected' : '' }}>CLIENTE</option>
+				<option value="ESCRITÓRIO" {{ $solicitacao->origem_despesa == "ESCRITÓRIO" ? 'selected' : '' }}>ESCRITÓRIO</option>
 			</select>
 		</div>
 		<div class="col-md-3">
 			<label for="clientes">Cliente</label>
 			<select id="clientes" name="clientes_id" class="form-control show-tick" data-live-search="true">
+				@if(!empty($cliente[0]))
 				<option value="{{$solicitacao->clientes_id}}">{{ $cliente[0]->nome }}</option>
+				@endif
 			</select>
 		</div>
 		<div class="col-md-3">
@@ -61,10 +62,9 @@
 			<div class="form-group">
 				<label for="contrato">Tipo de Contrato</label>
 				<select id="contrato" name="contrato" class="form-control show-tick" data-live-search="true">
-					<option value="{{$solicitacao->contrato}}">{{$solicitacao->contrato}}</option>
-					<option value="CONSULTIVO">CONSULTIVO</option>
-					<option value="CONTECIOSO">CONTECIOSO</option>
-					<option value="PREVENTIVO">PREVENTIVO</option>
+					<option value="CONSULTIVO" {{ $solicitacao->contrato == "CONSULTIVO" ? 'selected' : '' }}>CONSULTIVO</option>
+					<option value="CONTECIOSO" {{ $solicitacao->contrato == "CONTECIOSO" ? 'selected' : '' }}>CONTECIOSO</option>
+					<option value="PREVENTIVO" {{ $solicitacao->contrato == "PREVENTIVO" ? 'selected' : '' }}>PREVENTIVO</option>
 				</select>
 			</div>
 		</div>
@@ -75,19 +75,19 @@
 				</fieldset>
 				@if ($solicitacao->urgente == true)
 				<input name="urgente" value="1" type="radio" id="sim" checked />
-				<label style="margin: 17px 5px" for="sim">Sim</label>
+				<label style="margin: 15px 15px 0px 0px" for="sim">Sim</label>
 				<input name="urgente" value="0" type="radio" id="nao" />
-				<label style="margin: 17px 5px" for="nao">Não</label>
+				<label style="margin: 15px 15px 0px 0px" for="nao">Não</label>
 				@else
 				<input name="urgente" value="1" type="radio" id="sim" />
-				<label style="margin: 17px 5px" for="sim">Sim</label>
+				<label style="margin: 15px 15px 0px 0px" for="sim">Sim</label>
 				<input name="urgente" value="0" type="radio" id="nao" checked />
-				<label style="margin: 17px 5px" for="nao">Não</label>
+				<label style="margin: 11px 15px 0px 0px" for="nao">Não</label>
 				@endif
 			</div>
 		</div>
 		<div class="col-md-2" style="margin-top: 20px">
-		<button class="btn btn-primary btn-lg waves-effect">
+			<button class="btn btn-primary btn-lg waves-effect">
 				<i class="material-icons">save</i>
 				<span>ATUALIZAR CABEÇALHO</span> 
 			</button>

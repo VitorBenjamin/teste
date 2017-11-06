@@ -14,9 +14,9 @@ class Viagem extends Model
     protected $table = 'viagens';
 
     protected $fillable = [
-        'observacao', 'origem', 'destino', 'data_ida', 'data_volta', 'hospedagem', 'bagagem', 'kg', 'solicitacoes_id', 'reembolso_id'
+        'observacao', 'origem', 'destino', 'data_ida', 'data_volta', 'hospedagem', 'bagagem', 'kg', 'locacao', 'solicitacoes_id', 'reembolso_id'
     ];
-
+ 
     /** Consulta a Solicitacao por Viagem
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

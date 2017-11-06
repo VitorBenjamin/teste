@@ -17,7 +17,6 @@ use App\Status;
 
 class CompraController extends Controller
 {
-    //
 
     //Retorna a View de cadastro da unidade
 	public function cadastrar()
@@ -44,11 +43,14 @@ class CompraController extends Controller
 	public function editar($id)
 	{
 
-		$solicitacao = Solicitacao::with('compra')->where('id',$id)->first();
+		$solicitacao = Solicitacao::with('compra')
+		->where('tipo',config('constantes.tipo_compra'))
+		->where('id',$id)
+		->first();
 		if(!$solicitacao){
 			\Session::flash('flash_message',[
 				'msg'=>"Não Existe essa Solicitacao Cadastrada!!! Deseja Cadastrar uma Nova Solicitação?",
-				'class'=>"alert-danger"
+				'class'=>"alert bg-red alert-dismissible"
 				]);
 			return redirect()->route('compra.cadastrar');            
 		}
@@ -60,24 +62,24 @@ class CompraController extends Controller
 	}
 
     //Atualiza uma compra e redireciona para a tela de edição da Solicitação
-    public function atualizarCompra(Request $request,$id)
-    {   
-        $compra = Compra::find($id);
-        
-        $compra->update(
-            [   
-                'descricao' => $request->descricao,
-                'data_compra' => $request->data_compra,
-                'quantidade' => $request->quantidade,                
-            ]
-        );
-        
-        \Session::flash('flash_message',[
-            'msg'=>"Compra Atualizada com Sucesso!!!",
-            'class'=>"alert bg-green alert-dismissible"
-        ]);
-        return redirect()->route('compra.editar', $compra->solicitacoes_id);
-    }
+	public function atualizarCompra(Request $request,$id)
+	{   
+		$compra = Compra::find($id);
+
+		$compra->update(
+			[   
+			'descricao' => $request->descricao,
+			'data_compra' => $request->data_compra,
+			'quantidade' => $request->quantidade,                
+			]
+			);
+
+		\Session::flash('flash_message',[
+			'msg'=>"Compra Atualizada com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+			]);
+		return redirect()->route('compra.editar', $compra->solicitacoes_id);
+	}
 	public function addCompra(Request $request,$id){
 		Compra::create([
 			'data_compra' => $request->data_compra,
@@ -92,18 +94,18 @@ class CompraController extends Controller
 		return redirect()->route('compra.editar',$id);
 	}
 	//Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
-    public function deletarCompra($id)
-    {        
+	public function deletarCompra($id)
+	{        
 
-        $translado = Compra::find($id);
-        $s_id = $translado->solicitacoes_id;
-        $translado->delete();
-        \Session::flash('flash_message',[
-            'msg'=>"Compra Removida com Sucesso!!!",
+		$translado = Compra::find($id);
+		$s_id = $translado->solicitacoes_id;
+		$translado->delete();
+		\Session::flash('flash_message',[
+			'msg'=>"Compra Removida com Sucesso!!!",
 			'class'=>"alert bg-red alert-dismissible"
-        ]);
-        return redirect()->route('compra.editar',$s_id);       
-    }
+			]);
+		return redirect()->route('compra.editar',$s_id);       
+	}
     //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
 	public function atualizar(Request $request,$id)
 	{   

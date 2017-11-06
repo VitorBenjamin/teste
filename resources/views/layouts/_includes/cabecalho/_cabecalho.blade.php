@@ -55,9 +55,9 @@
 					<legend>Urgência</legend>
 				</fieldset>
 				<input name="urgente" value="1" type="radio" id="sim" />
-				<label style="margin: 15px" for="sim">Sim</label>
+				<label style="margin: 15px 15px 0px 0px" for="sim">Sim</label>
 				<input name="urgente" value="0" type="radio" id="nao" />
-				<label style="margin: 15px" for="nao">Não</label>
+				<label style="margin: 15px 15px 0px 0px" for="nao">Não</label>
 			</div>
 		</div>
 	</div>

@@ -45,7 +45,6 @@ class SolicitacaoRepository
         $dados = [   
 
             'urgente' => $data->urgente,
-            'tipo' => 'Reembolso',
             'origem_despesa' => $data->origem_despesa,
             'contrato' => $data->contrato,
             'area_atuacoes_id'=>$data->area_atuacoes_id,

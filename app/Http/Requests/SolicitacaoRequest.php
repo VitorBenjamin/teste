@@ -29,7 +29,7 @@ class SolicitacaoRequest extends FormRequest
             'origem_despesa' => 'required',
             'contrato' => 'required',
             'area_atuacoes_id'=> 'required',
-            'clientes_id' => 'required_with:origem_despesa',
+            'clientes_id' => 'required_unless:origem_despesa,ESCRITÓRIO',
             'solicitantes_id' => 'required',
         ];
     }
