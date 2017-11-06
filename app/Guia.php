@@ -26,7 +26,7 @@ class Guia extends Model
 	/** Consulta o Tipo_Guia da Guia
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-	public function tipo_guia()
+	public function tipoGuia()
 	{
 		return $this->belongsTo('App\TipoGuia','tipo_guias_id');
 	}

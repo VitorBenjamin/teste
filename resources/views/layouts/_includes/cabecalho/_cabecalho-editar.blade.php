@@ -87,8 +87,8 @@
 			</div>
 		</div>
 		<div class="col-md-2" style="margin-top: 20px">
-			<button class="btn btn-primary btn-lg waves-effect">
-				<i class="material-icons">save</i>
+			<button class="btn bg-green waves-effect">
+				<i class="material-icons">update</i>
 				<span>ATUALIZAR CABEÇALHO</span> 
 			</button>
 		</div>																	

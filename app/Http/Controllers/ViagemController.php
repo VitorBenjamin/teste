@@ -109,7 +109,7 @@ class ViagemController extends Controller
     }
     
     //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
-    public function atualizar(Request $request,$id)
+    public function atualizarCabecalho(Request $request,$id)
     {   
         $repo = new SolicitacaoRepository();
         $solicitacao = $repo->update($request,$id);

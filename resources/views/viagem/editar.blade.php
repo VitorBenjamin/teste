@@ -28,7 +28,7 @@
 				<div class="header">
 					<h2>Dados da Compra</h2>
 				</div>
-				<form action="{{ route('compra.atualizar',$solicitacao->id)}}" method="POST">
+				<form action="{{ route('compra.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
 					{{ method_field('PUT') }}
 					@include('layouts._includes.cabecalho._cabecalho-editar')
@@ -88,7 +88,7 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<fieldset>
-										<legend>Locação</legend>
+										<legend style="margin: 0">Locação</legend>
 									</fieldset>
 									<input name="locacao" value="1" type="radio" id="simL" />
 									<label style="margin: 15px 15px 0px 0px" for="simL">Sim</label>
@@ -99,7 +99,7 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<fieldset>
-										<legend>Hospedagem</legend>
+										<legend style="margin: 0">Hospedagem</legend>
 									</fieldset>
 									<input name="hospedagem" value="1" type="radio" id="simH" />
 									<label style="margin: 15px 15px 0px 0px" for="simH">Sim</label>

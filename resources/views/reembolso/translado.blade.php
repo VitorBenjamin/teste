@@ -4,7 +4,7 @@
 
 <section class="content">
 	<div class="block-header">
-		<h2>Atualização da Despesa</h2>
+		<h2>Atualização do Translado</h2>
 	</div>
 	<form action="{{ route('reembolso.atualizarTranslado',$translado->id)}}" method="POST">
 		{{ csrf_field() }}
@@ -31,16 +31,9 @@
 								</div>
 								<div class="col-md-2">
 									<label for="turno">Turno</label>
-									<select id="turno" name="turno" class="form-control show-tick" data-live-search="true">
-										@if($translado->turno == "MATUTINO")
-										<option value="{{$translado->turno}}">{{$translado->turno}}</option>
-										<option value="">SELECIONE</option>											
-										<option value="VESPERTINO">VESPERTINO</option>
-										@else
-										<option value="{{$translado->turno}}">{{$translado->turno}}</option>
-										<option value="">SELECIONE</option>											
-										<option value="MATUTINO">MATUTINO</option>
-										@endif						
+									<select id="turno" name="turno" class="form-control show-tick">
+										<option value="VESPERTINO" {{ $translado->turno == "VESPERTINO" ? 'selected' : '' }}>VESPERTINO</option>
+										<option value="MATUTINO" {{ $translado->turno == "MATUTINO" ? 'selected' : '' }}>MATUTINO</option>	
 									</select>
 								</div>
 								<div class="col-md-2">
@@ -64,22 +57,23 @@
 									<div class="form-group">
 										<div>
 											<fieldset>
-												<legend>Ida / Volta</legend>
+												<legend style="margin: 0">Ida / Volta</legend>
 											</fieldset>
 											@if ($translado->ida_volta == true)
 											<input name="ida_volta" value="1" type="radio" id="ida_volta_sim" checked />
-											<label style="margin: 17px 5px" for="ida_volta_sim">Sim</label>
+											<label style="margin: 17px 5px 0px 0px" for="ida_volta_sim">Sim</label>
 											<input name="ida_volta" value="0" type="radio" id="ida_volta_nao" />
-											<label style="margin: 17px 5px" for="ida_volta_nao">Não</label>
+											<label style="margin: 17px 5px 0px 0px" for="ida_volta_nao">Não</label>
 											@else
 											<input name="ida_volta" value="1" type="radio" id="ida_volta_sim" />
-											<label style="margin: 17px 5px" for="ida_volta_sim">Sim</label>
+											<label style="margin: 17px 5px 0px 0px" for="ida_volta_sim">Sim</label>
 											<input name="ida_volta" value="0" type="radio" id="ida_volta_nao" checked />
-											<label style="margin: 17px 5px" for="ida_volta_nao">Não</label>
+											<label style="margin: 17px 5px 0px 0px" for="ida_volta_nao">Não</label>
 											@endif										
 										</div>
 									</div>
 								</div>
+
 								<div class="col-md-2">
 									<div class="form-group">
 										<div class="form-line">
@@ -88,19 +82,22 @@
 										</div>
 									</div>								
 								</div>
-								<div class="col-sm-12">
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-4">
 									<div class="form-group">
 										<div class="form-line">
-											<textarea rows="3" name="observacao" class="form-control no-resize" placeholder="Campo para deixar uma Observação">{{$translado->observacao}}</textarea>
+											<label for="observacao">Obeservação</label>
+											<textarea rows="1" name="observacao" class="form-control no-resize" placeholder="Deixa uma Breve Observação">{{$translado->observacao}}</textarea>
 										</div>
 									</div>
-								</div>								
-							</div>
-							<div class="form-group">
-								<button class="btn btn-info">
-									<i class="material-icons">save</i>
-									<span>ATUALIZAR TRANSLADO</span> 
-								</button>
+								</div>	
+								<div class="col-md-2">
+									<button class="btn bg-green waves-effect" style="margin-top: 20px">
+										<i class="material-icons">update</i>
+										<span>ATUALIZAR TRANSLADO</span> 
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>

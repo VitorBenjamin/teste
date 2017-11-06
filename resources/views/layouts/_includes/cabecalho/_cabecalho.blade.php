@@ -16,7 +16,6 @@
 		<div class="col-md-3">
 			<label for="solicitantes">Solicitante</label>
 			<select id="solicitantes" name="solicitantes_id" class="form-control show-tick" data-live-search="true" required>
-				{{old('solicitantes')}}
 			</select>
 		</div>
 		<div class="demo-masked-input">
@@ -49,22 +48,22 @@
 				<option value="PREVENTIVO">PREVENTIVO</option>
 			</select>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<div class="form-group">
 				<fieldset>
 					<legend>Urgência</legend>
 				</fieldset>
 				<input name="urgente" value="1" type="radio" id="sim" />
 				<label style="margin: 15px 15px 0px 0px" for="sim">Sim</label>
-				<input name="urgente" value="0" type="radio" id="nao" />
+				<input name="urgente" value="0" type="radio" id="nao" checked />
 				<label style="margin: 15px 15px 0px 0px" for="nao">Não</label>
 			</div>
 		</div>
+		<div class="col-md-2" style="margin-top: 20px">
+			<button class="btn bg-green waves-effect">
+				<i class="material-icons">send</i>
+				<span>CADASTRAR SOLICITAÇÃO</span> 
+			</button>
+		</div>	
 	</div>
-	<div class="form-group">
-		<button class="btn btn-info">
-			<i class="material-icons">save</i>
-			<span>ADD Reembolso</span> 
-		</button>
-	</div>						
 </div>

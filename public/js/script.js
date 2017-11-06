@@ -55,7 +55,8 @@ $('#solicitantes')
             emptyTitle: 'Buscar Por Solicitantes...',
             statusInitialized: 'Digite para Buscar',
             statusNoResults: 'Nenhum Resultado',
-            statusSearching: 'Buscando'
+            statusSearching: 'Buscando',
+            searchPlaceholder: 'Buscar...'
         },
         preprocessData: function(data){
             var solicitantes = [];
@@ -100,7 +101,9 @@ $('#clientes')
             emptyTitle: 'Buscar Por Clientes...',
             statusInitialized: 'Digite para Buscar',
             statusNoResults: 'Nenhum Resultado',
-            statusSearching: 'Buscando'
+            statusSearching: 'Buscando',
+            searchPlaceholder: 'Buscar...'
+
         },
         preprocessData: function(data){
             var clientes = [];

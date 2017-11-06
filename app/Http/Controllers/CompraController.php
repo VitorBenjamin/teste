@@ -107,7 +107,7 @@ class CompraController extends Controller
 		return redirect()->route('compra.editar',$s_id);       
 	}
     //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
-	public function atualizar(Request $request,$id)
+	public function atualizarCabecalho(Request $request,$id)
 	{   
 		$repo = new SolicitacaoRepository();
 		$solicitacao = $repo->update($request,$id);

@@ -4,7 +4,7 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                <img src="/mosello-oficial/public/images/user.png" width="48" height="48" alt="User" />
+                <img src="{{url('images/user.png')}}" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
@@ -24,42 +24,56 @@
             </div>
         </div>
         <!-- #User Info -->
+        
         <!-- Menu -->
         <div class="menu">
             <ul class="list">
                 <li class="header">Menu Principal</li>
                 <li class="active">
-                    <a href="/">
-                        <i class="material-icons">home</i>
+                    <a href="{{url('/')}}">
+                        <i class="material-icons">dashboard</i>
                         <span>DashBoard</span>
                     </a>
                 </li>
 
-                <li class="active">
+                <li>
                     <a href="{{route('reembolso.cadastrar')}}">
-                        <i class="material-icons">create</i>
+                        <i class="material-icons">account_balance_wallet</i>
                         <span>Solicitar Reembolso</span>
                     </a>
                 </li>
 
-                <li class="active">
+                <li>
                     <a href="{{route('compra.cadastrar')}}">
-                        <i class="material-icons">create</i>
+                        <i class="material-icons">add_shopping_cart</i>
                         <span>Solicitar Compra</span>
                     </a>
                 </li>
 
-                <li class="active">
+                <li>
                     <a href="{{route('viagem.cadastrar')}}">
-                        <i class="material-icons">create</i>
+                        <i class="material-icons">flight_takeoff</i>
                         <span>Solicitar Viagem</span>
                     </a>
-                </li>
-                
+                </li>  
 
+                <li>
+                    <a href="{{route('antecipacao.cadastrar')}}">
+                        <i class="material-icons">chat_bubble_outline</i>
+                        <span>Solicitar Antecipação</span>
+                    </a>
+                </li>  
+
+                <li>
+                    <a href="{{route('guia.cadastrar')}}">
+                        <i class="material-icons">content_paste</i>
+                        <span>Solicitar Guia</span>
+                    </a>
+                </li>          
             </ul>
         </div>
         <!-- #Menu -->
+
         <!-- Footer -->
         <div class="legal">
             <div class="copyright">

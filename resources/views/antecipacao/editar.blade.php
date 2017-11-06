@@ -28,7 +28,7 @@
 				<div class="header">
 					<h2>Dados da Compra</h2>
 				</div>
-				<form action="{{ route('compra.atualizarCabecalho',$solicitacao->id)}}" method="POST">
+				<form action="{{ route('antecipacao.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
 					{{ method_field('PUT') }}
 					@include('layouts._includes.cabecalho._cabecalho-editar')
@@ -38,25 +38,26 @@
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
 
-	<!-- SESSÃO PRODUTO -->
+	<!-- SESSÃO ANTECIPAÇÂO -->
+	@if(empty($solicitacao->antecipacao[0]))
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
 					<h2>
-						Adicione um produto a sua solicitação
+						Peça uma Antecipação
 					</h2>
 				</div>
 				<div class="body">
-					<form action="{{ route('compra.addCompra',$solicitacao->id)}}" method="POST">
+					<form action="{{ route('antecipacao.addAntecipacao',$solicitacao->id)}}" method="POST">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
 						<div class="row clearfix">
 							<div class="col-md-2">
 								<div class="form-group">
 									<div class="form-line">
-										<label for="data_compra">Data</label>
-										<input type="text" value="" name="data_compra" class="datepicker form-control" placeholder="Escolha uma Data"/>
+										<label for="data_recebimento">Data</label>
+										<input type="text" value="" name="data_recebimento" class="datepicker form-control " placeholder="Escolha uma Data"/>
 									</div>
 								</div>
 							</div>
@@ -72,15 +73,15 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<div class="form-line">
-										<label for="quantidade">Quantidade</label>
-										<input type="text" value="" name="quantidade" class="form-control" placeholder="Qtd."/>
+										<label for="valor_solicitado">Valor</label>
+										<input type="text" value="" name="valor_solicitado" class="form-control" placeholder="R$."/>
 									</div>
 								</div>								
 							</div>
 							<div class="col-md-2" style="margin-top: 20px">
 								<button class="btn btn-primary btn-lg waves-effect">
 									<i class="material-icons">save</i>
-									<span>ADD PRODUTO</span> 
+									<span>ADD ANTECIPAÇÃO</span> 
 								</button>
 							</div>
 						</div>
@@ -89,14 +90,16 @@
 			</div>			
 		</div>
 	</div>
+	@endif
+	<!-- FIM SESSÃO DA ANTECIPAÇÃO -->
 
-	<!-- LISTAGEM DOS PRODUTOS  -->
+	<!-- LISTAGEM DA ANTECIPAÇÃO  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
 					<h2>
-						LISTAGEM DOS PRODUTOS
+						LISTA DA ANTECIPAÇÃO
 					</h2>
 				</div>
 				<div class="body">
@@ -107,7 +110,7 @@
 									<th></th>
 									<th>Data</th>
 									<th>Descrição</th>
-									<th>Quantidade</th>
+									<th>Valor</th>
 									<th>Ações</th>																	
 								</tr>
 							</thead>
@@ -116,25 +119,25 @@
 									<th></th>
 									<th>Data</th>
 									<th>Descrição</th>
-									<th>Quantidade</th>
+									<th>Valor</th>
 									<th>Ações</th>
 								</tr>
 							</tfoot>
 							<tbody>
-								@foreach ($solicitacao->compra as $compra)
+								@foreach ($solicitacao->antecipacao as $antecipacao)
 								<tr>
 									<td></td>
-									<td>{{date('d/m/y',strtotime($compra->data_compra))}}</td>
-									<td>{{$compra->descricao}}</td>
-									<td>{{$compra->quantidade}}</td>									
+									<td>{{date('d/m/y',strtotime($antecipacao->data_recebimento))}}</td>
+									<td>{{$antecipacao->descricao}}</td>
+									<td>{{$antecipacao->valor_solicitado}}</td>									
 									<td>
 										<div class="btn-group">
 											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												<i class="material-icons">settings</i>
 											</button>
 											<ul class="dropdown-menu">
-												<li><a data-toggle="modal" data-target="#modal{{$compra->id}}" class="waves-effect" role="button">Editar</a></li>
-												<li><a href="{{ route('compra.deletarCompra', $compra->id)}}">Deletar</a></li>												
+												<li><a data-toggle="modal" data-target="#modal{{$antecipacao->id}}" class="waves-effect" role="button">Editar</a></li>
+												<li><a href="{{ route('antecipacao.deletarAntecipacao', $antecipacao->id)}}">Deletar</a></li>												
 											</ul>
 										</div>
 									</td>
@@ -142,15 +145,15 @@
 
 
 								<!-- MODAL TRANSLADO -->
-								<div class="modal fade" id="modal{{$compra->id}}" tabindex="-1" role="dialog">
+								<div class="modal fade" id="modal{{$antecipacao->id}}" tabindex="-1" role="dialog">
 									<div class="modal-dialog modal-lg" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h4 class="modal-title" id="largeModalLabel">Editar um Produto</h4>
+												<h4 class="modal-title" id="largeModalLabel">Editar um Antecipação</h4>
 											</div>
 
 											<!-- INCIO SESSÃO TRANSLADO -->
-											<form action="{{ route('compra.atualizarCompra',$compra->id)}}" method="POST">
+											<form action="{{ route('antecipacao.atualizarAntecipacao',$antecipacao->id)}}" method="POST">
 												{{ csrf_field() }}
 												{{ method_field('PUT') }}
 												<div class="modal-body">				
@@ -159,8 +162,8 @@
 														<div class="col-md-2">
 															<div class="form-group">
 																<div class="form-line">
-																	<label for="data_compra">Data</label>
-																	<input type="text" value="{{$compra->data_compra}}" name="data_compra" class="datepicker form-control" placeholder="Escolha uma Data"/>
+																	<label for="data_recebimento">Data</label>
+																	<input type="text" value="{{$antecipacao->data_recebimento}}" name="data_recebimento" class="datepicker form-control" placeholder="Escolha uma Data"/>
 																</div>
 															</div>
 														</div>
@@ -168,7 +171,7 @@
 															<div class="form-group">
 																<div class="form-line">
 																	<label for="descricao">Descrição</label>
-																	<input type="text" value="{{$compra->descricao}}" name="descricao" class="form-control" placeholder="Descrição do produto"/>										
+																	<input type="text" value="{{$antecipacao->descricao}}" name="descricao" class="form-control" placeholder="Descrição do produto"/>										
 																</div>
 															</div>
 														</div>
@@ -176,8 +179,8 @@
 														<div class="col-md-2">
 															<div class="form-group">
 																<div class="form-line">
-																	<label for="quantidade">Quantidade</label>
-																	<input type="text" value="{{$compra->quantidade}}" name="quantidade" class="form-control" placeholder="Qtd."/>
+																	<label for="valor_solicitado">Valor Solicitado</label>
+																	<input type="text" value="{{$antecipacao->valor_solicitado}}" name="valor_solicitado" class="form-control" placeholder="Qtd."/>
 																</div>
 															</div>								
 														</div>
@@ -201,11 +204,6 @@
 									</div>
 								</div>
 								<!-- FIM MODAL TRANSLADO -->
-
-
-
-
-
 								@endforeach														
 							</tbody>
 						</table>
@@ -215,8 +213,7 @@
 			</div>
 		</div> 												
 	</div>
-	<!-- FIM LISTAGEM DOS PRODUTOS -->
-	
+	<!-- FIM LISTAGEM DA ANTECIPAÇÃO -->
 
 </section>
 @endsection

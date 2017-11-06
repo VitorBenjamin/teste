@@ -23,13 +23,6 @@ class Solicitacao extends Model
     {
         return $this->belongsToMany('App\Status','solicitacoes_status','solicitacoes_id','status_id');
     }
-    /** Consulta as Despesas da  solicitação
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function despesa()
-    {
-        return $this->hasMany('App\Despesa','solicitacoes_id');
-    }
     
     /** Consulta as Despesas da  solicitação
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -39,6 +32,22 @@ class Solicitacao extends Model
         return $this->hasMany('App\Viagem','solicitacoes_id');
     }
 
+    /** Consulta as Despesas da  solicitação
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function guia()
+    {
+        return $this->hasMany('App\Guia','solicitacoes_id');
+    }
+
+    /** Consulta as Despesas da  solicitação
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function despesa()
+    {
+        return $this->hasMany('App\Despesa','solicitacoes_id');
+    }
+    
     /** Consulta os Translados da  solicitação
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -53,6 +62,14 @@ class Solicitacao extends Model
     public function compra()
     {
         return $this->hasMany('App\Compra','solicitacoes_id');
+    }
+
+    /** Consulta as compras da solicitação
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function antecipacao()
+    {
+        return $this->hasMany('App\Antecipacao','solicitacoes_id');
     }
     
     /** Consulta a area de atuação da solicitação
