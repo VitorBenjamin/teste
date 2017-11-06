@@ -12,10 +12,10 @@ class Compra extends Model
      * @var array
      */
     protected $fillable = [
-        'descricao', 'data_compra', 'quantidade', 'solicitacoes_id'
+        'data_compra','descricao', 'quantidade', 'solicitacoes_id'
     ];
     
-    /** Consulta a Solicitacao da Despesa
+    /** Consulta a Solicitacao da compra
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
      public function solicitacao()

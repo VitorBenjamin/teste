@@ -7,6 +7,17 @@ use App\Cliente;
 
 class ClienteController extends Controller
 {
+    
+
+    public function getCliente(Request $search){
+
+        $clientes = Cliente::where('nome','like','%'.$search->q.'%')
+        ->select('id','nome') 
+        ->get();
+
+        return response()->json(array("clientes" => $clientes));
+    }
+
     //buscando todas as informações dos clientes e enviando para a view de listagem das clientes
     public function index(){
     	

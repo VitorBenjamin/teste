@@ -1,23 +1,28 @@
 @extends('layouts.app')
 @section('content')
+<script type="text/javascript">
+	var urlClientes = "{{route('cliente.getCliente')}}";
 
+	var urlSoli = "{{route('solicitante.getSolicitante')}}";
+</script>
 <section class="content">
 	<div class="block-header">
 		<h2>Dados da Solicitação</h2>			
 	</div>
 	<!-- COMEÇO CABEÇALHO PADRÃO -->
-	@if(Session::has('flash_message'))
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div align="center" class="alert {{ Session::get('flash_message')['class'] }}">
+	<div class="row clearfix">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="header">
+				@if(Session::has('flash_message'))
+				<div align="center" class="{{ Session::get('flash_message')['class'] }}" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					{{ Session::get('flash_message')['msg'] }}
-
-				</div>
+				</div>								
+				@endif
 			</div>
 		</div>
 	</div>
-	@endif
+
 	
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -28,133 +33,11 @@
 						<a data-toggle="modal" data-target="#modalDespesa" class="btn bg-primary waves-effect" role="button">ADD DESPESA</a>
 					</div>
 				</div>
-				<div class="body">
-					<form action="{{ route('reembolso.atualizar',$solicitacao->id)}}" method="POST">
-						{{ csrf_field() }}
-						{{ method_field('PUT') }}
-						<div class="row clearfix">
-							<div class="col-md-2">
-								<label for="origem_despesa">Origem de Despesa</label>
-								<select id="origem_despesa" name="origem_despesa" class="form-control show-tick">
-									<option value="{{$solicitacao->origem_despesa}}">{{$solicitacao->origem_despesa}}</option>
-									<option value="ESCRITÓRIO">ESCRITÓRIO</option>
-									<option value="CLIENTE">CLIENTE</option>
-
-								</select>
-							</div>
-							<div class="col-md-3">
-								<label for="clientes_id">Cliente</label>
-								<select id="clientes_id" name="clientes_id" class="form-control show-tick" data-live-search="true">
-									@foreach ($clientes as $cliente)
-									@if($solicitacao->clientes_id == $cliente->id)
-									<option value="{{$solicitacao->clientes_id}}">{{ $cliente->nome }}</option>
-									@break							
-									@endif
-									@endforeach
-									<option value="">SELECIONE</option>
-									
-									@foreach ($clientes as $cliente)
-									@unless ($solicitacao->clientes_id == $cliente->id)
-									<option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
-									@endunless
-
-									@endforeach
-								</select>
-							</div>
-							<div class="col-md-3">
-								<label for="solicitantes_id">Solicitante</label>
-								<select id="solicitantes_id" name="solicitantes_id" class="form-control show-tick" data-live-search="true">
-									@foreach ($solicitantes as $solicitante)
-									@if($solicitacao->solicitantes_id == $solicitante->id)
-									<option value="{{$solicitacao->solicitantes_id}}">{{ $solicitante->nome }}</option>
-									@break							
-									@endif
-									@endforeach
-									
-									<option value="null">SELECIONE</option>
-									
-									@foreach ($solicitantes as $solicitante)
-									@unless ($solicitacao->solicitantes_id == $solicitante->id)
-									<option value="{{ $solicitante->id }}">{{ $solicitante->nome }}</option>
-									@endunless												
-									@endforeach
-								</select>
-							</div>
-							<div class="demo-masked-input">
-								<div class="col-sm-4">
-									<b>Número de Processo</b>
-									<div class="input-group">
-										<div class="form-line">
-											@if($solicitacao->processo != null)
-											<input type="text" name="processo" value="{{$solicitacao->processo->codigo}}" class="form-control processo" placeholder="Ex: 9999999-99.9999.9.99.9999" />
-											@else
-											<input type="text" name="processo" class="form-control processo" placeholder="Ex: 9999999-99.9999.9.99.9999" />
-											@endif
-
-										</div>
-									</div>
-								</div>
-							</div>
-							
-						</div>
-						<div class="row clearfix">
-							<div class="col-md-3">
-								<label for="area_atuacoes_id">Área de Atendimento</label>
-								<select id="area_atuacoes_id" name="area_atuacoes_id" class="form-control show-tick" data-live-search="true">									
-									@foreach ($areas as $area)
-									@if($solicitacao->area_atuacoes_id == $area->id)
-									<option value="{{$solicitacao->area_atuacoes_id}}">{{ $area->tipo }}</option>
-									@break							
-									@endif
-									@endforeach
-									
-									<option value="null">SELECIONE</option>
-									
-									@foreach ($areas as $area)
-									@unless ($solicitacao->area_atuacoes_id == $area->id)
-									<option value="{{ $area->id }}">{{ $area->tipo }}</option>
-									@endunless												
-									@endforeach
-								</select>
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<label for="contrato">Tipo de Contrato</label>
-									<select id="contrato" name="contrato" class="form-control show-tick" data-live-search="true">
-										<option value="{{$solicitacao->contrato}}">{{$solicitacao->contrato}}</option>
-										<option value="CONSULTIVO">CONSULTIVO</option>
-										<option value="CONTECIOSO">CONTECIOSO</option>
-										<option value="PREVENTIVO">PREVENTIVO</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<fieldset>
-										<legend style="margin: 0">Urgência</legend>
-									</fieldset>
-									@if ($solicitacao->urgente == true)
-									<input name="urgente" value="1" type="radio" id="sim" checked />
-									<label style="margin: 17px 5px" for="sim">Sim</label>
-									<input name="urgente" value="0" type="radio" id="nao" />
-									<label style="margin: 17px 5px" for="nao">Não</label>
-									@else
-									<input name="urgente" value="1" type="radio" id="sim" />
-									<label style="margin: 17px 5px" for="sim">Sim</label>
-									<input name="urgente" value="0" type="radio" id="nao" checked />
-									<label style="margin: 17px 5px" for="nao">Não</label>
-									@endif
-								</div>
-							</div>																	
-						</div>
-						<div class="form-group">
-							<button class="btn btn-info">
-								<i class="material-icons">save</i>
-								<span>ATUALIZAR CABEÇALHO</span> 
-							</button>
-						</div>
-					</form> 
-				</div>
+				<form action="{{ route('reembolso.atualizar',$solicitacao->id)}}" method="POST">
+					{{ csrf_field() }}
+					{{ method_field('PUT') }}
+					@include('layouts._includes.cabecalho._cabecalho-editar')
+				</form>
 			</div>
 		</div>
 	</div>
@@ -315,7 +198,7 @@
 										</div>
 										<div class="body">
 											<div class="row clearfix">
-												<div class="col-sm-2">
+												<div class="col-md-2">
 													<div class="form-group">
 														<div class="form-line">
 															<label for="data_translado">Data</label>
@@ -325,7 +208,7 @@
 												</div>
 												<div class="col-md-2">
 													<label for="turno">Turno</label>
-													<select id="turno" name="turno" class="form-control show-tick" data-live-search="true">
+													<select id="turno" name="turno" class="form-control show-tick">
 														<option value="">SELECIONE</option>
 														<option value="MATUTINO">MATUTINO</option>
 														<option value="VESPERTINO">VESPERTINO</option>
@@ -353,24 +236,24 @@
 													<div class="form-group">
 														<div>
 															<fieldset>
-																<legend>Ida / Volta</legend>
+																<legend style="margin: 0px">Ida / Volta</legend>
 															</fieldset>
 															<input name="ida_volta" value="1" type="radio" id="ida_volta_sim" />
-															<label style="margin: 15px" for="ida_volta_sim">Sim</label>
+															<label style="margin: 15px 0px" for="ida_volta_sim">Sim</label>
 															<input name="ida_volta" value="0" type="radio" id="ida_volta_nao" checked/>
-															<label style="margin: 15px" for="ida_volta_nao">Não</label>
+															<label style="margin: 15px 0px" for="ida_volta_nao">Não</label>
 														</div>
 													</div>
 												</div>
-												<div class="col-md-2">
+												<div class="col-md-1">
 													<div class="form-group">
 														<div class="form-line">
-															<label for="distancia">Distância (KM)</label>
-															<input type="text" name="distancia" class="form-control" placeholder=""/>
+															<label for="distancia">Distância</label>
+															<input type="text" name="distancia" class="form-control" placeholder="KM"/>
 														</div>
 													</div>								
 												</div>
-												<div class="col-sm-12">
+												<div class="col-md-12">
 													<div class="form-group">
 														<div class="form-line">
 															<textarea rows="3" name="observacao" class="form-control no-resize" placeholder="Campo para deixar uma Observação"></textarea>
@@ -426,7 +309,7 @@
 
 										<div class="body">
 											<div class="row clearfix">
-												<div class="col-sm-2">
+												<div class="col-md-2">
 													<div class="form-group">
 														<div class="form-line">
 															<label for="data_despesa">Data</label>

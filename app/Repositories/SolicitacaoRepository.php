@@ -19,7 +19,8 @@ class SolicitacaoRepository
     }
     public function create($request,$tipo)
     {
-    	$data = self::montaData($request);
+        
+        $data = self::montaData($request);
         $data['codigo'] = random_int(7, 7);
         $data['tipo'] = $tipo;
  
@@ -36,7 +37,7 @@ class SolicitacaoRepository
         $status = Status::where('descricao',config('constantes.status_aberto'))->first();
         //$status = Status::where('descricao','ABERTO')->orWhere('descricao' , 'ANDAMENTO')->get();        
         $solicitacao->status()->attach($status);
-    	return $solicitacao;
+        return $solicitacao;
     }
 
     private function montaData($data){
@@ -50,6 +51,7 @@ class SolicitacaoRepository
             'area_atuacoes_id'=>$data->area_atuacoes_id,
             'clientes_id' => $data->clientes_id,
             'solicitantes_id' => $data->solicitantes_id,
+            'unidades_id' => 1,
             'users_id' => 1,
         ];
         return $dados;

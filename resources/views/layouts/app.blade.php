@@ -47,6 +47,8 @@
 
   <!-- <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" /> -->
   {!! Html::style('plugins/bootstrap-select/css/bootstrap-select.css') !!}
+
+  {!! Html::style('css/ajax-bootstrap-select.css') !!}
   
   <!-- Custom Css -->
   <!-- <link href="css/style.css" rel="stylesheet">-->
@@ -111,7 +113,6 @@
  <!-- Jquery Core Js -->
  {!! Html::script('/plugins/jquery/jquery.min.js') !!}
 
- {!! Html::script('/js/script.js') !!}
 
  <!-- Bootstrap Core Js -->
  {!! Html::script('/plugins/bootstrap/js/bootstrap.js') !!}
@@ -121,6 +122,12 @@
 
  <!-- Select Plugin Js -->
  {!! Html::script('/plugins/bootstrap-select/js/bootstrap-select.js') !!}
+
+ {!! Html::script('/js/ajax-bootstrap-select.js') !!}
+
+ {!! Html::script('/js/script.js') !!}
+
+ @yield('javascript')
 
  <!-- Slimscroll Plugin Js -->
  {!! Html::script('/plugins/jquery-slimscroll/jquery.slimscroll.js') !!}
@@ -163,8 +170,7 @@
  {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.print.min.js') !!}
 
  <!-- Sparkline Chart Plugin Js -->
-<!--  {!! Html::script('/plugins/jquery-sparkline/jquery.sparkline.js') !!}
- -->
+ <!-- {!! Html::script('/plugins/jquery-sparkline/jquery.sparkline.js') !!} -->
  <!-- Custom Js -->
 
  {!! Html::script('/js/admin.js') !!} 
@@ -174,12 +180,10 @@
  {!! Html::script('/js/pages/forms/advanced-form-elements.js') !!}
  {!! Html::script('/js/pages/ui/modals.js') !!}
 
-<!--  {!! Html::script('/js/pages/index.js') !!}
- -->
+<!--  {!! Html::script('/js/pages/index.js') !!} -->
 
 
- <!-- Demo Js -->
-<!--  {!! Html::script('/js/demo.js') !!}
--->
+<!-- Demo Js -->
+<!--  {!! Html::script('/js/demo.js') !!} -->
 </body>
 </html>

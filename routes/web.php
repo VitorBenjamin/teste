@@ -16,12 +16,27 @@ Route::get('/', function () {
     return view('welcome',compact('teste'));
 });
 
-Route::get('/unidade', ['uses' => 'UnidadeController@index', 'as' => 'unidade.index']);
+Route::get('/ajax/clientes', ['uses' => 'ClienteController@getCliente', 'as' => 'cliente.getCliente']);
+Route::get('/ajax/solicitantes', ['uses' => 'SolicitanteController@getSolicitante', 'as' => 'solicitante.getSolicitante']);
+
+
 
 Route::group(['prefix' => 'solicitacao'],function(){
 
 
-	// Rotas para controle de Reembolso
+	Route::get('/compra', ['uses' => 'CompraController@index', 'as' => 'compra.index']);
+    Route::get('/compra/cadastrar', ['uses' => 'CompraController@cadastrar', 'as' => 'compra.cadastrar']);
+    Route::post('/compra/salvar', ['uses' => 'CompraController@salvar', 'as' => 'compra.salvar']);
+    Route::put('/compra/atualizar/{id}', ['uses' => 'CompraController@atualizar', 'as' => 'compra.atualizar']);
+    Route::put('/compra/add-compra/{id}', ['uses' => 'CompraController@addCompra', 'as' => 'compra.addCompra']);
+    Route::get('/compra/deletar-compra/{id}', ['uses' => 'CompraController@deletarCompra', 'as' => 'compra.deletarCompra']);
+    Route::get('/compra/editar-compra/{id}', ['uses' => 'CompraController@editar', 'as' => 'compra.editar']);
+    Route::put('/compra/atualizar-compra/{id}', ['uses' => 'CompraController@atualizarCompra', 'as' => 'compra.atualizarCompra']);
+
+
+
+
+    // Rotas para controle de Reembolso
     Route::get('/reembolso', ['uses' => 'ReembolsoController@index', 'as' => 'reembolso.index']);
     Route::get('/reembolso/cadastrar', ['uses' => 'ReembolsoController@cadastrar', 'as' => 'reembolso.cadastrar']);
     Route::post('/reembolso/salvar', ['uses' => 'ReembolsoController@salvar', 'as' => 'reembolso.salvar']);

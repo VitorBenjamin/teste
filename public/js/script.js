@@ -1,74 +1,116 @@
-﻿$(function() {
+﻿//Deixa todas os inputs UpperCase
+$(function() {
     $('input:text').keyup(function() {
         this.value = this.value.toLocaleUpperCase()
     });
 });
 
+//Desativa o select de CLIENTES Caso Origem da despesa seja = Escritório
 $('#origem_despesa').change(function() {
-      console.log('teste');
+      
       var value = $(this).val();
-            console.log(value);
 
       if (value == "ESCRITÓRIO") {
-        $('#clientes_id').prop("disabled", true );
-       // $('#clientes_id').attr("disabled", "disabled");
-        console.log('value');
+      
+         $('#clientes').attr("disabled", true);
+         $('.selectpicker').selectpicker('refresh');
+      
       }else{
-      //$('#solicitante_id').addClass("disabled")
-       $('#clientes_id').removeAttr('disabled');
-        console.log('false');
+       
+       $('#clientes').removeAttr('disabled',false);
+       $('.selectpicker').selectpicker('refresh');
+      
       }
-  });
+});
 
 
-var inputElement = document.getElementById("anexo_comprovante");
-var cancelButton = document.getElementById("pseudoCancel");
-var numFiles = 0;
+//Ajax para trazer os clientes
+$('#solicitantes')
+    .selectpicker({
+        liveSearch: true
+    })
+    .ajaxSelectPicker({
+        ajax: {
+            url: urlSoli,
+            type: 'GET',
+            data: function () {
+                var params = {
+                    q: '{{{q}}}'
+                };
+            }
+        },
+        locale: {
+            emptyTitle: 'Buscar Por Solicitantes...',
+            statusInitialized: 'Digite para Buscar',
+            statusNoResults: 'Nenhum Resultado',
+            statusSearching: 'Buscando'
+        },
+        preprocessData: function(data){
+            var solicitantes = [];
+            if(data.hasOwnProperty('solicitantes')){
+                var len = data.solicitantes.length;
+                for(var i = 0; i < len; i++){
+                    var curr = data.solicitantes[i];
+                    solicitantes.push(
+                        {
+                            'value': curr.id,
+                            'text': curr.nome,
+                            // 'data': {
+                            //     'icon': 'icon-person'
+                            //     // 'subtext': 'Internal'
+                            // },
+                            'disabled': false
+                        }
+                    );
+                }
+            }
+            return solicitantes;
+        },
+        preserveSelected: false
+    });
 
-inputElement.onclick = function(event) {
-  var target = event.target || event.srcElement;
-  console.log(target, "clicked.");
-  console.log(event);
-  if (target.value.length == 0) {
-    console.log("Suspect Cancel was hit, no files selected.");
-    cancelButton.onclick();
-  } else {
-    console.log("File selected: ", target.value);
-    numFiles = target.files.length;
-  }
-}
-
-inputElement.onchange = function(event) {
-  var target = event.target || event.srcElement;
-  console.log(target, "changed.");
-  console.log(event);
-  if (target.value.length == 0) {
-    console.log("Suspect Cancel was hit, no files selected.");
-    if (numFiles == target.files.length) {
-      cancelButton.onclick();
-    }
-  } else {
-    console.log("File selected: ", target.value);
-    numFiles = target.files.length;
-  }
-}
-
-inputElement.onblur = function(event) {
-  var target = event.target || event.srcElement;
-  console.log(target, "changed.");
-  console.log(event);
-  if (target.value.length == 0) {
-    console.log("Suspect Cancel was hit, no files selected.");
-    if (numFiles == target.files.length) {
-      cancelButton.onclick();
-    }
-  } else {
-    console.log("File selected: ", target.value);
-    numFiles = target.files.length;
-  }
-}
-
-
-cancelButton.onclick = function(event) {
-  console.log("Pseudo Cancel button clicked.");
-}
+//Ajax para trazer os clientes
+$('#clientes')
+    .selectpicker({
+        liveSearch: true
+    })
+    .ajaxSelectPicker({
+        ajax: {
+            url: urlClientes,
+            type: 'GET',
+            data: function () {
+                var params = {
+                    q: '{{{q}}}'
+                };
+            }
+        },
+        locale: {
+            emptyTitle: 'Buscar Por Clientes...',
+            statusInitialized: 'Digite para Buscar',
+            statusNoResults: 'Nenhum Resultado',
+            statusSearching: 'Buscando'
+        },
+        preprocessData: function(data){
+            var clientes = [];
+            if(data.hasOwnProperty('clientes')){
+                var len = data.clientes.length;
+                for(var i = 0; i < len; i++){
+                    var curr = data.clientes[i];
+                    clientes.push(
+                        {
+                            'value': curr.id,
+                            'text': curr.nome,
+                            // 'data': {
+                            //     'icon': 'icon-person'
+                            //     // 'subtext': 'Internal'
+                            // },
+                            'disabled': false
+                        }
+                    );
+                }
+            }
+            return clientes;
+        },
+        preserveSelected: false,
+        langCode: 'pt-BR'
+    });

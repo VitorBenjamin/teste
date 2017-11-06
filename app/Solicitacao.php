@@ -13,7 +13,7 @@ class Solicitacao extends Model
      */ 
     protected $table = 'solicitacoes';
     protected $fillable = [
-        'codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato', 'area_atuacoes_id', 'clientes_id', 'solicitantes_id', 'processos_id', 'users_id'
+    'codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato', 'area_atuacoes_id', 'clientes_id', 'solicitantes_id', 'processos_id', 'unidades_id', 'users_id'
     ];
     
     /** Consulta os status de  solicitação
@@ -38,6 +38,14 @@ class Solicitacao extends Model
         return $this->hasMany('App\Translado','solicitacoes_id');
     }
 
+    /** Consulta as compras da solicitação
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function compra()
+    {
+        return $this->hasMany('App\Compra','solicitacoes_id');
+    }
+    
     /** Consulta a area de atuação da solicitação
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -70,7 +78,6 @@ class Solicitacao extends Model
     {
         return $this->belongsTo('App\Processo','processos_id');
     }
-
 
 
     /** Consulta o usuário da solicitação

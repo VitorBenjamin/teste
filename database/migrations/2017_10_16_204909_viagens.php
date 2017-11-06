@@ -26,6 +26,7 @@ class Viagens extends Migration
             $table->boolean('locacao')->nullable();
             $table->integer('kg')->nullable();
             $table->integer('solicitacoes_id')->unsigned();
+            $table->integer('reembolso_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
