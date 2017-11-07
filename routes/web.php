@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    $teste = 'active';
-    return view('welcome',compact('teste'));
-});
+// Route::get('/', function () {
+//     $teste = 'active';
+//     return view('welcome',compact('teste'));
+// });
+
+Route::get('/', ['uses' => 'SolicitacaoController@index', 'as' => 'solicitacao.index']);
 
 Route::get('/ajax/clientes', ['uses' => 'ClienteController@getCliente', 'as' => 'cliente.getCliente']);
 Route::get('/ajax/solicitantes', ['uses' => 'SolicitanteController@getSolicitante', 'as' => 'solicitante.getSolicitante']);

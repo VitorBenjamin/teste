@@ -7,6 +7,7 @@ use App\Http\Requests\SolicitacaoRequest;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use App\Repositories\SolicitacaoRepository;
+use App\Viagem;
 use App\Solicitacao;
 use App\Solicitante;
 use App\Cliente;
@@ -33,7 +34,7 @@ class ViagemController extends Controller
         \Session::flash('flash_message',[
             'msg'=>"Cadastro da ".$solicitacao->tipo." Realizada com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
-            ]);
+        ]);
 
         return redirect()->route('viagem.editar', $solicitacao->id);
     }
@@ -50,7 +51,7 @@ class ViagemController extends Controller
             \Session::flash('flash_message',[
                 'msg'=>"Não Existe essa Solicitacao Cadastrada!!! Deseja Cadastrar uma Nova Solicitação?",
                 'class'=>"alert bg-red alert-dismissible"
-                ]);
+            ]);
             return redirect()->route('viagem.cadastrar');            
         }
         $cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
@@ -70,27 +71,28 @@ class ViagemController extends Controller
         \Session::flash('flash_message',[
             'msg'=>"Viagem Atualizada com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
-            ]);
+        ]);
         return redirect()->route('viagem.editar', $viagem->solicitacoes_id);
     }
     public function addViagem(Request $request,$id){
-        Viagem::create([
-            [   
-            'observacao' => $request->observacao,
-            'origem' => $request->origem,
-            'destino' => $request->destino, 
-            'data_ida' => $request->data_ida,
-            'data_volta' => $request->data_volta, 
-            'hospedagem' => $request->hospedagem,
-            'bagagem' => $request->bagagem, 
-            'kg' => $request->kg,
-            'solicitacoes_id' => $id,                
+        Viagem::create(
+            [
+                'observacao' => $request->observacao,
+                'origem' => $request->origem,
+                'destino' => $request->destino, 
+                'data_ida' => $request->data_ida,
+                'data_volta' => $request->data_volta, 
+                'hospedagem' => $request->hospedagem,
+                'bagagem' => $request->bagagem, 
+                'kg' => $request->kg,
+                'solicitacoes_id' => $id,                
+
             ]
-            ]);
+        );
         \Session::flash('flash_message',[
             'msg'=>"Viagem Cadastrada com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
-            ]);
+        ]);
         return redirect()->route('viagem.editar',$id);
     }
 
@@ -104,7 +106,7 @@ class ViagemController extends Controller
         \Session::flash('flash_message',[
             'msg'=>"Viagem Removida com Sucesso!!!",
             'class'=>"alert bg-red alert-dismissible"
-            ]);
+        ]);
         return redirect()->route('viagem.editar',$s_id);       
     }
     
@@ -117,7 +119,7 @@ class ViagemController extends Controller
         \Session::flash('flash_message',[
             'msg'=>"Solicitação Atualizada com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
-            ]);
+        ]);
         return redirect()->route('viagem.editar',$id);
     }
 

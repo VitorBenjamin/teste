@@ -26,7 +26,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
-					<h2>Dados da Compra</h2>
+					<h2>Dados da Guia</h2>
 				</div>
 				<form action="{{ route('guia.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
@@ -38,8 +38,7 @@
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
 
-	<!-- SESSÃO ANTECIPAÇÂO -->
-	@if(empty($solicitacao->antecipacao[0]))
+	<!-- SESSÃO CADASRO DA GUIA -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -58,7 +57,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label for="data_limite">Data</label>
-										<input type="text" value="" name="data_limite" class="datepicker form-control " placeholder="Escolha uma Data"/>
+										<input type="text" value="" name="data_limite" class="datepicker form-control" placeholder="Escolha uma Data" required />
 									</div>
 								</div>
 							</div>
@@ -66,7 +65,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label for="reclamante">Reclamante</label>
-										<input type="text" value="" name="reclamante" class="form-control" placeholder="Nome do Reclamante"/>
+										<input type="text" value="" name="reclamante" class="form-control" placeholder="Nome do Reclamante" required/>
 									</div>
 								</div>
 							</div>
@@ -75,14 +74,14 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label for="valor_solicitado">Valor</label>
-										<input type="text" value="" name="valor_solicitado" class="form-control" placeholder="R$."/>
+										<input type="text" value="" name="valor_solicitado" class="form-control" placeholder="R$." required/>
 									</div>
 								</div>								
 							</div>
 
 							<div class="col-md-2">
 								<label for="perfil_pagamento">Perfil Pagamento</label>
-								<select id="perfil_pagamento" name="perfil_pagamento" class="form-control show-tick">
+								<select id="perfil_pagamento" name="perfil_pagamento" class="form-control show-tick" required>
 									<option value="BOLETO">BOLETO</option>										
 									<option value="DAF">DAF</option>
 									<option value="DMA">DAM</option>
@@ -93,7 +92,7 @@
 
 							<div class="col-md-2">
 								<label for="banco">Banco</label>
-								<select id="banco" name="banco" class="form-control show-tick">
+								<select id="banco" name="banco" class="form-control show-tick" required>
 									<option value="BANCO DO BRASIL">BANCO DO BRASIL</option>										
 									<option value="ITAU">ITAU</option>
 									<option value="BRADESCO">BRADESCO</option>								
@@ -107,14 +106,14 @@
 									</fieldset>
 									<input name="prioridade" value="1" type="radio" id="simP" />
 									<label style="margin: 15px 15px 0px 0px" for="simP">Sim</label>
-									<input name="prioridade" value="0" type="radio" id="naoP" />
+									<input name="prioridade" value="0" type="radio" id="naoP" checked />
 									<label style="margin: 15px 15px 0px 0px" for="naoP">Não</label>
 								</div>
 							</div>
 
 							<div class="col-md-3">
 								<label for="tipo_guias_id">Tipo</label>
-								<select id="tipo_guias_id" name="tipo_guias_id" class="form-control show-tick" data-live-search="true" data-size="5">
+								<select id="tipo_guias_id" name="tipo_guias_id" class="form-control show-tick" data-live-search="true" data-size="5" required>
 									@foreach($tipo_guia as $grupo => $tipo)
 									<optgroup label="{{$grupo}}">
 										@foreach($tipo as $desc)
@@ -128,7 +127,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label for="anexo_pdf">Anexar PDF</label>
-										<input style="margin-top: 10px " type="file" name="anexo_pdf" id="anexo_pdf" />
+										<input style="margin-top: 10px " type="file" name="anexo_pdf" id="anexo_pdf" required/>
 									</div>
 								</div>								
 							</div>	
@@ -145,16 +144,15 @@
 			</div>			
 		</div>
 	</div>
-	@endif
-	<!-- FIM SESSÃO DA ANTECIPAÇÃO -->
+	<!-- FIM SESSÃO DA GUIA -->
 
-	<!-- LISTAGEM DA ANTECIPAÇÃO  -->
+	<!-- LISTAGEM DA GUIA  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
 					<h2>
-						LISTA DA ANTECIPAÇÃO
+						LISTA DA GUIA
 					</h2>
 				</div>
 				<div class="body">
@@ -188,103 +186,160 @@
 									<th>Ações</th>
 								</tr>
 							</tfoot>
-							<tbody>
+							<tbody> 
 								@foreach ($solicitacao->guia as $guia)
 								<tr>
 									<td></td>
 									<td>{{date('d/m/y',strtotime($guia->data_limite))}}</td>
-									<td>{{$guia->prioridade}}</td>
+									<td>{{ $guia->prioridade == 1 ? 'SIM' : 'NÃO' }}</td>
 									<td>{{$guia->reclamante}}</td>									
 									<td>{{$guia->perfil_pagamento}}</td>
 									<td>{{$guia->banco}}</td>
-									<td>{{$guia->tipoGuia->tipo}}</td>
-									<td>{{$guia->tipoGuia->descricao}}</td>
-									<td><a href="{{Illuminate\Support\Facades\Storage::url($guia->anexo_pdf)}}">{{$guia->anexo_pdf}}</a></td>
+									<td>{{$guia->tipoGuia()->first()->tipo}}</td>
+									<td>{{$guia->tipoGuia()->first()->descricao}}</td>
+									<td><a target="_blank" href="{{URL::to('storage/guias/'.$guia->anexo_pdf)}}" class="btn btn-primary waves-effect">
+										<i class="material-icons">file_download</i>BAIXAR PDF</a>
+									</td>
 									<td>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<i class="material-icons">settings</i>
-											</button>
-											<ul class="dropdown-menu">
-												<li><a data-toggle="modal" data-target="#modal{{$guia->id}}" class="waves-effect" role="button">
-													<i class="material-icons">settings</i>Editar</a></li>
-													<li><a href="{{ route('guia.deletarGuia', $guia->id)}}"><i class="material-icons">delete_sweep</i>Deletar</a></li>												
-												</ul>
+										<div class="icon-button-demo" >
+											<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$guia->id}}" class="waves-effect" role="button"><i class="material-icons">settings</i></a>
+											
+											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('guia.deletarGuia', $guia->id)}}"><i class="material-icons">delete_sweep</i></a>
+
+										</div>
+									</td>
+								</tr>
+
+
+								<!-- MODAL TRANSLADO -->
+								<div class="modal fade" id="modal{{$guia->id}}" tabindex="-1" role="dialog">
+									<div class="modal-dialog modal-lg" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title" id="largeModalLabel">Editar um Guia</h4>
 											</div>
-										</td>
-									</tr>
 
+											<!-- INCIO SESSÃO TRANSLADO -->
+											<form action="{{ route('guia.atualizarGuia',$guia->id)}}" method="POST">
+												{{ csrf_field() }}
+												{{ method_field('PUT') }}
+												<div class="modal-body">				
 
-									<!-- MODAL TRANSLADO -->
-									<div class="modal fade" id="modal{{$guia->id}}" tabindex="-1" role="dialog">
-										<div class="modal-dialog modal-lg" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h4 class="modal-title" id="largeModalLabel">Editar um Antecipação</h4>
-												</div>
+													<div class="row clearfix">
 
-												<!-- INCIO SESSÃO TRANSLADO -->
-												<form action="{{ route('guia.atualizarAntecipacao',$antecipacao->id)}}" method="POST">
-													{{ csrf_field() }}
-													{{ method_field('PUT') }}
-													<div class="modal-body">				
-
-														<div class="row clearfix">
-															<div class="col-md-2">
-																<div class="form-group">
-																	<div class="form-line">
-																		<label for="data_recebimento">Data</label>
-																		<input type="text" value="{{$antecipacao->data_recebimento}}" name="data_recebimento" class="datepicker form-control" placeholder="Escolha uma Data"/>
-																	</div>
+														<div class="col-md-2">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="data_limite">Data</label>
+																	<input type="text" value="{{$guia->data_limite}}" name="data_limite" class="datepicker form-control " placeholder="Escolha uma Data"/>
 																</div>
 															</div>
-															<div class="col-md-6">
-																<div class="form-group">
-																	<div class="form-line">
-																		<label for="descricao">Descrição</label>
-																		<input type="text" value="{{$antecipacao->descricao}}" name="descricao" class="form-control" placeholder="Descrição do produto"/>										
-																	</div>
+														</div>
+														<div class="col-md-2">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="reclamante">Reclamante</label>
+																	<input type="text" value="{{$guia->reclamante}}" name="reclamante" class="form-control" placeholder="Nome do Reclamante"/>
 																</div>
-															</div>
-
-															<div class="col-md-2">
-																<div class="form-group">
-																	<div class="form-line">
-																		<label for="valor_solicitado">Valor Solicitado</label>
-																		<input type="text" value="{{$antecipacao->valor_solicitado}}" name="valor_solicitado" class="form-control" placeholder="Qtd."/>
-																	</div>
-																</div>								
-															</div>
-															<div class="col-md-2" style="margin-top: 20px">
-																<button class="btn btn-primary btn-lg waves-effect">
-																	<i class="material-icons">save</i>
-																	<span>ADD PRODUTO</span> 
-																</button>
 															</div>
 														</div>
 
-
-														<div class="modal-footer">													
-															<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
-															<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+														<div class="col-md-2">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="valor_solicitado">Valor</label>
+																	<input type="text" value="{{$guia->perfil_pagamento}}" name="valor_solicitado" class="form-control" placeholder="R$."/>
+																</div>
+															</div>								
 														</div>
 
+														<div class="col-md-2">
+															<label for="perfil_pagamento">Perfil Pagamento</label>
+															<select id="perfil_pagamento" name="perfil_pagamento" class="form-control show-tick">
+																<option value="{{$guia->perfil_pagamento}}">{{$guia->perfil_pagamento}}</option>
+																<option value="BOLETO">BOLETO</option>										
+																<option value="DAF">DAF</option>
+																<option value="DMA">DAM</option>
+																<option value="GRU">GRU</option>
+																<option value="GFIP">GFIP</option>
+															</select>
+														</div>
+
+														<div class="col-md-2">
+															<label for="banco">Banco</label>
+															<select id="banco" name="banco" class="form-control show-tick">
+																<option value="{{$guia->banco}}">{{$guia->banco}}</option>
+																<option value="BANCO DO BRASIL">BANCO DO BRASIL</option>		
+																<option value="ITAU">ITAU</option>
+																<option value="BRADESCO">BRADESCO</option>								
+															</select>
+														</div>
+
+														<div class="col-md-2">
+															<div class="form-group">
+																<fieldset>
+																	<legend style="margin: 0">Prioridade</legend>
+																</fieldset>
+																<input name="prioridade" value="1" type="radio" id="simP" 
+																{{$guia->prioridade == 1 ? 'checked' : '' }}/>
+																<label style="margin: 15px 15px 0px 0px" for="simP">Sim</label>
+																<input name="prioridade" value="0" type="radio" id="naoP" 
+																{{$guia->prioridade == 0 ? 'checked' : '' }}/>
+																<label style="margin: 15px 15px 0px 0px" for="naoP">Não</label>
+															</div>
+														</div>
+
+														<div class="col-md-3">
+															<label for="tipo_guias_id">Tipo</label>
+															<select id="tipo_guias_id" name="tipo_guias_id" class="form-control show-tick" data-live-search="true" data-size="5">
+																@foreach($tipo_guia as $grupo => $tipo)
+																<optgroup label="{{$grupo}}">
+																	@foreach($tipo as $desc)
+																	<option value="{{$desc->id}}" {{$guia->tipoGuia()->first()->id == $desc->id ? 'selected' : '' }}>{{$desc->descricao}}</option>
+																	@endforeach	
+																</optgroup>
+																@endforeach						
+															</select>
+														</div>
+														<div class="col-md-3">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="anexo_pdf">Anexar PDF</label>
+																	<input style="margin-top: 10px " type="file" name="anexo_pdf" id="anexo_pdf" />
+																</div>
+															</div>								
+														</div>	
+
+														<div class="col-md-2" style="margin-top: 20px">
+															<button class="btn bg-light-green waves-effect">
+																<i class="material-icons">save</i>
+																<span>ADD GUIA</span> 
+															</button>
+														</div>
 													</div>
-												</form>	
-											</div>
+
+
+													<div class="modal-footer">													
+														<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+														<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+													</div>
+
+												</div>
+											</form>	
 										</div>
 									</div>
-									<!-- FIM MODAL TRANSLADO -->
-									@endforeach														
-								</tbody>
-							</table>
-						</div>
+								</div>
+								<!-- FIM MODAL EDIÇÂO DA GUIA -->
+								@endforeach														
+							</tbody>
+						</table>
 					</div>
-
 				</div>
-			</div> 												
-		</div>
-		<!-- FIM LISTAGEM DA ANTECIPAÇÃO -->
 
-	</section>
-	@endsection
+			</div>
+		</div> 												
+	</div>
+	<!-- FIM LISTAGEM DA ANTECIPAÇÃO -->
+
+</section>
+@endsection

@@ -26,7 +26,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
-					<h2>Dados da Compra</h2>
+					<h2>Cabecalho da Viagem</h2>
 				</div>
 				<form action="{{ route('compra.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
@@ -37,26 +37,25 @@
 		</div>
 	</div>
 
-	<!-- SESSÃO PRODUTO -->
+	<!-- SESSÃO CADASTRO DA VIAGEM -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
 					<h2>
-						Adicione um produto a sua solicitação
+						Adicione uma Passagem a sua solicitação
 					</h2>
 				</div>
 				<div class="body">
 					<form action="{{ route('viagem.addViagem',$solicitacao->id)}}" method="POST">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
-
 						<div class="row clearfix">
 							<div class="col-md-2">
 								<div class="form-group">
 									<div class="form-line">
-										<label for="origem">Destino Ida</label>
-										<input type="text" value="" name="origem" class="form-control" placeholder="Descrição do produto"/>										
+										<label for="origem">Origem</label>
+										<input type="text" value="" name="origem" class="form-control" placeholder="Cidade de origem" required />										
 									</div>
 								</div>
 							</div>
@@ -64,15 +63,15 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label for="data_ida">Data Ida</label>
-										<input type="text" value="" name="data_ida" class="datepicker form-control" placeholder="Escolha uma Data"/>
+										<input type="text" value="" name="data_ida" class="datetimepicker form-control" placeholder="Data Obrigatória" required/>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-2">
 								<div class="form-group">
 									<div class="form-line">
-										<label for="destino">Destino Volta</label>
-										<input type="text" value="" name="destino" class="form-control" placeholder="Descrição do produto"/>										
+										<label for="destino">Destino</label>
+										<input type="text" value="" name="destino" class="form-control" placeholder="Cidade de DEstino" required/>										
 									</div>
 								</div>
 							</div>
@@ -80,7 +79,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label for="data_volta">Data Volta</label>
-										<input type="text" value="" name="data_volta" class="datepicker form-control" placeholder="Escolha uma Data"/>
+										<input type="text" value="" name="data_volta" class="datetimepicker form-control" placeholder="Data Opcional"/>
 									</div>
 								</div>
 							</div>
@@ -92,7 +91,7 @@
 									</fieldset>
 									<input name="locacao" value="1" type="radio" id="simL" />
 									<label style="margin: 15px 15px 0px 0px" for="simL">Sim</label>
-									<input name="locacao" value="0" type="radio" id="naoL" />
+									<input name="locacao" value="0" type="radio" id="naoL" checked />
 									<label style="margin: 15px 15px 0px 0px" for="naoL">Não</label>
 								</div>
 							</div>
@@ -103,7 +102,7 @@
 									</fieldset>
 									<input name="hospedagem" value="1" type="radio" id="simH" />
 									<label style="margin: 15px 15px 0px 0px" for="simH">Sim</label>
-									<input name="hospedagem" value="0" type="radio" id="naoH" />
+									<input name="hospedagem" value="0" type="radio" id="naoH" checked />
 									<label style="margin: 15px 15px 0px 0px" for="naoH">Não</label>
 								</div>
 							</div>
@@ -117,7 +116,7 @@
 									</fieldset>
 									<input name="bagagem" value="1" type="radio" id="simB" />
 									<label style="margin: 15px 15px 0px 0px" for="simB">Sim</label>
-									<input name="bagagem" value="0" type="radio" id="naoB" />
+									<input name="bagagem" value="0" type="radio" id="naoB" checked/>
 									<label style="margin: 15px 15px 0px 0px" for="naoB">Não</label>
 								</div>
 							</div>
@@ -131,7 +130,7 @@
 								</div>								
 							</div>
 							<div class="col-md-2" style="margin-top: 20px">
-								<button class="btn btn-primary btn-lg waves-effect">
+								<button class="btn bg-deep-orange waves-effect">
 									<i class="material-icons">save</i>
 									<span>ADD VIAGEM</span> 
 								</button>

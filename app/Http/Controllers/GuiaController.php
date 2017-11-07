@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SolicitacaoRequest;
+use App\Http\Requests\GuiaRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -38,31 +39,53 @@ class GuiaController extends Controller
 
 		return redirect()->route('guia.editar', $solicitacao->id);
 	}
+	public function addGuia(GuiaRequest $request,$id){
+		
+		$today = (string) date("Y-m-d H-i");
+		$fileName = $today.'_'.$id.'_'.$request->anexo_pdf->getClientOriginalName();	
+		$request->anexo_pdf->storeAs('public/guias',$fileName);
+		$guia = Guia::create([
+			'data_limite' => $request->data_limite,
+			'prioridade' => $request->prioridade,
+			'observacao' => $request->observacao,
+			'reclamante' => $request->reclamante,
+			'perfil_pagamento' => $request->perfil_pagamento,
+			'banco' => $request->banco,
+			'anexo_pdf' => $fileName,
+			'solicitacoes_id' => $id,
+			'tipo_guias_id' => $request->tipo_guias_id,
+
+		]);
+
+		\Session::flash('flash_message',[
+			'msg'=>"Guia Cadastrada com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+		return redirect()->route('guia.editar',$id);
+	}
 
     //Retorna a View de edição da unidade
 	public function editar($id)
 	{
-
-		// $solicitacao = Solicitacao::with('guia')
-		// ->where('tipo',config('constantes.tipo_guia'))
-		// ->where('id',$id)
-		// ->first();
-		// if(!$solicitacao){
-		// 	\Session::flash('flash_message',[
-		// 		'msg'=>"Não Existe essa Solicitacao Cadastrada!!! Deseja Cadastrar uma Nova Solicitação?",
-		// 		'class'=>"alert bg-red alert-dismissible"
-		// 	]);
-		// 	return redirect()->route('guia.cadastrar');            
-		// }
-
-		$solicitacao = DB::table('solicitacoes')
-		->join('guias','solicitacoes.id','guias.solicitacoes_id')
-		->join('tipo_guias','guia.tipo_guias_id','tipo_guias.id')
-		->get();
-		dd($solicitacao);
-		foreach ($solicitacao->guia as $guia ) {
-			dd($guia->tipoGuia()->first()->id);
+		$solicitacao = Solicitacao::with('guia')
+		->where('tipo',config('constantes.tipo_guia'))
+		->where('id',$id)
+		->first();
+		if(!$solicitacao){
+			\Session::flash('flash_message',[
+				'msg'=>"Não Existe essa Solicitacao Cadastrada!!! Deseja Cadastrar uma Nova Solicitação?",
+				'class'=>"alert bg-red alert-dismissible"
+			]);
+			return redirect()->route('guia.cadastrar');            
 		}
+		// $solicitacao = DB::table('solicitacoes')
+		// ->join('guias','solicitacoes.id','guias.solicitacoes_id')
+		// ->join('tipo_guias','guia.tipo_guias_id','tipo_guias.id')
+		// ->get();
+		// dd($solicitacao);
+		// foreach ($solicitacao->guia as $guia ) {
+		// 	dd($guia->tipoGuia()->first()->id);
+		// }
 		$cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
 		$areas = AreaAtuacao::all('id','tipo'); 
 		$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
@@ -71,7 +94,7 @@ class GuiaController extends Controller
 		// 	dd($value);
 		// }
 		
-         
+
 		return view('guia.editar', compact('solicitacao','cliente','areas','solicitante','tipo_guia'));
 	}
 
@@ -94,31 +117,6 @@ class GuiaController extends Controller
 		]);
 		return redirect()->route('guia.editar', $guia->solicitacoes_id);
 	}
-	public function addGuia(Request $request,$id){
-		
-		$fileName = $id.'_'.$request->anexo_pdf->getClientOriginalName();
-		$fileExtension = $request->anexo_pdf->getClientOriginalName();
-		$path = $request->anexo_pdf->storeAs('public/guias',$fileName);
-		//$url = Storage::url('guias/'.$fileName);
-
-		Guia::create([
-			'data_limite' => $request->data_limite,
-			'prioridade' => $request->prioridade,
-			'observacao' => $request->observacao,
-			'reclamante' => $request->reclamante,
-			'perfil_pagamento' => $request->perfil_pagamento,
-			'banco' => $request->banco,
-			'anexo_pdf' => $fileName,
-			'solicitacoes_id' => $id,
-			'tipo_guias_id' => $request->tipo_guias_id,
-
-		]);
-		\Session::flash('flash_message',[
-			'msg'=>"Guia Cadastrada com Sucesso!!!",
-			'class'=>"alert bg-green alert-dismissible"
-		]);
-		return redirect()->route('guia.editar',$id);
-	}
 	//Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
 	public function deletarGuia($id)
 	{        
@@ -127,7 +125,7 @@ class GuiaController extends Controller
 		$s_id = $guia->solicitacoes_id;
 		$guia->delete();
 		\Session::flash('flash_message',[
-			'msg'=>"Antecipação Removida com Sucesso!!!",
+			'msg'=>"Guia Removida com Sucesso!!!",
 			'class'=>"alert bg-red alert-dismissible"
 		]);
 		return redirect()->route('guia.editar',$s_id);       

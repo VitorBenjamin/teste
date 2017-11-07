@@ -5,6 +5,18 @@
   .modal-lg {
     width: 90%;
   }
+@media (min-width: 1400px) {
+
+  .dropdown-menu {
+/*-webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0; */
+  /* Alteração do bootstrap */
+  right: 0 !important;
+  left: unset !important;
+/*  margin-top: -35px !important; */ 
+  }
 }
 legend {
     display: inline-block;
@@ -7371,7 +7383,10 @@ fieldset[disabled] .form-control {
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   border-radius: 0;
-  margin-top: -35px !important;
+  /* Alteração do bootstrap */
+  right: unset;
+  left: 0;
+  /*margin-top: -35px !important; */ 
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   border: none; }
   .dropdown-menu .divider {

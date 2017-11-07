@@ -26,13 +26,13 @@
 									<div class="form-group">
 										<div class="form-line">
 											<label for="data_despesa">Data</label>
-											<input type="text" name="data_despesa" value="{{$despesa->data_despesa}}" class="datepicker form-control" placeholder="Escolha uma Data"/>
+											<input type="text" name="data_despesa" value="{{$despesa->data_despesa}}" class="datepicker form-control" placeholder="Escolha uma Data" required/>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-2">
 									<label for="tipo_comprovante">Comprovante</label>
-									<select id="tipo_comprovante" name="tipo_comprovante" class="form-control show-tick">
+									<select id="tipo_comprovante" name="tipo_comprovante" class="form-control show-tick" required>
 										<option value="{{$despesa->tipo_comprovante}}">{{$despesa->tipo_comprovante}}</option>
 										<option value="">SELECIONE</option>
 										<option value="HOSPEDAGEM">HOSPEDAGEM</option>
@@ -46,7 +46,7 @@
 									<div class="form-group">
 										<div class="form-line">
 											<label for="descricao">Descrição</label>
-											<input type="text" name="descricao" value="{{$despesa->descricao}}" class="form-control" placeholder=""/>
+											<input type="text" name="descricao" value="{{$despesa->descricao}}" class="form-control" placeholder="" required/>
 										</div>
 									</div>
 								</div>
@@ -54,7 +54,7 @@
 									<div class="form-group">
 										<div class="form-line">
 											<label for="valor">Valor</label>
-											<input type="text" id="valor" name="valor" value="{{$despesa->valor}}" class="form-control" placeholder=""/>
+											<input type="text" id="valor" name="valor" value="{{$despesa->valor}}" class="form-control" placeholder="" required/>
 										</div>
 									</div>								
 								</div>
@@ -62,7 +62,7 @@
 									<div class="form-group">
 										<div class="form-line">
 											<label for="anexo_comprovante">Envie um Arquivo</label>
-											<input type="file" name="anexo_comprovante" id="anexo_comprovante" />
+											<input type="file" name="anexo_comprovante" id="anexo_comprovante"/>
 											<button type="reset" id="pseudoCancel">
 												Cancel
 											</button>

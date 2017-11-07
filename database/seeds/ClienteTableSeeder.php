@@ -36,11 +36,43 @@ class ClienteTableSeeder extends Seeder
     	]);
 
     	Cliente::create([
-    		'nome' => 'VILACA',
+    		'nome' => 'AGENCIA VILACA',
     		'cnpj' => '451623',
     		'valor_km' => 1,
     		'saldo' => 50000,
     		'unidades_id' => 2,
     	]);
+
+        Cliente::create([
+            'nome' => 'PORTOVEL',
+            'cnpj' => '451206',
+            'valor_km' => 1,
+            'saldo' => 50000,
+            'unidades_id' => 3,
+        ]);
+
+        Cliente::create([
+            'nome' => '2TREE',
+            'cnpj' => '984513',
+            'valor_km' => 1,
+            'saldo' => 50000,
+            'unidades_id' => 3,
+        ]);
+
+        Cliente::create([
+            'nome' => 'EXPRESSO NEPOMUCENO',
+            'cnpj' => '321546',
+            'valor_km' => 1,
+            'saldo' => 50000,
+            'unidades_id' => 2,
+        ]);
+
+        Cliente::create([
+            'nome' => 'MOSELLO LIMA',
+            'cnpj' => '854236',
+            'valor_km' => 1,
+            'saldo' => 50000,
+            'unidades_id' => 1,
+        ]);
     }
 }

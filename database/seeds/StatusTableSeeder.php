@@ -12,31 +12,31 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
     	Status::create([
-    		'descricao' => 'ABERTO'
+    		'descricao' => 'ABERTO',
 
     	]);
     	Status::create([
-    		'descricao' => 'FECHADO'
+    		'descricao' => 'FECHADO',
     		
     	]);
     	Status::create([
-    		'descricao' => 'ANDAMENTO'
+    		'descricao' => 'ANDAMENTO',
     		
     	]);
     	Status::create([
-    		'descricao' => 'APROVADO'
+    		'descricao' => 'APROVADO',
     		
     	]);
     	Status::create([
-    		'descricao' => 'DEVOLVIDO'
+    		'descricao' => 'DEVOLVIDO',
     		
     	]);
     	Status::create([
-    		'descricao' => 'DEVOLVIDO-FINANCEIRO'
+    		'descricao' => 'DEVOLVIDO-FINANCEIRO',
     		
     	]);
     	Status::create([
-    		'descricao' => 'FINALIZADO'
+    		'descricao' => 'FINALIZADO',
     		
     	]);
     }

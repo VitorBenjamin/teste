@@ -43,7 +43,7 @@ class ReembolsoController extends Controller
         \Session::flash('flash_message',[
             'msg'=>"Cadastro do ".$solicitacao->tipo." Realizado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
-            ]);
+        ]);
 
         return redirect()->route('reembolso.editar', $solicitacao->id);
     }
@@ -57,7 +57,7 @@ class ReembolsoController extends Controller
         \Session::flash('flash_message',[
             'msg'=>"Solicitação Atualizada com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
-            ]);
+        ]);
         return redirect()->route('reembolso.editar',$id);
     }
 
@@ -68,21 +68,21 @@ class ReembolsoController extends Controller
 
         $translado = Translado::create(
             [   
-            'data_translado' => $request->data_translado,
-            'turno' => $request->turno,
-            'observacao' => $request->observacao,
-            'origem' => $request->origem,
-            'destino' => $request->destino,
-            'ida_volta' => $request->ida_volta,
-            'distancia'=>$request->distancia,
-            'solicitacoes_id' => $id,
+                'data_translado' => $request->data_translado,
+                'turno' => $request->turno,
+                'observacao' => $request->observacao,
+                'origem' => $request->origem,
+                'destino' => $request->destino,
+                'ida_volta' => $request->ida_volta,
+                'distancia'=>$request->distancia,
+                'solicitacoes_id' => $id,
             ]
-            );
+        );
 
         \Session::flash('flash_message',[
             'msg'=>"Cadastro do Translado Realizado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
-            ]);
+        ]);
         
         $clientes = Cliente::all('id','nome');
         $areas = AreaAtuacao::all('id','tipo'); 
@@ -106,19 +106,19 @@ class ReembolsoController extends Controller
         $img_64 = (string) $file->encode('data-url');
         $despesa = Despesa::create(
             [   
-            'descricao' => $request->descricao,
-            'data_despesa' => $request->data_despesa,
-            'tipo_comprovante' => $request->tipo_comprovante,
-            'valor' => $request->valor,
-            'anexo_comprovante' => $img_64,
-            'solicitacoes_id' => $solicitacao->id,
+                'descricao' => $request->descricao,
+                'data_despesa' => $request->data_despesa,
+                'tipo_comprovante' => $request->tipo_comprovante,
+                'valor' => $request->valor,
+                'anexo_comprovante' => $img_64,
+                'solicitacoes_id' => $solicitacao->id,
             ]
-            );
+        );
 
         \Session::flash('flash_message',[
             'msg'=>"Cadastro da Despesa Realizado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
-            ]);
+        ]);
         
         return redirect()->route('reembolso.editar',$id);
     }
@@ -136,7 +136,7 @@ class ReembolsoController extends Controller
                 'msg'=>"Não Existe essa Solicitacao Cadastrada!!! Deseja Cadastrar uma Nova Solicitação?",
                 'class'=>"alert bg-red alert-dismissible"
 
-                ]);
+            ]);
             return redirect()->route('reembolso.cadastrar');            
         }
         $cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
@@ -164,7 +164,7 @@ class ReembolsoController extends Controller
         \Session::flash('flash_message',[
             'msg'=>"Translado Atualizado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
-            ]);
+        ]);
         return redirect()->route('reembolso.editar',$translado->solicitacoes_id);
     }
 
@@ -189,18 +189,18 @@ class ReembolsoController extends Controller
 
         $despesa->update(
             [   
-            'descricao' => $request->descricao,
-            'data_despesa' => $request->data_despesa,
-            'tipo_comprovante' => $request->tipo_comprovante,
-            'valor' => $request->valor,
-            'anexo_comprovante' => $img_64,
+                'descricao' => $request->descricao,
+                'data_despesa' => $request->data_despesa,
+                'tipo_comprovante' => $request->tipo_comprovante,
+                'valor' => $request->valor,
+                'anexo_comprovante' => $img_64,
             ]
-            );
+        );
         
         \Session::flash('flash_message',[
             'msg'=>"Despesa Atualizada com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
-            ]);
+        ]);
         return redirect()->route('reembolso.editar', $despesa->solicitacoes_id);
     }
 
@@ -214,8 +214,8 @@ class ReembolsoController extends Controller
         $translado->delete();
         \Session::flash('flash_message',[
             'msg'=>"Translado Removido com Sucesso!!!",
-            'class'=>"alert-danger"
-            ]);
+            'class'=>"alert bg-red alert-dismissible"
+        ]);
         return redirect()->route('reembolso.editar',$s_id);       
     }
 
@@ -228,8 +228,8 @@ class ReembolsoController extends Controller
         $despesa->delete();
         \Session::flash('flash_message',[
             'msg'=>"Despesas Removida com Sucesso!!!",
-            'class'=>"alert-danger"
-            ]);
+            'class'=>"alert bg-red alert-dismissible"
+        ]);
         return redirect()->route('reembolso.editar',$s_id);       
     }
 
@@ -241,8 +241,8 @@ class ReembolsoController extends Controller
 
         \Session::flash('flash_message',[
             'msg'=>"Reembolso Removido com Sucesso!!!",
-            'class'=>"alert-danger"
-            ]);
+            'class'=>"alert bg-red alert-dismissible"
+        ]);
         return redirect()->route('reembolso.index');    	
     }
 }

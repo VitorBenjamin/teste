@@ -19,7 +19,7 @@ class Status extends Model
     /** Consulta a solicitacao por status
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function solicitcao()
+    public function solicitacao()
     {
         return $this->belongsToMany('App\Solicitacao','solicitacoes_status','solicitacoes_id','status_id');
     }

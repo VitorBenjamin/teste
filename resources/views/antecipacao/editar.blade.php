@@ -131,15 +131,12 @@
 									<td>{{$antecipacao->descricao}}</td>
 									<td>{{$antecipacao->valor_solicitado}}</td>									
 									<td>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<i class="material-icons">settings</i>
-											</button>
-											<ul class="dropdown-menu">
-												<li><a data-toggle="modal" data-target="#modal{{$antecipacao->id}}" class="waves-effect" role="button">Editar</a></li>
-												<li><a href="{{ route('antecipacao.deletarAntecipacao', $antecipacao->id)}}">Deletar</a></li>												
-											</ul>
+										<div class="icon-button-demo" >
+											<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$antecipacao->id}}" role="button"><i class="material-icons">settings</i></a>
+
+											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('antecipacao.deletarAntecipacao', $antecipacao->id)}}"><i class="material-icons">delete_sweep</i></a>
 										</div>
+
 									</td>
 								</tr>
 

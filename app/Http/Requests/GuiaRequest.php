@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SolicitacaoRequest extends FormRequest
+class GuiaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,12 @@ class SolicitacaoRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'processo' => 'exists:mysql.processos,codigo',
-            'urgente' => 'required',
-            'origem_despesa' => 'required',
-            'contrato' => 'required',
-            'area_atuacoes_id'=> 'required',
-            'clientes_id' => 'required_unless:origem_despesa,ESCRITÓRIO',
-            'solicitantes_id' => 'required',
+            'data_limite' => 'required',
+            'prioridade' => 'required',
+            'reclamante' => 'required',
+            'perfil_pagamento' => 'required',
+            'banco' => 'required',
+            'anexo_pdf' => 'mimes:application/pdf,pdf',
         ];
     }
 }

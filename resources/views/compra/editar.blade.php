@@ -24,7 +24,7 @@
 	</div>
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<div class="card">
+			<div class="card"> 
 				<div class="header">
 					<h2>Dados da Compra</h2>
 				</div>
@@ -128,19 +128,13 @@
 									<td>{{$compra->descricao}}</td>
 									<td>{{$compra->quantidade}}</td>									
 									<td>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<i class="material-icons">settings</i>
-											</button>
-											<ul class="dropdown-menu">
-												<li><a data-toggle="modal" data-target="#modal{{$compra->id}}" class="waves-effect" role="button">Editar</a></li>
-												<li><a href="{{ route('compra.deletarCompra', $compra->id)}}">Deletar</a></li>												
-											</ul>
+										<div class="icon-button-demo" >
+											<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$compra->id}}" role="button"><i class="material-icons">settings</i></a>
+
+											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('compra.deletarCompra', $compra->id)}}"><i class="material-icons">delete_sweep</i></a>
 										</div>
 									</td>
 								</tr>
-
-
 								<!-- MODAL TRANSLADO -->
 								<div class="modal fade" id="modal{{$compra->id}}" tabindex="-1" role="dialog">
 									<div class="modal-dialog modal-lg" role="document">

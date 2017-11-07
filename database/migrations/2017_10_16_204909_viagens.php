@@ -20,7 +20,7 @@ class Viagens extends Migration
             $table->string('origem');
             $table->string('destino');
             $table->datetime('data_ida');
-            $table->datetime('data_volta');
+            $table->datetime('data_volta')->nullable();
             $table->boolean('hospedagem')->nullable();
             $table->boolean('bagagem')->nullable();
             $table->boolean('locacao')->nullable();

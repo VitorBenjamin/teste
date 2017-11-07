@@ -111,22 +111,10 @@
 
 									<td>{{$translado->distancia}}</td>
 									<td>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<i class="material-icons">settings</i>
-											</button>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="{{ route('reembolso.editarTranslado', $translado->id)}}">
-														<i class="material-icons">settings</i>Editar
-													</a>
-												</li>
-												<li>
-													<a href="{{ route('reembolso.deletarTranslado', $translado->id)}}">
-														<i class="material-icons">delete_sweep</i>Deletar
-													</a>
-												</li>
-											</ul>
+										<div class="icon-button-demo" >
+											<a href="{{ route('reembolso.editarTranslado', $translado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float"><i class="material-icons">settings</i></a>
+
+											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('reembolso.deletarTranslado', $translado->id)}}"><i class="material-icons">delete_sweep</i></a>
 										</div>
 									</td>
 								</tr>
@@ -183,18 +171,10 @@
 									<td>{{$despesa->tipo_comprovante}}</td>
 									<td>{{$despesa->valor}}</td>
 									<td>
-										<div class="btn-group">
-											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<i class="material-icons">settings</i>
-											</button>
-											<ul class="dropdown-menu">
-												<li>
-													<a href="{{ route('reembolso.editarDespesa', $despesa->id)}}">Editar</a>
-												</li>
-												<li>
-													<a href="{{ route('reembolso.deletarDespesa', $despesa->id)}}">Deletar</a>
-												</li>
-											</ul>
+										<div class="icon-button-demo" >
+											<a href="{{ route('reembolso.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float"><i class="material-icons">settings</i></a>
+
+											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('reembolso.deletarDespesa', $despesa->id)}}"><i class="material-icons">delete_sweep</i></a>
 										</div>
 									</td>
 								</tr>
@@ -324,7 +304,9 @@
 				</div>
 				<!-- INCIO SESSÃO DESPESA -->
 				<div class="modal-body">
-					<form action="{{ route('reembolso.addDespesa',$solicitacao->id)}}" method="post" enctype="multipart/form-data">
+					<form action="{{ route('reembolso.addDespesa',$solicitacao->id)}}" method="POST" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						{{ method_field('PUT') }}
 						<div class="body">
 							<div class="row clearfix">
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -340,13 +322,13 @@
 													<div class="form-group">
 														<div class="form-line">
 															<label for="data_despesa">Data</label>
-															<input type="text" name="data_despesa" class="datepicker form-control" placeholder="Escolha uma Data"/>
+															<input type="text" name="data_despesa" class="datepicker form-control" placeholder="Escolha uma Data" required />
 														</div>
 													</div>
 												</div>
 												<div class="col-md-2">
 													<label for="tipo_comprovante">Comprovante</label>
-													<select id="tipo_comprovante" name="tipo_comprovante" class="form-control show-tick">
+													<select id="tipo_comprovante" name="tipo_comprovante" class="form-control show-tick" required>
 														<option value="">SELECIONE</option>
 														<option value="HOSPEDAGEM">HOSPEDAGEM</option>
 														<option value="ALIMENTAÇÂO">ALIMENTAÇÃo</option>
@@ -357,7 +339,7 @@
 													<div class="form-group">
 														<div class="form-line">
 															<label for="descricao">Descrição</label>
-															<input type="text" name="descricao" class="form-control" placeholder=""/>
+															<input type="text" name="descricao" class="form-control" placeholder="Deixe uma breve descrição" required/>
 														</div>
 													</div>
 												</div>
@@ -365,7 +347,7 @@
 													<div class="form-group">
 														<div class="form-line">
 															<label for="valor">Valor</label>
-															<input type="text" id="valor" name="valor" class="form-control" placeholder=""/>
+															<input type="text" id="valor" name="valor" class="form-control" placeholder="R$." required/>
 														</div>
 													</div>
 												</div>
@@ -373,7 +355,7 @@
 													<div class="form-group">
 														<div class="form-line">
 															<label for="anexo_comprovante">Evie um Arquivo</label>
-															<input type="file" name="anexo_comprovante" id="anexo_comprovante" />
+															<input type="file" name="anexo_comprovante" id="anexo_comprovante" required/>
 															<button type="reset" id="pseudoCancel">
 																Cancel
 															</button>

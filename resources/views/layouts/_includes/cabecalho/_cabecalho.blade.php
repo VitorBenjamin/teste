@@ -2,7 +2,7 @@
 	<div class="row clearfix">
 		<div class="col-md-2">
 			<label for="origem_despesa">Origem da Despesa</label>
-			<select id="origem_despesa" name="origem_despesa" class="form-control show-tick">
+			<select id="origem_despesa" name="origem_despesa" class="form-control show-tick" required>
 				<option value="CLIENTE" {{ old('origem_despesa') == "CLIENTE" ? 'selected' : '' }}>CLIENTE</option>
 				<option value="ESCRITÓRIO" {{ old('origem_despesa') == "ESCRITÓRIO" ? 'selected' : '' }}>ESCRITÓRIO</option>
 
@@ -10,7 +10,7 @@
 		</div>
 		<div class="col-md-3">
 			<label for="clientes">Cliente</label>
-			<select id="clientes" name="clientes_id" class="selectpicker with-ajax with-ajax after-init form-control show-tick" data-live-search="true">
+			<select id="clientes" name="clientes_id" class="selectpicker with-ajax with-ajax after-init form-control show-tick" data-live-search="true" >
 			</select>
 		</div>
 		<div class="col-md-3">
@@ -41,7 +41,7 @@
 		</div>
 		<div class="col-md-2">
 			<label for="contrato">Tipo de Contrato</label>
-			<select id="contrato" name="contrato" class="form-control show-tick" data-live-search="true" >
+			<select id="contrato" name="contrato" class="form-control show-tick" data-live-search="true" required>
 				<option value="">SELECIONE</option>
 				<option value="CONSULTIVO">CONSULTIVO</option>
 				<option value="CONTECIOSO">CONTECIOSO</option>

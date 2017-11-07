@@ -5,12 +5,15 @@ $(function () {
 
     //Datetimepicker plugin
     
-    // $('.datetimepicker').bootstrapMaterialDatePicker({
-    //     format: 'dddd DD MMMM YYYY - HH:mm',
-    //     lang: 'pt-br',
-    //     clearButton: true,
-    //     weekStart: 1
-    // });
+    $('.datetimepicker').bootstrapMaterialDatePicker({
+        //format: 'dddd DD MMMM YYYY - HH:mm',
+        format: 'YYYY-MM-DD - HH:mm:00',
+        lang: 'pt-br',
+        clearButton: true,
+        clearText: 'Limpar',
+        cancelText : 'Cancelar',
+        weekStart: 1,
+    });
 
     $('.datepicker').bootstrapMaterialDatePicker({
         // format: 'dddd DD MMMM YYYY',

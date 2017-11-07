@@ -16,7 +16,7 @@ class TipoGuias extends Migration
         Schema::create('tipo_guias', function (Blueprint $table) {
             //
             $table->increments('id');
-            $table->enum('tipo',['TRABALHISTA','CIVIL','CRIMINAL']);
+            $table->enum('tipo',['TRABALHISTA','CIVIL','CRIMINAL','AMBIENTAL']);
             $table->string('descricao',20);
             $table->timestamps();
             $table->softDeletes();
