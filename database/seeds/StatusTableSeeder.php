@@ -28,6 +28,10 @@ class StatusTableSeeder extends Seeder
     		'descricao' => 'APROVADO',
     		
     	]);
+        Status::create([
+            'descricao' => 'REPROVADO',
+            
+        ]);
     	Status::create([
     		'descricao' => 'DEVOLVIDO',
     		

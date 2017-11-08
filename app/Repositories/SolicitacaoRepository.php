@@ -14,14 +14,15 @@ use App\Status;
 class SolicitacaoRepository
 {
 
-    public function __construct(){
+    public function __construct()
+    {
 
     }
     public function create($request,$tipo)
     {
         
         $data = self::montaData($request);
-        $data['codigo'] = random_int(7, 7);
+        $data['codigo'] = random_int(100, 99999);
         $data['tipo'] = $tipo;
  
         if ($request->processo != "") {
@@ -35,12 +36,14 @@ class SolicitacaoRepository
         $solicitacao = Solicitacao::create($data);
         
         $status = Status::where('descricao',config('constantes.status_aberto'))->first();
-        //$status = Status::where('descricao','ABERTO')->orWhere('descricao' , 'ANDAMENTO')->get();        
+      //$status = Status::where('descricao','ABERTO')->orWhere('descricao' , 'ANDAMENTO')->get();        
         $solicitacao->status()->attach($status);
+      
         return $solicitacao;
     }
 
-    private function montaData($data){
+    private function montaData($data)
+    {
 
         $dados = [   
 
@@ -55,6 +58,17 @@ class SolicitacaoRepository
         ];
         return $dados;
     }
+
+    public function getSolicitacao($status)
+    {
+        
+        $status = Status::with(['solicitacao' => function($q){
+            $q->select('id','codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato')->take(10);
+        }])->where('descricao',$status)->first();
+
+        return $status;
+    }
+
     public function update($request,$id)
     {
         $data = self::montaData($request);

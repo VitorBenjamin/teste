@@ -43,7 +43,7 @@
 							<i class="material-icons">exposure_plus_1</i>
 							<span>DESPESA</span>
 						</a>
-						<a href="#" class="btn bg-teal waves-effect" role="button">
+						<a href="{{ route('solicitacao.andamento',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
 							<i class="material-icons">send</i>
 							<span>ENVIAR</span>
 						</a>
@@ -69,7 +69,6 @@
 					</h2>
 				</div>
 				<div class="body">
-					<div class="table-responsive">
 						<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
 							<thead>
 								<tr>
@@ -122,7 +121,6 @@
 
 							</tbody>
 						</table>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -163,7 +161,6 @@
 							</tfoot>
 							<tbody>
 								@foreach ($solicitacao->despesa as $despesa)
-
 								<tr>
 									<td></td>
 									<td>{{date('d/m/y',strtotime($despesa->data_despesa))}}</td>
@@ -179,7 +176,6 @@
 									</td>
 								</tr>
 								@endforeach														
-
 							</tbody>
 						</table>
 					</div>

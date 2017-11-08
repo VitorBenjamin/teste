@@ -180,8 +180,8 @@
  {!! Html::script('/js/pages/forms/advanced-form-elements.js') !!}
  {!! Html::script('/js/pages/ui/modals.js') !!}
 
- {!! Html::script('/js/pages/index.js') !!}
-
+<!--  {!! Html::script('/js/pages/index.js') !!}
+ -->
 
 <!-- Demo Js -->
 <!--  {!! Html::script('/js/demo.js') !!} -->

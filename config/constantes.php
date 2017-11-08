@@ -12,6 +12,7 @@ return [
 	'status_fechado' => 'FECHADO',
 	'status_andamento' => 'ANDAMENTO',
 	'status_aprovado' => 'APROVADO',
+	'status_reprovado' => 'REPROVADO',
 	'status_devolvido' => 'DEVOLVIDO',
 	'status_devolvido_financeiro' => 'DEVOLVIDO-FINANCEIRO',
 	'status_finalizado' => 'FINALIZADO',

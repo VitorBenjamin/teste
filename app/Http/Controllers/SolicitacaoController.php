@@ -18,30 +18,34 @@ use App\Status;
 
 class SolicitacaoController extends Controller
 {
-     //Buscando todas as informações das solicitacao e enviando para a view de listagem das solicitacao
+    //Buscando todas as informações das solicitacao e enviando para a view de listagem das solicitacao
 	public function index()
 	{
 
+		$repo = new SolicitacaoRepository();
+		$abertas = $repo->getSolicitacao(config('constantes.status_aberto'));
+		$andamentos = $repo->getSolicitacao(config('constantes.status_andamento'));
+		$aprovadas = $repo->getSolicitacao(config('constantes.status_aprovado'));
+		$reprovados = $repo->getSolicitacao(config('constantes.status_reprovado'));
+		//dd($aprovadas);
+		$devolvidas = $repo->getSolicitacao(config('constantes.status_devolvido'));
 
-		//$status = Status::find(1);
-		$status = Status::with('solicitacao')->where('descricao',"ABERTO")->get();
-		dd($status);
+		// foreach ($abertas->solicitacao as $value) {
+		// 	dd($value->id);
+		// }
+		// dd($abertas);
+		return view('dashboard.index',compact('abertas','andamentos','aprovadas','reprovados','devolvidas'));
+	}
 
+	public function andamento($id)
+	{
+		$aberto = Status::where('descricao',config('constantes.status_aberto'))->first();
+		$andamento = Status::where('descricao',config('constantes.status_andamento'))->first();
+      	//$status = Status::where('descricao','ABERTO')->orWhere('descricao' , 'ANDAMENTO')->get();        
+		$solicitacao = Solicitacao::find($id);		
+		$solicitacao->status()->detach($aberto);
+		$solicitacao->status()->attach($andamento);
+		return redirect()->route('solicitacao.index');
 
-		$status = \App\solicitacao::with(
-			[
-			'status' => function ($query) {
-				$query->where('status.descricao', 'ABERTO');
-			}
-			])->get();
-		dd($status);
-		foreach ($status->Solicitacao()->get() as $value) {
-			echo($value);
-		}
-		
-
-		
-		//dd($status->solicitacao()->get());
-		//return view('reembolso.index',compact('solicitacao'));
 	}
 }
