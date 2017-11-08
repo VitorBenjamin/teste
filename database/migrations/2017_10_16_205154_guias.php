@@ -20,7 +20,6 @@ class Guias extends Migration
             $table->boolean('prioridade')->default(false);
             $table->string('observacao')->nullable();
             $table->string('reclamante');
-            $table->string('reclamante');
             $table->string('perfil_pagamento');
             $table->string('banco');
             $table->integer('solicitacoes_id')->unsigned();

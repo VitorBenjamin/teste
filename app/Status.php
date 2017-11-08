@@ -21,7 +21,7 @@ class Status extends Model
      */
     public function solicitacao()
     {
-        return $this->belongsToMany('App\Solicitacao','solicitacoes_status','solicitacoes_id','status_id');
+        return $this->belongsToMany('App\Solicitacao','solicitacoes_status','status_id','solicitacoes_id');
     }
     
 }

@@ -22,8 +22,26 @@ class SolicitacaoController extends Controller
 	public function index()
 	{
 
-		$solicitacao = Status::with('solicitacao')->get();
-		dd($solicitacao);
-		return view('reembolso.index',compact('solicitacao'));
+
+		//$status = Status::find(1);
+		$status = Status::with('solicitacao')->where('descricao',"ABERTO")->get();
+		dd($status);
+
+
+		$status = \App\solicitacao::with(
+			[
+			'status' => function ($query) {
+				$query->where('status.descricao', 'ABERTO');
+			}
+			])->get();
+		dd($status);
+		foreach ($status->Solicitacao()->get() as $value) {
+			echo($value);
+		}
+		
+
+		
+		//dd($status->solicitacao()->get());
+		//return view('reembolso.index',compact('solicitacao'));
 	}
 }
