@@ -83,11 +83,16 @@
                 </div>
                 <div class="body">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="active sais-tab"><a href="" data-toggle="tab" role="tab" data-target="#aberto"><i class="material-icons">build</i>  ABERTO</a></li>
-                        <li class="azed-tab"><a href="" data-toggle="tab" role="tab" data-target="#andamento"><i class="material-icons">hourglass_empty</i>ANDAMENTO</a></li>
-                        <li class="azed-tab"><a href="" data-toggle="tab" role="tab" data-target="#aprovado"><i class="material-icons">done_all</i>APROVADO</a></li>
-                        <li class="azed-tab"><a href="" data-toggle="tab" role="tab" data-target="#reprovado"><i class="material-icons">highlight_off</i>REPROVADO</a></li>
-                        <li class="azed-tab"><a href="" data-toggle="tab" role="tab" data-target="#devolvido"><i class="material-icons">restore_page</i> DEVOLVIDO</a></li>
+                        <li class="active sais-tab"><a href="" data-toggle="tab" role="tab" data-target="#aberto">
+                        <i style="color: #bb7408" class="material-icons">build</i>  ABERTO</a></li>
+                        <li class="azed-tab"><a href="" data-toggle="tab" role="tab" data-target="#andamento">
+                        <i style="color: #30b1b1" class="material-icons">hourglass_empty</i>ANDAMENTO</a></li>
+                        <li class="azed-tab"><a href="" data-toggle="tab" role="tab" data-target="#aprovado">
+                        <i style="color: #3ecc1b" class="material-icons">done_all</i>APROVADO</a></li>
+                        <li class="azed-tab"><a href="" data-toggle="tab" role="tab" data-target="#reprovado">
+                        <i style="color: #ff0000" class="material-icons">highlight_off</i>REPROVADO</a></li>
+                        <li class="azed-tab"><a href="" data-toggle="tab" role="tab" data-target="#devolvido">
+                        <i style="color: #f3f706" class="material-icons">restore_page</i> DEVOLVIDO</a></li>
                         
                         
                     </ul>
@@ -173,8 +178,8 @@
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
 
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
-                        <div id="aprovada" class="tab-pane fade in" role="tabpanel">
-                            <table id="aprovada" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                        <div id="aprovado" class="tab-pane fade in" role="tabpanel">
+                            <table id="aprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -188,20 +193,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($aprovadas->solicitacao as $aprovada)
+                                    @foreach ($aprovadas->solicitacao as $aprovado)
                                     <tr>
                                         <td></td>
-                                        <td>{{ $aprovada->id }}</td>
-                                        <td>{{ $aprovada->codigo }}</td>
-                                        <td>{{ $aprovada->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> 
-                                        <td>{{ $aprovada->tipo }}</td>
-                                        <td>{{ $aprovada->origem_despesa }}</td>
-                                        <td>{{ $aprovada->contrato }}</td>
+                                        <td>{{ $aprovado->id }}</td>
+                                        <td>{{ $aprovado->codigo }}</td>
+                                        <td>{{ $aprovado->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> 
+                                        <td>{{ $aprovado->tipo }}</td>
+                                        <td>{{ $aprovado->origem_despesa }}</td>
+                                        <td>{{ $aprovado->contrato }}</td>
                                         <td>
                                             <div class="icon-button-demo" >
-                                                <a href="{{ route('reembolso.editarDespesa', $aprovada->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float"><i class="material-icons">settings</i></a>
+                                                <a href="{{ route('reembolso.editarDespesa', $aprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float"><i class="material-icons">settings</i></a>
 
-                                                <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('reembolso.deletarDespesa', $aprovada->id)}}"><i class="material-icons">delete_sweep</i></a>
+                                                <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('reembolso.deletarDespesa', $aprovado->id)}}"><i class="material-icons">delete_sweep</i></a>
                                             </div>
                                         </td>
                                     </tr>
