@@ -11,6 +11,7 @@ class Cliente extends Model
      *
      * @var array
      */
+    protected $table = 'clientes';
     protected $fillable = [
         'nome', 'cnpj', 'valor_km', 'saldo', 'unidades_id'
     ];
@@ -22,5 +23,10 @@ class Cliente extends Model
     public function unidade(){
 
     	return $this->belongsTo('App\Unidade','unidades_id');
+    }
+
+    public function solicitacao()
+    {
+        return $this->hasMany('App\Solicitacao', 'clientes_id');
     }
 }

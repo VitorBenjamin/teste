@@ -38,13 +38,13 @@ class CreateFks extends Migration
 
     //Foreign Keys Tabela comentarios
         Schema::table('comentarios', function (Blueprint $table) {
-            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes');
+            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             $table->foreign('users_id')->references('id')->on('users');
         });       
 
     //Foreign Keys Tabela compras
         Schema::table('compras', function (Blueprint $table) {
-            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes');
+            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
         });  
 
     //Foreign Keys Tabela contacoes
@@ -56,7 +56,7 @@ class CreateFks extends Migration
 
     //Foreign Keys Tabela viagens
         Schema::table('viagens', function (Blueprint $table) {
-            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes');
+            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');;
 
         });
 
@@ -70,7 +70,7 @@ class CreateFks extends Migration
 
     //Foreign Keys Tabela antecipacoes
         Schema::table('antecipacoes', function (Blueprint $table) {
-            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes');
+            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
         });
 
     //Foreign Keys Tabela antecipacoes_comprovantes
@@ -81,18 +81,18 @@ class CreateFks extends Migration
 
     //Foreign Keys Tabela despesas
         Schema::table('despesas', function (Blueprint $table) {
-            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes');
+            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             DB::statement("ALTER TABLE despesas ADD anexo_comprovante LONGBLOB");
         });
 
     //Foreign Keys Tabela translados
         Schema::table('translados', function (Blueprint $table) {
-            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes');
+            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
         });
 
     //Foreign Keys Tabela guias
         Schema::table('guias', function (Blueprint $table) {
-            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes');
+            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             $table->foreign('tipo_guias_id')->references('id')->on('tipo_guias');
         });     
 

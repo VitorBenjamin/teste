@@ -249,6 +249,8 @@ return [
         'Viagem' => App\Viagem::class,        
         'ViagemComprovante' => App\ViagemComprovante::class,
 
+        'SolicitacaoHelper' => App\Http\Helpers\SolicitacaoHelper::class,
+
 
 
 

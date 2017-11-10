@@ -3,7 +3,7 @@ $(function() {
     $('input:text').keyup(function() {
         this.value = this.value.toLocaleUpperCase()
     });
-    
+
 });
 $( window ).load(function() {
 
@@ -11,10 +11,12 @@ $( window ).load(function() {
 
   if (value == "ESCRITÓRIO") {
 
-   $('#clientes').attr("disabled", true);
-   $('#clientes').selectpicker('refresh');
 
-}
+     $('#clientes').attr("disabled", true);
+     $('#clientes').selectpicker('deselectAll');
+     $('#clientes').selectpicker('refresh');
+
+ }
     //$('.js-basic-example').DataTable().responsive.recalc();
     //console.log($('.js-basic-example').DataTable().responsive.recalc());
 });
@@ -22,13 +24,10 @@ $( window ).load(function() {
 $(document).ready(function () {
 
     $("a[data-toggle=\"tab\"]").on("shown.bs.tab", function (e) {
-      console.log( 'show tab' );
       $($.fn.dataTable.tables(true)).DataTable()
       .columns.adjust()
       .responsive.recalc();
   });
-
-
 });
 
 //Desativa o select de CLIENTES Caso Origem da despesa seja = Escritório
@@ -37,14 +36,18 @@ $('#origem_despesa').change(function() {
   var value = $(this).val();
 
   if (value == "ESCRITÓRIO") {
-
+    $('#label').css("color","#ded5d5");
+      // $('#clientes').closest('label').addClass("red2");
+   //console.log('ghjhgjgj');
    $('#clientes').attr("disabled", true);
+   $('#clientes').selectpicker('deselectAll');
    $('#clientes').selectpicker('refresh');
 
-}else{
 
- $('#clientes').removeAttr('disabled',false);
- $('#clientes').selectpicker('refresh');
+}else{
+    $('#label').css("color","#555"); 
+    $('#clientes').removeAttr('disabled',false);
+    $('#clientes').selectpicker('refresh');
 
 }
 });

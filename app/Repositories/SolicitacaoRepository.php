@@ -62,9 +62,7 @@ class SolicitacaoRepository
     public function getSolicitacao($status)
     {
         
-        $status = Status::with(['solicitacao' => function($q){
-            $q->select('id','codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato')->take(10);
-        }])->where('descricao',$status)->first();
+        $status = Status::with('solicitacao')->where('descricao',$status)->first();
 
         return $status;
     }

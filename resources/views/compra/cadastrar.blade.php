@@ -3,7 +3,6 @@
 @section('content')
 <script type="text/javascript">
 	var urlClientes = "{{route('cliente.getCliente')}}";
-
 	var urlSoli = "{{route('solicitante.getSolicitante')}}";
 </script>
 <section class="content">

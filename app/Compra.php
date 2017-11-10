@@ -15,11 +15,19 @@ class Compra extends Model
         'data_compra','descricao', 'quantidade', 'solicitacoes_id'
     ];
     
-    /** Consulta a Solicitacao da compra
+    /** Consulta a Solicitacao da Compra
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
      public function solicitacao()
     {
         return $this->belongsTo('App\Solicitacao','solicitacoes_id');
+    }
+
+    /** Consulta a Solicitacao da Compra
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+     public function cotacao()
+    {
+        return $this->hasMany('App\Cotacao','compras_id');
     }
 }

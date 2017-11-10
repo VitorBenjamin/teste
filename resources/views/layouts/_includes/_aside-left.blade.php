@@ -31,42 +31,42 @@
                 <li class="header">Menu Principal</li>
                 <li class="active">
                     <a href="{{url('/')}}">
-                        <i class="material-icons">dashboard</i>
+                        <i class="material-icons" style="color: #607d8b">dashboard</i>
                         <span>DashBoard</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{route('reembolso.cadastrar')}}">
-                        <i class="material-icons">account_balance_wallet</i>
+                        <i class="material-icons" style="color: #66a216">account_balance_wallet</i>
                         <span>Solicitar Reembolso</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{route('compra.cadastrar')}}">
-                        <i class="material-icons">add_shopping_cart</i>
+                        <i class="material-icons" style="color: #009688">add_shopping_cart</i>
                         <span>Solicitar Compra</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{route('viagem.cadastrar')}}">
-                        <i class="material-icons">flight_takeoff</i>
+                        <i class="material-icons" style="color: #ffc107">flight_takeoff</i>
                         <span>Solicitar Viagem</span>
                     </a>
                 </li>  
 
                 <li>
                     <a href="{{route('antecipacao.cadastrar')}}">
-                        <i class="material-icons">chat_bubble_outline</i>
+                        <i class="material-icons" style="color: #03a9f4">chat_bubble_outline</i>
                         <span>Solicitar Antecipação</span>
                     </a>
                 </li>  
 
                 <li>
                     <a href="{{route('guia.cadastrar')}}">
-                        <i class="material-icons">content_paste</i>
+                        <i class="material-icons" style="color: #795548">content_paste</i>
                         <span>Solicitar Guia</span>
                     </a>
                 </li>          

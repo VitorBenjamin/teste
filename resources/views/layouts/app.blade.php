@@ -25,6 +25,9 @@
   <!-- <link href="plugins/animate-css/animate.css" rel="stylesheet" />-->
   {!! Html::style('plugins/animate-css/animate.css') !!} 
 
+  <!-- Sweetalert Css -->
+  {!! Html::style('plugins/sweetalert/sweetalert.css') !!}
+
   <!-- Morris Chart Css-->
   <!-- <link href="plugins/morrisjs/morris.css" rel="stylesheet" />-->
 
@@ -64,7 +67,7 @@
   <div class="page-loader-wrapper">
     <div class="loader">
       <div class="preloader">
-        <div class="spinner-layer pl-red">
+        <div class="spinner-layer pl-black">
           <div class="circle-clipper left">
             <div class="circle"></div>
           </div>
@@ -118,7 +121,7 @@
  {!! Html::script('/plugins/bootstrap/js/bootstrap.js') !!}
 
  <!-- Dropzone Plugin Js -->
-<!--  {!! Html::script('/plugins/dropzone/dropzone.js') !!} -->
+ <!--  {!! Html::script('/plugins/dropzone/dropzone.js') !!} -->
 
  <!-- Select Plugin Js -->
  {!! Html::script('/plugins/bootstrap-select/js/bootstrap-select.js') !!}
@@ -168,22 +171,25 @@
  {!! Html::script('/plugins/jquery-datatable/extensions/export/vfs_fonts.js') !!}
  {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') !!}
  {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.print.min.js') !!}
-
  <!-- Sparkline Chart Plugin Js -->
  <!-- {!! Html::script('/plugins/jquery-sparkline/jquery.sparkline.js') !!} -->
  <!-- Custom Js -->
 
- {!! Html::script('/js/admin.js') !!} 
+ <!-- SweetAlert Plugin Js -->
+ {!! Html::script('/plugins/sweetalert/sweetalert.min.js') !!}
+
+
+ {!! Html::script('/js/admin.js') !!}
+ {!! Html::script('/js/pages/ui/dialogs.js') !!}
  {!! Html::script('/js/pages/forms/form-wizard.js') !!}
  {!! Html::script('/js/pages/tables/jquery-datatable.js') !!}
  {!! Html::script('/js/pages/forms/basic-form-elements.js') !!}
  {!! Html::script('/js/pages/forms/advanced-form-elements.js') !!}
  {!! Html::script('/js/pages/ui/modals.js') !!}
 
-<!--  {!! Html::script('/js/pages/index.js') !!}
- -->
+ <!-- {!! Html::script('/js/pages/index.js') !!} -->
 
-<!-- Demo Js -->
-<!--  {!! Html::script('/js/demo.js') !!} -->
+ <!-- Demo Js -->
+ <!-- {!! Html::script('/js/demo.js') !!} -->
 </body>
 </html>

@@ -9,16 +9,29 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label for="clientes">Cliente</label>
-			<select id="clientes" name="clientes_id" class="selectpicker with-ajax with-ajax after-init form-control show-tick" data-live-search="true" >
+			<label id="label" for="clientes">Cliente</label>
+			<select id="clientes" name="clientes_id" class="selectpicker form-control show-tick" data-live-search="true">
 			</select>
 		</div>
 		<div class="col-md-3">
 			<label for="solicitantes">Solicitante</label>
 			<select id="solicitantes" name="solicitantes_id" class="form-control show-tick" data-live-search="true" required>
+				@foreach ($processos as $processo)
+				<option value="{{ $processo->id }}">{{ $processo->codigo }}</option>
+				@endforeach
 			</select>
 		</div>
-		<div class="demo-masked-input">
+
+		<div class="col-md-3">
+			<label for="processo">Número de Processo</label>
+			<select id="processo" name="processo" class="form-control show-tick" data-live-search="true" >
+				<option value="">SELECIONE</option>
+				@foreach ($processos as $processo)
+				<option value="{{ $processo->id }}">{{ $processo->codigo }}</option>
+				@endforeach
+			</select>
+		</div>
+<!-- 		<div class="demo-masked-input">
 			<div class="col-md-3">
 				<b>Número de Processo</b>
 				<div class="input-group">
@@ -27,7 +40,7 @@
 					</div>
 				</div>
 			</div>
-		</div>							
+		</div>	 -->						
 	</div>
 	<div class="row clearfix">
 		<div class="col-md-2">
@@ -64,6 +77,6 @@
 				<i class="material-icons">send</i>
 				<span>CADASTRAR SOLICITAÇÃO</span> 
 			</button>
-		</div>	
+		</div> 
 	</div>
 </div>

@@ -39,7 +39,7 @@ class Viagem extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     
-    public function comprovantes(){
+    public function comprovante(){
 
         return $this->hasMany('App\ViagemComprovante', 'viagens_id');
     }

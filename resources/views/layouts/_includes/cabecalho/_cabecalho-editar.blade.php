@@ -8,8 +8,8 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label for="clientes">Cliente</label>
-			<select id="clientes" name="clientes_id" class="form-control show-tick" data-live-search="true">
+			<label id="label" for="clientes">Cliente</label>
+			<select id="clientes" name="clientes_id" class="selectpicker form-control show-tick" data-live-search="true">
 				@if(!empty($cliente[0]))
 				<option value="{{$solicitacao->clientes_id}}">{{ $cliente[0]->nome }}</option>
 				@endif
@@ -91,6 +91,13 @@
 				<i class="material-icons">update</i>
 				<span>ATUALIZAR CABEÇALHO</span> 
 			</button>
-		</div>																	
+		</div>		
+		
+		<div class="col-md-2" style="margin-top: 20px">
+			<a href="{{ route('solicitacao.andamento',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+				<i class="material-icons">send</i>
+				<span>ENVIAR</span>
+			</a>
+		</div>																
 	</div>			
 </div>

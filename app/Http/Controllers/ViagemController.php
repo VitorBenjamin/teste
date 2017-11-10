@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\SolicitacaoHelper;
 use Illuminate\Http\Request;
 use App\Http\Requests\SolicitacaoRequest;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,8 @@ class ViagemController extends Controller
     public function cadastrar()
     {
         $areas = AreaAtuacao::all('id','tipo');
-        return view('viagem.cadastrar', compact('areas'));  
+        $processos = Processo::all();
+        return view('viagem.cadastrar', compact('areas','processos'));  
     }
 
     //Cadatra uma nova Solicitação e redireciona para a tela de edição
@@ -38,22 +40,34 @@ class ViagemController extends Controller
 
         return redirect()->route('viagem.editar', $solicitacao->id);
     }
-
-    //Retorna a View de edição da unidade
-    public function editar($id)
+    public function veriicarSolicitacao($id)
     {
-
         $solicitacao = Solicitacao::with('viagem')
         ->where('tipo',config('constantes.tipo_viagem'))
         ->where('id',$id)
         ->first();
-        if(!$solicitacao){
-            \Session::flash('flash_message',[
-                'msg'=>"Não Existe essa Solicitacao Cadastrada!!! Deseja Cadastrar uma Nova Solicitação?",
-                'class'=>"alert bg-red alert-dismissible"
-            ]);
-            return redirect()->route('viagem.cadastrar');            
+        $solicitacaoHelper = new SolicitacaoHelper();
+        $exist = $solicitacaoHelper->solicitacaoExist($solicitacao,config('constantes.tipo_reembolso'));
+        if ($exist == "ok") 
+        {
+            $verificarStatus = $solicitacaoHelper->verificarStatus($solicitacao);
+            if ($verificarStatus == "ok") 
+            {
+                return $this->editar($solicitacao);           
+            }else{
+                return $solicitacaoHelper->verificarStatus($solicitacao);
+            }
+
+        }else{
+            return $exist;
         }
+    }
+
+    //Retorna a View de edição da unidade
+    public function editar($soli)
+    {
+        $solicitacao = $soli;
+        
         $cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
         $areas = AreaAtuacao::all('id','tipo'); 
         $solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
@@ -68,6 +82,7 @@ class ViagemController extends Controller
         
         $viagem->update($request->all());
 
+        //dd($viagem);
         \Session::flash('flash_message',[
             'msg'=>"Viagem Atualizada com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
@@ -75,6 +90,7 @@ class ViagemController extends Controller
         return redirect()->route('viagem.editar', $viagem->solicitacoes_id);
     }
     public function addViagem(Request $request,$id){
+        
         Viagem::create(
             [
                 'observacao' => $request->observacao,

@@ -325,9 +325,8 @@
 												<div class="col-md-2">
 													<label for="tipo_comprovante">Comprovante</label>
 													<select id="tipo_comprovante" name="tipo_comprovante" class="form-control show-tick" required>
-														<option value="">SELECIONE</option>
 														<option value="HOSPEDAGEM">HOSPEDAGEM</option>
-														<option value="ALIMENTAÇÂO">ALIMENTAÇÃo</option>
+														<option value="ALIMENTAÇÂO">ALIMENTAÇÃO</option>
 														<option value="TRANSPORTE">TRANSPORTE</option>
 													</select>
 												</div>

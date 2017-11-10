@@ -22,6 +22,8 @@ class Guias extends Migration
             $table->string('reclamante');
             $table->string('perfil_pagamento');
             $table->string('banco');
+            $table->string('anexo_pdf');
+            $table->decimal('valor', 10,2);
             $table->integer('solicitacoes_id')->unsigned();
             $table->integer('tipo_guias_id')->unsigned();
             $table->timestamps();

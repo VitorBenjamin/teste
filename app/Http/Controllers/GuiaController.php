@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\SolicitacaoHelper;
 use App\Http\Requests\SolicitacaoRequest;
 use App\Http\Requests\GuiaRequest;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +24,8 @@ class GuiaController extends Controller
 	public function cadastrar()
 	{
 		$areas = AreaAtuacao::all('id','tipo');
-		return view('guia.cadastrar', compact('areas')); 	
+		$processos = Processo::all();
+		return view('guia.cadastrar', compact('areas','processos'));  	
 	}
 
     //Cadatra uma nova Solicitação e redireciona para a tela de edição
@@ -63,21 +65,33 @@ class GuiaController extends Controller
 		]);
 		return redirect()->route('guia.editar',$id);
 	}
-
-    //Retorna a View de edição da unidade
-	public function editar($id)
+	public function veriicarSolicitacao($id)
 	{
 		$solicitacao = Solicitacao::with('guia')
 		->where('tipo',config('constantes.tipo_guia'))
 		->where('id',$id)
 		->first();
-		if(!$solicitacao){
-			\Session::flash('flash_message',[
-				'msg'=>"Não Existe essa Solicitacao Cadastrada!!! Deseja Cadastrar uma Nova Solicitação?",
-				'class'=>"alert bg-red alert-dismissible"
-			]);
-			return redirect()->route('guia.cadastrar');            
+		$solicitacaoHelper = new SolicitacaoHelper();
+		$exist = $solicitacaoHelper->solicitacaoExist($solicitacao,config('constantes.tipo_reembolso'));
+		if ($exist == "ok") 
+		{
+			$verificarStatus = $solicitacaoHelper->verificarStatus($solicitacao);
+			if ($verificarStatus == "ok") 
+			{
+				return $this->editar($solicitacao);           
+			}else{
+				return $solicitacaoHelper->verificarStatus($solicitacao);
+			}
+
+		}else{
+			return $exist;
 		}
+	}
+
+    //Retorna a View de edição da unidade
+	public function editar($soli)
+	{
+		$solicitacao = $soli;		
 		// $solicitacao = DB::table('solicitacoes')
 		// ->join('guias','solicitacoes.id','guias.solicitacoes_id')
 		// ->join('tipo_guias','guia.tipo_guias_id','tipo_guias.id')
@@ -90,10 +104,6 @@ class GuiaController extends Controller
 		$areas = AreaAtuacao::all('id','tipo'); 
 		$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
 		$tipo_guia = TipoGuia::all('id','tipo','descricao')->groupBy('tipo');
-		// foreach ($tipo_guia as $key => $value) {
-		// 	dd($value);
-		// }
-		
 
 		return view('guia.editar', compact('solicitacao','cliente','areas','solicitante','tipo_guia'));
 	}

@@ -19,7 +19,9 @@
   /*  margin-top: -35px !important; */ 
 }
 }
-
+.red2{
+  color: red;
+}
 legend {
   display: inline-block;
   width: 100%;
@@ -6443,7 +6445,7 @@ fieldset[disabled] .form-control {
   .spinner-layer.pl-blue-grey {
     border-color: #607D8B; }
   .spinner-layer.pl-black {
-    border-color: #000000; }
+    border-color: #383636; }
   .spinner-layer.pl-white {
     border-color: #ffffff; }
 

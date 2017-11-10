@@ -1,38 +1,102 @@
-$(function () {
-    $('.js-sweetalert button').on('click', function () {
-        var type = $(this).data('type');
-        if (type === 'basic') {
-            showBasicMessage();
-        }
-        else if (type === 'with-title') {
-            showWithTitleMessage();
-        }
-        else if (type === 'success') {
-            showSuccessMessage();
-        }
-        else if (type === 'confirm') {
-            showConfirmMessage();
-        }
-        else if (type === 'cancel') {
-            showCancelMessage();
-        }
-        else if (type === 'with-custom-icon') {
-            showWithCustomIconMessage();
-        }
-        else if (type === 'html-message') {
-            showHtmlMessage();
-        }
-        else if (type === 'autoclose-timer') {
-            showAutoCloseTimerMessage();
-        }
-        else if (type === 'prompt') {
-            showPromptMessage();
-        }
-        else if (type === 'ajax-loader') {
-            showAjaxLoaderMessage();
-        }
+// $(function () {
+//     $('.js-sweetalert').on('click', function () {
+//         var type = $(this).data('type');
+//         if (type === 'basic') {
+//             showBasicMessage();
+//         }
+//         else if (type === 'with-title') {
+//             showWithTitleMessage();
+//         }
+//         else if (type === 'success') {
+//             showSuccessMessage();
+//         }
+//         else if (type === 'confirm') {
+//             showConfirmMessage();
+//         }
+//         else if (type === 'cancel') {
+//             showCancelMessage();
+//         }
+//         else if (type === 'with-custom-icon') {
+//             showWithCustomIconMessage();
+//         }
+//         else if (type === 'html-message') {
+//             showHtmlMessage();
+//         }
+//         else if (type === 'autoclose-timer') {
+//             showAutoCloseTimerMessage();
+//         }
+//         else if (type === 'prompt') {
+//             showPromptMessage();
+//         }
+//         else if (type === 'ajax-loader') {
+//             showAjaxLoaderMessage();
+//         }
+//     });
+// });
+
+//Remover Solicitação em aberto 
+$(document).on('click', '.js-sweetalert', function (e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    swal({
+        title: "Comfirmar Exclusão!",
+        type: "warning",
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Sim!',        
+        cancelButtonText: 'Cancelar',
+        cancelButtonColor: '#d33',
+        closeOnConfirm: false,
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+    },
+    function() {
+
+        $.ajax({ 
+            headers:
+            {
+                'X-CSRF-Token': $('input[name="_token"]').val()
+            },
+            type: 'POST',
+            url: urlDeletar,
+            data: {id:id},
+            success: function (data) {
+                swal({
+                  type: 'success',
+                  title: "Solicitação Removida com Sucesso",
+                  text: "Redirecionado......",
+                  showConfirmButton: false,
+                  timer: 2000,
+              }); 
+
+                setTimeout(function () { window.location.href = data; }, 1000);
+
+
+            },
+            error : function(data) {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }       
+        });
+
     });
 });
+//Remover Solicitação em aberto
+
+
+function showAjaxLoaderMessage() {
+    swal({
+        title: "Ajax request example",
+        text: "Submit to run ajax request",
+        type: "info",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+    }, function () {
+        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+        // setTimeout(function () {
+        //     swal("Ajax request finished!");
+        // }, 2000);
+    });
+}
 
 //These codes takes from http://t4t5.github.io/sweetalert/
 function showBasicMessage() {
@@ -121,20 +185,5 @@ function showPromptMessage() {
             swal.showInputError("You need to write something!"); return false
         }
         swal("Nice!", "You wrote: " + inputValue, "success");
-    });
-}
-
-function showAjaxLoaderMessage() {
-    swal({
-        title: "Ajax request example",
-        text: "Submit to run ajax request",
-        type: "info",
-        showCancelButton: true,
-        closeOnConfirm: false,
-        showLoaderOnConfirm: true,
-    }, function () {
-        setTimeout(function () {
-            swal("Ajax request finished!");
-        }, 2000);
     });
 }

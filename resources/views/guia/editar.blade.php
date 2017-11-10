@@ -198,7 +198,7 @@
 									<td>{{$guia->tipoGuia()->first()->tipo}}</td>
 									<td>{{$guia->tipoGuia()->first()->descricao}}</td>
 									<td><a target="_blank" href="{{URL::to('storage/guias/'.$guia->anexo_pdf)}}" class="btn btn-primary waves-effect">
-										<i class="material-icons">file_download</i>BAIXAR PDF</a>
+										<i class="material-icons">file_download</i>EXIBIR PDF</a>
 									</td>
 									<td>
 										<div class="icon-button-demo" >
@@ -312,8 +312,8 @@
 
 														<div class="col-md-2" style="margin-top: 20px">
 															<button class="btn bg-light-green waves-effect">
-																<i class="material-icons">save</i>
-																<span>ADD GUIA</span> 
+																<i class="material-icons">update</i>
+																<span>ATUALZIAR GUIA</span> 
 															</button>
 														</div>
 													</div>
@@ -340,6 +340,5 @@
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DA ANTECIPAÇÃO -->
-
 </section>
 @endsection

@@ -20,6 +20,7 @@ class Cotacoes extends Migration
             $table->string('descricao');
             $table->string('fornecedor');
             $table->integer('quantidade');
+            $table->decimal('valor', 10,2)
             $table->integer('compras_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
@@ -34,7 +35,6 @@ class Cotacoes extends Migration
     public function down()
     {
         Schema::table('cotacoes', function (Blueprint $table) {
-            //
         });
     }
 }

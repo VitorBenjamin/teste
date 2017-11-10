@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\SolicitacaoHelper;
 use App\Http\Requests\SolicitacaoRequest;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Repositories\SolicitacaoRepository;
 use App\Compra;
+use App\Processo;
 use App\Solicitacao;
 use App\Solicitante;
 use App\Cliente;
@@ -22,7 +24,8 @@ class CompraController extends Controller
 	public function cadastrar()
 	{
 		$areas = AreaAtuacao::all('id','tipo');
-		return view('compra.cadastrar', compact('areas')); 	
+		$processos = Processo::all();
+		return view('compra.cadastrar', compact('areas','processos'));  	
 	}
 
     //Cadatra uma nova Solicitação e redireciona para a tela de edição
@@ -34,26 +37,38 @@ class CompraController extends Controller
 		\Session::flash('flash_message',[
 			'msg'=>"Cadastro do ".$solicitacao->tipo." Realizado com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
-			]);
+		]);
 
 		return redirect()->route('compra.editar', $solicitacao->id);
 	}
-
-    //Retorna a View de edição da unidade
-	public function editar($id)
+	
+	public function veriicarSolicitacao($id)
 	{
-
 		$solicitacao = Solicitacao::with('compra')
 		->where('tipo',config('constantes.tipo_compra'))
 		->where('id',$id)
 		->first();
-		if(!$solicitacao){
-			\Session::flash('flash_message',[
-				'msg'=>"Não Existe essa Solicitacao Cadastrada!!! Deseja Cadastrar uma Nova Solicitação?",
-				'class'=>"alert bg-red alert-dismissible"
-				]);
-			return redirect()->route('compra.cadastrar');            
+		$solicitacaoHelper = new SolicitacaoHelper();
+		$exist = $solicitacaoHelper->solicitacaoExist($solicitacao,config('constantes.tipo_reembolso'));
+		if ($exist == "ok") 
+		{
+			$verificarStatus = $solicitacaoHelper->verificarStatus($solicitacao);
+			if ($verificarStatus == "ok") 
+			{
+				return $this->editar($solicitacao);           
+			}else{
+				return $solicitacaoHelper->verificarStatus($solicitacao);
+			}
+
+		}else{
+			return $exist;
 		}
+	}
+
+    //Retorna a View de edição da unidade
+	public function editar($soli)
+	{
+		$solicitacao = $soli;
 		$cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
 		$areas = AreaAtuacao::all('id','tipo'); 
 		$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
@@ -68,16 +83,16 @@ class CompraController extends Controller
 
 		$compra->update(
 			[   
-			'descricao' => $request->descricao,
-			'data_compra' => $request->data_compra,
-			'quantidade' => $request->quantidade,                
+				'descricao' => $request->descricao,
+				'data_compra' => $request->data_compra,
+				'quantidade' => $request->quantidade,                
 			]
-			);
+		);
 
 		\Session::flash('flash_message',[
 			'msg'=>"Compra Atualizada com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
-			]);
+		]);
 		return redirect()->route('compra.editar', $compra->solicitacoes_id);
 	}
 	public function addCompra(Request $request,$id){
@@ -86,11 +101,11 @@ class CompraController extends Controller
 			'descricao' => $request->descricao,
 			'quantidade' => $request->quantidade,
 			'solicitacoes_id' => $id,
-			]);
+		]);
 		\Session::flash('flash_message',[
 			'msg'=>"Produto Cadastrado com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
-			]);
+		]);
 		return redirect()->route('compra.editar',$id);
 	}
 	//Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
@@ -103,7 +118,7 @@ class CompraController extends Controller
 		\Session::flash('flash_message',[
 			'msg'=>"Compra Removida com Sucesso!!!",
 			'class'=>"alert bg-red alert-dismissible"
-			]);
+		]);
 		return redirect()->route('compra.editar',$s_id);       
 	}
     //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
@@ -115,7 +130,7 @@ class CompraController extends Controller
 		\Session::flash('flash_message',[
 			'msg'=>"Solicitação Atualizada com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
-			]);
+		]);
 		return redirect()->route('compra.editar',$id);
 	}
 
