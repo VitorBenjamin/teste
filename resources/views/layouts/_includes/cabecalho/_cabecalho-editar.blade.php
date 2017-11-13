@@ -86,18 +86,17 @@
 				@endif
 			</div>
 		</div>
-		<div class="col-md-2" style="margin-top: 20px">
-			<button class="btn bg-green waves-effect">
+		<div class="col-md-4" style="margin-top: 10px">
+			<button class="btn bg-green waves-effect" style="margin-top: 10px" >
 				<i class="material-icons">update</i>
 				<span>ATUALIZAR CABEÇALHO</span> 
 			</button>
-		</div>		
-		
-		<div class="col-md-2" style="margin-top: 20px">
-			<a href="{{ route('solicitacao.andamento',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+			<a  style="margin-top: 10px" href="{{ route('solicitacao.andamento',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
 				<i class="material-icons">send</i>
 				<span>ENVIAR</span>
 			</a>
-		</div>																
+		</div>		
+		
+																	
 	</div>			
 </div>

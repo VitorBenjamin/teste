@@ -68,6 +68,7 @@ Route::group(['prefix' => 'solicitacao'],function()
    Route::put('add-guia/{id}', ['uses' => 'GuiaController@addGuia', 'as' => 'guia.addGuia']);
    Route::get('deletar-guia/{id}', ['uses' => 'GuiaController@deletarGuia', 'as' => 'guia.deletarGuia']);
    Route::get('editar-guia/{id}', ['uses' => 'GuiaController@veriicarSolicitacao', 'as' => 'guia.editar']);
+   Route::get('edicao-guia/{id}', ['uses' => 'GuiaController@editarGuia', 'as' => 'guia.editarGuia']);
    Route::put('atualizar-guia/{id}', ['uses' => 'GuiaController@atualizarGuia', 'as' => 'guia.atualizarGuia']);
  });
     // FIM ROTAS DE GUIA    

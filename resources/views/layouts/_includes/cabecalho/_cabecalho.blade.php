@@ -16,9 +16,6 @@
 		<div class="col-md-3">
 			<label for="solicitantes">Solicitante</label>
 			<select id="solicitantes" name="solicitantes_id" class="form-control show-tick" data-live-search="true" required>
-				@foreach ($processos as $processo)
-				<option value="{{ $processo->id }}">{{ $processo->codigo }}</option>
-				@endforeach
 			</select>
 		</div>
 
