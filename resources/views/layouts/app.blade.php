@@ -62,54 +62,46 @@
   {!! Html::style('css/themes/theme-black.css') !!}
 
 </head>
-<body id="app-layout" class="theme-black">
-  <!-- Page Loader -->
-  <div class="page-loader-wrapper">
-    <div class="loader">
-      <div class="preloader">
-        <div class="spinner-layer pl-black">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div>
-          <div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
+<body id="app-layout" class="theme-black {{Auth::guest() == true ? 'login-page' : ''}}">
+
+  @if (Auth::guest())
+ <!--  <li><a href="{{ route('login') }}">Login</a></li>
+ <li><a href="{{ route('register') }}">Register</a></li> -->
+ @yield('content-login')
+ @else
+ <!-- Page Loader -->
+ <div class="page-loader-wrapper">
+  <div class="loader">
+    <div class="preloader">
+      <div class="spinner-layer pl-black">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
         </div>
       </div>
-      <p>Por favor Aguarde...</p>
     </div>
+    <p>Por favor Aguarde...</p>
   </div>
-  <!-- #END# Page Loader -->
-  
-  <!-- Overlay For Sidebars -->
-  <div class="overlay"></div>
-  <!-- #END# Overlay For Sidebars -->
-  
-  <!-- Top Bar -->
-  @include('layouts._includes._nav')
+</div>
+<!-- #END# Page Loader -->
 
-  <!-- Left Sidebar -->
-  @include('layouts._includes._aside-left')
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+<!-- #END# Overlay For Sidebars -->
+<!-- Top Bar -->
+@include('layouts._includes._nav')
 
-  <!-- Right Sidebar -->
-  @include('layouts._includes._aside-right')
+<!-- Left Sidebar -->
+@include('layouts._includes._aside-left')
 
+<!-- Right Sidebar -->
+@include('layouts._includes._aside-right')
 
+@yield('content')
 
-<!--   @if(Session::has('flash_message'))
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div align="center" class="alert {{ Session::get('flash_message')['class'] }}">
-         {{ Session::get('flash_message')['msg'] }}
-
-       </div>
-     </div>
-   </div>
- </div>
- @endif -->
-
- @yield('content')
+@endif
 
  <!-- JavaScripts -->
 
@@ -129,8 +121,6 @@
  {!! Html::script('/js/ajax-bootstrap-select.js') !!}
 
  {!! Html::script('/js/script.js') !!}
-
- @yield('javascript')
 
  <!-- Slimscroll Plugin Js -->
  {!! Html::script('/plugins/jquery-slimscroll/jquery.slimscroll.js') !!}

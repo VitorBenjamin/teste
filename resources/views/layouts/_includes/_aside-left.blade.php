@@ -18,72 +18,77 @@
                         <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                         <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
                         <li role="seperator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
-                    </ul>
+                        <li><a href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();"><i class="material-icons">input</i>Sign Out</a></li>
+                        </ul>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- #User Info -->
-        
-        <!-- Menu -->
-        <div class="menu">
-            <ul class="list">
-                <li class="header">Menu Principal</li>
-                <li class="active">
-                    <a href="{{url('/')}}">
-                        <i class="material-icons" style="color: #607d8b">dashboard</i>
-                        <span>DashBoard</span>
-                    </a>
-                </li>
+            <!-- #User Info -->
 
-                <li>
-                    <a href="{{route('reembolso.cadastrar')}}">
-                        <i class="material-icons" style="color: #66a216">account_balance_wallet</i>
-                        <span>Solicitar Reembolso</span>
-                    </a>
-                </li>
+            <!-- Menu -->
+            <div class="menu">
+                <ul class="list">
+                    <li class="header">Menu Principal</li>
+                    <li class="active">
+                        <a href="{{url('/')}}">
+                            <i class="material-icons" style="color: #607d8b">dashboard</i>
+                            <span>DashBoard</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{route('compra.cadastrar')}}">
-                        <i class="material-icons" style="color: #009688">add_shopping_cart</i>
-                        <span>Solicitar Compra</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{route('reembolso.cadastrar')}}">
+                            <i class="material-icons" style="color: #66a216">account_balance_wallet</i>
+                            <span>Solicitar Reembolso</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{route('viagem.cadastrar')}}">
-                        <i class="material-icons" style="color: #ffc107">flight_takeoff</i>
-                        <span>Solicitar Viagem</span>
-                    </a>
-                </li>  
+                    <li>
+                        <a href="{{route('compra.cadastrar')}}">
+                            <i class="material-icons" style="color: #009688">add_shopping_cart</i>
+                            <span>Solicitar Compra</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{route('antecipacao.cadastrar')}}">
-                        <i class="material-icons" style="color: #03a9f4">chat_bubble_outline</i>
-                        <span>Solicitar Antecipação</span>
-                    </a>
-                </li>  
+                    <li>
+                        <a href="{{route('viagem.cadastrar')}}">
+                            <i class="material-icons" style="color: #ffc107">flight_takeoff</i>
+                            <span>Solicitar Viagem</span>
+                        </a>
+                    </li>  
 
-                <li>
-                    <a href="{{route('guia.cadastrar')}}">
-                        <i class="material-icons" style="color: #795548">content_paste</i>
-                        <span>Solicitar Guia</span>
-                    </a>
-                </li>          
-            </ul>
-        </div>
-        <!-- #Menu -->
+                    <li>
+                        <a href="{{route('antecipacao.cadastrar')}}">
+                            <i class="material-icons" style="color: #03a9f4">chat_bubble_outline</i>
+                            <span>Solicitar Antecipação</span>
+                        </a>
+                    </li>  
 
-        <!-- Footer -->
-        <div class="legal">
-            <div class="copyright">
-                &copy; 2017 {{ HTML::link('http://agenciavilaca.com.br', 'Prototipo | Agencia Vilaca') }}
+                    <li>
+                        <a href="{{route('guia.cadastrar')}}">
+                            <i class="material-icons" style="color: #795548">content_paste</i>
+                            <span>Solicitar Guia</span>
+                        </a>
+                    </li>          
+                </ul>
             </div>
-            <div class="version">
-                <b>Version: </b> 1.0
+            <!-- #Menu -->
+
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    &copy; 2017 {{ HTML::link('http://agenciavilaca.com.br', 'Prototipo | Agencia Vilaca') }}
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.0
+                </div>
             </div>
-        </div>
-        <!-- #Footer -->
-    </aside>
-    <!-- #END# Left Sidebar -->
-</section>
+            <!-- #Footer -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+    </section>
