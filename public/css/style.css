@@ -7661,7 +7661,7 @@ fieldset[disabled] .form-control {
         display: inline-flex;
         vertical-align: middle;
         width: 100%;
-        padding: 10px 13px; }
+        padding: 5px 13px; }
         .sidebar .menu .list a:hover, .sidebar .menu .list a:active, .sidebar .menu .list a:focus {
           text-decoration: none !important; }
         .sidebar .menu .list a small {
@@ -7758,7 +7758,9 @@ fieldset[disabled] .form-control {
 
 /* Login Page ================================== */
 .login-page {
-  background-color: #00BCD4;
+  /* background-color: #00BCD4; */
+  background-image: url('../images/bg.jpg');
+  background-size: cover;
   padding-left: 0;
   max-width: 360px;
   margin: 5% auto;

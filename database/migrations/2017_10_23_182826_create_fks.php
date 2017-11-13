@@ -31,6 +31,8 @@ class CreateFks extends Migration
     //Foreign Keys Tabela solicitacoes
         Schema::table('solicitacoes', function (Blueprint $table) {
             $table->foreign('area_atuacoes_id')->references('id')->on('area_atuacoes');
+            $table->foreign('unidades_id')->references('id')->on('unidades');
+            $table->foreign('solicitantes_id')->references('id')->on('solicitantes');
             $table->foreign('clientes_id')->references('id')->on('clientes');
             $table->foreign('processos_id')->references('id')->on('processos');
             $table->foreign('users_id')->references('id')->on('users');
@@ -101,7 +103,7 @@ class CreateFks extends Migration
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
         });
-    
+
     //Foreign Keys Tabela limites_unidades
         Schema::table('limites_unidades', function (Blueprint $table) {
             $table->foreign('limites_id')->references('id')->on('limites')->onDelete('cascade');

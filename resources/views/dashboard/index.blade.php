@@ -109,27 +109,27 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active sais-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#aberto">
-                                <i style="color: #bb7408" class="material-icons">build</i>  ABERTO
+                                <i style="color: #bb7408" class="material-icons">build</i> ABERTO {{count($abertas->solicitacao)}}
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#andamento">
-                                <i style="color: #30b1b1" class="material-icons">hourglass_empty</i>ANDAMENTO
+                                <i style="color: #30b1b1" class="material-icons">hourglass_empty</i> ANDAMENTO {{count($andamentos->solicitacao)}}
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#aprovado">
-                                <i style="color: #3ecc1b" class="material-icons">done_all</i>APROVADO
+                                <i style="color: #3ecc1b" class="material-icons">done_all</i> APROVADO {{count($aprovadas->solicitacao)}}
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#reprovado">
-                                <i style="color: #ff0000" class="material-icons">highlight_off</i>REPROVADO
+                                <i style="color: #ff0000" class="material-icons">highlight_off</i> REPROVADO {{count($reprovados->solicitacao)}}
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#devolvido">
-                                <i style="color: #deb422" class="material-icons">restore_page</i> DEVOLVIDO
+                                <i style="color: #deb422" class="material-icons">restore_page</i> DEVOLVIDO {{count($devolvidas->solicitacao)}}
                             </a>
                         </li>
                     </ul>

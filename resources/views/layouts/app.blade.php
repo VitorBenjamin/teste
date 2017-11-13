@@ -101,7 +101,7 @@
 
 @yield('content')
 
-@endif
+
 
  <!-- JavaScripts -->
 
@@ -151,16 +151,18 @@
  {!! Html::script('/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') !!}
 
  <!-- Jquery DataTable Plugin Js -->
- {!! Html::script('/plugins/jquery-datatable/jquery.dataTables.js') !!}
- {!! Html::script('/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') !!}
- {!! Html::script('https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js')!!}
- {!! Html::script('/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js') !!}
- {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.flash.min.js') !!}
- {!! Html::script('/plugins/jquery-datatable/extensions/export/jszip.min.js') !!}
- {!! Html::script('/plugins/jquery-datatable/extensions/export/pdfmake.min.js') !!}
- {!! Html::script('/plugins/jquery-datatable/extensions/export/vfs_fonts.js') !!}
- {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') !!}
- {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.print.min.js') !!}
+ @yield('scripts')
+ @stack('scripts')
+    {!! Html::script('/plugins/jquery-datatable/jquery.dataTables.js') !!}
+    {!! Html::script('/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') !!}
+    {!! Html::script('https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.min.js')!!}
+    {!! Html::script('/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js') !!}
+    {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.flash.min.js') !!}
+    {!! Html::script('/plugins/jquery-datatable/extensions/export/jszip.min.js') !!}
+    {!! Html::script('/plugins/jquery-datatable/extensions/export/pdfmake.min.js') !!}
+    {!! Html::script('/plugins/jquery-datatable/extensions/export/vfs_fonts.js') !!}
+    {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') !!}
+    {!! Html::script('/plugins/jquery-datatable/extensions/export/buttons.print.min.js') !!}
  <!-- Sparkline Chart Plugin Js -->
  <!-- {!! Html::script('/plugins/jquery-sparkline/jquery.sparkline.js') !!} -->
  <!-- Custom Js -->
@@ -176,7 +178,7 @@
  {!! Html::script('/js/pages/forms/basic-form-elements.js') !!}
  {!! Html::script('/js/pages/forms/advanced-form-elements.js') !!}
  {!! Html::script('/js/pages/ui/modals.js') !!}
-
+@endif
  <!-- {!! Html::script('/js/pages/index.js') !!} -->
 
  <!-- Demo Js -->
