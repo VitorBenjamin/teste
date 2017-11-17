@@ -14,45 +14,46 @@
             border-bottom-width: 3px;
             border-bottom-color: #FF9800;
             border-bottom-style: solid">
-        <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-            {{ csrf_field() }}
-            <div class="msg">Iniciar Sessão</div>
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="material-icons">person</i>
-                </span>
-                <div class="form-line">
-                    <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail" required autofocus>
+            <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                {{ csrf_field() }}
+                <div class="msg">Iniciar Sessão</div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">person</i>
+                    </span>
+                    <div class="form-line">
+                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail" required autofocus>
+                        
+                    </div>
                     @if ($errors->has('email'))
                     <span class="help-block">
                         <strong>{{ $errors->first('email') }}</strong>
                     </span>
                     @endif
                 </div>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="material-icons">lock</i>
-                </span>
-                <div class="form-line">
-                    <input type="password" class="form-control" name="password" placeholder="Senha" required>
-                    @if ($errors->has('password'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('password') }}</strong>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">lock</i>
                     </span>
-                    @endif
+                    <div class="form-line">
+                        <input type="password" class="form-control" name="password" placeholder="Senha" required>
+                        @if ($errors->has('password'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                        @endif
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8 p-t-5">
-                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} id="rememberme" class="filled-in chk-col-orange">
-                    <label for="rememberme">Lembrar</label>
+                <div class="row">
+                    <div class="col-xs-8 p-t-5">
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} id="rememberme" class="filled-in chk-col-orange">
+                        <label for="rememberme">Lembrar</label>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-block bg-orange waves-effect" type="submit">ENTRAR</button>
+                    </div>
                 </div>
-                <div class="col-xs-4">
-                    <button class="btn btn-block bg-orange waves-effect" type="submit">ENTRAR</button>
-                </div>
-            </div>
-            <div class="row m-t-15 m-b--20">
+                <div class="row m-t-15 m-b--20">
                 <!-- <div class="col-xs-6">
                     <a href="sign-up.html">Register Now!</a>
                 </div> -->

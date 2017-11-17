@@ -4,19 +4,19 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                <img src="{{url('images/user.png')}}" width="48" height="48" alt="User" />
-            </div>
+<!--                 <img src="{{url('images/user.png')}}" width="48" height="48" alt="User" />
+ -->            </div>
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{auth()->user()->nome}}</div>
                 <div class="email">{{auth()->user()->email}}</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
+                        <li><a href="{{ route('register') }}"><i class="material-icons">person</i>Profile</a></li>
                         <li role="seperator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
+                        <!-- <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
                         <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
+                        <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li> -->
                         <li role="seperator" class="divider"></li>
                         <li><a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
@@ -40,14 +40,14 @@
                             <span>DashBoard</span>
                         </a>
                     </li>
-
+                    @role(['ADVOGADO','COORDENADOR'])
                     <li>
                         <a href="{{route('reembolso.cadastrar')}}">
                             <i class="material-icons" style="color: #66a216">account_balance_wallet</i>
                             <span>Solicitar Reembolso</span>
                         </a>
                     </li>
-
+                    
                     <li>
                         <a href="{{route('compra.cadastrar')}}">
                             <i class="material-icons" style="color: #009688">add_shopping_cart</i>
@@ -74,7 +74,8 @@
                             <i class="material-icons" style="color: #795548">content_paste</i>
                             <span>Solicitar Guia</span>
                         </a>
-                    </li>          
+                    </li>
+                    @endrole          
                 </ul>
             </div>
             <!-- #Menu -->

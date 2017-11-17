@@ -24,6 +24,10 @@ class StatusTableSeeder extends Seeder
     		'descricao' => 'ANDAMENTO',
     		
     	]);
+        Status::create([
+            'descricao' => 'ANDAMENTO-RECORRENTE',
+            
+        ]);
     	Status::create([
     		'descricao' => 'APROVADO',
     		
@@ -44,5 +48,9 @@ class StatusTableSeeder extends Seeder
     		'descricao' => 'FINALIZADO',
     		
     	]);
+        Status::create([
+            'descricao' => 'RECORRENTE',
+            
+        ]);
     }
 }

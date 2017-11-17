@@ -159,68 +159,65 @@
 					</h2>
 				</div>
 				<div class="body">
-					<div class="table-responsive">
-						<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
-							<thead>
-								<tr>
-									<th></th>
-									<th>Data</th>
-									<th>Prioridade</th>
-									<th>Reclamante</th>
-									<th>Perfil Pagamento</th>
-									<th>Banco</th>
-									<th>Area</th>
-									<th>Tipo</th>
-									<th>Valor</th>
-									<th>PDF</th>
-									<th>Ações</th>																	
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th></th>
-									<th>Data</th>
-									<th>Prioridade</th>
-									<th>Reclamante</th>
-									<th>Perfil Pagamento</th>
-									<th>Banco</th>
-									<th>Area</th>
-									<th>Tipo</th>
-									<th>Valor</th>
-									<th>PDF</th>
-									<th>Ações</th>
-								</tr>
-							</tfoot>
-							<tbody> 
-								@foreach ($solicitacao->guia as $guia)
-								<tr>
-									<td></td>
-									<td>{{date('d/m/y',strtotime($guia->data_limite))}}</td>
-									<td>{{$guia->prioridade == 1 ? 'SIM' : 'NÃO' }}</td>
-									<td>{{$guia->reclamante}}</td>									
-									<td>{{$guia->perfil_pagamento}}</td>
-									<td>{{$guia->banco}}</td>
-									<td>{{$guia->tipoGuia()->first()->tipo}}</td>
-									<td>{{$guia->tipoGuia()->first()->descricao}}</td>
-									<td>{{  'R$ '.number_format($guia->valor, 2, ',', '.') }} </td>
-									<td><a target="_blank" href="{{URL::to('storage/guias/'.$guia->anexo_pdf)}}" class="btn btn-primary waves-effect">
-										<i class="material-icons">file_download</i>EXIBIR PDF</a>
-									</td>
-									<td>
-										<div class="icon-button-demo" >
-											<a href="{{ route('guia.editarGuia', $guia->id)}}" class="btn btn-circle waves-effect waves-circle waves-float" ><i class="material-icons">settings</i></a>
-											
-											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('guia.deletarGuia', $guia->id)}}"><i class="material-icons">delete_sweep</i></a>
+					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Prioridade</th>
+								<th>Reclamante</th>
+								<th>Perfil Pagamento</th>
+								<th>Banco</th>
+								<th>Area</th>
+								<th>Tipo</th>
+								<th>Valor</th>
+								<th>PDF</th>
+								<th>Ações</th>																	
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Prioridade</th>
+								<th>Reclamante</th>
+								<th>Perfil Pagamento</th>
+								<th>Banco</th>
+								<th>Area</th>
+								<th>Tipo</th>
+								<th>Valor</th>
+								<th>PDF</th>
+								<th>Ações</th>
+							</tr>
+						</tfoot>
+						<tbody> 
+							@foreach ($solicitacao->guia as $guia)
+							<tr>
+								<td></td>
+								<td>{{date('d/m/y',strtotime($guia->data_limite))}}</td>
+								<td>{{$guia->prioridade == 1 ? 'SIM' : 'NÃO' }}</td>
+								<td>{{$guia->reclamante}}</td>									
+								<td>{{$guia->perfil_pagamento}}</td>
+								<td>{{$guia->banco}}</td>
+								<td>{{$guia->tipoGuia()->first()->tipo}}</td>
+								<td>{{$guia->tipoGuia()->first()->descricao}}</td>
+								<td>{{  'R$ '.number_format($guia->valor, 2, ',', '.') }} </td>
+								<td><a target="_blank" href="{{URL::to('storage/guias/'.$guia->anexo_pdf)}}" class="btn btn-primary waves-effect">
+									<i class="material-icons">file_download</i>EXIBIR PDF</a>
+								</td>
+								<td class="acoesTD">
+									<div class="icon-button-demo" >
+										<a href="{{ route('guia.editarGuia', $guia->id)}}" class="btn btn-circle waves-effect waves-circle waves-float" ><i class="material-icons">settings</i></a>
+										
+										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('guia.deletarGuia', $guia->id)}}"><i class="material-icons">delete_sweep</i></a>
 
-										</div>
-									</td>
-								</tr>
-								@endforeach														
-							</tbody>
-						</table>
-					</div>
+									</div>
+								</td>
+							</tr>
+							@endforeach														
+						</tbody>
+					</table>
 				</div>
-
 			</div>
 		</div> 												
 	</div>

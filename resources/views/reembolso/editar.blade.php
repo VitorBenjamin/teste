@@ -69,58 +69,58 @@
 					</h2>
 				</div>
 				<div class="body">
-						<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
-							<thead>
-								<tr>
-									<th></th>
-									<th>Data</th>
-									<th>Origem</th>
-									<th>Destino</th>
-									<th>Ida/Volta</th>
-									<th>Distância</th>
-									<th>Ações</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th></th>
-									<th>Data</th>
-									<th>Origem</th>
-									<th>Destino</th>
-									<th>Ida/Volta</th>
-									<th>Distância</th>
-									<th>Ações</th>
-								</tr>
-							</tfoot>
-							<tbody>
-								@foreach ($solicitacao->translado as $translado)
+					<table class="table table-bordered table-striped nowrap table-hover dataTable js-exportable ">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Origem</th>
+								<th>Destino</th>
+								<th>Ida/Volta</th>
+								<th>Distância</th>
+								<th>Ações</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Origem</th>
+								<th>Destino</th>
+								<th>Ida/Volta</th>
+								<th>Distância</th>
+								<th>Ações</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							@foreach ($solicitacao->translado as $translado)
 
-								<tr>
-									<td></td>
-									<td>{{date('d/m/y',strtotime($translado->data_translado))}}</td>
-									<td>{{$translado->origem}}</td>
-									<td>{{$translado->destino}}</td>
-									@if($translado->ida_volta)
+							<tr>
+								<td></td>
+								<td>{{date('d/m/y',strtotime($translado->data_translado))}}</td>
+								<td>{{$translado->origem}}</td>
+								<td>{{$translado->destino}}</td>
+								@if($translado->ida_volta)
 
-									<td>SIM</td>
-									@else
+								<td>SIM</td>
+								@else
 
-									<td>NÂO</td>
-									@endif
+								<td>NÂO</td>
+								@endif
 
-									<td>{{$translado->distancia}}</td>
-									<td>
-										<div class="icon-button-demo" >
-											<a href="{{ route('reembolso.editarTranslado', $translado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float"><i class="material-icons">settings</i></a>
+								<td>{{$translado->distancia}}</td>
+								<td class="acoesTD">
+									<div class="icon-button-demo" >
+										<a href="{{ route('reembolso.editarTranslado', $translado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float"><i class="material-icons">settings</i></a>
 
-											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('reembolso.deletarTranslado', $translado->id)}}"><i class="material-icons">delete_sweep</i></a>
-										</div>
-									</td>
-								</tr>
-								@endforeach														
+										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('reembolso.deletarTranslado', $translado->id)}}"><i class="material-icons">delete_sweep</i></a>
+									</div>
+								</td>
+							</tr>
+							@endforeach														
 
-							</tbody>
-						</table>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -133,58 +133,89 @@
 			<div class="card">
 				<div class="header">
 					<h2>
-						LISTAGEM DOS DESPESAS
+						LISTAGEM DAS DESPESAS
 					</h2>
 				</div>
 				<div class="body">
-					<div class="table-responsive">
-						<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
-							<thead>
-								<tr>
-									<th></th>
-									<th>Data</th>
-									<th>Descricao</th>
-									<th>Comprovante</th>
-									<th>Valor</th>
-									<th>Ação</th>
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th></th>
-									<th>Data</th>
-									<th>Descricao</th>
-									<th>Comprovante</th>
-									<th>Valor</th>
-									<th>Ação</th>
-								</tr>
-							</tfoot>
-							<tbody>
-								@foreach ($solicitacao->despesa as $despesa)
-								<tr>
-									<td></td>
-									<td>{{date('d/m/y',strtotime($despesa->data_despesa))}}</td>
-									<td>{{$despesa->descricao}}</td>
-									<td>{{$despesa->tipo_comprovante}}</td>
-									<td>{{$despesa->valor}}</td>
-									<td>
-										<div class="icon-button-demo" >
-											<a href="{{ route('reembolso.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float"><i class="material-icons">settings</i></a>
+					<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Descricao</th>
+								<th>Comprovante</th>
+								<th>Valor</th>
+								<th>Ação</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Descricao</th>
+								<th>Comprovante</th>
+								<th>Valor</th>
+								<th>Ação</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							@foreach ($solicitacao->despesa as $key => $despesa)
+							<tr>
+								<td></td>
+								<td>{{date('d/m/y',strtotime($despesa->data_despesa))}}</td>
+								<td>{{$despesa->descricao}}</td>
+								<td>{{$despesa->tipo_comprovante}}</td>
+								<td>{{$despesa->valor}}</td>
+								<td class="acoesTD">
+									<div class="icon-button-demo" >
+										<a href="{{ route('reembolso.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+											<i class="material-icons">settings</i>
+										</a>
 
-											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('reembolso.deletarDespesa', $despesa->id)}}"><i class="material-icons">delete_sweep</i></a>
-										</div>
-									</td>
-								</tr>
-								@endforeach														
-							</tbody>
-						</table>
-					</div>
+										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('reembolso.deletarDespesa',$despesa->id)}}">
+											<i class="material-icons">delete_sweep</i>
+										</a>
+										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+1}})">
+											<i class="material-icons">photo_library</i>
+										</a>
+									</div>
+								</td>
+							</tr>							
+							@endforeach														
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- FIM LISTAGEM DOS DESPESAS -->
-	
+	<!-- FIM LISTAGEM DAS DESPESAS -->
+
+	<!-- MODAL GALERIA -->
+	<div id="myModal" class="modal-2">
+		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
+		<div class="modal-content-2">
+			@foreach ($solicitacao->despesa as $key => $despesa)
+			<div class="mySlides">
+				<div class="numbertext"><span class="badge bg-cyan">{{$key+1}} / {{count($solicitacao->despesa)}}</span></div>
+				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
+			</div>
+			@endforeach														
+
+			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
+			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
+
+			<!-- <div class="caption-container">
+				<p id="caption"></p>
+			</div> -->
+			<!-- 
+			@foreach ($solicitacao->despesa as $key => $despesa)
+			<div class="column">
+				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
+			</div>
+			@endforeach -->
+
+		</div>
+	</div>
 	<!-- MODAL TRANSLADO -->
 	<div class="modal fade" id="modalTranslado" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
@@ -379,7 +410,20 @@
 			</div>
 		</div>
 	</div>
+	
 	<!-- FIM MODAL DESPESA -->
+	
 
 </section>
 @endsection
+<!-- @push('scripts')
+<script src="{{ URL::asset('/plugins/jquery-datatable/jquery.dataTables.js') }}"></script>
+<script src="{{ URL::asset('/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') }}"></script>
+<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js') }}"></script>
+<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/buttons.flash.min.js') }}"></script>
+<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/jszip.min.js') }}"></script>
+<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/pdfmake.min.js') }}"></script>
+<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/vfs_fonts.js') }}"></script>
+<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
+<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
+@endpush -->

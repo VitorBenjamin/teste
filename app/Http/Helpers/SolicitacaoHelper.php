@@ -22,7 +22,7 @@ class SolicitacaoHelper
     {
         foreach ($solicitacao->status as $status) {
             
-            if ($status->descricao == config('constantes.status_aberto')) {
+            if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_devolvido')) {
                 
                 return "ok";
             }elseif ($status->descricao == config('constantes.status_andamento')) {
@@ -33,7 +33,7 @@ class SolicitacaoHelper
 
                 ]);
 
-                return redirect()->route('solicitacao.index');
+                return redirect()->route('user.index');
             }   
         }
     }

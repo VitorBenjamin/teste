@@ -68,7 +68,7 @@ class GuiaController extends Controller
 			]);
 		return redirect()->route('guia.editar',$id);
 	}
-	public function veriicarSolicitacao($id)
+	public function verificarSolicitacao($id)
 	{
 		$solicitacao = Solicitacao::with('guia')
 		->where('tipo',config('constantes.tipo_guia'))
@@ -89,6 +89,16 @@ class GuiaController extends Controller
 		}else{
 			return $exist;
 		}
+	}
+
+	public function analisar($id)
+	{
+
+		$solicitacao = Solicitacao::with('guia','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
+        //dd($solicitacao);
+
+		return view('coordenador.analiseGuia', compact('solicitacao'));
+
 	}
 
     //Retorna a View de edição da unidade

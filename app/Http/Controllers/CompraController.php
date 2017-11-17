@@ -42,7 +42,7 @@ class CompraController extends Controller
 		return redirect()->route('compra.editar', $solicitacao->id);
 	}
 	
-	public function veriicarSolicitacao($id)
+	public function verificarSolicitacao($id)
 	{
 		$solicitacao = Solicitacao::with('compra')
 		->where('tipo',config('constantes.tipo_compra'))
@@ -63,6 +63,16 @@ class CompraController extends Controller
 		}else{
 			return $exist;
 		}
+	}
+
+	public function analisar($id)
+	{
+
+		$solicitacao = Solicitacao::with('compra','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
+        //dd($solicitacao);
+
+		return view('coordenador.analiseCompra', compact('solicitacao'));
+
 	}
 
     //Retorna a View de edição da unidade

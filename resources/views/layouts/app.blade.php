@@ -64,7 +64,7 @@
 </head>
 <body id="app-layout" class="theme-black {{Auth::guest() == true ? 'login-page' : ''}}">
 
-  @if (Auth::guest())
+@if (Auth::guest())
  <!--  <li><a href="{{ route('login') }}">Login</a></li>
  <li><a href="{{ route('register') }}">Register</a></li> -->
  @yield('content-login')

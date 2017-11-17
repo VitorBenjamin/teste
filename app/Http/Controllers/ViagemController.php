@@ -8,6 +8,7 @@ use App\Http\Requests\SolicitacaoRequest;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use App\Repositories\SolicitacaoRepository;
+use App\Processo;
 use App\Viagem;
 use App\Solicitacao;
 use App\Solicitante;
@@ -40,7 +41,19 @@ class ViagemController extends Controller
 
         return redirect()->route('viagem.editar', $solicitacao->id);
     }
-    public function veriicarSolicitacao($id)
+
+    public function analisar($id)
+    {
+
+        $solicitacao = Solicitacao::with('viagem','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
+        //dd($solicitacao);
+
+        return view('coordenador.analiseViagem', compact('solicitacao'));
+
+    }
+
+
+    public function verificarSolicitacao($id)
     {
         $solicitacao = Solicitacao::with('viagem')
         ->where('tipo',config('constantes.tipo_viagem'))

@@ -60,6 +60,7 @@ $(document).on('click', '.js-sweetalert', function (e) {
             url: urlDeletar,
             data: {id:id},
             success: function (data) {
+                console.log(data);
                 swal({
                   type: 'success',
                   title: "Solicitação Removida com Sucesso",
@@ -73,7 +74,8 @@ $(document).on('click', '.js-sweetalert', function (e) {
 
             },
             error : function(data) {
-                swal("Cancelled", "Your imaginary file is safe :)", "error");
+                console.log(data);
+                swal("Cancelado", "Seu arquivo não pode ser Apagado :)", "error");
             }       
         });
 

@@ -103,110 +103,107 @@
 					</h2>
 				</div>
 				<div class="body">
-					<div class="table-responsive">
-						<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
-							<thead>
-								<tr>
-									<th></th>
-									<th>Data</th>
-									<th>Descrição</th>
-									<th>Valor</th>
-									<th>Ações</th>																	
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th></th>
-									<th>Data</th>
-									<th>Descrição</th>
-									<th>Valor</th>
-									<th>Ações</th>
-								</tr>
-							</tfoot>
-							<tbody>
-								@foreach ($solicitacao->antecipacao as $antecipacao)
-								<tr>
-									<td></td>
-									<td>{{date('d/m/y',strtotime($antecipacao->data_recebimento))}}</td>
-									<td>{{$antecipacao->descricao}}</td>
-									<td>{{$antecipacao->valor_solicitado}}</td>									
-									<td>
-										<div class="icon-button-demo" >
-											<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$antecipacao->id}}" role="button"><i class="material-icons">settings</i></a>
+					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Descrição</th>
+								<th>Valor</th>
+								<th>Ações</th>																	
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Descrição</th>
+								<th>Valor</th>
+								<th>Ações</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							@foreach ($solicitacao->antecipacao as $antecipacao)
+							<tr>
+								<td></td>
+								<td>{{date('d/m/y',strtotime($antecipacao->data_recebimento))}}</td>
+								<td>{{$antecipacao->descricao}}</td>
+								<td>{{$antecipacao->valor_solicitado}}</td>									
+								<td class="acoesTD">
+									<div class="icon-button-demo" >
+										<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$antecipacao->id}}" role="button"><i class="material-icons">settings</i></a>
 
-											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('antecipacao.deletarAntecipacao', $antecipacao->id)}}"><i class="material-icons">delete_sweep</i></a>
+										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('antecipacao.deletarAntecipacao', $antecipacao->id)}}"><i class="material-icons">delete_sweep</i></a>
+									</div>
+
+								</td>
+							</tr>
+
+
+							<!-- MODAL TRANSLADO -->
+							<div class="modal fade" id="modal{{$antecipacao->id}}" tabindex="-1" role="dialog">
+								<div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title" id="largeModalLabel">Editar um Antecipação</h4>
 										</div>
 
-									</td>
-								</tr>
+										<!-- INCIO SESSÃO TRANSLADO -->
+										<form action="{{ route('antecipacao.atualizarAntecipacao',$antecipacao->id)}}" method="POST">
+											{{ csrf_field() }}
+											{{ method_field('PUT') }}
+											<div class="modal-body">				
 
-
-								<!-- MODAL TRANSLADO -->
-								<div class="modal fade" id="modal{{$antecipacao->id}}" tabindex="-1" role="dialog">
-									<div class="modal-dialog modal-lg" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h4 class="modal-title" id="largeModalLabel">Editar um Antecipação</h4>
-											</div>
-
-											<!-- INCIO SESSÃO TRANSLADO -->
-											<form action="{{ route('antecipacao.atualizarAntecipacao',$antecipacao->id)}}" method="POST">
-												{{ csrf_field() }}
-												{{ method_field('PUT') }}
-												<div class="modal-body">				
-
-													<div class="row clearfix">
-														<div class="col-md-2">
-															<div class="form-group">
-																<div class="form-line">
-																	<label for="data_recebimento">Data</label>
-																	<input type="text" value="{{$antecipacao->data_recebimento}}" name="data_recebimento" class="datepicker form-control" placeholder="Escolha uma Data"/>
-																</div>
+												<div class="row clearfix">
+													<div class="col-md-2">
+														<div class="form-group">
+															<div class="form-line">
+																<label for="data_recebimento">Data</label>
+																<input type="text" value="{{$antecipacao->data_recebimento}}" name="data_recebimento" class="datepicker form-control" placeholder="Escolha uma Data"/>
 															</div>
 														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<div class="form-line">
-																	<label for="descricao">Descrição</label>
-																	<input type="text" value="{{$antecipacao->descricao}}" name="descricao" class="form-control" placeholder="Descrição do produto"/>										
-																</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<div class="form-line">
+																<label for="descricao">Descrição</label>
+																<input type="text" value="{{$antecipacao->descricao}}" name="descricao" class="form-control" placeholder="Descrição do produto"/>										
 															</div>
-														</div>
-
-														<div class="col-md-2">
-															<div class="form-group">
-																<div class="form-line">
-																	<label for="valor_solicitado">Valor Solicitado</label>
-																	<input type="text" value="{{$antecipacao->valor_solicitado}}" name="valor_solicitado" class="form-control" placeholder="Qtd."/>
-																</div>
-															</div>								
-														</div>
-														<div class="col-md-2" style="margin-top: 20px">
-															<button class="btn btn-primary btn-lg waves-effect">
-																<i class="material-icons">save</i>
-																<span>ADD PRODUTO</span> 
-															</button>
 														</div>
 													</div>
 
-
-													<div class="modal-footer">													
-														<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
-														<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+													<div class="col-md-2">
+														<div class="form-group">
+															<div class="form-line">
+																<label for="valor_solicitado">Valor Solicitado</label>
+																<input type="text" value="{{$antecipacao->valor_solicitado}}" name="valor_solicitado" class="form-control" placeholder="Qtd."/>
+															</div>
+														</div>								
 													</div>
-
+													<div class="col-md-2" style="margin-top: 20px">
+														<button class="btn btn-primary btn-lg waves-effect">
+															<i class="material-icons">save</i>
+															<span>ADD PRODUTO</span> 
+														</button>
+													</div>
 												</div>
-											</form>	
-										</div>
+
+
+												<div class="modal-footer">													
+													<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+													<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+												</div>
+
+											</div>
+										</form>	
 									</div>
 								</div>
-								<!-- FIM MODAL TRANSLADO -->
-								@endforeach														
-							</tbody>
-						</table>
-					</div>
+							</div>
+							<!-- FIM MODAL TRANSLADO -->
+							@endforeach														
+						</tbody>
+					</table>
 				</div>
-
 			</div>
 		</div> 												
 	</div>

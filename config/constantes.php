@@ -11,6 +11,9 @@ return [
 	'status_aberto' => 'ABERTO',
 	'status_fechado' => 'FECHADO',
 	'status_andamento' => 'ANDAMENTO',
+	'status_andamento_recorrente' => 'ANDAMENTO-RECORRENTE',
+	'status_recorrente' => 'RECORRENTE',
+	'status_aprovado_recorrente' => 'APROVADO-RECORRENTE',
 	'status_aprovado' => 'APROVADO',
 	'status_reprovado' => 'REPROVADO',
 	'status_devolvido' => 'DEVOLVIDO',
@@ -21,4 +24,11 @@ return [
 	'tipo_guia' => 'GUIA',
 	'tipo_compra' => 'COMPRA',
 	'tipo_antecipacao' => 'ANTECIPAÇÃO',
+	'user_advogado' =>'ADVOGADO',
+	'user_coordenador' =>'COORDENADOR',
+	'user_financeiro' =>'FINANCEIRO',
+	'user_god' =>'GOD',
+	'km' => 1,
+
+
 ];

@@ -64,6 +64,17 @@ class AntecipacaoController extends Controller
 		}
 	}
 
+
+	public function analisar($id)
+	{
+
+		$solicitacao = Solicitacao::with('antecipacao','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
+        //dd($solicitacao);
+
+		return view('coordenador.analiseAntecipacao', compact('solicitacao'));
+
+	}
+
     //Retorna a View de edição da unidade
 	public function editar($soli)
 	{

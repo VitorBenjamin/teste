@@ -17,6 +17,7 @@ class Limites extends Migration
             $table->increments('id');
             $table->decimal('de', 10, 2);
             $table->decimal('ate', 10, 2);
+            $table->integer('area_atuacoes_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

@@ -100,117 +100,108 @@
 					</h2>
 				</div>
 				<div class="body">
-					<div class="table-responsive">
-						<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
-							<thead>
-								<tr>
-									<th></th>
-									<th>Data</th>
-									<th>Descrição</th>
-									<th>Quantidade</th>
-									<th>Ações</th>																	
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th></th>
-									<th>Data</th>
-									<th>Descrição</th>
-									<th>Quantidade</th>
-									<th>Ações</th>
-								</tr>
-							</tfoot>
-							<tbody>
-								@foreach ($solicitacao->compra as $compra)
-								<tr>
-									<td></td>
-									<td>{{date('d/m/y',strtotime($compra->data_compra))}}</td>
-									<td>{{$compra->descricao}}</td>
-									<td>{{$compra->quantidade}}</td>									
-									<td>
-										<div class="icon-button-demo" >
-											<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$compra->id}}" role="button"><i class="material-icons">settings</i></a>
+					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Descrição</th>
+								<th>Quantidade</th>
+								<th>Ações</th>																	
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Descrição</th>
+								<th>Quantidade</th>
+								<th>Ações</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							@foreach ($solicitacao->compra as $compra)
+							<tr>
+								<td></td>
+								<td>{{date('d/m/y',strtotime($compra->data_compra))}}</td>
+								<td>{{$compra->descricao}}</td>
+								<td>{{$compra->quantidade}}</td>									
+								<td class="acoesTD">
+									<div class="icon-button-demo" >
+										<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$compra->id}}" role="button"><i class="material-icons">settings</i></a>
 
-											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('compra.deletarCompra', $compra->id)}}"><i class="material-icons">delete_sweep</i></a>
+										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('compra.deletarCompra', $compra->id)}}"><i class="material-icons">delete_sweep</i></a>
+									</div>
+								</td>
+							</tr>
+							<!-- MODAL TRANSLADO -->
+							<div class="modal fade" id="modal{{$compra->id}}" tabindex="-1" role="dialog">
+								<div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title" id="largeModalLabel">Editar um Produto</h4>
 										</div>
-									</td>
-								</tr>
-								<!-- MODAL TRANSLADO -->
-								<div class="modal fade" id="modal{{$compra->id}}" tabindex="-1" role="dialog">
-									<div class="modal-dialog modal-lg" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h4 class="modal-title" id="largeModalLabel">Editar um Produto</h4>
-											</div>
 
-											<!-- INCIO SESSÃO TRANSLADO -->
-											<form action="{{ route('compra.atualizarCompra',$compra->id)}}" method="POST">
-												{{ csrf_field() }}
-												{{ method_field('PUT') }}
-												<div class="modal-body">				
+										<!-- INCIO SESSÃO TRANSLADO -->
+										<form action="{{ route('compra.atualizarCompra',$compra->id)}}" method="POST">
+											{{ csrf_field() }}
+											{{ method_field('PUT') }}
+											<div class="modal-body">				
 
-													<div class="row clearfix">
-														<div class="col-md-2">
-															<div class="form-group">
-																<div class="form-line">
-																	<label for="data_compra">Data</label>
-																	<input type="text" value="{{$compra->data_compra}}" name="data_compra" class="datepicker form-control" placeholder="Escolha uma Data"/>
-																</div>
+												<div class="row clearfix">
+													<div class="col-md-2">
+														<div class="form-group">
+															<div class="form-line">
+																<label for="data_compra">Data</label>
+																<input type="text" value="{{$compra->data_compra}}" name="data_compra" class="datepicker form-control" placeholder="Escolha uma Data"/>
 															</div>
 														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<div class="form-line">
-																	<label for="descricao">Descrição</label>
-																	<input type="text" value="{{$compra->descricao}}" name="descricao" class="form-control" placeholder="Descrição do produto"/>										
-																</div>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<div class="form-line">
+																<label for="descricao">Descrição</label>
+																<input type="text" value="{{$compra->descricao}}" name="descricao" class="form-control" placeholder="Descrição do produto"/>										
 															</div>
-														</div>
-
-														<div class="col-md-2">
-															<div class="form-group">
-																<div class="form-line">
-																	<label for="quantidade">Quantidade</label>
-																	<input type="text" value="{{$compra->quantidade}}" name="quantidade" class="form-control" placeholder="Qtd."/>
-																</div>
-															</div>								
-														</div>
-														<div class="col-md-2" style="margin-top: 20px">
-															<button class="btn btn-primary btn-lg waves-effect">
-																<i class="material-icons">save</i>
-																<span>ADD PRODUTO</span> 
-															</button>
 														</div>
 													</div>
 
-
-													<div class="modal-footer">													
-														<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
-														<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+													<div class="col-md-2">
+														<div class="form-group">
+															<div class="form-line">
+																<label for="quantidade">Quantidade</label>
+																<input type="text" value="{{$compra->quantidade}}" name="quantidade" class="form-control" placeholder="Qtd."/>
+															</div>
+														</div>								
 													</div>
-
+													<div class="col-md-2" style="margin-top: 20px">
+														<button class="btn btn-primary btn-lg waves-effect">
+															<i class="material-icons">save</i>
+															<span>ADD PRODUTO</span> 
+														</button>
+													</div>
 												</div>
-											</form>	
-										</div>
+
+
+												<div class="modal-footer">													
+													<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+													<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+												</div>
+
+											</div>
+										</form>	
 									</div>
 								</div>
-								<!-- FIM MODAL TRANSLADO -->
-
-
-
-
-
-								@endforeach														
-							</tbody>
-						</table>
-					</div>
+							</div>
+							<!-- FIM MODAL TRANSLADO -->
+							@endforeach														
+						</tbody>
+					</table>
 				</div>
 
 			</div>
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DOS PRODUTOS -->
-	
-
 </section>
 @endsection
