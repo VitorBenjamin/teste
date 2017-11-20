@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="block-header">
             <h2>
-                REGISTRO DE ADVOGADO
+                CADASTRO DE ANALISTA FINANCEIRO
             </h2>
         </div>
         <!-- Advanced Form Example With Validation -->
@@ -19,13 +19,14 @@
                     <div class="body">
                         <form id="wizard_with_validation" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
-                            <input type="hidden" name="role" value="{{config('constantes.user_advogado')}}">
+                            <input type="hidden" name="role" value="{{config('constantes.user_financeiro')}}">
+
                             <h3>SEGURANÇA</h3>
                             <fieldset>
                                 <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }} form-float">
                                     <div class="form-line">
                                         <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}" required autofocus>
-                                        <label class="form-label">Nome do Advogado*</label>
+                                        <label class="form-label">Nome do Analista*</label>
                                         @if ($errors->has('nome'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('nome') }}</strong>

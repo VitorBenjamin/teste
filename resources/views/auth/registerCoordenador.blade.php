@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="block-header">
             <h2>
-                REGISTRO DE ADVOGADO
+                CADASTRO DE COORDENADOR
             </h2>
         </div>
         <!-- Advanced Form Example With Validation -->
@@ -19,7 +19,7 @@
                     <div class="body">
                         <form id="wizard_with_validation" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
-                            <input type="hidden" name="role" value="{{config('constantes.user_advogado')}}">
+                            <input type="hidden" name="role" value="{{config('constantes.user_coordenador')}}">
                             <h3>SEGURANÇA</h3>
                             <fieldset>
                                 <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }} form-float">
@@ -67,7 +67,7 @@
                             <fieldset>
                                 <div class="form-group form-float">
                                     <label for="area_atuacoes_id">Área de Atendimento</label>
-                                    <select id="area_atuacoes_id" name="area_atuacoes_id" class="form-control show-tick" data-live-search="true" required>
+                                    <select id="area_atuacoes_id" name="area_atuacoes_id" data-container="body" class="form-control show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" required>
                                         <option value="">SELECIONE</option>
                                         @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">{{ $area->tipo }}</option>
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <label for="unidades_id">Unidades</label>
-                                    <select id="unidades_id" name="unidades_id" class="form-control show-tick" data-live-search="true" required>
+                                    <select id="unidades_id" name="unidades_id" data-container="body" class="form-control show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" required>
                                         <option value="">SELECIONE</option>
                                         @foreach ($unidades as $unidade)
                                         <option value="{{ $unidade->id }}">{{ $unidade->localidade }}</option>
@@ -105,7 +105,48 @@
                                         @endif
                                     </div>
                                 </div>
-
+                            </fieldset>
+                            <h3>Dados Coordenador</h3>
+                            <fieldset>
+                                <div class="form-group form-float">
+                                    <label for="area_atuacoes_limite">Área de Atendimento</label>
+                                    <select id="area_atuacoes_limite" name="area_atuacoes_limite" class="form-control show-tick" data-container="body" data-live-search="true" required>
+                                        <option value="">SELECIONE</option>
+                                        @foreach ($areas as $area)
+                                        <option value="{{ $area->id }}">{{ $area->tipo }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group form-float">
+                                    <label for="unidades_limite">Unidades</label>
+                                    <select id="unidades_limite" name="unidades_limite[]" data-container="body" class="form-control show-tick" data-dropup-auto="false" multiple data-actions-box="true"  data-live-search="true">
+                                        @foreach ($unidades as $unidade)
+                                        <option value="{{ $unidade->id }}">{{ $unidade->localidade }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group{{ $errors->has('de') ? ' has-error' : '' }} form-float">
+                                    <div class="form-line">
+                                        <input id="de" type="text" class="form-control" name="de" value="{{ old('de') }}" required autofocus>
+                                        <label class="form-label">Limite Mínimo De*</label>
+                                        @if ($errors->has('de'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('de') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group{{ $errors->has('ate') ? ' has-error' : '' }} form-float">
+                                    <div class="form-line">
+                                        <input id="ate" type="text" class="form-control" name="ate" value="{{ old('ate') }}" required autofocus>
+                                        <label class="form-label">Limite Máximo de Até*</label>
+                                        @if ($errors->has('ate'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('ate') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
                             </fieldset>
                         </form>
                     </div>

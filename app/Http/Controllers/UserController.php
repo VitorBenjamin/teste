@@ -7,14 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Repositories\SolicitacaoRepository;
-use App\Despesa;
-use App\Processo;
-use App\Translado;
-use App\Solicitacao;
-use App\Solicitante;
-use App\Cliente;
-use App\AreaAtuacao; 
-use App\Status;
 use Illuminate\Support\Facades\Auth;
 
 

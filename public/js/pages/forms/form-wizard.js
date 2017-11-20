@@ -15,6 +15,7 @@ $(function () {
     //Vertical form basic
     $('#wizard_vertical').steps({
         headerTag: 'h2',
+        next :'Proximo',
         bodyTag: 'section',
         transitionEffect: 'slideLeft',
         stepsOrientation: 'vertical',
@@ -29,9 +30,21 @@ $(function () {
     //Advanced form with validation
     var form = $('#wizard_with_validation').show();
     form.steps({
+
         headerTag: 'h3',
+        next: 'Proximo',
         bodyTag: 'fieldset',
         transitionEffect: 'slideLeft',
+
+        labels: {
+        cancel: "Cancelar",
+        current: "current step:",
+        pagination: "Pagination",
+        finish: "Finalizar",
+        next: "Próximo",
+        previous: "Anterior",
+        loading: "Carregando ..."
+        },
         onInit: function (event, currentIndex) {
             $.AdminBSB.input.activate();
 
@@ -81,12 +94,30 @@ $(function () {
             $(input).parents('.form-line').removeClass('error');
         },
         errorPlacement: function (error, element) {
+            console.log(error);
             $(element).parents('.form-group').append(error);
         },
         rules: {
-            'confirm': {
+            'password_confirmation': {
                 equalTo: '#password'
             }
+        },
+        messages: {
+            nome: {
+                required: "Digite um nome",
+            },
+            email: {
+                required: "Digite um e-mail válido...",
+                email: "Seu endereço de e-mail precisar ter um formato válido nome@dominio.com"
+            },
+            password: {
+                required: "Digite uma senha! min 6 caracteres...",
+                email: "Seu endereço de e-mail precisar ter um formato válido nome@dominio.com"
+            },
+            password_confirmation: {
+                equalTo: "Senhas Diferentes. Por Favor Digite a mesma senha do campo a cima!"
+            }
+
         }
     });
 });

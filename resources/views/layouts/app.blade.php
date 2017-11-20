@@ -67,7 +67,7 @@
 @if (Auth::guest())
  <!--  <li><a href="{{ route('login') }}">Login</a></li>
  <li><a href="{{ route('register') }}">Register</a></li> -->
- @yield('content-login')
+@yield('content-login')
  @else
  <!-- Page Loader -->
  <div class="page-loader-wrapper">
@@ -112,8 +112,12 @@
  <!-- Bootstrap Core Js -->
  {!! Html::script('/plugins/bootstrap/js/bootstrap.js') !!}
 
- <!-- Dropzone Plugin Js -->
- <!--  {!! Html::script('/plugins/dropzone/dropzone.js') !!} -->
+ <!-- Jquery Validation Plugin Css -->
+ {!! Html::script('/plugins/jquery-validation/jquery.validate.js') !!}
+
+ <!-- JQuery Steps Plugin Js -->
+ {!! Html::script('/plugins/jquery-steps/jquery.steps.js') !!}
+  {!! Html::script('/js/pages/forms/form-wizard.js') !!}
 
  <!-- Select Plugin Js -->
  {!! Html::script('/plugins/bootstrap-select/js/bootstrap-select.js') !!}
@@ -124,12 +128,6 @@
 
  <!-- Slimscroll Plugin Js -->
  {!! Html::script('/plugins/jquery-slimscroll/jquery.slimscroll.js') !!}
-
- <!-- Jquery Validation Plugin Css -->
- {!! Html::script('/plugins/jquery-validation/jquery.validate.js') !!}
-
- <!-- JQuery Steps Plugin Js -->
- {!! Html::script('/plugins/jquery-steps/jquery.steps.js') !!}
 
  <!-- Jquery CountTo Plugin Js -->
  {!! Html::script('/plugins/jquery-countto/jquery.countTo.js') !!}
@@ -173,7 +171,6 @@
 
  {!! Html::script('/js/admin.js') !!}
  {!! Html::script('/js/pages/ui/dialogs.js') !!}
- {!! Html::script('/js/pages/forms/form-wizard.js') !!}
  {!! Html::script('/js/pages/tables/jquery-datatable.js') !!}
  {!! Html::script('/js/pages/forms/basic-form-elements.js') !!}
  {!! Html::script('/js/pages/forms/advanced-form-elements.js') !!}

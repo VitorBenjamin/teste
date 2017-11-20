@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Wilder
@@ -29,6 +30,5 @@ return [
 	'user_financeiro' =>'FINANCEIRO',
 	'user_god' =>'GOD',
 	'km' => 1,
-
 
 ];
