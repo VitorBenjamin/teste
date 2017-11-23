@@ -26,7 +26,9 @@ class GuiaController extends Controller
 	{
 		$areas = AreaAtuacao::all('id','tipo');
 		$processos = Processo::all();
-		return view('guia.cadastrar', compact('areas','processos'));  	
+		$clientes = Cliente::all('id','nome');
+        $solicitantes = Solicitante::all('id','nome');
+		return view('guia.cadastrar', compact('areas','processos','solicitantes','clientes'));
 	}
 
     //Cadatra uma nova Solicitação e redireciona para a tela de edição
@@ -49,7 +51,7 @@ class GuiaController extends Controller
 		$fileName = $today.'_'.$id.'_'.$request->anexo_pdf->getClientOriginalName();	
 		$request->anexo_pdf->storeAs('public/guias',$fileName);
 		$guia = Guia::create([
-			'data_limite' => $request->data_limite,
+			'data_limite' => date('Y-m-d', strtotime($request->data_limite)),
 			'prioridade' => $request->prioridade,
 			'observacao' => $request->observacao,
 			'reclamante' => $request->reclamante,
@@ -97,7 +99,7 @@ class GuiaController extends Controller
 		$solicitacao = Solicitacao::with('guia','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
         //dd($solicitacao);
 
-		return view('coordenador.analiseGuia', compact('solicitacao'));
+		return view('guia.analiseGuia', compact('solicitacao'));
 
 	}
 
@@ -113,12 +115,13 @@ class GuiaController extends Controller
 		// foreach ($solicitacao->guia as $guia ) {
 		// 	dd($guia->tipoGuia()->first()->id);
 		// }
-		$cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
+		// $cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
 		$areas = AreaAtuacao::all('id','tipo'); 
-		$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
+		// $solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
 		$tipo_guia = TipoGuia::all('id','tipo','descricao')->groupBy('tipo');
-
-		return view('guia.editar', compact('solicitacao','cliente','areas','solicitante','tipo_guia'));
+		$clientes = Cliente::all('id','nome');
+        $solicitantes = Solicitante::all('id','nome');
+		return view('guia.editar', compact('solicitacao','clientes','areas','solicitantes','tipo_guia'));
 	}
 
 
@@ -143,7 +146,7 @@ class GuiaController extends Controller
 		}
 		$guia->update(
 			[   
-			'data_limite' => $request->data_limite,
+			'data_limite' => date('Y-m-d', strtotime($request->data_limite)),
 			'prioridade' => $request->prioridade,
 			'observacao' => $request->observacao,
 			'reclamante' => $request->reclamante,

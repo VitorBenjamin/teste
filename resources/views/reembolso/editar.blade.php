@@ -43,10 +43,10 @@
 							<i class="material-icons">exposure_plus_1</i>
 							<span>DESPESA</span>
 						</a>
-						<a href="{{ route('solicitacao.andamento',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+						<!-- <a href="{{ route('solicitacao.andamento',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
 							<i class="material-icons">send</i>
 							<span>ENVIAR</span>
-						</a>
+						</a> -->
 					</div>
 				</div>
 				<form action="{{ route('reembolso.atualizarCabecalho',$solicitacao->id)}}" method="POST">
@@ -69,7 +69,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable js-exportable ">
+					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example">
 						<thead>
 							<tr>
 								<th></th>
@@ -216,6 +216,8 @@
 
 		</div>
 	</div>
+	<!-- FIM MODAL GALERIA -->
+
 	<!-- MODAL TRANSLADO -->
 	<div class="modal fade" id="modalTranslado" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
@@ -370,10 +372,13 @@
 													</div>
 												</div>
 												<div class="col-md-2">
-													<div class="form-group">
+													<b>Valor</b>
+													<div class="input-group">
+														<span class="input-group-addon">
+															R$
+														</span>
 														<div class="form-line">
-															<label for="valor">Valor</label>
-															<input type="text" id="valor" name="valor" class="form-control" placeholder="R$." required/>
+															<input type="numeric" id="valor" name="valor" class="form-control valor" placeholder="" required/>
 														</div>
 													</div>
 												</div>
@@ -382,9 +387,9 @@
 														<div class="form-line">
 															<label for="anexo_comprovante">Evie um Arquivo</label>
 															<input type="file" name="anexo_comprovante" id="anexo_comprovante" required/>
-															<button type="reset" id="pseudoCancel">
-																Cancel
-															</button>
+															<!-- <button type="reset" id="pseudoCancel">
+																Resetar
+															</button> -->
 														</div>
 													</div>
 												</div>

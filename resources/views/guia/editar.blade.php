@@ -26,7 +26,22 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
-					<h2>Dados da Guia</h2>
+					<!-- <h2>Cabecalho da Viagem</h2> -->
+					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
+						<a data-toggle="modal" data-target="#modalGuia" class="btn bg-light-green waves-effect" role="button">
+							<i class="material-icons">exposure_plus_1</i>
+							<!-- <span class="hidden-xs">ADD</span> -->
+							<span>GUIA</span>
+						</a>
+						<!-- <a data-toggle="modal" data-target="#modalDespesa" class="btn bg-green waves-effect" role="button">
+							<i class="material-icons">exposure_plus_1</i>
+							<span>DESPESA</span>
+						</a> -->
+						<!-- <a href="{{ route('solicitacao.andamento',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+							<i class="material-icons">send</i>
+							<span>ENVIAR</span>
+						</a> -->
+					</div>
 				</div>
 				<form action="{{ route('guia.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
@@ -38,8 +53,131 @@
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
 
+	<!-- MODAL CADASTRO DA ANTECIPAÇÂO -->
+	<div class="modal fade" id="modalGuia" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="largeModalLabel">Adicione uma Guia</h4>
+				</div>
+				<!-- INCIO SESSÃO VIAGEM -->
+				<div class="modal-body">
+					<form action="{{ route('guia.addGuia',$solicitacao->id)}}" method="POST" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						{{ method_field('PUT') }}			
+						<div class="body">
+							<div class="row clearfix">
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<div class="form-line">
+											<label for="data_limite">Data</label>
+											<input type="text" value="" name="data_limite" class="datepicker form-control" placeholder="Escolha uma Data" required />
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<div class="form-line">
+											<label for="reclamante">Reclamante</label>
+											<input type="text" value="" name="reclamante" class="form-control" placeholder="Nome do Reclamante" required/>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<label for="perfil_pagamento">Perfil Pagamento</label>
+									<select id="perfil_pagamento" name="perfil_pagamento" class="form-control show-tick" required>
+										<option value="BOLETO">BOLETO</option>										
+										<option value="DAF">DAF</option>
+										<option value="DMA">DAM</option>
+										<option value="GRU">GRU</option>
+										<option value="GFIP">GFIP</option>
+									</select>
+								</div>
+
+								<div class="col-md-3">
+									<label for="banco">Banco</label>
+									<select id="banco" name="banco" class="form-control show-tick" required>
+										<option value="BANCO DO BRASIL">BANCO DO BRASIL</option>										
+										<option value="ITAU">ITAU</option>
+										<option value="BRADESCO">BRADESCO</option>								
+									</select>
+								</div>
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<fieldset>
+											<legend style="margin: 0">Prioridade</legend>
+										</fieldset>
+										<input name="prioridade" value="1" type="radio" id="simP" />
+										<label style="margin: 15px 15px 0px 0px" for="simP">Sim</label>
+										<input name="prioridade" value="0" type="radio" id="naoP" checked />
+										<label style="margin: 15px 15px 0px 0px" for="naoP">Não</label>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<label for="tipo_guias_id">Tipo</label>
+									<select id="tipo_guias_id" name="tipo_guias_id" class="form-control show-tick" data-live-search="true" data-size="5" required>
+										@foreach($tipo_guia as $grupo => $tipo)
+										<optgroup label="{{$grupo}}">
+											@foreach($tipo as $desc)
+											<option value="{{$desc->id}}">{{$desc->descricao}}</option>
+											@endforeach	
+										</optgroup>
+										@endforeach						
+									</select>
+								</div>
+								<div class="col-md-2">
+									<b>Valor</b>
+									<div class="input-group">
+										<span class="input-group-addon">
+											R$
+										</span>
+										<div class="form-line">
+											<input type="numeric" name="valor" class="form-control valor" required/>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<div class="form-line">
+											<label for="anexo_pdf">Anexar PDF</label>
+											<input style="margin-top: 10px " type="file" name="anexo_pdf" id="anexo_pdf" required/>
+										</div>
+									</div>								
+								</div>	
+
+								<!-- <div class="col-md-2" style="margin-top: 20px">
+									<button class="btn bg-light-green waves-effect">
+										<i class="material-icons">save</i>
+										<span>ADD GUIA</span> 
+									</button>
+								</div> -->
+							</div>
+						</div>
+						<div class="modal-footer">
+							<div class="form-group">
+								<button class="btn btn-info">
+									<i class="material-icons">save</i>
+									<span>ADD GUIA</span>
+								</button>
+							</div>
+							<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+							<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIM MODAL CADASTRO DA PRODUTO -->
+
+
 	<!-- SESSÃO CADASRO DA GUIA -->
-	<div class="row clearfix">
+	<!-- <div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
@@ -121,7 +259,7 @@
 										R$
 									</span>
 									<div class="form-line">
-										<input type="text" value="" name="valor" class="form-control" placeholder="R$." required/>
+										<input type="numeric" name="valor" class="form-control valor" required/>
 									</div>
 								</div>
 							</div>
@@ -146,7 +284,7 @@
 				</div>			
 			</div>			
 		</div>
-	</div>
+	</div> -->
 	<!-- FIM SESSÃO DA GUIA -->
 
 	<!-- LISTAGEM DA GUIA  -->

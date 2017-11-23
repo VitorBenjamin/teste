@@ -12,9 +12,9 @@ $( window ).load(function() {
   if (value == "ESCRITÓRIO") {
 
    $('#label').css("color","#ded5d5");
-   $('#clientes').selectpicker('deselectAll');
-   $('#clientes').selectpicker('hide');
-   $('#clientes').selectpicker('refresh');
+   $('#cliente').selectpicker('deselectAll');
+   $('#cliente').selectpicker('hide');
+   $('#cliente').selectpicker('refresh');
 
 }
     //$('.js-basic-example').DataTable().responsive.recalc();
@@ -41,16 +41,15 @@ $('#origem_despesa').change(function() {
       // $('#clientes').closest('label').addClass("red2");
    //console.log('ghjhgjgj');
   // $('#clientes').attr("disabled", true);
-  $('#clientes').selectpicker('deselectAll');
-  $('#clientes').selectpicker('hide');
-  $('#clientes').selectpicker('refresh');
-
+  $('#cliente').selectpicker('deselectAll');
+  $('#cliente').selectpicker('hide');
+  $('#cliente').selectpicker('refresh');
 
 }else{
     $('#label').css("color","#555"); 
-    $('#clientes').removeAttr('disabled',false);
-    $('#clientes').selectpicker('show');
-    $('#clientes').selectpicker('refresh');
+    $('#cliente').removeAttr('disabled',false);
+    $('#cliente').selectpicker('show');
+    $('#cliente').selectpicker('refresh');
 
 }
 });

@@ -34,9 +34,12 @@ class ReembolsoController extends Controller
     //Retorna a View de cadastro da unidade
     public function cadastrar()
     {    	
+     
     	$areas = AreaAtuacao::all('id','tipo'); 
         $processos = Processo::all();
-        return view('reembolso.cadastrar', compact('areas','processos')); 	
+        $clientes = Cliente::all('id','nome');
+        $solicitantes = Solicitante::all('id','nome');
+        return view('reembolso.cadastrar', compact('areas','processos','solicitantes','clientes')); 	
     }
 
     //Cadatra uma nova Solicitação e redireciona para a tela de edição
@@ -73,7 +76,7 @@ class ReembolsoController extends Controller
 
         $translado = Translado::create(
             [   
-                'data_translado' => $request->data_translado,
+                'data_translado' => date('Y-m-d', strtotime($request->data_translado)),
                 'turno' => $request->turno,
                 'observacao' => $request->observacao,
                 'origem' => $request->origem,
@@ -112,7 +115,7 @@ class ReembolsoController extends Controller
         $despesa = Despesa::create(
             [   
                 'descricao' => $request->descricao,
-                'data_despesa' => $request->data_despesa,
+                'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
                 'tipo_comprovante' => $request->tipo_comprovante,
                 'valor' => $request->valor,
                 'anexo_comprovante' => $img_64,
@@ -163,11 +166,13 @@ class ReembolsoController extends Controller
     public function editar($soli)
     {
         $solicitacao = $soli;
-        $cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
+        //$clientes = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
         $areas = AreaAtuacao::all('id','tipo'); 
-        $solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
+        //$solicitantes = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
+        $clientes = Cliente::all('id','nome');
+        $solicitantes = Solicitante::all('id','nome');
 
-        return view('reembolso.editar', compact('solicitacao','cliente','areas','solicitante'));
+        return view('reembolso.editar', compact('solicitacao','clientes','areas','solicitantes'));
     }
 
     //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
@@ -214,7 +219,7 @@ class ReembolsoController extends Controller
         $despesa->update(
             [   
                 'descricao' => $request->descricao,
-                'data_despesa' => $request->data_despesa,
+                'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
                 'tipo_comprovante' => $request->tipo_comprovante,
                 'valor' => $request->valor,
                 'anexo_comprovante' => $img_64,
@@ -250,7 +255,7 @@ class ReembolsoController extends Controller
         $solicitacao = Solicitacao::with('despesa','translado','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
         //dd($solicitacao);
 
-        return view('coordenador.analiseReembolso', compact('solicitacao'));
+        return view('reembolso.analiseReembolso', compact('solicitacao'));
 
     }
 

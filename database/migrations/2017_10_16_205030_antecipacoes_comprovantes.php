@@ -19,7 +19,7 @@ class AntecipacoesComprovantes extends Migration
             $table->string('descricao');
             $table->datetime('data');
             $table->string('tipo_comprovante');
-            $table->decimal('valor_aprovado', 10,2);
+            $table->decimal('valor', 10,2);
             $table->integer('antecipacoes_id')->unsigned();      
             $table->timestamps();
             $table->softDeletes();

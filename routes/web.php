@@ -46,6 +46,12 @@ Route::group(['middleware' => ['check.user.role:GOD|COORDENADOR']],function()
 {
     Route::get('set-aprovar/{id}', ['uses' => 'SolicitacaoController@aprovar', 'as' => 'solicitacao.aprovar']);
     Route::get('set-reprovar/{id}', ['uses' => 'SolicitacaoController@reprovar', 'as' => 'solicitacao.reprovar']);
+
+});
+
+Route::group(['middleware' => ['check.user.role:FINANCEIRO|COORDENADOR']],function()
+{
+
     Route::get('set-devolver/{id}', ['uses' => 'SolicitacaoController@devolver', 'as' => 'solicitacao.devolver']);
 
 });
@@ -53,6 +59,10 @@ Route::group(['middleware' => ['check.user.role:GOD|COORDENADOR']],function()
 Route::group(['middleware' => ['check.user.role:FINANCEIRO']],function()
 {
     Route::get('set-finalizar/{id}', ['uses' => 'SolicitacaoController@finalizar', 'as' => 'solicitacao.finalizar']);
+    Route::put('add-comprovante/{id}', ['uses' => 'AntecipacaoController@addComprovante', 'as' => 'antecipacao.addComprovante']);
+    Route::put('add-viagem-comprovantes/{id}', ['uses' => 'ViagemController@addComprovante', 'as' => 'viagem.addComprovante']);
+
+
 });
 
 // INICIO ROTAS DE SOLICITAÇÃO
@@ -92,7 +102,8 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
         Route::get('deletar-antecipacao/{id}', ['uses' => 'AntecipacaoController@deletarAntecipacao', 'as' => 'antecipacao.deletarAntecipacao']);
         Route::get('editar-antecipacao/{id}', ['uses' => 'AntecipacaoController@verificarSolicitacao', 'as' => 'antecipacao.editar']);
         Route::put('atualizar-antecipacao/{id}', ['uses' => 'AntecipacaoController@atualizarAntecipacao', 'as' => 'antecipacao.atualizarAntecipacao']);
-        Route::get('analisar-antecipacao/{id}', ['uses' => 'AntecipacaoController@analisar','middleware' => ['check.user.role:FINANCEIRO|ADVOGADO|GOD|COORDENADOR'], 'as' => 'antecipacao.analisar']);
+        Route::get('analisar-antecipacao/{id}', ['uses' => 'AntecipacaoController@analisar', 'as' => 'antecipacao.analisar']);
+
 
     });
     // FIM ROTAS DE ANTECIPAÇÃO

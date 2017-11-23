@@ -73,6 +73,8 @@ class CreateFks extends Migration
     //Foreign Keys Tabela antecipacoes
         Schema::table('antecipacoes', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
+            DB::statement("ALTER TABLE antecipacoes ADD anexo_comprovante LONGBLOB");
+
         });
 
     //Foreign Keys Tabela antecipacoes_comprovantes

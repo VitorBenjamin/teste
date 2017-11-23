@@ -52,5 +52,9 @@ class StatusTableSeeder extends Seeder
             'descricao' => 'RECORRENTE',
             
         ]);
+        Status::create([
+            'descricao' => 'APROVADO-RECORRENTE',
+            
+        ]);
     }
 }

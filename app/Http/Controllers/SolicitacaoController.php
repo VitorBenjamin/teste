@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Repositories\SolicitacaoRepository;
+use Illuminate\Support\Facades\Auth;
 use App\Despesa;
 use App\Processo;
 use App\Translado;
@@ -21,43 +22,41 @@ class SolicitacaoController extends Controller
     //Buscando todas as informações das solicitacao e enviando para a view de listagem das solicitacao
 	public function index()
 	{
-		//dd(Route::currentRouteName());
-		$repo = new SolicitacaoRepository();
-		$abertas = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto'));
-		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento'));
-		$aprovadas = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado'));
-		$reprovados = $repo->getSolicitacaoAdvogado(config('constantes.status_reprovado'));
-		$devolvidas = $repo->getSolicitacaoAdvogado(config('constantes.status_devolvido'));
-
-		$abertas = $repo->valorTotalAdvogado($abertas);
-		$andamentos = $repo->valorTotalAdvogado($andamentos);
-		$aprovadas = $repo->valorTotalAdvogado($aprovadas);
-		$reprovados = $repo->valorTotalAdvogado($reprovados);
-		$devolvidas = $repo->valorTotalAdvogado($devolvidas);
-	    //dd($abertas);
-		return view('dashboard.advogado',compact('abertas','andamentos','aprovadas','reprovados','devolvidas'));
+		
 	}
-
 
 	public function andamento($id)
 	{
-		//$aberto = Status::where('descricao', config('constantes.status_aberto'))->first();
-		$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
+
+		$solicitacao = Solicitacao::find($id);
+		if ($solicitacao->status[0]->descricao == config('constantes.status_devolvido')) {
+			$andamento = Status::where('descricao', config('constantes.status_recorrente'))->first();
+		}else{
+			$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
+		}
 		$this->trocarStatus($id,$andamento);
 		return redirect()->route('user.index');
 	}
 
 	public function aprovar($id)
 	{
-		//$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
-		$aprovado = Status::where('descricao', config('constantes.status_aprovado'))->first();
+
+		$solicitacao = Solicitacao::find($id);
+		if ($solicitacao->status[0]->descricao == config('constantes.status_devolvido_financeiro')) {
+			
+			$aprovado = Status::where('descricao', config('constantes.status_aprovado_recorrente'))->first();
+		}else{
+			
+			$aprovado = Status::where('descricao', config('constantes.status_aprovado'))->first();
+		}
 		$this->trocarStatus($id,$aprovado);
 		return redirect()->route('user.index');
+
 	}	
 
 	public function reprovar($id)
 	{
-		//$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
+		
 		$reprovado = Status::where('descricao', config('constantes.status_reprovado'))->first();				
 		$this->trocarStatus($id,$reprovado);
 		return redirect()->route('user.index');
@@ -66,7 +65,12 @@ class SolicitacaoController extends Controller
 	public function devolver($id)
 	{
 		//$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
-		$devolvido = Status::where('descricao', config('constantes.status_devolvido'))->first();				
+		//dd($id);
+		if (Auth::user()->hasRole(config('constantes.user_financeiro'))) {
+			$devolvido = Status::where('descricao', config('constantes.status_devolvido_financeiro'))->first();
+		}else{
+			$devolvido = Status::where('descricao', config('constantes.status_devolvido'))->first();
+		}
 		$this->trocarStatus($id,$devolvido);
 		return redirect()->route('user.index');
 	}

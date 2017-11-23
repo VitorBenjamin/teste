@@ -12,7 +12,7 @@ class ViagemComprovante extends Model
      *
      * @var array
      */
-    protected $table = 'viagem_comprovantes';
+    protected $table = 'viagens_comprovantes';
 
     protected $fillable = [
         'observacao', 'data_compra', 'custo_passagem', 'custo_hospedagem', 'custo_locacao', 'anexo_passagem', 'anexo_hospedagem', 'anexo_locacao', 'viagens_id'

@@ -129,7 +129,7 @@
 		<div class="modal-content-2">
 			@foreach ($solicitacao->despesa as $key => $despesa)
 			<div class="mySlides">
-				<div class="numbertext"><span class="badge bg-cyan">{{$key+1}} / {{count($solicitacao->despesa)}}</span></div>
+				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/y',strtotime($despesa->data_despesa))}}</span></h3></div>
 				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
 			</div>
 			@endforeach														

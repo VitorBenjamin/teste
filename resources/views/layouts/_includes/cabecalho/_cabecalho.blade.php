@@ -9,26 +9,34 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label id="label" for="clientes">Cliente</label>
-			<select id="clientes" name="clientes_id" class="selectpicker form-control show-tick" data-live-search="true">
+			<label id="label" for="cliente">Cliente</label>
+			<select id="cliente" name="clientes_id" class="selectpicker form-control show-tick" data-size="5" data-live-search="true">
+				<option value="">SELECIONE</option>
+				@foreach ($clientes as $cliente)
+				<option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+				@endforeach
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label for="solicitantes">Solicitante</label>
-			<select id="solicitantes" name="solicitantes_id" class="form-control show-tick" data-live-search="true" required>
+			<label for="solicitante">Solicitante</label>
+			<select id="solicitante" name="solicitantes_id" class="form-control show-tick" data-size="5" data-live-search="true" required>
+				<option value="">SELECIONE</option>
+				@foreach ($solicitantes as $solicitante)
+				<option value="{{ $solicitante->id }}">{{ $solicitante->nome }}</option>
+				@endforeach
 			</select>
 		</div>
 
 		<div class="col-md-3">
 			<label for="processo">Número de Processo</label>
-			<select id="processo" name="processo" class="form-control show-tick" data-live-search="true" >
+			<select id="processo" name="processo" class="form-control show-tick" data-size="5" data-live-search="true" >
 				<option value="">SELECIONE</option>
 				@foreach ($processos as $processo)
 				<option value="{{ $processo->id }}">{{ $processo->codigo }}</option>
 				@endforeach
 			</select>
 		</div>
-<!-- 		<div class="demo-masked-input">
+   <!-- <div class="demo-masked-input">
 			<div class="col-md-3">
 				<b>Número de Processo</b>
 				<div class="input-group">

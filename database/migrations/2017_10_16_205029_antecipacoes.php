@@ -18,7 +18,7 @@ class Antecipacoes extends Migration
             $table->increments('id');
             $table->string('descricao');
             $table->datetime('data_recebimento');
-            $table->decimal('valor_solicitado', 10, 2);
+            $table->decimal('valor', 10, 2);
             $table->integer('solicitacoes_id')->unsigned();      
             $table->timestamps();
             $table->softDeletes();

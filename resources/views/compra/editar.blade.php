@@ -26,8 +26,24 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card"> 
 				<div class="header">
-					<h2>Dados da Compra</h2>
+					<!-- <h2>Cabecalho da Viagem</h2> -->
+					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
+						<a data-toggle="modal" data-target="#modalCompra" class="btn bg-light-green waves-effect" role="button">
+							<i class="material-icons">exposure_plus_1</i>
+							<!-- <span class="hidden-xs">ADD</span> -->
+							<span>PRODUTO</span>
+						</a>
+						<!-- <a data-toggle="modal" data-target="#modalDespesa" class="btn bg-green waves-effect" role="button">
+							<i class="material-icons">exposure_plus_1</i>
+							<span>DESPESA</span>
+						</a> -->
+						<!-- <a href="{{ route('solicitacao.andamento',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+							<i class="material-icons">send</i>
+							<span>ENVIAR</span>
+						</a> -->
+					</div>
 				</div>
+
 				<form action="{{ route('compra.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
 					{{ method_field('PUT') }}
@@ -38,8 +54,85 @@
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
 
-	<!-- SESSÃO PRODUTO -->
-	<div class="row clearfix">
+	<!-- MODAL CADASTRO DO PRODUTO -->
+	<div class="modal fade" id="modalCompra" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="largeModalLabel">Adicione um Produto</h4>
+				</div>
+				<!-- INCIO SESSÃO VIAGEM -->
+				<div class="modal-body">
+					<form action="{{ route('compra.addCompra',$solicitacao->id)}}" method="POST">
+						{{ csrf_field() }}
+						{{ method_field('PUT') }}			
+						<div class="body">
+							<div class="row clearfix">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="card">
+										<div class="header">
+											<h2>
+												Preencha os campos abaixo com atenção
+											</h2>
+										</div>
+										<div class="body">
+											<div class="row clearfix">
+												<div class="col-md-2">
+													<div class="form-group">
+														<div class="form-line">
+															<label for="data_compra">Data</label>
+															<input type="text" value="" name="data_compra" class="datepicker form-control" placeholder="Escolha uma Data"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<div class="form-line">
+															<label for="descricao">Descrição</label>
+															<input type="text" value="" name="descricao" class="form-control" placeholder="Descrição do produto"/>										
+														</div>
+													</div>
+												</div>
+
+												<div class="col-md-2">
+													<div class="form-group">
+														<div class="form-line">
+															<label for="quantidade">Quantidade</label>
+															<input type="text" value="" name="quantidade" class="form-control" placeholder="Qtd."/>
+														</div>
+													</div>								
+												</div>
+												<!-- <div class="col-md-2" style="margin-top: 20px">
+													<button class="btn btn-primary btn-lg waves-effect">
+														<i class="material-icons">save</i>
+														<span>ADD PRODUTO</span> 
+													</button>
+												</div> -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<div class="form-group">
+								<button class="btn btn-info">
+									<i class="material-icons">save</i>
+									<span>ADD PRODUTO</span>
+								</button>
+							</div>
+							<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+							<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIM MODAL CADASTRO DA PRODUTO -->
+
+	<!-- SESSÃO CADASTRO PRODUTO -->
+	<!-- <div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
@@ -88,7 +181,8 @@
 				</div>			
 			</div>			
 		</div>
-	</div>
+	</div> -->
+	<!-- FIM DA SESSÃO CADASTRO PRODUTO -->
 
 	<!-- LISTAGEM DOS PRODUTOS  -->
 	<div class="row clearfix">
@@ -177,7 +271,7 @@
 													<div class="col-md-2" style="margin-top: 20px">
 														<button class="btn btn-primary btn-lg waves-effect">
 															<i class="material-icons">save</i>
-															<span>ADD PRODUTO</span> 
+															<span>ATUALIZAR</span> 
 														</button>
 													</div>
 												</div>

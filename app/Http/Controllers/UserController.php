@@ -31,8 +31,6 @@ class UserController extends Controller
 			//return $this->coordenadorDash();
 			return redirect()->route('user.financeiroDash');
 		}
-		
-		
 	}
 
 	public function advogadoDash()
@@ -41,15 +39,18 @@ class UserController extends Controller
 		
 		$abertas = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto'));
 		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento'));
-		$aprovadas = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado'));
+		$recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_recorrente'));
+		if ($recorrente !=null) {
+			
+			foreach ($recorrente->solicitacao as $key => $value) {
+
+				$andamentos->solicitacao->push($value);
+			}
+
+		}
+		$aprovadas = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado'));		
 		$reprovados = $repo->getSolicitacaoAdvogado(config('constantes.status_reprovado'));
 		$devolvidas = $repo->getSolicitacaoAdvogado(config('constantes.status_devolvido'));
-
-		$abertas = $repo->valorTotalAdvogado($abertas);
-		$andamentos = $repo->valorTotalAdvogado($andamentos);
-		$aprovadas = $repo->valorTotalAdvogado($aprovadas);
-		$reprovados = $repo->valorTotalAdvogado($reprovados);
-		$devolvidas = $repo->valorTotalAdvogado($devolvidas);
 
 		return view('dashboard.advogado',compact('abertas','andamentos','aprovadas','reprovados','devolvidas'));
 	}
@@ -60,8 +61,17 @@ class UserController extends Controller
 
 		$abertas = $repo->getSolicitacaoCoordenador(config('constantes.status_andamento'));
 		$aprovadas = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado'));
+		$aprovadas_recorrente = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado_recorrente'));
+		if ($aprovadas_recorrente !=null) {
+			
+			foreach ($aprovadas_recorrente->solicitacao as $key => $value) {
+
+				$aprovadas->solicitacao->push($value);
+			}
+		# code...
+		}
 		$reprovados = $repo->getSolicitacaoCoordenador(config('constantes.status_reprovado'));
-		$devolvidas = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido'));
+		$devolvidas = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido_financeiro'));
 		$recorrentes = $repo->getSolicitacaoCoordenador(config('constantes.status_recorrente'));
 		
 		return view('dashboard.coordenador',compact('abertas','aprovadas','reprovados','devolvidas','recorrentes'));

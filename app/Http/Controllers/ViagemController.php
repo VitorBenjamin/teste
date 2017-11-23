@@ -10,6 +10,7 @@ use Intervention\Image\Facades\Image;
 use App\Repositories\SolicitacaoRepository;
 use App\Processo;
 use App\Viagem;
+use App\ViagemComprovante;
 use App\Solicitacao;
 use App\Solicitante;
 use App\Cliente;
@@ -25,7 +26,9 @@ class ViagemController extends Controller
     {
         $areas = AreaAtuacao::all('id','tipo');
         $processos = Processo::all();
-        return view('viagem.cadastrar', compact('areas','processos'));  
+        $clientes = Cliente::all('id','nome');
+        $solicitantes = Solicitante::all('id','nome');
+        return view('viagem.cadastrar', compact('areas','processos','solicitantes','clientes'));
     }
 
     //Cadatra uma nova Solicitação e redireciona para a tela de edição
@@ -48,7 +51,7 @@ class ViagemController extends Controller
         $solicitacao = Solicitacao::with('viagem','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
         //dd($solicitacao);
 
-        return view('coordenador.analiseViagem', compact('solicitacao'));
+        return view('viagem.analiseViagem', compact('solicitacao'));
 
     }
 
@@ -81,19 +84,32 @@ class ViagemController extends Controller
     {
         $solicitacao = $soli;
         
-        $cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
+        //$cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
         $areas = AreaAtuacao::all('id','tipo'); 
-        $solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
-
-        return view('viagem.editar', compact('solicitacao','cliente','areas','solicitante'));
+        //$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
+        $clientes = Cliente::all('id','nome');
+        $solicitantes = Solicitante::all('id','nome');
+        return view('viagem.editar', compact('solicitacao','clientes','areas','solicitantes'));
     }
 
     //Atualiza uma viagem e redireciona para a tela de edição da Solicitação
     public function atualizarViagem(Request $request,$id)
     {   
         $viagem = viagem::find($id);
-        
-        $viagem->update($request->all());
+        $data = null;
+        if ($request->data_volta) {
+            $data = date('Y-m-d H:m:s', strtotime($request->data_volta));
+        }
+        $viagem->update([
+            'observacao' => $request->observacao,
+            'origem' => $request->origem,
+            'destino' => $request->destino, 
+            'data_ida' => date('Y-m-d H:m:s', strtotime($request->data_ida)),
+            'data_volta' => $data, 
+            'hospedagem' => $request->hospedagem,
+            'bagagem' => $request->bagagem, 
+            'kg' => $request->kg,
+        ]);
 
         //dd($viagem);
         \Session::flash('flash_message',[
@@ -103,14 +119,19 @@ class ViagemController extends Controller
         return redirect()->route('viagem.editar', $viagem->solicitacoes_id);
     }
     public function addViagem(Request $request,$id){
-        
+
+        //dd(date('Y-m-d H:m:s', strtotime($request->data_volta)));
+        $data = null;
+        if ($request->data_volta) {
+            $data = date('Y-m-d H:m:s', strtotime($request->data_volta)); 
+        }
         Viagem::create(
             [
                 'observacao' => $request->observacao,
                 'origem' => $request->origem,
                 'destino' => $request->destino, 
-                'data_ida' => $request->data_ida,
-                'data_volta' => $request->data_volta, 
+                'data_ida' => date('Y-m-d H:m:s', strtotime($request->data_ida)),
+                'data_volta' => $data, 
                 'hospedagem' => $request->hospedagem,
                 'bagagem' => $request->bagagem, 
                 'kg' => $request->kg,
@@ -123,6 +144,48 @@ class ViagemController extends Controller
             'class'=>"alert bg-green alert-dismissible"
         ]);
         return redirect()->route('viagem.editar',$id);
+    }
+
+    public function addComprovante(Request $request,$id)
+    {
+        if ($request->file('anexo_passagem')) {
+            $file = Image::make($request->file('anexo_passagem'))->resize(1200, 600);
+            $anexo_passagem = (string) $file->encode('data-url');
+
+        } else {
+            $anexo_passagem = null;
+        }
+
+        if ($request->file('anexo_hospedagem')) {
+            $file = Image::make($request->file('anexo_hospedagem'))->resize(1200, 600);
+            $anexo_hospedagem = (string) $file->encode('data-url');
+        } else {
+            $anexo_hospedagem = null;
+        }
+        
+        
+        if ($request->file('anexo_locacao')) {
+            $file = Image::make($request->file('anexo_locacao'))->resize(1200, 600);
+            $anexo_locacao = (string) $file->encode('data-url');
+        } else {
+            $anexo_locacao = null;
+        }
+
+
+        $comprovante = ViagemComprovante::create([
+            'observacao' => $request->observacao,
+            'data_compra' => $request->data_compra,
+            'custo_passagem' => $request->custo_passagem,
+            'custo_hospedagem' => $request->custo_hospedagem,
+            'custo_locacao' => $request->custo_locacao,
+            'anexo_passagem' => $anexo_passagem,
+            'anexo_hospedagem' => $anexo_hospedagem,
+            'anexo_locacao' => $anexo_locacao,
+            'viagens_id' => $id,
+        ]);
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.analisar', $solicitacao->id);
     }
 
     //Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao

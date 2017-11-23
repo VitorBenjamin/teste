@@ -26,7 +26,23 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
-					<h2>Dados da Compra</h2>
+					<!-- <h2>Cabecalho da Viagem</h2> -->
+					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
+						<a data-toggle="modal" data-target="#modalAntecipacao" class="btn bg-light-green waves-effect" role="button" 
+						{{!empty($solicitacao->antecipacao[0]) ? 'disabled' : ''}}>
+							<i class="material-icons">exposure_plus_1</i>
+							<!-- <span class="hidden-xs">ADD</span> -->
+							<span>ANTECIPAÇÂO</span>
+						</a>
+						<!-- <a data-toggle="modal" data-target="#modalDespesa" class="btn bg-green waves-effect" role="button">
+							<i class="material-icons">exposure_plus_1</i>
+							<span>DESPESA</span>
+						</a> -->
+						<!-- <a href="{{ route('solicitacao.andamento',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+							<i class="material-icons">send</i>
+							<span>ENVIAR</span>
+						</a> -->
+					</div>
 				</div>
 				<form action="{{ route('antecipacao.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
@@ -37,10 +53,77 @@
 		</div>
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
+	@if(empty($solicitacao->antecipacao[0]))
+	<!-- MODAL CADASTRO DA ANTECIPAÇÂO -->
+	<div class="modal fade" id="modalAntecipacao" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="largeModalLabel">Adicione uma Antecipação</h4>
+				</div>
+				<!-- INCIO SESSÃO VIAGEM -->
+				<div class="modal-body">
+					<form action="{{ route('antecipacao.addAntecipacao',$solicitacao->id)}}" method="POST">
+						{{ csrf_field() }}
+						{{ method_field('PUT') }}			
+						<div class="body">
+							<div class="row clearfix">
+								<div class="col-md-2">
+									<div class="form-group">
+										<div class="form-line">
+											<label for="data_recebimento">Data</label>
+											<input type="text" value="" name="data_recebimento" class="datepicker2 form-control " placeholder="Escolha uma Data" required />
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<div class="form-line">
+											<label for="descricao">Descrição</label>
+											<input type="text" value="" name="descricao" class="form-control" placeholder="Descrição..." required />										
+										</div>
+									</div>
+								</div>
 
+								<div class="col-md-2">
+									<b>Valor</b>
+									<div class="input-group">
+										<span class="input-group-addon">
+											R$
+										</span>
+										<div class="form-line">
+											<input type="numeric" name="valor" class="form-control valor" required />
+										</div>
+									</div>								
+								</div>
+								<!-- <div class="col-md-2" style="margin-top: 20px">
+									<button class="btn btn-primary waves-effect">
+										<i class="material-icons">save</i>
+										<span>ADD ANTECIPAÇÃO</span> 
+									</button>
+								</div> -->
+							</div>
+						</div>
+						<div class="modal-footer">
+							<div class="form-group">
+								<button class="btn btn-info">
+									<i class="material-icons">save</i>
+									<span>ADD ANTECIPAÇÃO</span>
+								</button>
+							</div>
+							<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+							<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIM MODAL CADASTRO DA PRODUTO -->
+	@endif
 	<!-- SESSÃO ANTECIPAÇÂO -->
 	@if(empty($solicitacao->antecipacao[0]))
-	<div class="row clearfix">
+	<!-- <div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
@@ -57,7 +140,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label for="data_recebimento">Data</label>
-										<input type="text" value="" name="data_recebimento" class="datepicker form-control " placeholder="Escolha uma Data"/>
+										<input type="text" value="" name="data_recebimento" class="datepicker2 form-control " placeholder="Escolha uma Data"/>
 									</div>
 								</div>
 							</div>
@@ -71,10 +154,13 @@
 							</div>
 
 							<div class="col-md-2">
-								<div class="form-group">
+								<b>Valor</b>
+								<div class="input-group">
+									<span class="input-group-addon">
+										R$
+									</span>
 									<div class="form-line">
-										<label for="valor_solicitado">Valor</label>
-										<input type="text" value="" name="valor_solicitado" class="form-control" placeholder="R$."/>
+										<input type="numeric" name="valor" class="form-control valor" />
 									</div>
 								</div>								
 							</div>
@@ -89,7 +175,7 @@
 				</div>			
 			</div>			
 		</div>
-	</div>
+	</div> -->
 	@endif
 	<!-- FIM SESSÃO DA ANTECIPAÇÃO -->
 
@@ -128,7 +214,7 @@
 								<td></td>
 								<td>{{date('d/m/y',strtotime($antecipacao->data_recebimento))}}</td>
 								<td>{{$antecipacao->descricao}}</td>
-								<td>{{$antecipacao->valor_solicitado}}</td>									
+								<td>R$ {{$antecipacao->valor}}</td>									
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
 										<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$antecipacao->id}}" role="button"><i class="material-icons">settings</i></a>
@@ -140,7 +226,7 @@
 							</tr>
 
 
-							<!-- MODAL TRANSLADO -->
+							<!-- MODAL EDIÇÂO DA ANTECIPAÇÂO -->
 							<div class="modal fade" id="modal{{$antecipacao->id}}" tabindex="-1" role="dialog">
 								<div class="modal-dialog modal-lg" role="document">
 									<div class="modal-content">
@@ -148,7 +234,7 @@
 											<h4 class="modal-title" id="largeModalLabel">Editar um Antecipação</h4>
 										</div>
 
-										<!-- INCIO SESSÃO TRANSLADO -->
+										<!-- INCIO SESSÃO ANTECIPAÇÂO -->
 										<form action="{{ route('antecipacao.atualizarAntecipacao',$antecipacao->id)}}" method="POST">
 											{{ csrf_field() }}
 											{{ method_field('PUT') }}
@@ -187,8 +273,6 @@
 														</button>
 													</div>
 												</div>
-
-
 												<div class="modal-footer">													
 													<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
 													<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
@@ -199,7 +283,7 @@
 									</div>
 								</div>
 							</div>
-							<!-- FIM MODAL TRANSLADO -->
+							<!-- FIM MODAL DE ANTECIPAÇÂO -->
 							@endforeach														
 						</tbody>
 					</table>

@@ -231,6 +231,8 @@ class SolicitacaoRepository
 
     public function valorTotalAdvogado($solicitacoes)
     {
+        //dd($solicitacoes->solicitacao);
+
         foreach ($solicitacoes->solicitacao as $s) {
             if ($s->tipo=="REEMBOLSO") {
                 $s['total']=$this->totalReembolso($s);
@@ -327,7 +329,7 @@ class SolicitacaoRepository
         $total = 0;
         if ($antecipacoes->antecipacao != null ) {
             foreach ($antecipacoes->antecipacao as $antecipacao) {
-                $total += $antecipacao->valor_solicitado;
+                $total += $antecipacao->valor;
             }
         }
         return $total;

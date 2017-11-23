@@ -23,7 +23,9 @@ class AntecipacaoController extends Controller
 	{
 		$areas = AreaAtuacao::all('id','tipo');
 		$processos = Processo::all();
-		return view('antecipacao.cadastrar', compact('areas','processos')); 
+		$clientes = Cliente::all('id','nome');
+        $solicitantes = Solicitante::all('id','nome');
+		return view('antecipacao.cadastrar', compact('areas','processos','solicitantes','clientes'));
 	}
 
     //Cadatra uma nova Solicitação e redireciona para a tela de edição
@@ -41,7 +43,7 @@ class AntecipacaoController extends Controller
 	}
 	
 
-	public function veriicarSolicitacao($id)
+	public function verificarSolicitacao($id)
 	{
 		$solicitacao = Solicitacao::with('antecipacao')
 		->where('tipo',config('constantes.tipo_antecipacao'))
@@ -64,6 +66,21 @@ class AntecipacaoController extends Controller
 		}
 	}
 
+	public function addComprovante(Request $request,$id)
+	{
+		$file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);
+		$img_64 = (string) $file->encode('data-url');
+		$antecipacao = Antecipacao::find($id);
+
+		$antecipacao->update(['anexo_comprovante' => $img_64]);
+
+		\Session::flash('flash_message',[
+			'msg'=>"Comprovante da Antecipação Cadastrado com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+		return redirect()->route('antecipacao.analisar',$id);
+
+	}
 
 	public function analisar($id)
 	{
@@ -71,7 +88,7 @@ class AntecipacaoController extends Controller
 		$solicitacao = Solicitacao::with('antecipacao','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
         //dd($solicitacao);
 
-		return view('coordenador.analiseAntecipacao', compact('solicitacao'));
+		return view('antecipacao.analiseAntecipacao', compact('solicitacao'));
 
 	}
 
@@ -79,11 +96,11 @@ class AntecipacaoController extends Controller
 	public function editar($soli)
 	{
 		$solicitacao = $soli;
-		$cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
 		$areas = AreaAtuacao::all('id','tipo'); 
-		$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
+		$clientes = Cliente::all('id','nome');
+        $solicitantes = Solicitante::all('id','nome');
 
-		return view('antecipacao.editar', compact('solicitacao','cliente','areas','solicitante'));
+		return view('antecipacao.editar', compact('solicitacao','clientes','areas','solicitantes'));
 	}
 
     //Atualiza uma antecipacao e redireciona para a tela de edição da Solicitação
@@ -93,9 +110,9 @@ class AntecipacaoController extends Controller
 
 		$antecipacao->update(
 			[   
-				'data_recebimento' => $request->data_recebimento,
+				'data_recebimento' => date('Y-m-d', strtotime($request->data_recebimento)),
 				'descricao' => $request->descricao,
-				'valor_solicitado' => $request->valor_solicitado,                
+				'valor' => $request->valor,                
 			]
 		);
 
@@ -108,9 +125,9 @@ class AntecipacaoController extends Controller
 	public function addAntecipacao(Request $request,$id){
 		
 		Antecipacao::create([
-			'data_recebimento' => $request->data_recebimento,
+			'data_recebimento' => date('Y-m-d', strtotime($request->data_recebimento)),
 			'descricao' => $request->descricao,
-			'valor_solicitado' => $request->valor_solicitado,
+			'valor' => $request->valor,
 			'solicitacoes_id' => $id,
 		]);
 		\Session::flash('flash_message',[

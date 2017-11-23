@@ -26,18 +26,16 @@
 									<div class="form-group">
 										<div class="form-line">
 											<label for="data_despesa">Data</label>
-											<input type="text" name="data_despesa" value="{{$despesa->data_despesa}}" class="datepicker form-control" placeholder="Escolha uma Data" required/>
+											<input type="text" name="data_despesa" value="{{date('d-m-Y',strtotime($despesa->data_despesa))}}" class="datepicker form-control" placeholder="Escolha uma Data" required/>
 										</div>
 									</div>
 								</div>
 								<div class="col-md-2">
 									<label for="tipo_comprovante">Comprovante</label>
 									<select id="tipo_comprovante" name="tipo_comprovante" class="form-control show-tick" required>
-										<option value="{{$despesa->tipo_comprovante}}">{{$despesa->tipo_comprovante}}</option>
-										<option value="">SELECIONE</option>
-										<option value="HOSPEDAGEM">HOSPEDAGEM</option>
-										<option value="ALIMENTAÇÂO">ALIMENTAÇÃo</option>
-										<option value="TRANSPORTE">TRANSPORTE</option>
+										<option value="HOSPEDAGEM" {{$despesa->tipo_comprovante == 'HOSPEDAGEM' ? 'selected' : ''}}>HOSPEDAGEM</option>
+										<option value="ALIMENTAÇÂO" {{$despesa->tipo_comprovante == 'ALIMENTAÇÃO' ? 'selected' : ''}}>ALIMENTAÇÃO</option>
+										<option value="TRANSPORTE" {{$despesa->tipo_comprovante == 'TRANSPORTE' ? 'selected' : ''}}>TRANSPORTE</option>
 
 									</select>
 								</div>
@@ -51,12 +49,15 @@
 									</div>
 								</div>
 								<div class="col-md-2">
-									<div class="form-group">
+									<b>Valor</b>
+									<div class="input-group">
+										<span class="input-group-addon">
+											R$
+										</span>
 										<div class="form-line">
-											<label for="valor">Valor</label>
-											<input type="text" id="valor" name="valor" value="{{$despesa->valor}}" class="form-control" placeholder="" required/>
+											<input type="numeric" id="valor" name="valor" class="form-control valor" value="{{$despesa->valor}}" required/>
 										</div>
-									</div>								
+									</div>							
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">

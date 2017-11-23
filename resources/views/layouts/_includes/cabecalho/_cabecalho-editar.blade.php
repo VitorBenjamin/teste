@@ -8,17 +8,22 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label id="label" for="clientes">Cliente</label>
-			<select id="clientes" name="clientes_id" class="selectpicker form-control show-tick" data-live-search="true">
-				@if(!empty($cliente[0]))
+			<label id="label" for="cliente">Cliente</label>
+			<select id="cliente" name="clientes_id" class="selectpicker form-control show-tick" data-live-search="true">
+				<!-- @if(!empty($cliente[0]))
 				<option value="{{$solicitacao->clientes_id}}">{{ $cliente[0]->nome }}</option>
-				@endif
+				@endif -->
+				@foreach ($clientes as $cliente)
+				<option value="{{ $cliente->id }}" {{$solicitacao->clientes_id == $cliente->id ? 'selected' : '' }} >{{ $cliente->nome }}</option>
+				@endforeach
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label for="solicitantes">Solicitante</label>
-			<select id="solicitantes" name="solicitantes_id" class="form-control show-tick" data-live-search="true">
-				<option value="{{$solicitacao->solicitantes_id}}">{{ $solicitante[0]->nome }}</option>
+			<label for="solicitante">Solicitante</label>
+			<select id="solicitante" name="solicitantes_id" class="form-control show-tick" data-live-search="true">
+				@foreach ($solicitantes as $solicitante)
+				<option value="{{ $solicitante->id }}" {{$solicitacao->solicitantes_id == $solicitante->id ? 'selected' : '' }} >{{ $solicitante->nome }}</option>
+				@endforeach
 			</select>
 		</div>
 		<div class="demo-masked-input">

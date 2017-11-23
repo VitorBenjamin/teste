@@ -4,25 +4,28 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-<!--                 <img src="{{url('images/user.png')}}" width="48" height="48" alt="User" />
- -->            </div>
+                <!-- <img src="{{url('images/user.png')}}" width="48" height="48" alt="User" /> -->
+            </div>
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{auth()->user()->nome}}</div>
                 <div class="email">{{auth()->user()->email}}</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
+                        @role(['FINANCEIRO','GOD','COORDENADOR'])
                         <li><a href="{{ route('registerAdvogado') }}"><i class="material-icons">sd_storage</i>Reg. Advogado</a></li>
                         <li><a href="{{ route('registerCoordenador') }}"><i class="material-icons">sd_storage</i>Reg. Coordenador</a></li>
                         <li><a href="{{ route('registerFinanceiro') }}"><i class="material-icons">sd_storage</i>Reg. Financeiro</a></li>
+                        <li role="seperator" class="divider"></li>
+                        @endrole
                         <!-- <li role="seperator" class="divider"></li> -->
                         <!-- <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
                         <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                         <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li> -->
-                        <li role="seperator" class="divider"></li>
+                        
                         <li><a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();"><i class="material-icons">input</i>Sign Out</a></li>
+                            document.getElementById('logout-form').submit();"><i class="material-icons">input</i>Sair</a></li>
                         </ul>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}

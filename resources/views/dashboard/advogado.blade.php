@@ -150,9 +150,9 @@
                                         <td></td>
                                         <td>{{ $andamento->id }}</td>
                                         <td>{{ date('d/m/y',strtotime($andamento->created_at)) }}</td>
-                                        <td>{{ $andamento->urgencia == 1 ? 'SIM' : 'NÃO' }}</td>
+                                        <td>{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
                                         <td>{{ $andamento->tipo }}</td>
-                                        <td>{{ $andamento->origem_despesa }}</td>
+                                        <td>{{ $andamento->solicitante->nome }}</td>
                                         <td>R$ {{ $andamento->total }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -191,9 +191,9 @@
                                         <td></td>
                                         <td>{{ $aprovado->id }}</td>
                                         <td>{{ date('d/m/y',strtotime($aprovado->created_at)) }}</td>
-                                        <td>{{ $aprovado->urgencia == 1 ? 'SIM' : 'NÃO' }}</td>
+                                        <td>{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
                                         <td>{{ $aprovado->tipo }}</td>
-                                        <td>{{ $aprovado->origem_despesa }}</td>
+                                        <td>{{ $aprovado->solicitante->nome }}</td>
                                         <td>R$ {{ $aprovado->total }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -232,17 +232,18 @@
                                     
                                     <tr>
                                         <td></td>
-                                        <td>{{ $reprovado->id}}</td>
-                                        <td>{{ $reprovado->codigo }}</td>
-                                        <td>{{ $reprovado->urgencia == 1 ? 'SIM' : 'NÃO' }}</td>
+                                        <td>{{ $reprovado->id }}</td>
+                                        <td>{{ date('d/m/y',strtotime($reprovado->created_at)) }}</td>
+                                        <td>{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
                                         <td>{{ $reprovado->tipo }}</td>
-                                        <td>{{ $reprovado->origem_despesa }}</td>
+                                        <td>{{ $reprovado->solicitante->nome }}</td>
                                         <td>R$ {{ $reprovado->total }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
-                                                <a href="{{ route('reembolso.editarDespesa', $reprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                                    <i class="material-icons">pageview</i>
-                                                </a>                                            
+                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                                <a href="{{ route(strtolower($reprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $reprovado->tipo).'.analisar', $reprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                    <i class="material-icons">launch</i>
+                                                </a>                                           
                                             </div>
                                         </td>
                                     </tr>
@@ -273,34 +274,34 @@
                                     <tr>
                                         <td></td>
                                         <td>{{ $devolvida->id }}</td>
-                                        <td>{{ $devolvida->codigo }}</td>
-                                        <td>{{ $devolvida->urgencia == 1 ? 'SIM' : 'NÃO' }}</td>
+                                        <td>{{ date('d/m/y',strtotime($devolvida->created_at)) }}</td>
+                                        <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
-                                        <td>{{ $devolvida->origem_despesa }}</td>
+                                        <td>{{ $devolvida->solicitante->nome }}</td>
                                         <td>R$ {{ $devolvida->total }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
-                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.editar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                                    <i class="material-icons">settings</i>
-                                                </a>
-                                                <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$devolvida->id}}">
-                                                    <i class="material-icons">delete_sweep</i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach                                                     
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
+                                             <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                             <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.editar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <i class="material-icons">settings</i>
+                                            </a>
+                                            <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$devolvida->id}}">
+                                                <i class="material-icons">delete_sweep</i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach                                                     
+                                
+                            </tbody>
+                        </table>
                     </div>
+                    <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
                 </div>
             </div>
         </div>
     </div>
-    <!-- #END# Tabs With Icon Title -->
+</div>
+<!-- #END# Tabs With Icon Title -->
 </section>
 @endsection

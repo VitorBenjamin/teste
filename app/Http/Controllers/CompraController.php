@@ -25,7 +25,9 @@ class CompraController extends Controller
 	{
 		$areas = AreaAtuacao::all('id','tipo');
 		$processos = Processo::all();
-		return view('compra.cadastrar', compact('areas','processos'));  	
+		$clientes = Cliente::all('id','nome');
+        $solicitantes = Solicitante::all('id','nome');
+		return view('compra.cadastrar', compact('areas','processos','clientes','solicitantes'));  	
 	}
 
     //Cadatra uma nova Solicitação e redireciona para a tela de edição
@@ -71,7 +73,7 @@ class CompraController extends Controller
 		$solicitacao = Solicitacao::with('compra','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
         //dd($solicitacao);
 
-		return view('coordenador.analiseCompra', compact('solicitacao'));
+		return view('compra.analiseCompra', compact('solicitacao'));
 
 	}
 
@@ -79,11 +81,12 @@ class CompraController extends Controller
 	public function editar($soli)
 	{
 		$solicitacao = $soli;
-		$cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
+		//$cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
 		$areas = AreaAtuacao::all('id','tipo'); 
-		$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
-
-		return view('compra.editar', compact('solicitacao','cliente','areas','solicitante'));
+		//$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
+		$clientes = Cliente::all('id','nome');
+        $solicitantes = Solicitante::all('id','nome');
+        return view('compra.editar', compact('solicitacao','clientes','areas','solicitantes'));
 	}
 
     //Atualiza uma compra e redireciona para a tela de edição da Solicitação

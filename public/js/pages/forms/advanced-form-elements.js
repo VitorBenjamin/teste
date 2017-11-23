@@ -10,18 +10,27 @@ $(function () {
     //Masked Input ============================================================================================================================
     var $demoMaskedInput = $('.demo-masked-input');
 
-//     $('.moedaReal').inputmask('decimal', {
-//       radixPoint:",",
-//       groupSeparator: ".",
-//       autoGroup: true,
-//       digits: 2,
-//       digitsOptional: true,
-//       placeholder: '0',
-//       rightAlign: false,
-//       onBeforeMask: function (value, opts) {
-//         return value;
-//       }
-// });
+    // $('.valor').inputmask('decimal', {
+    //   radixPoint:".",
+    //   groupSeparator: "",
+    //   removeMaskOnSubmit: true
+    //   autoGroup: true,
+    //   digits: 2,
+    //   digitsOptional: true,
+    //   placeholder: '0',
+    //   rightAlign: false,
+    //   onBeforeMask: function (value, opts) {
+    //     return value;
+    // }
+    // })
+
+    $('.valor').inputmask("currency", {
+    groupSeparator: '.',
+    prefix: "",
+    placeholder: '0.00',
+    numericInput: true,
+    autoGroup: false
+    });
     //Date
     $demoMaskedInput.find('.date').inputmask('dd/mm/yyyy', { placeholder: '__/__/____' });
 
@@ -42,9 +51,15 @@ $(function () {
     $demoMaskedInput.find('.phone-number').inputmask('+99 (999) 999-99-99', { placeholder: '+__ (___) ___-__-__' });
 
     //Dollar Money
-    $demoMaskedInput.find('.money-dollar').inputmask('99,99 $', { placeholder: '__,__ $' });
+    // $demoMaskedInput.find('.valor').inputmask('currency', {
+    // groupSeparator: '.',
+    // placeholder: '0.00',
+    // numericInput: true,
+    // autoGroup: false});
 
     //Euro Money
+    $demoMaskedInput.find('.money-euro').inputmask('99,99 €', { placeholder: '__,__ €' });
+
     $demoMaskedInput.find('.money-euro').inputmask('99,99 €', { placeholder: '__,__ €' });
 
     //IP Address

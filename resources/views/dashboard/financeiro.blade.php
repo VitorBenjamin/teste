@@ -131,9 +131,9 @@
                                         <td></td>
                                         <td>{{ $finalizada->id }}</td>
                                         <td>{{ date('d/m/y',strtotime($finalizada->created_at)) }}</td>
-                                        <td>{{ $finalizada->urgencia == 1 ? 'SIM' : 'NÃO' }}</td>
+                                        <td>{{ $finalizada->cliente == null ? 'MOSELLO LIMA' : $finalizada->cliente->nome }}</td>
                                         <td>{{ $finalizada->tipo }}</td>
-                                        <td>{{ $finalizada->origem_despesa }}</td>
+                                        <td>{{ $finalizada->solicitante->nome }}</td>
                                         <td>R$ {{ $finalizada->total }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -171,9 +171,9 @@
                                         <td></td>
                                         <td>{{ $devolvida->id }}</td>
                                         <td>{{ date('d/m/y',strtotime($devolvida->created_at)) }}</td>
-                                        <td>{{ $devolvida->urgencia == 1 ? 'SIM' : 'NÃO' }}</td>
+                                        <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
-                                        <td>{{ $devolvida->origem_despesa }}</td>
+                                        <td>{{ $devolvida->solicitante->nome }}</td>
                                         <td>R$ {{ $devolvida->total }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -212,18 +212,22 @@
                                         <td></td>
                                         <td>{{ $recorrente->id }}</td>
                                         <td>{{ date('d/m/y',strtotime($recorrente->created_at)) }}</td>
-                                        <td>{{ $recorrente->urgencia == 1 ? 'SIM' : 'NÃO' }}</td>
+                                        <td>{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
-                                        <td>{{ $recorrente->origem_despesa }}</td>
+                                        <td>{{ $recorrente->solicitante->nome }}</td>
                                         <td>R$ {{ $recorrente->total }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($recorrente->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $recorrente->tipo).'.editar', $recorrente->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($recorrente->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $recorrente->tipo).'.analisar', $recorrente->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
                                                     <i class="material-icons">launch</i>
                                                 </a>
-                                                <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$recorrente->id}}">
-                                                    <i class="material-icons">delete_sweep</i>
+                                                <a href="{{ route('solicitacao.finalizar',$recorrente->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float">
+                                                    <i class="material-icons">done_all</i>
+                                                    <!-- <span class="hidden-xs">ADD</span> -->
+                                                </a>
+                                                <a href="{{ route('solicitacao.devolver',$recorrente->id) }}" class="btn bg-amber btn-circle waves-effect waves-circle waves-float">
+                                                    <i class="material-icons">report_problem</i>
                                                 </a>
                                             </div>
                                         </td>
