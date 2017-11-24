@@ -44,24 +44,23 @@ Route::get('/cadastro/registrar-advogado', 'Auth\RegisterController@showRegistra
 
 Route::group(['middleware' => ['check.user.role:GOD|COORDENADOR']],function()
 {
-    Route::get('set-aprovar/{id}', ['uses' => 'SolicitacaoController@aprovar', 'as' => 'solicitacao.aprovar']);
     Route::get('set-reprovar/{id}', ['uses' => 'SolicitacaoController@reprovar', 'as' => 'solicitacao.reprovar']);
 
 });
 
 Route::group(['middleware' => ['check.user.role:FINANCEIRO|COORDENADOR']],function()
 {
-
+    Route::get('set-aprovar/{id}', ['uses' => 'SolicitacaoController@aprovar', 'as' => 'solicitacao.aprovar']);
     Route::get('set-devolver/{id}', ['uses' => 'SolicitacaoController@devolver', 'as' => 'solicitacao.devolver']);
 
 });
 
 Route::group(['middleware' => ['check.user.role:FINANCEIRO']],function()
 {
+
     Route::get('set-finalizar/{id}', ['uses' => 'SolicitacaoController@finalizar', 'as' => 'solicitacao.finalizar']);
     Route::put('add-comprovante/{id}', ['uses' => 'AntecipacaoController@addComprovante', 'as' => 'antecipacao.addComprovante']);
     Route::put('add-viagem-comprovantes/{id}', ['uses' => 'ViagemController@addComprovante', 'as' => 'viagem.addComprovante']);
-
 
 });
 

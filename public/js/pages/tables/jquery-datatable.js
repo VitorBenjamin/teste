@@ -13,7 +13,10 @@ $(function () {
     columnDefs: [ {
         className: 'control',
         orderable: false,
-        targets:   0
+        targets:   0,
+        render: function ( data, type, row ) {
+            return data.substr( 0, 5 );
+        }
     } ]
 });
 

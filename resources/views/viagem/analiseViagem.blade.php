@@ -51,15 +51,17 @@
 
 								<td class="acoesTD">
 									@role('FINANCEIRO')
-									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal{{$viagem->id}}">ANEXO</button>
+									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal{{$viagem->id}}">ANEXAR</button>
 									@endrole
-									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" {{$viagem->anexo_comprovante == null ? 'disabled' : ''}} 
-										onclick="{{$viagem->anexo_comprovante == null ? '' : 'openModal();currentSlide($key+1)'}}" >
+									@if(!$viagem->comprovante || $viagem->comprovante == null)
+									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" disabled>
 										<i class="material-icons">photo_library</i>
 									</a>
+									@else
 									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+$viagem->id+2}})">
 										<i class="material-icons">photo_library</i>
 									</a>
+									@endif
 								</td>	
 							</tr>
 							<div class="modal fade" id="defaultModal{{$viagem->id}}" tabindex="-1" role="dialog">
@@ -72,9 +74,10 @@
 											<form action="{{ route('viagem.addComprovante',$viagem->id)}}" method="POST" enctype="multipart/form-data">
 												{{ csrf_field() }}
 												{{ method_field('PUT') }}
+												<input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
 												<div class="col-md-12">
 													<div class="row clearfix">
-														<div class="col-md-3">
+														<div class="col-md-4">
 															<div class="form-group">
 																<div class="form-line">
 																	<label for="data_compra">Data</label>
@@ -82,7 +85,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="col-md-9">
+														<div class="col-md-8">
 															<div class="form-group">
 																<div class="form-line">
 																	<label for="observacao">Observação</label>
@@ -91,14 +94,17 @@
 															</div>
 														</div>
 													</div>
-													<div class="row clearfix">
+													<div class="row clearfix">														
 														<div class="col-md-4">
-															<div class="form-group">
+															<b>Cursto da Passagem</b>
+															<div class="input-group">
+																<span class="input-group-addon">
+																	R$
+																</span>
 																<div class="form-line">
-																	<label for="custo_passagem">Valor Passagem</label>
-																	<input type="text" value="" name="custo_passagem" class="form-control" placeholder="Qtd." required/>
+																	<input type="numeric" name="custo_passagem" class="form-control valor" required/>
 																</div>
-															</div>								
+															</div>
 														</div>
 														<div class="col-md-8">
 															<div class="form-group">
@@ -112,12 +118,15 @@
 													@if($viagem->hospedagem == 1)
 													<div class="row clearfix">
 														<div class="col-md-4">
-															<div class="form-group">
+															<b>Custo da Hospedagem</b>
+															<div class="input-group">
+																<span class="input-group-addon">
+																	R$
+																</span>
 																<div class="form-line">
-																	<label for="custo_hospedagem">Valor Hospedagem</label>
-																	<input type="text" value="" name="custo_hospedagem" class="form-control" placeholder="Qtd." required/>
+																	<input type="numeric" name="custo_hospedagem" class="form-control valor" required/>
 																</div>
-															</div>								
+															</div>
 														</div>
 														<div class="col-md-8">
 															<div class="form-group">
@@ -133,12 +142,15 @@
 													@if($viagem->locacao == 1)
 													<div class="row clearfix">
 														<div class="col-md-4">
-															<div class="form-group">
+															<b>Custo da Locação</b>
+															<div class="input-group">
+																<span class="input-group-addon">
+																	R$
+																</span>
 																<div class="form-line">
-																	<label for="custo_locacao">Valor Locação</label>
-																	<input type="text" value="" name="custo_locacao" class="form-control" placeholder="Qtd." required/>
+																	<input type="numeric" name="custo_locacao" class="form-control valor" required/>
 																</div>
-															</div>								
+															</div>
 														</div>
 														<div class="col-md-8">
 															<div class="form-group">
@@ -178,7 +190,7 @@
 	
 
 	<!-- MODAL GALERIA -->
-
+	@if($viagem->comprovante || $viagem->comprovante != null)
 	<div id="myModal" class="modal-2">
 		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
 		<div class="modal-content-2">
@@ -197,22 +209,22 @@
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> 
 					<span class="label label-warning"> Hospedagem</span> </h3></div>
-				<img src="{{$comp->anexo_hospedagem}}" style="width:100%; max-height: 70%">
-			</div>
-			@endif
-			
-			@if($comp->anexo_locacao != null)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label label-info">{{$viagem->origem}} x {{$viagem->destino}} Locação</span></h3></div>
-				<img src="{{$comp->anexo_locacao}}" style="width:100%; max-height: 70%">
-			</div>
-			@endif
-			
-			@endforeach	
-			@endforeach													
+					<img src="{{$comp->anexo_hospedagem}}" style="width:100%; max-height: 70%">
+				</div>
+				@endif
 
-			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
-			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
+				@if($comp->anexo_locacao != null)
+				<div class="mySlides">
+					<div class="numbertext"><h3><span class="label label-info">{{$viagem->origem}} x {{$viagem->destino}} Locação</span></h3></div>
+					<img src="{{$comp->anexo_locacao}}" style="width:100%; max-height: 70%">
+				</div>
+				@endif
+
+				@endforeach	
+				@endforeach													
+
+				<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
+				<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
 
 			<!-- <div class="caption-container">
 				<p id="caption"></p>
@@ -226,6 +238,7 @@
 
 		</div>
 	</div>
+	@endif
 	<!-- FIM MODAL GALERIA -->
 </section>
 @endsection

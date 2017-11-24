@@ -29,12 +29,22 @@ class SolicitacaoController extends Controller
 	{
 
 		$solicitacao = Solicitacao::find($id);
-		if ($solicitacao->status[0]->descricao == config('constantes.status_devolvido')) {
-			$andamento = Status::where('descricao', config('constantes.status_recorrente'))->first();
-		}else{
+		
+		if ($solicitacao->status[0]->descricao == config('constantes.status_devolvido')) 
+		{
+			$andamento = Status::where('descricao', config('constantes.status_andamento_recorrente'))->first();
+
+		} elseif($solicitacao->tipo == "COMPRA"){
+			
+			$andamento = Status::where('descricao', config('constantes.status_andamento_financeiro'))->first();
+
+		}else {			
+			
 			$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
+
 		}
-		$this->trocarStatus($id,$andamento);
+		$this->trocarStatus($solicitacao,$andamento);
+
 		return redirect()->route('user.index');
 	}
 
@@ -42,50 +52,67 @@ class SolicitacaoController extends Controller
 	{
 
 		$solicitacao = Solicitacao::find($id);
+		
 		if ($solicitacao->status[0]->descricao == config('constantes.status_devolvido_financeiro')) {
 			
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado_recorrente'))->first();
-		}else{
+		
+		}elseif($solicitacao->status[0]->descricao == config('constantes.status_aberto_financeiro')){
 			
+			$aprovado = Status::where('descricao', config('constantes.status_andamento_financeiro'))->first();
+		
+		}else{			
+		
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado'))->first();
 		}
-		$this->trocarStatus($id,$aprovado);
+		$this->trocarStatus($solicitacao,$aprovado);
+
 		return redirect()->route('user.index');
 
 	}	
 
 	public function reprovar($id)
 	{
-		
+		$solicitacao = Solicitacao::find($id);
 		$reprovado = Status::where('descricao', config('constantes.status_reprovado'))->first();				
-		$this->trocarStatus($id,$reprovado);
+		$this->trocarStatus($solicitacao,$reprovado);
 		return redirect()->route('user.index');
 	}
 	
 	public function devolver($id)
 	{
-		//$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
-		//dd($id);
-		if (Auth::user()->hasRole(config('constantes.user_financeiro'))) {
-			$devolvido = Status::where('descricao', config('constantes.status_devolvido_financeiro'))->first();
+
+		$solicitacao = Solicitacao::find($id);
+		if ($solicitacao->status[0]->descricao == config('constantes.status_andamento_financeiro')) {
+
+			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
+				$devolvido = Status::where('descricao', config('constantes.status_recorrente_financeiro'))->first();
+			}
+
+		}elseif (Auth::user()->hasRole(config('constantes.user_financeiro'))) {
+			
+			$devolvido = Status::where('descricao', config('constantes.status_recorrente'))->first();
+
 		}else{
+
 			$devolvido = Status::where('descricao', config('constantes.status_devolvido'))->first();
+
 		}
-		$this->trocarStatus($id,$devolvido);
+		$this->trocarStatus($solicitacao,$devolvido);
 		return redirect()->route('user.index');
 	}
 
 	public function finalizar($id)
 	{
-		//$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
+		$solicitacao = Solicitacao::find($id);
 		$devolvido = Status::where('descricao', config('constantes.status_finalizado'))->first();				
-		$this->trocarStatus($id,$devolvido);
+		$this->trocarStatus($solicitacao,$devolvido);
 		return redirect()->route('user.index');
 	}
 
-	public function trocarStatus($id,$proximo)
+	public function trocarStatus($solicitacao,$proximo)
 	{
-		$solicitacao = Solicitacao::find($id);
+		//$solicitacao = Solicitacao::find($id);
 		$atual = $solicitacao->status;
 		//dd($atual);
 		$solicitacao->status()->detach($atual);

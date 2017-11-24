@@ -7,14 +7,27 @@ table.dataTable tbody td {
 .acoesTD{
   text-align: center
 }
+
 table.dataTable thead th {
   background-color: #ddcfbe;
 }
-
+@media (max-width: 420px){
+.teste{
+max-width: 70px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+}
 @media (min-width: 900px) {
   .modal-lg {
     width: 90%
   }
+}
+.nav > li > a {
+  position: relative;
+  display: block;
+  padding: 10px 10px !important;
 }
 @media (min-width: 1400px) {
 

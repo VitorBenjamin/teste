@@ -257,7 +257,7 @@ class SolicitacaoRepository
     {
         //dd($reembolso);
         $total = 0;
-        $km = $reembolso->cliente == null ? config('constantes.km') : $reembolso->cliente->km;
+        $km = $reembolso->cliente == null ? config('constantes.km') : $reembolso->cliente->valor_km;
         if ($reembolso->despesa != null ) {
             foreach ($reembolso->despesa as $despesa) {
                 $total += $despesa->valor;

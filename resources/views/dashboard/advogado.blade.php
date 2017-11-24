@@ -58,33 +58,35 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active sais-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#aberto">
-                                <i style="color: #bb7408" class="material-icons">build</i> ABERTO <span class="badge">{{count($abertas->solicitacao)}}</span>
+                                <i style="color: #bb7408" class="material-icons">build</i> <span class="hidden-xs"> ABERTO </span> <span class="badge">{{count($abertas->solicitacao)}}</span>
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#andamento">
-                                <i style="color: #30b1b1" class="material-icons">hourglass_empty</i> ANDAMENTO <span class="badge">{{count($andamentos->solicitacao)}}</span>
+                                <i style="color: #30b1b1" class="material-icons">hourglass_empty</i> <span class="hidden-xs"> ANDAMENTO </span> <span class="badge">{{count($andamentos->solicitacao)}}</span>
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#aprovado">
-                                <i style="color: #3ecc1b" class="material-icons">done_all</i> APROVADO <span class="badge">{{count($aprovadas->solicitacao)}}</span>
+                                <i style="color: #3ecc1b" class="material-icons">done_all</i> <span class="hidden-xs"> APROVADO </span> <span class="badge">{{count($aprovadas->solicitacao)}}</span>
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#reprovado">
-                                <i style="color: #ff0000" class="material-icons">highlight_off</i> REPROVADO <span class="badge">{{count($reprovados->solicitacao)}}</span>
+                                <i style="color: #ff0000" class="material-icons">highlight_off</i> <span class="hidden-xs"> REPROVADO </span> <span class="badge">{{count($reprovados->solicitacao)}}</span>
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#devolvido">
-                                <i style="color: #deb422" class="material-icons">restore_page</i> DEVOLVIDO <span class="badge">{{count($devolvidas->solicitacao)}}</span>
+                                <i style="color: #deb422" class="material-icons">restore_page</i> <span class="hidden-xs"> DEVOLVIDO </span> <span class="badge">{{count($devolvidas->solicitacao)}}</span>
                             </a>
                         </li>
                     </ul>
                     <div class="tab-content">
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
+
                         <div id="aberto" class="tab-pane fade in active" role="tabpanel">
+                             <h1 class="visible-xs" style="text-align: center"> ABERTO </h1>
                             <table id="aberto" class="table table-bordered table-striped table-hover dataTable js-basic-example">
                                 <thead>
                                     <tr>
@@ -106,7 +108,7 @@
                                         <td>{{ $aberto->id }}</td>
                                         <td>{{ date('d/m/y',strtotime($aberto->created_at)) }}</td>
                                         <!-- <td>{{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> -->
-                                        <td>{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
+                                        <td class="teste">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
                                         <td>{{ $aberto->solicitante->nome }}</td>
                                         <td>R$ {{ $aberto->total }}</td>
@@ -130,6 +132,7 @@
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
                         <div id="andamento" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> ANDAMENTO </h1>
                             <table id="andamento" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
@@ -150,7 +153,7 @@
                                         <td></td>
                                         <td>{{ $andamento->id }}</td>
                                         <td>{{ date('d/m/y',strtotime($andamento->created_at)) }}</td>
-                                        <td>{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
+                                        <td class="teste">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
                                         <td>{{ $andamento->tipo }}</td>
                                         <td>{{ $andamento->solicitante->nome }}</td>
                                         <td>R$ {{ $andamento->total }}</td>
@@ -169,8 +172,10 @@
                             </table>
                         </div>
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
+                        
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
                         <div id="aprovado" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> APROVADO </h1>
                             <table id="aprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
@@ -214,6 +219,7 @@
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
                         <div id="reprovado" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> REPROVADO </h1>
                             <table id="reprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
@@ -255,6 +261,7 @@
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
                         <div id="devolvido" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> DEVOLVIDO </h1>
                             <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>

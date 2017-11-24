@@ -2,27 +2,18 @@
 <div class="row clearfix">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="card">
-			@role(['COORDENADOR','FINANCEIRO'])
+			
 			<div class="header">
 				<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
-					<a href="{{ route('solicitacao.aprovar',$solicitacao->id) }}" class="btn bg-light-green waves-effect" role="button">
-						<i class="material-icons">done_all</i>
-						<!-- <span class="hidden-xs">ADD</span> -->
-						<span>APROVAR</span>
-					</a>
 					@role(['COORDENADOR'])
-					<a href="{{ route('solicitacao.reprovar',$solicitacao->id) }}" class="btn bg-green waves-effect" role="button">
-						<i class="material-icons">report_problem</i>
-						<span>REPROVAR</span>
-					</a>
+					@include('layouts._includes.cabecalho.acoesCoordenador')
 					@endrole
-					<a href="{{ route('solicitacao.devolver',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
-						<i class="material-icons">report_problem</i>
-						<span>DEVOLVER</span>
-					</a>
+					@role(['FINANCEIRO'])
+					@include('layouts._includes.cabecalho.acoesFinanceiro')
+					@endrole
 				</div>
 			</div>
-			@endrole
+			
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-6 col-sm-1">

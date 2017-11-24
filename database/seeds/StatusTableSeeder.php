@@ -56,5 +56,13 @@ class StatusTableSeeder extends Seeder
             'descricao' => 'APROVADO-RECORRENTE',
             
         ]);
+        Status::create([
+            'descricao' => 'ANDAMENTO-FINANCEIRO',
+            
+        ]);
+        Status::create([
+            'descricao' => 'APROVADO-FINANCEIRO',
+            
+        ]);
     }
 }

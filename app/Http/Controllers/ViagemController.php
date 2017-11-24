@@ -148,6 +148,7 @@ class ViagemController extends Controller
 
     public function addComprovante(Request $request,$id)
     {
+        //dd($request->all());
         if ($request->file('anexo_passagem')) {
             $file = Image::make($request->file('anexo_passagem'))->resize(1200, 600);
             $anexo_passagem = (string) $file->encode('data-url');
@@ -183,6 +184,7 @@ class ViagemController extends Controller
             'anexo_locacao' => $anexo_locacao,
             'viagens_id' => $id,
         ]);
+
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
         return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.analisar', $solicitacao->id);

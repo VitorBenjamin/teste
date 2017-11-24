@@ -39,20 +39,36 @@ class UserController extends Controller
 		
 		$abertas = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto'));
 		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento'));
+
 		$recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_recorrente'));
+		$andamento_recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_recorrente'));
+		
 		if ($recorrente !=null) {
-			
-			foreach ($recorrente->solicitacao as $key => $value) {
-
-				$andamentos->solicitacao->push($value);
-			}
-
+			$andamentos=$this->pushSolicitacao($andamentos,$recorrente);
 		}
-		$aprovadas = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado'));		
+		if ($andamento_recorrente !=null) {
+			$andamentos=$this->pushSolicitacao($andamentos,$andamento_recorrente);
+		}
+
+		$aprovadas = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado'));
+		$finalizados = $repo->getSolicitacaoAdvogado(config('constantes.status_finalizado'));	
+
+		if ($finalizados !=null) {
+			$aprovadas=$this->pushSolicitacao($aprovadas,$finalizados);
+		}	
 		$reprovados = $repo->getSolicitacaoAdvogado(config('constantes.status_reprovado'));
 		$devolvidas = $repo->getSolicitacaoAdvogado(config('constantes.status_devolvido'));
 
 		return view('dashboard.advogado',compact('abertas','andamentos','aprovadas','reprovados','devolvidas'));
+	}
+
+	public function pushSolicitacao($solicitacoes,$pushSolici)
+	{
+		foreach ($pushSolici->solicitacao as $key => $value) {
+
+			$solicitacoes->solicitacao->push($value);
+		}
+		return $solicitacoes;
 	}
 
 	public function coordenadorDash()
@@ -63,17 +79,16 @@ class UserController extends Controller
 		$aprovadas = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado'));
 		$aprovadas_recorrente = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado_recorrente'));
 		if ($aprovadas_recorrente !=null) {
-			
-			foreach ($aprovadas_recorrente->solicitacao as $key => $value) {
-
-				$aprovadas->solicitacao->push($value);
-			}
-		# code...
+			$aprovadas =$this->pushSolicitacao($aprovadas,$aprovadas_recorrente);			
 		}
 		$reprovados = $repo->getSolicitacaoCoordenador(config('constantes.status_reprovado'));
-		$devolvidas = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido_financeiro'));
+		$devolvidas = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido'));
 		$recorrentes = $repo->getSolicitacaoCoordenador(config('constantes.status_recorrente'));
+		$andamento_recorrente = $repo->getSolicitacaoCoordenador(config('constantes.status_andamento_recorrente'));
 		
+		if ($andamento_recorrente !=null) {
+			$recorrentes = $this->pushSolicitacao($recorrentes,$andamento_recorrente);			
+		}
 		return view('dashboard.coordenador',compact('abertas','aprovadas','reprovados','devolvidas','recorrentes'));
 	}
 	public function financeiroDash()
@@ -81,8 +96,16 @@ class UserController extends Controller
 		$repo = new SolicitacaoRepository();
 
 		$abertas = $repo->getSolicitacaoFinanceiro(config('constantes.status_aprovado'));
+		$andamento = $repo->getSolicitacaoFinanceiro(config('constantes.status_andamento_financeiro'));
+		if ($andamento !=null) {
+			$abertas= $this->pushSolicitacao($abertas,$andamento);
+		}
 		$finalizadas = $repo->getSolicitacaoFinanceiro(config('constantes.status_finalizado'));
 		$devolvidas = $repo->getSolicitacaoFinanceiro(config('constantes.status_devolvido_financeiro'));
+		$recorrentes_devolvidas = $repo->getSolicitacaoFinanceiro(config('constantes.status_recorrente'));
+		if ($devolvidas !=null) {
+			$devolvidas= $this->pushSolicitacao($devolvidas,$recorrentes_devolvidas);
+		}
 		$recorrentes = $repo->getSolicitacaoFinanceiro(config('constantes.status_aprovado_recorrente'));
 
 		return view('dashboard.financeiro',compact('abertas','finalizadas','devolvidas','recorrentes'));
