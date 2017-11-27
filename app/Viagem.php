@@ -49,6 +49,6 @@ class Viagem extends Model
     
     public function comprovante(){
 
-        return $this->hasMany('App\ViagemComprovante', 'viagens_id');
+        return $this->belongsTo('App\ViagemComprovante', 'viagens_comprovantes_id');
     }
 }

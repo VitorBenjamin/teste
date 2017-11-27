@@ -68,20 +68,20 @@
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h4 class="modal-title" id="defaultModalLabel">COMPROVANTE DE ENTREGA DA ANTECIPAÇÂO</h4>
+											<h4 class="modal-title" id="defaultModalLabel">COMPROVANTES DA VIAGEM</h4>
 										</div>
 										<div class="modal-body">
-											<form action="{{ route('viagem.addComprovante',$viagem->id)}}" method="POST" enctype="multipart/form-data">
+											<form action="{{ route('viagem.addComprovante',$solicitacao->id)}}" method="POST" enctype="multipart/form-data">
 												{{ csrf_field() }}
 												{{ method_field('PUT') }}
-												<input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+												<input type="hidden" name="viagem_id" value="{{$viagem->id}}">
 												<div class="col-md-12">
 													<div class="row clearfix">
 														<div class="col-md-4">
 															<div class="form-group">
 																<div class="form-line">
 																	<label for="data_compra">Data</label>
-																	<input type="text" id="data_compra" name="data_compra" class="datepicker form-control" placeholder="Clique"/>
+																	<input type="text" id="data_compra" value="{{old('data_compra')}}"name="data_compra" class="datepicker form-control" placeholder="Clique"/>
 																</div>
 															</div>
 														</div>
@@ -89,7 +89,7 @@
 															<div class="form-group">
 																<div class="form-line">
 																	<label for="observacao">Observação</label>
-																	<input type="text" value="" name="observacao" class="form-control" placeholder="Observação"/>										
+																	<input type="text" value="{{old('observacao')}}" name="observacao" class="form-control" placeholder="Observação"/>										
 																</div>
 															</div>
 														</div>
@@ -102,7 +102,7 @@
 																	R$
 																</span>
 																<div class="form-line">
-																	<input type="numeric" name="custo_passagem" class="form-control valor" required/>
+																	<input type="numeric" value="{{old('custo_passagem')}}" name="custo_passagem" class="form-control valor" required/>
 																</div>
 															</div>
 														</div>
@@ -124,7 +124,7 @@
 																	R$
 																</span>
 																<div class="form-line">
-																	<input type="numeric" name="custo_hospedagem" class="form-control valor" required/>
+																	<input type="numeric" value="{{old('custo_hospedagem')}}" name="custo_hospedagem" class="form-control valor" required/>
 																</div>
 															</div>
 														</div>
@@ -148,7 +148,7 @@
 																	R$
 																</span>
 																<div class="form-line">
-																	<input type="numeric" name="custo_locacao" class="form-control valor" required/>
+																	<input type="numeric" value="{{old('custo_locacao')}}" name="custo_locacao" class="form-control valor" required/>
 																</div>
 															</div>
 														</div>
@@ -195,32 +195,29 @@
 
 			@foreach ($solicitacao->viagem as $key => $viagem)
 			@if($viagem->viagens_comprovantes_id != null)
-			@foreach ($viagem->comprovante as $comp)
-			
-			@if($comp->anexo_passagem != null)
+			@if($viagem->comprovante->anexo_passagem != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> <span class="label label-danger"> Passagem</span></h3></div>
-				<img src="{{$comp->anexo_passagem}}" style="width:100%; max-height: 70%">
+				<img src="{{$viagem->comprovante->anexo_passagem}}" style="width:100%; max-height: 70%">
 			</div>
 			@endif
 
-			@if($comp->anexo_hospedagem != null)
+			@if($viagem->comprovante->anexo_hospedagem != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> 
 					<span class="label label-warning"> Hospedagem</span> </h3>
 				</div>
-				<img src="{{$comp->anexo_hospedagem}}" style="width:100%; max-height: 70%">
+				<img src="{{$viagem->comprovante->anexo_hospedagem}}" style="width:100%; max-height: 70%">
 			</div>
 			@endif
 
-			@if($comp->anexo_locacao != null)
+			@if($viagem->comprovante->anexo_locacao != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label label-info">{{$viagem->origem}} x {{$viagem->destino}} Locação</span></h3></div>
-				<img src="{{$comp->anexo_locacao}}" style="width:100%; max-height: 70%">
+				<img src="{{$viagem->comprovante->anexo_locacao}}" style="width:100%; max-height: 70%">
 			</div>
 			@endif
 
-			@endforeach
 			@endif	
 			@endforeach													
 

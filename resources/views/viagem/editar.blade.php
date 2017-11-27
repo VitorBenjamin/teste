@@ -22,7 +22,7 @@
 			</div>
 		</div>
 	</div>
-	@if($solicitacao->status[0]->descricao =="ABERTO") 
+	@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO") 
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -65,6 +65,13 @@
 							<!-- <span class="hidden-xs">ADD</span> -->
 							<span>ADICIONAR DESPESA</span>
 						</a>
+						@if(empty($viagens->despesa))
+						<a data-toggle="modal" data-target="#modalDespesa" class="btn bg-light-green waves-effect" role="button">
+							<i class="material-icons">exposure_plus_1</i>
+							<!-- <span class="hidden-xs">ADD</span> -->
+							<span>FINALIZAR</span>
+						</a>
+						@endif
 					</div>
 				</div>
 			</div>
@@ -80,7 +87,7 @@
 				</div>
 				<!-- INCIO SESSÃO DESPESA -->
 				<div class="modal-body">
-					<form action="{{ route('reembolso.addDespesa',$solicitacao->id)}}" method="POST" enctype="multipart/form-data">
+					<form action="{{ route('viagem.addDespesa',$solicitacao->id)}}" method="POST" enctype="multipart/form-data">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
 						<div class="body">
@@ -168,7 +175,7 @@
 	@include('layouts._includes.cabecalho._cabecalho_analise')
 	<!-- FIM CABEÇALHO PADRAO -->
 	@endif
-	@if($solicitacao->status[0]->descricao =="ABERTO")
+	@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO")
 	<!-- MODAL VIAGEM -->
 	<div class="modal fade" id="modalViagem" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
@@ -462,7 +469,7 @@
 								<td>{{$viagem->kg}}</td>
 								<td>{{$viagem->locacao == 1 ? 'SIM' : 'NÃO'}}</td>					
 								<td class="acoesTD">
-									@if($solicitacao->status[0]->descricao =="ABERTO")
+									@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO")
 									<div class="icon-button-demo" >
 										<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$viagem->id}}" role="button"><i class="material-icons">settings</i></a>
 
@@ -601,7 +608,96 @@
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DA VIAGENS -->
+	
+	<!-- LISTAGEM DAS DESPESAS  -->
+	<div class="row clearfix">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="card">
+				<div class="header">
+					<h2>
+						LISTAGEM DAS DESPESAS
+					</h2>
+				</div>
+				<div class="body">
+					<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Descricao</th>
+								<th>Comprovante</th>
+								<th>Valor</th>
+								<th>Ação</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Descricao</th>
+								<th>Comprovante</th>
+								<th>Valor</th>
+								<th>Ação</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							@foreach ($solicitacao->despesa as $key => $despesa)
+							<tr>
+								<td></td>
+								<td>{{date('d/m/y',strtotime($despesa->data_despesa))}}</td>
+								<td>{{$despesa->descricao}}</td>
+								<td>{{$despesa->tipo_comprovante}}</td>
+								<td>{{$despesa->valor}}</td>
+								<td class="acoesTD">
+									<div class="icon-button-demo" >
+										<a href="{{ route('viagem.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+											<i class="material-icons">settings</i>
+										</a>
 
+										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('viagem.deletarDespesa',$despesa->id)}}">
+											<i class="material-icons">delete_sweep</i>
+										</a>
+										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key}})">
+											<i class="material-icons">photo_library</i>
+										</a>
+									</div>
+								</td>
+							</tr>							
+							@endforeach														
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIM LISTAGEM DAS DESPESAS -->
+
+	<!-- MODAL GALERIA -->
+	<div id="myModal2" class="modal-2">
+		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
+		<div class="modal-content-2">
+			@foreach ($solicitacao->despesa as $key => $despesa)
+			<div class="mySlides">
+				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/y',strtotime($despesa->data_despesa))}}</span></h3></div>
+				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
+			</div>
+			@endforeach														
+
+			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
+			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
+
+			<!-- <div class="caption-container">
+				<p id="caption"></p>
+			</div> -->
+			<!-- 
+			@foreach ($solicitacao->despesa as $key => $despesa)
+			<div class="column">
+				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
+			</div>
+			@endforeach -->
+
+		</div>
+	</div>
 	<!-- MODAL GALERIA -->
 	<div id="myModal" class="modal-2">
 		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
@@ -609,34 +705,39 @@
 
 			@foreach ($solicitacao->viagem as $key => $viagem)
 			@if($viagem->viagens_comprovantes_id != null)
-			@foreach ($viagem->comprovante as $comp)
 			
-			@if($comp->anexo_passagem != null)
+			@if($viagem->comprovante->anexo_passagem != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> <span class="label label-danger"> Passagem</span></h3></div>
-				<img src="{{$comp->anexo_passagem}}" style="width:100%; max-height: 70%">
+				<img src="{{$viagem->comprovante->anexo_passagem}}" style="width:100%; max-height: 70%">
 			</div>
 			@endif
 
-			@if($comp->anexo_hospedagem != null)
+			@if($viagem->comprovante->anexo_hospedagem != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> 
 					<span class="label label-warning"> Hospedagem</span> </h3>
 				</div>
-				<img src="{{$comp->anexo_hospedagem}}" style="width:100%; max-height: 70%">
+				<img src="{{$viagem->comprovante->anexo_hospedagem}}" style="width:100%; max-height: 70%">
 			</div>
 			@endif
 
-			@if($comp->anexo_locacao != null)
+			@if($viagem->comprovante->anexo_locacao != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label label-info">{{$viagem->origem}} x {{$viagem->destino}} Locação</span></h3></div>
-				<img src="{{$comp->anexo_locacao}}" style="width:100%; max-height: 70%">
+				<img src="{{$viagem->comprovante->anexo_locacao}}" style="width:100%; max-height: 70%">
 			</div>
 			@endif
 
-			@endforeach
 			@endif	
-			@endforeach													
+			@endforeach		
+			
+			@foreach ($solicitacao->despesa as $despesa)
+			<div class="mySlides">
+				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/y',strtotime($despesa->data_despesa))}}</span></h3></div>
+				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
+			</div>
+			@endforeach											
 
 			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
 			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
@@ -645,15 +746,15 @@
 				<p id="caption"></p>
 			</div> -->
 			
-			{{-- @foreach ($solicitacao->despesa as $key => $despesa)
+			<!-- @foreach ($solicitacao->despesa as $key => $despesa)
 			<div class="column">
 				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
 			</div>
 
-			@endforeach --}}
-			
+			@endforeach -->
+
+			</div>
 		</div>
-	</div>
-	<!-- FIM MODAL GALERIA -->
-</section>
-@endsection
+		<!-- FIM MODAL GALERIA -->
+	</section>
+	@endsection

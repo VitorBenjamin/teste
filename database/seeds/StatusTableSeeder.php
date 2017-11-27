@@ -16,41 +16,45 @@ class StatusTableSeeder extends Seeder
     		'descricao' => 'ABERTO',
 
     	]);
-    	Status::create([
-    		'descricao' => 'FECHADO',
-    		
-    	]);
-    	Status::create([
-    		'descricao' => 'ANDAMENTO',
-    		
-    	]);
         Status::create([
-            'descricao' => 'ANDAMENTO-RECORRENTE',
+            'descricao' => 'ABERTO-ETAPA2',
+
+        ]);
+        Status::create([
+            'descricao' => 'ANDAMENTO',
             
         ]);
-    	Status::create([
-    		'descricao' => 'APROVADO',
-    		
-    	]);
+        Status::create([
+            'descricao' => 'APROVADO',
+            
+        ]);
         Status::create([
             'descricao' => 'REPROVADO',
             
         ]);
-    	Status::create([
-    		'descricao' => 'DEVOLVIDO',
-    		
-    	]);
-    	Status::create([
-    		'descricao' => 'DEVOLVIDO-FINANCEIRO',
-    		
-    	]);
-    	Status::create([
-    		'descricao' => 'FINALIZADO',
-    		
-    	]);
+        Status::create([
+            'descricao' => 'DEVOLVIDO',
+            
+        ]);
         Status::create([
             'descricao' => 'RECORRENTE',
             
+        ]);
+        Status::create([
+            'descricao' => 'FINALIZADO',
+            
+        ]);
+        Status::create([
+            'descricao' => 'ABERTO-FINANCEIRO',
+
+        ]);
+        Status::create([
+            'descricao' => 'ANDAMENTO-RECORRENTE',
+            
+        ]);
+        Status::create([
+            'descricao' => 'DEVOLVIDO-FINANCEIRO',
+
         ]);
         Status::create([
             'descricao' => 'APROVADO-RECORRENTE',
@@ -64,5 +68,10 @@ class StatusTableSeeder extends Seeder
             'descricao' => 'APROVADO-FINANCEIRO',
             
         ]);
+        Status::create([
+            'descricao' => 'RECORRENTE-FINANCEIRO',
+            
+        ]);
+        
     }
 }

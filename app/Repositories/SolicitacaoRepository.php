@@ -150,8 +150,8 @@ class SolicitacaoRepository
         
         foreach ($limites as $limite) 
         {
-         if (empty($area_id)) 
-         {
+           if (empty($area_id)) 
+           {
             //dd($limite);
             if ($total >= $limite->de && $total <= $limite->ate) 
             {
@@ -334,20 +334,22 @@ public function totalCompra($compras)
 public function totalViagem($viagens)
 {
     $total = 0;
-    foreach ($viagens->viagem as $viagens) 
+    foreach ($viagens->viagem as $viagem) 
     {
-        foreach ($viagens->comprovante as $comprovante) {
-            $total += $comprovante->custo_passagem;
-            $total += $comprovante->custo_hospedagem;
-            $total += $comprovante->custo_locacao;
-        }        
+        if ($viagem->viagens_comprovantes_id != null ) {
+                $total += $viagem->comprovante->custo_passagem;
+                $total += $viagem->comprovante->custo_hospedagem;
+                $total += $viagem->comprovante->custo_locacao;
+        }
         
-        if ($viagens->despesa != null ) {
+    }
+    //dd($viagens->despesa);
+
+    if (!empty($viagens->despesa)) {
             foreach ($viagens->despesa as $despesa) {
                 $total += $despesa->valor;
             }
         }
-    }
     return $total;
 }
 

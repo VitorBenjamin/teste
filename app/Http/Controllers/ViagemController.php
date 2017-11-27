@@ -16,6 +16,7 @@ use App\Solicitante;
 use App\Cliente;
 use App\AreaAtuacao;
 use App\Status;
+use App\Despesa;
 
 class ViagemController extends Controller
 {
@@ -63,7 +64,7 @@ class ViagemController extends Controller
         ->where('id',$id)
         ->first();
         $solicitacaoHelper = new SolicitacaoHelper();
-        $exist = $solicitacaoHelper->solicitacaoExist($solicitacao,config('constantes.tipo_reembolso'));
+        $exist = $solicitacaoHelper->solicitacaoExist($solicitacao,config('constantes.tipo_viagem'));
         if ($exist == "ok") 
         {
             $verificarStatus = $solicitacaoHelper->verificarStatus($solicitacao);
@@ -79,6 +80,31 @@ class ViagemController extends Controller
         }
     }
 
+    //Adcionar uma nova despesa a solicitação
+    public function addDespesa(Request $request,$id)
+    {
+        $solicitacao = Solicitacao::find($id);
+
+        $file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);
+        $img_64 = (string) $file->encode('data-url');
+        $despesa = Despesa::create(
+            [   
+                'descricao' => $request->descricao,
+                'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
+                'tipo_comprovante' => $request->tipo_comprovante,
+                'valor' => $request->valor,
+                'anexo_comprovante' => $img_64,
+                'solicitacoes_id' => $solicitacao->id,
+            ]
+        );
+
+        \Session::flash('flash_message',[
+            'msg'=>"Cadastro da Despesa Realizado com Sucesso!!!",
+            'class'=>"alert bg-green alert-dismissible"
+        ]);
+        
+        return redirect()->route('viagem.editar',$id);
+    }
     //Retorna a View de edição da unidade
     public function editar($soli)
     {
@@ -96,7 +122,7 @@ class ViagemController extends Controller
     public function atualizarViagem(Request $request,$id)
     {   
         //dd($request->all());
-        $viagem = viagem::find($id);
+        $viagem = Viagem::find($id);
         $data = null;
         if ($request->data_volta) {
             $data = date('Y-m-d H:m:s', strtotime($request->data_volta));
@@ -147,6 +173,55 @@ class ViagemController extends Controller
         ]);
         return redirect()->route('viagem.editar',$id);
     }
+    //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
+    
+    public function editarDespesa($id)
+    {   
+        $despesa = Despesa::find($id);
+
+        return view('viagem.despesa', compact('despesa'));
+    }
+
+    //Atualiza uma Despesa e redireciona para a tela de edição da Solicitação
+    public function atualizarDespesa(Request $request,$id)
+    {   
+        $despesa = Despesa::find($id);
+        if ($request->hasFile('anexo_comprovante')) {
+            $file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);            
+            $img_64 = (string) $file->encode('data-url');
+        }else{
+            $img_64 = $despesa->anexo_comprovante;
+        }
+
+        $despesa->update(
+            [   
+                'descricao' => $request->descricao,
+                'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
+                'tipo_comprovante' => $request->tipo_comprovante,
+                'valor' => $request->valor,
+                'anexo_comprovante' => $img_64,
+            ]
+        );
+
+        \Session::flash('flash_message',[
+            'msg'=>"Despesa Atualizada com Sucesso!!!",
+            'class'=>"alert bg-green alert-dismissible"
+        ]);
+        return redirect()->route('viagem.editar', $despesa->solicitacoes_id);
+    }
+//Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
+    public function deletarDespesa($id)
+    {
+
+        $despesa = Despesa::find($id);
+        $s_id = $despesa->solicitacoes_id;
+        $despesa->delete();
+        \Session::flash('flash_message',[
+            'msg'=>"Despesas Removida com Sucesso!!!",
+            'class'=>"alert bg-red alert-dismissible"
+        ]);
+        return redirect()->route('viagem.editar',$s_id);       
+    }
 
     public function addComprovante(Request $request,$id)
     {
@@ -186,11 +261,10 @@ class ViagemController extends Controller
             'anexo_locacao' => $anexo_locacao,
         ]);
 
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-
-        $solicitação->viagens_comprovantes_id = $comprovante->id;
-        $solicitacao->save();
-        
+        $viagem = Viagem::find($request->viagem_id);
+        //dd($comprovante->id);
+        $solicitacao = Solicitacao::find($id);
+        $viagem->update(['viagens_comprovantes_id' => $comprovante->id]);        
         return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.analisar', $solicitacao->id);
     }
 

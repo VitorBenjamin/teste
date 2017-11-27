@@ -10,7 +10,7 @@
         </div>
         <div class="card">
             <div class="body" style="
-            padding: 30px; 
+            padding: 30px;  
             border-bottom-width: 3px;
             border-bottom-color: #FF9800;
             border-bottom-style: solid">
@@ -20,15 +20,15 @@
                 <input type="hidden" name="token" value="{{ $token }}">
 
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <label for="email" class="col-md-4 control-label">E-Mail</label>
-
+                    <!-- <label for="email" class="col-md-4 control-label">E-Mail</label> -->
                     <div class="col-md-12">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="material-icons">email</i>
                             </span>
-                            <input id="email" type="email" class="form-control" name="email" placeholder="E-Mail" value="{{ $email or old('email') }}" required autofocus>
-
+                            <div class="form-line">
+                                <input id="email" type="email" class="form-control" name="email" placeholder="E-Mail" value="{{ $email or old('email') }}" required autofocus>
+                            </div>
                             @if ($errors->has('email'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('email') }}</strong>
@@ -38,7 +38,34 @@
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">lock</i>
+                    </span>
+                    <div class="form-line">
+                        <input id="password" type="password" class="form-control" name="password" required>
+                        @if ($errors->has('password'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">lock</i>
+                    </span>
+                    <div class="form-line">
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        @if ($errors->has('password'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>
+                <!-- <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">lock</i>
@@ -56,8 +83,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                </div> -->
+                <!-- <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">lock</i>
@@ -74,12 +101,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-4">
                         <button type="submit" class="btn btn-primary">
-                            Resetar Password
+                            Resetar Senha
                         </button>
                     </div>
                 </div>

@@ -162,6 +162,11 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
         Route::put('atualizar-cabecalho/{id}', ['uses' => 'ViagemController@atualizarCabecalho', 'as' => 'viagem.atualizarCabecalho']);
         Route::put('atualizar-viagem/{id}', ['uses' => 'ViagemController@atualizarViagem', 'as' => 'viagem.atualizarViagem']);
         Route::get('analisar-viagem/{id}', ['uses' => 'ViagemController@analisar',  'as' => 'viagem.analisar']);
+        Route::put('add-despesa/{id}', ['uses' => 'ViagemController@addDespesa', 'as' => 'viagem.addDespesa']);
+        Route::put('atualizar-despesa/{id}', ['uses' => 'ViagemController@atualizarDespesa', 'as' => 'viagem.atualizarDespesa']);
+        Route::get('deletar-despesa/{id}', ['uses' => 'ViagemController@deletarDespesa', 'as' => 'viagem.deletarDespesa']);
+        Route::get('editar-despesa/{id}', ['uses' => 'ViagemController@editarDespesa', 'as' => 'viagem.editarDespesa']);
+
 
 
     });

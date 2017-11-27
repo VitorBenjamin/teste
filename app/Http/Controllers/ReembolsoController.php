@@ -149,7 +149,6 @@ class ReembolsoController extends Controller
         {
             $verificarStatus = $solicitacaoHelper->verificarStatus($solicitacao);
 
-
             if ($verificarStatus == "ok") 
             {
                 return $this->editar($solicitacao);           
