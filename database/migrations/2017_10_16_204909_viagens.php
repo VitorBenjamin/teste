@@ -14,7 +14,6 @@ class Viagens extends Migration
     public function up()
     {
         Schema::create('viagens', function (Blueprint $table) {
-            //
             $table->increments('id');
             $table->string('observacao')->nullable();
             $table->string('origem');
@@ -26,7 +25,7 @@ class Viagens extends Migration
             $table->boolean('locacao')->nullable();
             $table->integer('kg')->nullable();
             $table->integer('solicitacoes_id')->unsigned();
-            $table->integer('reembolso_id')->unsigned()->nullable();
+            $table->integer('viagens_comprovantes_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

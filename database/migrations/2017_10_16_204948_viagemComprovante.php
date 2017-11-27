@@ -18,12 +18,11 @@ class ViagemComprovante extends Migration
             //DB::statement("ALTER TABLE viagem_comprovantes ADD anexo_hospedagem LONGBLOB");
             //DB::statement("ALTER TABLE viagem_comprovantes ADD anexo_locacao LONGBLOB");
             $table->increments('id');
-            $table->string('observacao');
+            $table->string('observacao')->nullable();
             $table->datetime('data_compra');
             $table->decimal('custo_passagem', 10, 2);
             $table->decimal('custo_hospedagem', 10, 2)->nullable();
             $table->decimal('custo_locacao', 10, 2)->nullable();
-            $table->integer('viagens_id')->unsigned();            
             $table->timestamps();
             $table->softDeletes();
         });

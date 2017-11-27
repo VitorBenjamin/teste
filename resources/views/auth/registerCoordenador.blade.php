@@ -110,7 +110,7 @@
                             <fieldset>
                                 <div class="form-group form-float">
                                     <label for="area_atuacoes_limite">Área de Atendimento</label>
-                                    <select id="area_atuacoes_limite" name="area_atuacoes_limite" class="form-control show-tick" data-container="body" data-live-search="true" required>
+                                    <select id="area_atuacoes_limite" name="area_atuacoes_limite" class="form-control show-tick" data-container="body" data-live-search="true">
                                         <option value="">SELECIONE</option>
                                         @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">{{ $area->tipo }}</option>

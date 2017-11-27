@@ -10,6 +10,7 @@ return [
 	'title' => 'Sistema Reembolso | Mosello Lima',
 	'teste' => 'active',
 	'status_aberto' => 'ABERTO',
+	'status_aberto_etapa2' => 'ABERTO-ETAPA2',
 	'status_andamento' => 'ANDAMENTO',
 	'status_aprovado' => 'APROVADO',
 	'status_reprovado' => 'REPROVADO',

@@ -15,7 +15,7 @@ class ViagemComprovante extends Model
     protected $table = 'viagens_comprovantes';
 
     protected $fillable = [
-        'observacao', 'data_compra', 'custo_passagem', 'custo_hospedagem', 'custo_locacao', 'anexo_passagem', 'anexo_hospedagem', 'anexo_locacao', 'viagens_id'
+        'observacao', 'data_compra', 'custo_passagem', 'custo_hospedagem', 'custo_locacao', 'anexo_passagem', 'anexo_hospedagem', 'anexo_locacao'
     ];
     
     /** Consulta a viagem por Comprovante

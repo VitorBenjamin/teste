@@ -56,13 +56,13 @@ class SolicitacaoController extends Controller
 		if ($solicitacao->status[0]->descricao == config('constantes.status_devolvido_financeiro')) {
 			
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado_recorrente'))->first();
-		
+
 		}elseif($solicitacao->status[0]->descricao == config('constantes.status_aberto_financeiro')){
 			
 			$aprovado = Status::where('descricao', config('constantes.status_andamento_financeiro'))->first();
-		
+
 		}else{			
-		
+
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado'))->first();
 		}
 		$this->trocarStatus($solicitacao,$aprovado);
@@ -105,8 +105,12 @@ class SolicitacaoController extends Controller
 	public function finalizar($id)
 	{
 		$solicitacao = Solicitacao::find($id);
-		$devolvido = Status::where('descricao', config('constantes.status_finalizado'))->first();				
-		$this->trocarStatus($solicitacao,$devolvido);
+		if ($solicitacao->tipo == "VIAGEM" || $solicitacao->tipo == "ANTECIPAÇÂO" ) {
+			$finalizar = Status::where('descricao', config('constantes.status_aberto_etapa2'))->first();
+		}else{
+			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();				
+		}
+		$this->trocarStatus($solicitacao,$finalizar);
 		return redirect()->route('user.index');
 	}
 

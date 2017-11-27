@@ -38,6 +38,12 @@ class UserController extends Controller
 		$repo = new SolicitacaoRepository();
 		
 		$abertas = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto'));
+		$abertasEtapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto_etapa2'));
+
+		if ($abertasEtapa2 !=null) {
+			$abertas=$this->pushSolicitacao($abertas,$abertasEtapa2);
+		}
+
 		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento'));
 
 		$recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_recorrente'));

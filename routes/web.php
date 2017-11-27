@@ -19,6 +19,8 @@ Route::get('financeiro-dashboard', ['uses' => 'UserController@financeiroDash','m
 Route::post('solictacao-deletar', ['uses' => 'SolicitacaoController@deletar', 'as' => 'solicitacao.deletar']);
 Route::get('/ajax/clientes', ['uses' => 'ClienteController@getCliente', 'as' => 'cliente.getCliente']);
 Route::get('/ajax/solicitantes', ['uses' => 'SolicitanteController@getSolicitante', 'as' => 'solicitante.getSolicitante']);
+Route::get('/ajax/processo', ['uses' => 'ProcessoController@getProcesso', 'as' => 'processo.getProcesso']);
+
 // Route::get('cadastrar', ['uses' => 'CompraController@cadastrar', 'as' => 'compra.cadastrar']);
 Auth::routes();
 Route::get('/cadastro/registrar-coordenador', 'Auth\RegisterController@showRegistrationFormCoordenador')->name('registerCoordenador');

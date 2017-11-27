@@ -58,13 +58,14 @@ class CreateFks extends Migration
 
     //Foreign Keys Tabela viagens
         Schema::table('viagens', function (Blueprint $table) {
-            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');;
+            $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
+            $table->foreign('viagens_comprovantes_id')->references('id')->on('viagens_comprovantes')->onDelete('cascade');
+
 
         });
 
     //Foreign Keys Tabela viagens_comprovantes
         Schema::table('viagens_comprovantes', function (Blueprint $table) {
-            $table->foreign('viagens_id')->references('id')->on('viagens');
             DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_passagem LONGBLOB");
             DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_hospedagem LONGBLOB");
             DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_locacao LONGBLOB");

@@ -1,4 +1,5 @@
 ﻿//Deixa todas os inputs UpperCase
+
 $(function() {
     $('input:text').keyup(function() {
         this.value = this.value.toLocaleUpperCase()
@@ -53,6 +54,7 @@ $('#origem_despesa').change(function() {
 
 }
 });
+
 
 
 //Ajax para trazer os clientes

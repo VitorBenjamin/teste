@@ -4,6 +4,7 @@
 <script type="text/javascript">
 	var urlClientes = "{{route('cliente.getCliente')}}";
 	var urlSoli = "{{route('solicitante.getSolicitante')}}";
+	var urlProcesso = "{{route('processo.getProcesso')}}";
 </script>
 <section class="content">
 	<div class="block-header">
@@ -14,7 +15,7 @@
 			<div class="header">
 				@if(Session::has('flash_message'))
 				<div align="center" class="{{ Session::get('flash_message')['class'] }}" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					{{ Session::get('flash_message')['msg'] }}
 				</div>								
 				@endif

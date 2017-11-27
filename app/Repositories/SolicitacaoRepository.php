@@ -25,10 +25,8 @@ class SolicitacaoRepository
         $data = self::montaData($request);
         $data['codigo'] = random_int(100, 99999);
         $data['tipo'] = $tipo;
-        //dd($request->processo);
         if ($request->processo != "") 
         {
-            //dd($request->processo, ' asdadasdasdas');
             $processo = Processo::where('id',$request->processo)->first();
             if ($processo != "") 
             {
@@ -94,25 +92,29 @@ class SolicitacaoRepository
     public function getSolicitacaoCoordenador($status)
     {
         $area_id = array();
+        //dd(count($area_id));
         $limites = auth()->user()->limites;
+       // dd(empty($area_id));
         foreach ($limites as $limite) 
         {
 
             array_push($area_id,$limite->area_atuacoes_id);
 
         }
-        //dd($area_id);
-        $status = Status::with(['solicitacao' => function($q) use ($area_id)
-        {           
-            //array_push($area_id,$limites->id);
-            //$q->with('area_atuacoes_id');
-            if (!empty($area_id)) {
+        if (!empty($area_id)) 
+        {
+//            dd('asdasdasd');
+            $status = Status::with(['solicitacao' => function($q) use ($area_id)
+            {           
+
                 $q->whereIn('area_atuacoes_id', $area_id);
-            }            
-        }])->where('descricao',$status)->first();
+
+            }])->where('descricao',$status)->first();
+        }else {
+            $status = Status::with('solicitacao')->where('descricao',$status)->first();
+        }
         
         $solicitacoes = $this->valorTotalCoordenador($status,$limites);
-        //dd($status);
         return $solicitacoes;
     }
 
@@ -137,15 +139,34 @@ class SolicitacaoRepository
 
     public function getRange($total, $limites, $s)
     {
-
+        $area_id = array();
         foreach ($limites as $limite) 
         {
-            //dd($limite->unidades);
+
+            array_push($area_id,$limite->area_atuacoes_id);
+
+        }
+        //dd($area_id[0]);
+        
+        foreach ($limites as $limite) 
+        {
+         if (empty($area_id)) 
+         {
+            //dd($limite);
+            if ($total >= $limite->de && $total <= $limite->ate) 
+            {
+
+                return true;
+
+            }else {
+                return false;
+            }
+        }else{
 
             if ($s->area_atuacoes_id == $limite->area_atuacoes_id) 
             {
                 $unidades = $limite->unidades;
-                //dd($limites);
+
                 if ($unidades !=null)
                 {
                     if (!$unidades->contains('id',$s->unidades_id)) {
@@ -164,216 +185,222 @@ class SolicitacaoRepository
             }
         }
     }
-    public function valorTotalCoordenador($solicitacoes, $limites)
-    {
+
+}
+public function valorTotalCoordenador($solicitacoes, $limites)
+{
        //dd(is_array($solicitacoes));
-        if (!empty($solicitacoes->solicitacao)) 
-        {
-            foreach ($solicitacoes->solicitacao  as $key => $s) 
-            {
-                $temp = 0;
-                if ($s->tipo=="REEMBOLSO") 
-                {
-                    $temp = $this->totalReembolso($s);
-                    if ($this->getRange($temp,$limites,$s) ) 
-                    {
-                        $s['total']=$this->totalReembolso($s);
-                    }else{
-                        unset($solicitacoes->solicitacao[$key]);
-                    }                    
-                }
-                if ($s->tipo=="VIAGEM") 
-                {
-                    $temp = $this->totalViagem($s);
-                    if ($this->getRange($temp,$limites,$s) ) 
-                    {
-                        $s['total']=$this->totalViagem($s);
-                    }else {
-                        unset($solicitacoes->solicitacao[$key]);
-                    } 
-
-                }
-                if ($s->tipo=="GUIA") 
-                {
-                    $temp = $this->totalGuia($s);
-                    if ($this->getRange($temp,$limites,$s) ) 
-                    {
-                        $s['total']=$this->totalGuia($s);
-                    }else {
-                        unset($solicitacoes->solicitacao[$key]);
-                    } 
-                }
-                if ($s->tipo=="COMPRA") 
-                {
-                    $temp = $this->totalCompra($s);
-                    if ($this->getRange($temp,$limites,$s) ) 
-                    {
-                        $s['total']=$this->totalCompra($s);
-                    }else {
-                        unset($solicitacoes->solicitacao[$key]);
-                    } 
-                }
-                if ($s->tipo=="ANTECIPAÇÃO") 
-                {
-                    $temp = $this->totalAntecipacao($s);
-                    if ($this->getRange($temp,$limites,$s) ) 
-                    {
-                        $s['total']=$this->totalAntecipacao($s);
-                    }else {
-                        unset($solicitacoes->solicitacao[$key]);
-                    } 
-                }           
-            }
-        }
-        return $solicitacoes;
-
-    }
-
-    public function valorTotalAdvogado($solicitacoes)
+       // dd($solicitacoes);
+    if (!empty($solicitacoes->solicitacao)) 
     {
-        //dd($solicitacoes->solicitacao);
+        foreach ($solicitacoes->solicitacao  as $key => $s) 
+        {
+            $temp = 0;
+            if ($s->tipo=="REEMBOLSO") 
+            {
+                $temp = $this->totalReembolso($s);
+                if ($this->getRange($temp,$limites,$s) ) 
+                {
+                    $s['total']=$this->totalReembolso($s);
+                }else{
+                    unset($solicitacoes->solicitacao[$key]);
+                }                    
+            }
+            if ($s->tipo=="VIAGEM") 
+            {
+                $temp = $this->totalViagem($s);
+                if ($this->getRange($temp,$limites,$s) ) 
+                {
+                    $s['total']=$this->totalViagem($s);
+                }else {
+                    unset($solicitacoes->solicitacao[$key]);
+                } 
 
-        foreach ($solicitacoes->solicitacao as $s) {
-            if ($s->tipo=="REEMBOLSO") {
-                $s['total']=$this->totalReembolso($s);
             }
-            if ($s->tipo=="VIAGEM") {
-                $s['total']=$this->totalViagem($s);
+            if ($s->tipo=="GUIA") 
+            {
+                $temp = $this->totalGuia($s);
+                if ($this->getRange($temp,$limites,$s) ) 
+                {
+                    $s['total']=$this->totalGuia($s);
+                }else {
+                    unset($solicitacoes->solicitacao[$key]);
+                } 
             }
-            if ($s->tipo=="GUIA") {
-                $s['total']=$this->totalGuia($s);
+            if ($s->tipo=="COMPRA") 
+            {
+                $temp = $this->totalCompra($s);
+                if ($this->getRange($temp,$limites,$s) ) 
+                {
+                    $s['total']=$this->totalCompra($s);
+                }else {
+                    unset($solicitacoes->solicitacao[$key]);
+                } 
             }
-            if ($s->tipo=="COMPRA") {
-                $s['total']=$this->totalCompra($s);
-            }
-            if ($s->tipo=="ANTECIPAÇÃO") {
-                $s['total']=$this->totalAntecipacao($s);
+            if ($s->tipo=="ANTECIPAÇÃO") 
+            {
+                $temp = $this->totalAntecipacao($s);
+                if ($this->getRange($temp,$limites,$s) ) 
+                {
+                    $s['total']=$this->totalAntecipacao($s);
+                }else {
+                    unset($solicitacoes->solicitacao[$key]);
+                } 
             }           
         }
-        return $solicitacoes;
+    }
+    return $solicitacoes;
+
+}
+
+public function valorTotalAdvogado($solicitacoes)
+{
+        //dd($solicitacoes->solicitacao);
+
+    foreach ($solicitacoes->solicitacao as $s) {
+        if ($s->tipo=="REEMBOLSO") {
+            $s['total']=$this->totalReembolso($s);
+        }
+        if ($s->tipo=="VIAGEM") {
+            $s['total']=$this->totalViagem($s);
+        }
+        if ($s->tipo=="GUIA") {
+            $s['total']=$this->totalGuia($s);
+        }
+        if ($s->tipo=="COMPRA") {
+            $s['total']=$this->totalCompra($s);
+        }
+        if ($s->tipo=="ANTECIPAÇÃO") {
+            $s['total']=$this->totalAntecipacao($s);
+        }           
+    }
+    return $solicitacoes;
+}
+
+public function totalReembolso($reembolso)
+{
+        //dd($reembolso);
+    $total = 0;
+    $km = $reembolso->cliente == null ? config('constantes.km') : $reembolso->cliente->valor_km;
+    if ($reembolso->despesa != null ) {
+        foreach ($reembolso->despesa as $despesa) {
+            $total += $despesa->valor;
+        }
+    }
+    if ($reembolso->translado != null) {
+
+        foreach ($reembolso->translado as $translado) {
+            $total += $translado->distancia*$km;
+        }
+    }
+    return $total;
+}
+
+public function totalGuia($guias)
+{
+    $total = 0;
+    if ($guias->guia != null ) {
+        foreach ($guias->guia as $guia) {
+            $total += $guia->valor;
+        }
+    }
+    return $total;
+}
+
+public function totalCompra($compras)
+{
+    $total = 0;
+    $menor = 999999;
+    if ($compras->compra != null ) {
+        foreach ($compras->compra as $compra) {
+            foreach ($compra->cotacao as $cotacao) {
+
+                if ($cotacao->valor<$menor) {
+
+                    $menor = $cotacao->valor;
+                }
+
+            }
+            if ($menor != 999999) {
+
+                $total += $menor;
+            }
+        }
     }
 
-    public function totalReembolso($reembolso)
+    return $total;
+}
+
+public function totalViagem($viagens)
+{
+    $total = 0;
+    foreach ($viagens->viagem as $viagens) 
     {
-        //dd($reembolso);
-        $total = 0;
-        $km = $reembolso->cliente == null ? config('constantes.km') : $reembolso->cliente->valor_km;
-        if ($reembolso->despesa != null ) {
-            foreach ($reembolso->despesa as $despesa) {
+        foreach ($viagens->comprovante as $comprovante) {
+            $total += $comprovante->custo_passagem;
+            $total += $comprovante->custo_hospedagem;
+            $total += $comprovante->custo_locacao;
+        }        
+        
+        if ($viagens->despesa != null ) {
+            foreach ($viagens->despesa as $despesa) {
                 $total += $despesa->valor;
             }
         }
-        if ($reembolso->translado != null) {
-
-            foreach ($reembolso->translado as $translado) {
-                $total += $translado->distancia*$km;
-            }
-        }
-        return $total;
     }
+    return $total;
+}
 
-    public function totalGuia($guias)
-    {
-        $total = 0;
-        if ($guias->guia != null ) {
-            foreach ($guias->guia as $guia) {
-                $total += $guia->valor;
-            }
+public function totalAntecipacao($antecipacoes)
+{
+    $total = 0;
+    if ($antecipacoes->antecipacao != null ) {
+        foreach ($antecipacoes->antecipacao as $antecipacao) {
+            $total += $antecipacao->valor;
         }
-        return $total;
     }
+    return $total;
+}
 
-    public function totalCompra($compras)
-    {
-        $total = 0;
-        $menor = 999999;
-        if ($compras->compra != null ) {
-            foreach ($compras->compra as $compra) {
-                foreach ($compra->cotacao as $cotacao) {
+public function andamento($id)
+{
+    $aberto = Status::where('descricao',config('constantes.status_aberto'))->first();
+    $andamento = Status::where('descricao',config('constantes.status_andamento'))->first();
+    $solicitacao = Solicitacao::find($id);      
+    $solicitacao->status()->detach($aberto);
+    $solicitacao->status()->attach($andamento);
+    return redirect()->route('solicitacao.index');
 
-                    if ($cotacao->valor<$menor) {
+}
 
-                        $menor = $cotacao->valor;
-                    }
-
-                }
-                if ($menor != 999999) {
-
-                    $total += $menor;
-                }
-            }
-        }
-
-        return $total;
-    }
-
-    public function totalViagem($viagens)
-    {
-        $total = 0;
-        if ($viagens->comprovante != null ) {
-            foreach ($viagens->comprovante as $comprovante) {
-                $total += $comprovante->custo_passagem;
-                $total += $comprovante->custo_hospedagem;
-                $total += $comprovante->custo_locacao;
-            }
-        }
-        if ($viagens->reembolso != null) {
-
-            $total += $this->totalReembolso($viagens->reembolso);
-        }
-        return $total;
-    }
-
-    public function totalAntecipacao($antecipacoes)
-    {
-        $total = 0;
-        if ($antecipacoes->antecipacao != null ) {
-            foreach ($antecipacoes->antecipacao as $antecipacao) {
-                $total += $antecipacao->valor;
-            }
-        }
-        return $total;
-    }
-
-    public function andamento($id)
-    {
-        $aberto = Status::where('descricao',config('constantes.status_aberto'))->first();
-        $andamento = Status::where('descricao',config('constantes.status_andamento'))->first();
-        $solicitacao = Solicitacao::find($id);      
-        $solicitacao->status()->detach($aberto);
-        $solicitacao->status()->attach($andamento);
-        return redirect()->route('solicitacao.index');
-
-    }
-
-    public function deletar(Request $request)
-    {
+public function deletar(Request $request)
+{
         //echo "asdasdasdasdasd";
-        $solicitacao = Solicitacao::where('id',$request->id)->with('status')->first();
-        foreach ($solicitacao->status as $status) {
+    $solicitacao = Solicitacao::where('id',$request->id)->with('status')->first();
+    foreach ($solicitacao->status as $status) {
 
-            if ($status->descricao == config('constantes.status_aberto')) {
+        if ($status->descricao == config('constantes.status_aberto')) {
 
-                $tipo = $solicitacao->tipo;
-                if ($solicitacao->delete()) {
-                    \Session::flash('flash_message',[
-                        'msg'=> $tipo. "Removido com Sucesso!!!",
-                        'class'=>"alert bg-red alert-dismissible"
-                    ]);
-                    return route('solicitacao.index');
-                }
-            }else {
-
+            $tipo = $solicitacao->tipo;
+            if ($solicitacao->delete()) {
                 \Session::flash('flash_message',[
-                    'msg'=>"Solicitação não pode ser removida.",
+                    'msg'=> $tipo. "Removido com Sucesso!!!",
                     'class'=>"alert bg-red alert-dismissible"
-
                 ]);
+                return route('solicitacao.index');
+            }
+        }else {
 
-                return redirect()->route('solicitacao.index');
-            }   
-        }
-        return route('solicitacao.index');
+            \Session::flash('flash_message',[
+                'msg'=>"Solicitação não pode ser removida.",
+                'class'=>"alert bg-red alert-dismissible"
+
+            ]);
+
+            return redirect()->route('solicitacao.index');
+        }   
     }
+    return route('solicitacao.index');
+}
 
 }

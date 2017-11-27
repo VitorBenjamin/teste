@@ -22,6 +22,7 @@
 			</div>
 		</div>
 	</div>
+	@if($solicitacao->status[0]->descricao =="ABERTO") 
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -52,7 +53,122 @@
 			</div>
 		</div>
 	</div>
+	@else 
+	<div class="row clearfix">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="card">
+				<div class="header">
+					<!-- <h2>Cabecalho da Viagem</h2> -->
+					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
+						<a data-toggle="modal" data-target="#modalDespesa" class="btn bg-light-green waves-effect" role="button">
+							<i class="material-icons">exposure_plus_1</i>
+							<!-- <span class="hidden-xs">ADD</span> -->
+							<span>ADICIONAR DESPESA</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
+	<!-- MODAL DESPESA -->
+	<div class="modal fade" id="modalDespesa" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="largeModalLabel">Adicione uma Despesa</h4>
+				</div>
+				<!-- INCIO SESSÃO DESPESA -->
+				<div class="modal-body">
+					<form action="{{ route('reembolso.addDespesa',$solicitacao->id)}}" method="POST" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						{{ method_field('PUT') }}
+						<div class="body">
+							<div class="row clearfix">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="card">
+										<div class="header">
+											<h2>
+												Preencha os campos abaixo com atenção
+											</h2>
+										</div>
+										<div class="body">
+											<div class="row clearfix">
+												<div class="col-md-2">
+													<div class="form-group">
+														<div class="form-line">
+															<label for="data_despesa">Data</label>
+															<input type="text" name="data_despesa" class="datepicker form-control" placeholder="Escolha uma Data" required />
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2">
+													<label for="tipo_comprovante">Comprovante</label>
+													<select id="tipo_comprovante" name="tipo_comprovante" class="form-control show-tick" required>
+														<option value="HOSPEDAGEM">HOSPEDAGEM</option>
+														<option value="ALIMENTAÇÂO">ALIMENTAÇÃO</option>
+														<option value="TRANSPORTE">TRANSPORTE</option>
+													</select>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<div class="form-line">
+															<label for="descricao">Descrição</label>
+															<input type="text" name="descricao" class="form-control" placeholder="Deixe uma breve descrição" required/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2">
+													<b>Valor</b>
+													<div class="input-group">
+														<span class="input-group-addon">
+															R$
+														</span>
+														<div class="form-line">
+															<input type="numeric" id="valor" name="valor" class="form-control valor" placeholder="" required/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-12">
+													<div class="form-group">
+														<div class="form-line">
+															<label for="anexo_comprovante">Envie um Arquivo</label>
+															<input type="file" name="anexo_comprovante" id="anexo_comprovante" required/>
+															<!-- <button type="reset" id="pseudoCancel">
+																Resetar
+															</button> -->
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<div class="form-group">
+												<button class="btn btn-info">
+													<i class="material-icons">save</i>
+													<span>ADD DESPESA</span>
+												</button>
+											</div>
+											<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+											<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- FIM SESSÃO DESPESA -->
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- FIM MODAL DESPESA -->
+	<!-- INCIO CABEÇALHO PADRAO -->
+	@include('layouts._includes.cabecalho._cabecalho_analise')
+	<!-- FIM CABEÇALHO PADRAO -->
+	@endif
+	@if($solicitacao->status[0]->descricao =="ABERTO")
 	<!-- MODAL VIAGEM -->
 	<div class="modal fade" id="modalViagem" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
@@ -182,6 +298,7 @@
 		</div>
 	</div>
 	<!-- FIM MODAL VIAGEM -->
+	@endif
 
 	<!-- SESSÃO CADASTRO DA VIAGEM -->
 	<!-- <div class="row clearfix">
@@ -329,7 +446,7 @@
 							</tr>
 						</tfoot>
 						<tbody>
-							@foreach ($solicitacao->viagem as $viagem)
+							@foreach ($solicitacao->viagem as $key => $viagem)
 							<tr>
 								<td></td>
 								<td>{{$viagem->origem}}</td>
@@ -345,16 +462,27 @@
 								<td>{{$viagem->kg}}</td>
 								<td>{{$viagem->locacao == 1 ? 'SIM' : 'NÃO'}}</td>					
 								<td class="acoesTD">
+									@if($solicitacao->status[0]->descricao =="ABERTO")
 									<div class="icon-button-demo" >
 										<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$viagem->id}}" role="button"><i class="material-icons">settings</i></a>
 
 										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('viagem.deletarViagem', $viagem->id)}}"><i class="material-icons">delete_sweep</i></a>
 									</div>
-
+									@else
+									@if($viagem->viagens_comprovantes_id == null)
+									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" disabled>
+										<i class="material-icons">photo_library</i>
+									</a>
+									@else
+									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+$viagem->id+2}})">
+										<i class="material-icons">photo_library</i>
+									</a>
+									@endif
+									@endif
 								</td>
 							</tr>
 
-
+							@if($viagem->viagens_comprovantes_id == null)
 							<!-- MODAL ATUALIZAÇÂO VIAGEM -->
 							<div class="modal fade" id="modal{{$viagem->id}}" tabindex="-1" role="dialog">
 								<div class="modal-dialog modal-lg" role="document">
@@ -423,7 +551,7 @@
 															</fieldset>
 															<input name="hospedagem" value="1" type="radio" id="simHM" {{$viagem->hospedagem == 1 ? 'checked' : ''}}/>
 															<label style="margin: 15px 15px 0px 0px" for="simHM">Sim</label>
-															<input name="hospedagem" value="0" type="radio" id="naoHM" checked {{$viagem->hospedagem == 0 ? 'checked' : ''}} />
+															<input name="hospedagem" value="0" type="radio" id="naoHM" {{$viagem->hospedagem == 0 ? 'checked' : ''}} />
 															<label style="margin: 15px 15px 0px 0px" for="naoHM">Não</label>
 														</div>
 													</div>
@@ -463,7 +591,8 @@
 									</div>
 								</div>
 							</div>
-							<!-- FIM MODAL TRANSLADO -->
+							<!-- FIM MODAL VIAGEM -->.
+							@endif
 							@endforeach														
 						</tbody>
 					</table>
@@ -471,6 +600,60 @@
 			</div>
 		</div> 												
 	</div>
-	<!-- FIM LISTAGEM DA ANTECIPAÇÃO -->
+	<!-- FIM LISTAGEM DA VIAGENS -->
+
+	<!-- MODAL GALERIA -->
+	<div id="myModal" class="modal-2">
+		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
+		<div class="modal-content-2">
+
+			@foreach ($solicitacao->viagem as $key => $viagem)
+			@if($viagem->viagens_comprovantes_id != null)
+			@foreach ($viagem->comprovante as $comp)
+			
+			@if($comp->anexo_passagem != null)
+			<div class="mySlides">
+				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> <span class="label label-danger"> Passagem</span></h3></div>
+				<img src="{{$comp->anexo_passagem}}" style="width:100%; max-height: 70%">
+			</div>
+			@endif
+
+			@if($comp->anexo_hospedagem != null)
+			<div class="mySlides">
+				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> 
+					<span class="label label-warning"> Hospedagem</span> </h3>
+				</div>
+				<img src="{{$comp->anexo_hospedagem}}" style="width:100%; max-height: 70%">
+			</div>
+			@endif
+
+			@if($comp->anexo_locacao != null)
+			<div class="mySlides">
+				<div class="numbertext"><h3><span class="label label-info">{{$viagem->origem}} x {{$viagem->destino}} Locação</span></h3></div>
+				<img src="{{$comp->anexo_locacao}}" style="width:100%; max-height: 70%">
+			</div>
+			@endif
+
+			@endforeach
+			@endif	
+			@endforeach													
+
+			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
+			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
+
+			<!-- <div class="caption-container">
+				<p id="caption"></p>
+			</div> -->
+			
+			{{-- @foreach ($solicitacao->despesa as $key => $despesa)
+			<div class="column">
+				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
+			</div>
+
+			@endforeach --}}
+			
+		</div>
+	</div>
+	<!-- FIM MODAL GALERIA -->
 </section>
 @endsection

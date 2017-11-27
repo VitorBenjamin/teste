@@ -385,7 +385,7 @@
 												<div class="col-md-12">
 													<div class="form-group">
 														<div class="form-line">
-															<label for="anexo_comprovante">Evie um Arquivo</label>
+															<label for="anexo_comprovante">Envie um Arquivo</label>
 															<input type="file" name="anexo_comprovante" id="anexo_comprovante" required/>
 															<!-- <button type="reset" id="pseudoCancel">
 																Resetar

@@ -95,6 +95,7 @@ class ViagemController extends Controller
     //Atualiza uma viagem e redireciona para a tela de edição da Solicitação
     public function atualizarViagem(Request $request,$id)
     {   
+        //dd($request->all());
         $viagem = viagem::find($id);
         $data = null;
         if ($request->data_volta) {
@@ -106,6 +107,7 @@ class ViagemController extends Controller
             'destino' => $request->destino, 
             'data_ida' => date('Y-m-d H:m:s', strtotime($request->data_ida)),
             'data_volta' => $data, 
+            'locacao' => $request->locacao,
             'hospedagem' => $request->hospedagem,
             'bagagem' => $request->bagagem, 
             'kg' => $request->kg,
@@ -182,11 +184,13 @@ class ViagemController extends Controller
             'anexo_passagem' => $anexo_passagem,
             'anexo_hospedagem' => $anexo_hospedagem,
             'anexo_locacao' => $anexo_locacao,
-            'viagens_id' => $id,
         ]);
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
+        $solicitação->viagens_comprovantes_id = $comprovante->id;
+        $solicitacao->save();
+        
         return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.analisar', $solicitacao->id);
     }
 

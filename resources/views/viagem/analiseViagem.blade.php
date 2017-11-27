@@ -51,9 +51,9 @@
 
 								<td class="acoesTD">
 									@role('FINANCEIRO')
-									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal{{$viagem->id}}">ANEXAR</button>
+									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#addComprovante{{$viagem->id}}">ANEXAR</button>
 									@endrole
-									@if(!$viagem->comprovante || $viagem->comprovante == null)
+									@if($viagem->viagens_comprovantes_id == null)
 									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" disabled>
 										<i class="material-icons">photo_library</i>
 									</a>
@@ -64,7 +64,7 @@
 									@endif
 								</td>	
 							</tr>
-							<div class="modal fade" id="defaultModal{{$viagem->id}}" tabindex="-1" role="dialog">
+							<div class="modal fade" id="addComprovante{{$viagem->id}}" tabindex="-1" role="dialog">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
@@ -187,15 +187,14 @@
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DA VIAGEM  -->
-	
 
 	<!-- MODAL GALERIA -->
-	@if($viagem->comprovante || $viagem->comprovante != null)
 	<div id="myModal" class="modal-2">
 		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
 		<div class="modal-content-2">
 
 			@foreach ($solicitacao->viagem as $key => $viagem)
+			@if($viagem->viagens_comprovantes_id != null)
 			@foreach ($viagem->comprovante as $comp)
 			
 			@if($comp->anexo_passagem != null)
@@ -208,37 +207,40 @@
 			@if($comp->anexo_hospedagem != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> 
-					<span class="label label-warning"> Hospedagem</span> </h3></div>
-					<img src="{{$comp->anexo_hospedagem}}" style="width:100%; max-height: 70%">
+					<span class="label label-warning"> Hospedagem</span> </h3>
 				</div>
-				@endif
+				<img src="{{$comp->anexo_hospedagem}}" style="width:100%; max-height: 70%">
+			</div>
+			@endif
 
-				@if($comp->anexo_locacao != null)
-				<div class="mySlides">
-					<div class="numbertext"><h3><span class="label label-info">{{$viagem->origem}} x {{$viagem->destino}} Locação</span></h3></div>
-					<img src="{{$comp->anexo_locacao}}" style="width:100%; max-height: 70%">
-				</div>
-				@endif
+			@if($comp->anexo_locacao != null)
+			<div class="mySlides">
+				<div class="numbertext"><h3><span class="label label-info">{{$viagem->origem}} x {{$viagem->destino}} Locação</span></h3></div>
+				<img src="{{$comp->anexo_locacao}}" style="width:100%; max-height: 70%">
+			</div>
+			@endif
 
-				@endforeach	
-				@endforeach													
+			@endforeach
+			@endif	
+			@endforeach													
 
-				<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
-				<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
+			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
+			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
 
 			<!-- <div class="caption-container">
 				<p id="caption"></p>
 			</div> -->
-			<!-- 
-			@foreach ($solicitacao->despesa as $key => $despesa)
+			
+			{{-- @foreach ($solicitacao->despesa as $key => $despesa)
 			<div class="column">
 				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
 			</div>
-			@endforeach -->
 
+			@endforeach --}}
+			
 		</div>
 	</div>
-	@endif
+
 	<!-- FIM MODAL GALERIA -->
 </section>
 @endsection
