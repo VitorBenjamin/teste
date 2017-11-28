@@ -2,7 +2,7 @@
 
 /**
  * Created by PhpStorm.
- * User: Wilder
+ * User: VITOR BENJAMIN
  * Date: 12/11/2016
  * Time: 16:01
  */
@@ -12,9 +12,12 @@ return [
 	'status_aberto' => 'ABERTO',
 	'status_aberto_etapa2' => 'ABERTO-ETAPA2',
 	'status_andamento' => 'ANDAMENTO',
+	'status_andamento_etapa2' => 'ANDAMENTO-ETAPA2',
 	'status_aprovado' => 'APROVADO',
+	'status_aprovado_etapa2' => 'APROVADO-ETAPA2',
 	'status_reprovado' => 'REPROVADO',
 	'status_devolvido' => 'DEVOLVIDO',
+	'status_devolvido_etapa2' => 'DEVOLVIDO-ETAPA2',
 	'status_recorrente' => 'RECORRENTE',
 	'status_finalizado' => 'FINALIZADO',
 	'status_aberto_financeiro' => 'ABERTO-FINANCEIRO',

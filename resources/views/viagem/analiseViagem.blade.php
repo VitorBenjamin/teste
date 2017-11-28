@@ -41,9 +41,9 @@
 							<tr>
 								<td></td>
 								<td>{{$viagem->origem}}</td>
-								<td>{{date('d/m/y',strtotime($viagem->data_ida))}}</td>
+								<td>{{date('d-m-y H:m',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
-								<td>{{date('d/m/y',strtotime($viagem->data_volta))}}</td>
+								<td>{{date('d-m-y H:m',strtotime($viagem->data_volta))}}</td>
 								<td>{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$viagem->bagagem == 1 ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$viagem->kg}}</td>

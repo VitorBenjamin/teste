@@ -27,6 +27,12 @@ class CreateFks extends Migration
         Schema::table('solicitantes', function (Blueprint $table) {
             $table->foreign('clientes_id')->references('id')->on('clientes');
         });
+    //Foreign Keys Tabela solicitantes
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('area_atuacoes_id')->references('id')->on('area_atuacoes');
+            $table->foreign('unidades_id')->references('id')->on('unidades');
+
+        });
 
     //Foreign Keys Tabela solicitacoes
         Schema::table('solicitacoes', function (Blueprint $table) {
@@ -53,15 +59,12 @@ class CreateFks extends Migration
         Schema::table('cotacoes', function (Blueprint $table) {
             $table->foreign('compras_id')->references('id')->on('compras');
             DB::statement("ALTER TABLE cotacoes ADD anexo_comprovante LONGBLOB");
-
         });             
 
     //Foreign Keys Tabela viagens
         Schema::table('viagens', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             $table->foreign('viagens_comprovantes_id')->references('id')->on('viagens_comprovantes')->onDelete('cascade');
-
-
         });
 
     //Foreign Keys Tabela viagens_comprovantes
@@ -75,7 +78,6 @@ class CreateFks extends Migration
         Schema::table('antecipacoes', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             DB::statement("ALTER TABLE antecipacoes ADD anexo_comprovante LONGBLOB");
-
         });
 
     //Foreign Keys Tabela antecipacoes_comprovantes
@@ -120,7 +122,6 @@ class CreateFks extends Migration
         Schema::table('users_limites', function (Blueprint $table) {
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('limites_id')->references('id')->on('limites')->onDelete('cascade');
-
         });        
     }
     /**
@@ -133,4 +134,3 @@ class CreateFks extends Migration
         //
     }
 }
-

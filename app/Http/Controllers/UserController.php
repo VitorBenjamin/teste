@@ -45,9 +45,15 @@ class UserController extends Controller
 		}
 
 		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento'));
-
+		$andamentos2 = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_etapa2'));
+		if ($andamentos !=null) {
+			$andamentos=$this->pushSolicitacao($andamentos,$andamentos2);
+		}
 		$recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_recorrente'));
 		$andamento_recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_recorrente'));
+
+
+		
 		
 		if ($recorrente !=null) {
 			$andamentos=$this->pushSolicitacao($andamentos,$recorrente);
@@ -82,8 +88,15 @@ class UserController extends Controller
 		$repo = new SolicitacaoRepository();
 
 		$abertas = $repo->getSolicitacaoCoordenador(config('constantes.status_andamento'));
+
+		$abertas2 = $repo->getSolicitacaoCoordenador(config('constantes.status_andamento_etapa2'));
+		
+		if ($abertas2 !=null) {
+			$abertas =$this->pushSolicitacao($abertas,$abertas2);			
+		}
 		$aprovadas = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado'));
 		$aprovadas_recorrente = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado_recorrente'));
+		
 		if ($aprovadas_recorrente !=null) {
 			$aprovadas =$this->pushSolicitacao($aprovadas,$aprovadas_recorrente);			
 		}

@@ -53,7 +53,9 @@
 			</div>
 		</div>
 	</div>
+	
 	@else 
+	
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -65,11 +67,16 @@
 							<!-- <span class="hidden-xs">ADD</span> -->
 							<span>ADICIONAR DESPESA</span>
 						</a>
-						@if(empty($viagens->despesa))
-						<a data-toggle="modal" data-target="#modalDespesa" class="btn bg-light-green waves-effect" role="button">
-							<i class="material-icons">exposure_plus_1</i>
+						@if($solicitacao->despesa->count() == 0)
+						<a href="{{ route('adv.finalizar', $solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+							<i class="material-icons">done_all</i>
 							<!-- <span class="hidden-xs">ADD</span> -->
 							<span>FINALIZAR</span>
+						</a>
+						@else
+						<a href="{{ route('solicitacao.andamento', $solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+							<i class="material-icons">send</i>
+							<span>ENVIAR</span>
 						</a>
 						@endif
 					</div>
@@ -168,14 +175,16 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	
+	</div>	
 	<!-- FIM MODAL DESPESA -->
+
 	<!-- INCIO CABEÇALHO PADRAO -->
 	@include('layouts._includes.cabecalho._cabecalho_analise')
 	<!-- FIM CABEÇALHO PADRAO -->
 	@endif
+
 	@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO")
+	
 	<!-- MODAL VIAGEM -->
 	<div class="modal fade" id="modalViagem" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
@@ -305,6 +314,7 @@
 		</div>
 	</div>
 	<!-- FIM MODAL VIAGEM -->
+	
 	@endif
 
 	<!-- SESSÃO CADASTRO DA VIAGEM -->
@@ -413,13 +423,13 @@
 	</div> -->
 
 
-	<!-- LISTAGEM DA ANTECIPAÇÃO  -->
+	<!-- LISTAGEM DAS VIAGENS  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
 					<h2>
-						LISTA DA VIAGEM
+						LISTAGEM DAS VIAGENS
 					</h2>
 				</div>
 				<div class="body">
@@ -457,10 +467,10 @@
 							<tr>
 								<td></td>
 								<td>{{$viagem->origem}}</td>
-								<td>{{date('d/m/y H:m',strtotime($viagem->data_ida))}}</td>
+								<td>{{date('d-m-Y H:m',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
 								@if($viagem->data_volta)
-								<td>{{date('d/m/y H:m',strtotime($viagem->data_volta))}}</td>
+								<td>{{date('d-m-Y H:m',strtotime($viagem->data_volta))}}</td>
 								@else
 								<td>SOMENTE IDA</td>
 								@endif
@@ -495,7 +505,7 @@
 								<div class="modal-dialog modal-lg" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h4 class="modal-title" id="largeModalLabel">Editar um Antecipação</h4>
+											<h4 class="modal-title" id="largeModalLabel">Editar Viagem</h4>
 										</div>
 
 										<!-- INCIO SESSÃO ATUALIZAÇÂO DA VIAGEM -->
@@ -753,8 +763,8 @@
 
 			@endforeach -->
 
-			</div>
 		</div>
-		<!-- FIM MODAL GALERIA -->
-	</section>
-	@endsection
+	</div>
+	<!-- FIM MODAL GALERIA -->
+</section>
+@endsection

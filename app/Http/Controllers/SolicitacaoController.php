@@ -38,7 +38,11 @@ class SolicitacaoController extends Controller
 			
 			$andamento = Status::where('descricao', config('constantes.status_andamento_financeiro'))->first();
 
-		}else {			
+		} elseif ($solicitacao->status[0]->descricao == "ABERTO-ETAPA2" || $solicitacao->status[0]->descricao == config('constantes.status_devolvido_etapa2')) {
+
+			$andamento = Status::where('descricao', config('constantes.status_andamento_etapa2'))->first();
+
+		} else {			
 			
 			$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
 
@@ -89,7 +93,10 @@ class SolicitacaoController extends Controller
 				$devolvido = Status::where('descricao', config('constantes.status_recorrente_financeiro'))->first();
 			}
 
-		}elseif (Auth::user()->hasRole(config('constantes.user_financeiro'))) {
+		} elseif($solicitacao->status[0]->descricao == config('constantes.status_andamento_etapa2')) {
+			$devolvido = Status::where('descricao', config('constantes.status_devolvido_etapa2'))->first();
+
+		} elseif (Auth::user()->hasRole(config('constantes.user_financeiro'))) {
 			
 			$devolvido = Status::where('descricao', config('constantes.status_recorrente'))->first();
 
@@ -105,7 +112,9 @@ class SolicitacaoController extends Controller
 	public function finalizar($id)
 	{
 		$solicitacao = Solicitacao::find($id);
-		if ($solicitacao->tipo == "VIAGEM" || $solicitacao->tipo == "ANTECIPAÇÂO" ) {
+		if ($solicitacao->status[0]->descricao == config('constantes.status_aprovado_etapa2')) {
+			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();
+		}elseif ($solicitacao->tipo == "VIAGEM" || $solicitacao->tipo == "ANTECIPAÇÂO" ) {
 			$finalizar = Status::where('descricao', config('constantes.status_aberto_etapa2'))->first();
 		}else{
 			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();				
