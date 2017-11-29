@@ -123,11 +123,12 @@
     {!! Html::script('/plugins/bootstrap-select/js/bootstrap-select.js') !!}
 
     {!! Html::script('/js/ajax-bootstrap-select.js') !!}
-    {{--     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/bloodhound.min.js') !!} --}}
-
-
+    
+    {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js') !!}
+    
     {!! Html::script('/js/script.js') !!}
-
+    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script> -->
+    
     <!-- Slimscroll Plugin Js -->
     {!! Html::script('/plugins/jquery-slimscroll/jquery.slimscroll.js') !!}
 
@@ -176,11 +177,6 @@
     {!! Html::script('/js/pages/tables/jquery-datatable.js') !!}
     {!! Html::script('/js/pages/forms/basic-form-elements.js') !!}
     {!! Html::script('/js/pages/forms/advanced-form-elements.js') !!}
-    {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/bloodhound.js') !!}
-    {!! Html::script('/js/typeahead.js') !!}
-    {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.jquery.js') !!}
-
-    {!! Html::script('/js/ajax.js') !!}
     {!! Html::script('/js/pages/ui/modals.js') !!}
     @endif
     <!-- {!! Html::script('/js/pages/index.js') !!} -->

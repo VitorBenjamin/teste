@@ -1,9 +1,9 @@
 ﻿//Deixa todas os inputs UpperCase
 
 $(function() {
-    $('input:text').keyup(function() {
-        this.value = this.value.toLocaleUpperCase()
-    });
+  $('input:text').keyup(function() {
+    this.value = this.value.toLocaleUpperCase()
+  });
 
 });
 $( window ).load(function() {
@@ -17,18 +17,37 @@ $( window ).load(function() {
    $('#cliente').selectpicker('hide');
    $('#cliente').selectpicker('refresh');
 
-}
+ }
     //$('.js-basic-example').DataTable().responsive.recalc();
     //console.log($('.js-basic-example').DataTable().responsive.recalc());
-});
+  });
 
 $(document).ready(function () {
 
-    $("a[data-toggle=\"tab\"]").on("shown.bs.tab", function (e) {
-      $($.fn.dataTable.tables(true)).DataTable()
-      .columns.adjust()
-      .responsive.recalc();
+  $("a[data-toggle=\"tab\"]").on("shown.bs.tab", function (e) {
+    $($.fn.dataTable.tables(true)).DataTable()
+    .columns.adjust()
+    .responsive.recalc();
   });
+
+  $('#processo').typeahead({
+    source: function(query, result)
+    {
+     $.ajax({
+      url: "/ajax/processo",
+      method:"GET",
+      data:{query:query},
+      dataType:"json",
+      success:function(data)
+      {
+       result($.map(data, function(item){
+        return item;
+      }));
+     }
+   })
+   }
+ });
+
 });
 
 //Desativa o select de CLIENTES Caso Origem da despesa seja = Escritório
@@ -47,10 +66,10 @@ $('#origem_despesa').change(function() {
   $('#cliente').selectpicker('refresh');
 
 }else{
-    $('#label').css("color","#555"); 
-    $('#cliente').removeAttr('disabled',false);
-    $('#cliente').selectpicker('show');
-    $('#cliente').selectpicker('refresh');
+  $('#label').css("color","#555"); 
+  $('#cliente').removeAttr('disabled',false);
+  $('#cliente').selectpicker('show');
+  $('#cliente').selectpicker('refresh');
 
 }
 });
@@ -60,95 +79,95 @@ $('#origem_despesa').change(function() {
 //Ajax para trazer os clientes
 $('#solicitantes')
 .selectpicker({
-    liveSearch: true
+  liveSearch: true
 })
 .ajaxSelectPicker({
-    ajax: {
-        url: urlSoli,
-        type: 'GET',
-        data: function () {
-            var params = {
-                q: '{{{q}}}'
-            };
-        }
-    },
-    locale: {
-        emptyTitle: 'Buscar Por Solicitantes...',
-        statusInitialized: 'Digite para Buscar',
-        statusNoResults: 'Nenhum Resultado',
-        statusSearching: 'Buscando',
-        searchPlaceholder: 'Buscar...'
-    },
-    preprocessData: function(data){
-        var solicitantes = [];
-        if(data.hasOwnProperty('solicitantes')){
-            var len = data.solicitantes.length;
-            for(var i = 0; i < len; i++){
-                var curr = data.solicitantes[i];
-                solicitantes.push(
-                {
-                    'value': curr.id,
-                    'text': curr.nome,
+  ajax: {
+    url: urlSoli,
+    type: 'GET',
+    data: function () {
+      var params = {
+        q: '{{{q}}}'
+      };
+    }
+  },
+  locale: {
+    emptyTitle: 'Buscar Por Solicitantes...',
+    statusInitialized: 'Digite para Buscar',
+    statusNoResults: 'Nenhum Resultado',
+    statusSearching: 'Buscando',
+    searchPlaceholder: 'Buscar...'
+  },
+  preprocessData: function(data){
+    var solicitantes = [];
+    if(data.hasOwnProperty('solicitantes')){
+      var len = data.solicitantes.length;
+      for(var i = 0; i < len; i++){
+        var curr = data.solicitantes[i];
+        solicitantes.push(
+        {
+          'value': curr.id,
+          'text': curr.nome,
                             // 'data': {
                             //     'icon': 'icon-person'
                             //     // 'subtext': 'Internal'
                             // },
                             'disabled': false
-                        }
-                        );
-            }
-        }
-        return solicitantes;
-    },
-    preserveSelected: false
+                          }
+                          );
+      }
+    }
+    return solicitantes;
+  },
+  preserveSelected: false
 });
 
 //Ajax para trazer os clientes
 $('#clientes')
 .selectpicker({
-    liveSearch: true
+  liveSearch: true
 })
 .ajaxSelectPicker({
-    ajax: {
-        url: urlClientes,
-        type: 'GET',
-        data: function () {
-            var params = {
-                q: '{{{q}}}'
-            };
-        }
-    },
-    locale: {
-        emptyTitle: 'Buscar Por Clientes...',
-        statusInitialized: 'Digite para Buscar',
-        statusNoResults: 'Nenhum Resultado',
-        statusSearching: 'Buscando',
-        searchPlaceholder: 'Buscar...'
+  ajax: {
+    url: urlClientes,
+    type: 'GET',
+    data: function () {
+      var params = {
+        q: '{{{q}}}'
+      };
+    }
+  },
+  locale: {
+    emptyTitle: 'Buscar Por Clientes...',
+    statusInitialized: 'Digite para Buscar',
+    statusNoResults: 'Nenhum Resultado',
+    statusSearching: 'Buscando',
+    searchPlaceholder: 'Buscar...'
 
-    },
-    preprocessData: function(data){
-        var clientes = [];
-        if(data.hasOwnProperty('clientes')){
-            var len = data.clientes.length;
-            for(var i = 0; i < len; i++){
-                var curr = data.clientes[i];
-                clientes.push(
-                {
-                    'value': curr.id,
-                    'text': curr.nome,
+  },
+  preprocessData: function(data){
+    var clientes = [];
+    if(data.hasOwnProperty('clientes')){
+      var len = data.clientes.length;
+      for(var i = 0; i < len; i++){
+        var curr = data.clientes[i];
+        clientes.push(
+        {
+          'value': curr.id,
+          'text': curr.nome,
                             // 'data': {
                             //     'icon': 'icon-person'
                             //     // 'subtext': 'Internal'
                             // },
                             'disabled': false
-                        }
-                        );
-            }
-        }
-        return clientes;
-    },
-    preserveSelected: false,
-    langCode: 'pt-BR'
+                          }
+                          );
+      }
+    }
+    return clientes;
+  },
+  preserveSelected: false,
+  langCode: 'pt-BR'
 });
 
 function openModal() {
@@ -176,14 +195,14 @@ function showSlides(n) {
   var dots = document.getElementsByClassName("demo");
   var captionText = document.getElementById("caption");
   if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-  captionText.innerHTML = dots[slideIndex-1].alt;
-}
+    if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+      captionText.innerHTML = dots[slideIndex-1].alt;
+    }

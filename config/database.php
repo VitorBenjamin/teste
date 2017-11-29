@@ -53,6 +53,19 @@ return [
             'strict' => false,
             'engine' => null,
         ],
+        'mosello' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '69.64.57.177'),
+            'port' => env('DB_PORT', '3306'),
+            'database' =>  'mosellolima_sistema',
+            'username' => 'mosellolima_sistema',
+            'password' => env('DB_PASSWORD', 'Lifemetarecubuntu77'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',

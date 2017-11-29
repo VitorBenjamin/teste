@@ -26,7 +26,7 @@
 				@endforeach
 			</select>
 		</div>
-		<div class="demo-masked-input">
+		<!-- <div class="demo-masked-input">
 			<div class="col-md-4">
 				<b>Número de Processo</b>
 				<div class="input-group">
@@ -39,6 +39,12 @@
 
 					</div>
 				</div>
+			</div>
+		</div> -->
+		<div class="col-md-3">
+			<div class="form-line">
+				<label class="form-label">Número de Processo</label>
+				<input type="text" id="processo" value="{{$solicitacao->processo->codigo}}" name="processo" class="form-control" autocomplete="off" placeholder="Ex: 9999999-99.9999.9.99.9999" />
 			</div>
 		</div>
 

@@ -110,8 +110,7 @@
                             <fieldset>
                                 <div class="form-group form-float">
                                     <label for="area_atuacoes_limite">Área de Atendimento</label>
-                                    <select id="area_atuacoes_limite" name="area_atuacoes_limite" class="form-control show-tick" data-container="body" data-live-search="true">
-                                        <option value="">SELECIONE</option>
+                                    <select id="area_atuacoes_limite" name="area_atuacoes_limite[]" data-container="body" class="form-control show-tick" data-dropup-auto="false" multiple data-actions-box="true"  data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado">
                                         @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">{{ $area->tipo }}</option>
                                         @endforeach
@@ -119,7 +118,7 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <label for="unidades_limite">Unidades</label>
-                                    <select id="unidades_limite" name="unidades_limite[]" data-container="body" class="form-control show-tick" data-dropup-auto="false" multiple data-actions-box="true"  data-live-search="true">
+                                    <select id="unidades_limite" name="unidades_limite[]" data-container="body" class="form-control show-tick" data-dropup-auto="false" multiple data-actions-box="true"  data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado">
                                         @foreach ($unidades as $unidade)
                                         <option value="{{ $unidade->id }}">{{ $unidade->localidade }}</option>
                                         @endforeach

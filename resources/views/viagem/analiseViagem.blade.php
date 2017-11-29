@@ -188,6 +188,68 @@
 	</div>
 	<!-- FIM LISTAGEM DA VIAGEM  -->
 
+	<!-- LISTAGEM DAS DESPESAS  -->
+	<div class="row clearfix">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="card">
+				<div class="header">
+					<h2>
+						LISTAGEM DAS DESPESAS
+					</h2>
+				</div>
+				<div class="body">
+					<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Descricao</th>
+								<th>Comprovante</th>
+								<th>Valor</th>
+								<th>Ação</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Descricao</th>
+								<th>Comprovante</th>
+								<th>Valor</th>
+								<th>Ação</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							@foreach ($solicitacao->despesa as $key2 => $despesa)
+							<tr>
+								<td></td>
+								<td>{{date('d-m-y',strtotime($despesa->data_despesa))}}</td>
+								<td>{{$despesa->descricao}}</td>
+								<td>{{$despesa->tipo_comprovante}}</td>
+								<td>{{$despesa->valor}}</td>
+								<td class="acoesTD">
+									<div class="icon-button-demo" >
+										<a href="{{ route('viagem.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+											<i class="material-icons">settings</i>
+										</a>
+
+										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('viagem.deletarDespesa',$despesa->id)}}">
+											<i class="material-icons">delete_sweep</i>
+										</a>
+										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key2}})">
+											<i class="material-icons">photo_library</i>
+										</a>
+									</div>
+								</td>
+							</tr>							
+							@endforeach														
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIM LISTAGEM DAS DESPESAS -->
 	<!-- MODAL GALERIA -->
 	<div id="myModal" class="modal-2">
 		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
@@ -195,6 +257,7 @@
 
 			@foreach ($solicitacao->viagem as $key => $viagem)
 			@if($viagem->viagens_comprovantes_id != null)
+			
 			@if($viagem->comprovante->anexo_passagem != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> <span class="label label-danger"> Passagem</span></h3></div>
@@ -219,7 +282,14 @@
 			@endif
 
 			@endif	
-			@endforeach													
+			@endforeach		
+			
+			@foreach ($solicitacao->despesa as $despesa)
+			<div class="mySlides">
+				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/y',strtotime($despesa->data_despesa))}}</span></h3></div>
+				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
+			</div>
+			@endforeach											
 
 			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
 			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
@@ -228,15 +298,16 @@
 				<p id="caption"></p>
 			</div> -->
 			
-			{{-- @foreach ($solicitacao->despesa as $key => $despesa)
+			<!-- @foreach ($solicitacao->despesa as $key => $despesa)
 			<div class="column">
 				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
 			</div>
 
-			@endforeach --}}
-			
+			@endforeach -->
+
 		</div>
 	</div>
+	<!-- FIM MODAL GALERIA -->
 
 	<!-- FIM MODAL GALERIA -->
 </section>

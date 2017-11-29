@@ -27,7 +27,7 @@
 			</select>
 		</div>
 
-		<div class="col-md-3">
+<!-- 		<div class="col-md-3">
 			<label for="processo">Número de Processo</label>
 			<select id="processo" name="processo" class="form-control show-tick" data-size="5" data-live-search="true" >
 				<option value="">SELECIONE</option>
@@ -35,17 +35,13 @@
 				<option value="{{ $processo->id }}">{{ $processo->codigo }}</option>
 				@endforeach
 			</select>
-		</div>
-   <!-- <div class="demo-masked-input">
-			<div class="col-md-3">
-				<b>Número de Processo</b>
-				<div class="input-group">
-					<div class="form-line">
-						<input type="text" name="processo" class="form-control processo" placeholder="Ex: 9999999-99.9999.9.99.9999" />
-					</div>
-				</div>
+		</div> -->
+		<div class="col-md-3">
+			<div class="form-line">
+				<label class="form-label">Número de Processo</label>
+				<input type="text" id="processo" name="processo" class="form-control" autocomplete="off" placeholder="Ex: 9999999-99.9999.9.99.9999" />
 			</div>
-		</div>	 -->						
+		</div>
 	</div>
 	<div class="row clearfix">
 		<div class="col-md-2">
@@ -77,7 +73,7 @@
 				<label style="margin: 15px 15px 0px 0px" for="nao">Não</label>
 			</div>
 		</div>
-{{-- 		<div id="remote">
+		{{-- 		<div id="remote">
 			<input class="typeahead" type="text" placeholder="Oscar winners for Best Picture">
 		</div> --}}
 		<div class="col-md-2" style="margin-top: 20px">

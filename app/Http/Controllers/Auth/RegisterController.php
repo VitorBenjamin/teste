@@ -96,15 +96,14 @@ class RegisterController extends Controller
 
         $this->attachRole($user,$request);
         
-
         if ($request->role == config('constantes.user_coordenador')) {
             $this->setLimite($user,$request);
         }
         
-            \Session::flash('flash_message',[
-                'msg'=> "Dr(a) ".$user->nome." Cadastrado com Sucesso!!!",
-                'class'=>"alert bg-green alert-dismissible"
-            ]);
+        \Session::flash('flash_message',[
+            'msg'=> "Dr(a) ".$user->nome." Cadastrado com Sucesso!!!",
+            'class'=>"alert bg-green alert-dismissible"
+        ]);
         return redirect($this->redirectPath());
     }
 
@@ -124,15 +123,28 @@ class RegisterController extends Controller
 
     public function setLimite($user,$request)
     {
+        //dd(count($request->get('area_atuacoes_limite')));
+        if (count($request->get('area_atuacoes_limite')) >= 1) {
 
-        $limite = Limite::create([
-            'de' => $request->de,
-            'ate' => $request->ate,
-            'area_atuacoes_id' => $request->area_atuacoes_limite,
-        ]);
-        $limite->unidades()->sync($request->get('unidades_limite'));
-        var_dump('asdadadadadasdadadasd');
-        $user->limites()->attach($limite->id);
+            foreach ($request->get('area_atuacoes_limite') as $area) {
+                $limite = Limite::create([
+                    'de' => $request->de,
+                    'ate' => $request->ate,
+                    'area_atuacoes_id' => $area,
+                ]);
+                $limite->unidades()->sync($request->get('unidades_limite'));
+                $user->limites()->attach($limite->id);
+            }
+        }else{
+            $limite = Limite::create([
+                'de' => $request->de,
+                'ate' => $request->ate,
+                'area_atuacoes_id' => $request->area_atuacoes_limite,
+            ]);
+            $limite->unidades()->sync($request->get('unidades_limite'));
+            $user->limites()->attach($limite->id);
+        }
+        
     }
 
     public function attachRole($user,$request)

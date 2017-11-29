@@ -14,7 +14,7 @@
             border-bottom-width: 3px;
             border-bottom-color: #FF9800;
             border-bottom-style: solid">
-            <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+            <form class="form-horizontal" id="sign_in" method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
                 <div class="msg">Iniciar Sessão</div>
                 <div class="input-group">
@@ -23,7 +23,6 @@
                     </span>
                     <div class="form-line">
                         <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail" required autofocus>
-                        
                     </div>
                     @if ($errors->has('email'))
                     <span class="help-block">

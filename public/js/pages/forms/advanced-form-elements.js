@@ -1,35 +1,14 @@
 $(function () {
-    // $('.colorpicker').colorpicker();
 
-    //Dropzone
-    // Dropzone.options.frmFileUpload = {
-    //     paramName: "file",
-    //     maxFilesize: 2
-    // };
-
-    //Masked Input ============================================================================================================================
+      //Masked Input ============================================================================================================================
     var $demoMaskedInput = $('.demo-masked-input');
 
-    // $('.valor').inputmask('decimal', {
-    //   radixPoint:".",
-    //   groupSeparator: "",
-    //   removeMaskOnSubmit: true
-    //   autoGroup: true,
-    //   digits: 2,
-    //   digitsOptional: true,
-    //   placeholder: '0',
-    //   rightAlign: false,
-    //   onBeforeMask: function (value, opts) {
-    //     return value;
-    // }
-    // })
-
     $('.valor').inputmask("currency", {
-    groupSeparator: '.',
-    prefix: "",
-    placeholder: '0.00',
-    numericInput: true,
-    autoGroup: false
+        groupSeparator: '.',
+        prefix: "",
+        placeholder: '0.00',
+        numericInput: true,
+        autoGroup: false
     });
     //Date
     $demoMaskedInput.find('.date').inputmask('dd/mm/yyyy', { placeholder: '__/__/____' });
@@ -45,17 +24,11 @@ $(function () {
     $demoMaskedInput.find('.mobile-phone-number').inputmask('(99) 99999-9999', { placeholder: '(__) _____-____' });
 
     //Numero de Processo
-    $demoMaskedInput.find('.processo').inputmask('9999999-99.9999.9.99.9999', { placeholder: '_______-__.____._.__.____' });
+    // $demoMaskedInput.find('.processo').inputmask('9999999-99.9999.9.99.9999', { placeholder: '_______-__.____._.__.____' });
+    $demoMaskedInput.find('.processo').inputmask('9999999-99.9999.9.99.9999');
 
     //Phone Number
     $demoMaskedInput.find('.phone-number').inputmask('+99 (999) 999-99-99', { placeholder: '+__ (___) ___-__-__' });
-
-    //Dollar Money
-    // $demoMaskedInput.find('.valor').inputmask('currency', {
-    // groupSeparator: '.',
-    // placeholder: '0.00',
-    // numericInput: true,
-    // autoGroup: false});
 
     //Euro Money
     $demoMaskedInput.find('.money-euro').inputmask('99,99 €', { placeholder: '__,__ €' });

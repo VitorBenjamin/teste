@@ -491,7 +491,7 @@
 										<i class="material-icons">photo_library</i>
 									</a>
 									@else
-									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+$viagem->id+2}})">
+									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key}})">
 										<i class="material-icons">photo_library</i>
 									</a>
 									@endif
@@ -681,33 +681,6 @@
 		</div>
 	</div>
 	<!-- FIM LISTAGEM DAS DESPESAS -->
-
-	<!-- MODAL GALERIA -->
-	<div id="myModal2" class="modal-2">
-		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
-		<div class="modal-content-2">
-			@foreach ($solicitacao->despesa as $key => $despesa)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/y',strtotime($despesa->data_despesa))}}</span></h3></div>
-				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
-			</div>
-			@endforeach														
-
-			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
-			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
-
-			<!-- <div class="caption-container">
-				<p id="caption"></p>
-			</div> -->
-			<!-- 
-			@foreach ($solicitacao->despesa as $key => $despesa)
-			<div class="column">
-				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
-			</div>
-			@endforeach -->
-
-		</div>
-	</div>
 	<!-- MODAL GALERIA -->
 	<div id="myModal" class="modal-2">
 		<span class="close-2 cursor" onclick="closeModal()">&times;</span>

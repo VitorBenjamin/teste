@@ -17,10 +17,6 @@ class StatusTableSeeder extends Seeder
 
     	]);
         Status::create([
-            'descricao' => 'ABERTO-ETAPA2',
-
-        ]);
-        Status::create([
             'descricao' => 'ANDAMENTO',
             
         ]);
@@ -71,6 +67,10 @@ class StatusTableSeeder extends Seeder
         Status::create([
             'descricao' => 'RECORRENTE-FINANCEIRO',
             
+        ]);
+        Status::create([
+            'descricao' => 'ABERTO-ETAPA2',
+
         ]);
         Status::create([
             'descricao' => 'APROVADO-ETAPA2',

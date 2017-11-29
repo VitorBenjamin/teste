@@ -9,9 +9,14 @@ class ProcessoController extends Controller
 
 	public function getProcesso(Request $search){
 		$processos = Processo::where('codigo','like','%'.$search->input('query').'%')
-		->select('codigo') 
+		->select('codigo')
 		->get();
-		return response()->json($processos);
+		$data = array(); 
+		foreach ($processos as $value) {
+			$data[] = $value->codigo;
+		}
+		
+		return response()->json($data);
 	}
 
 }

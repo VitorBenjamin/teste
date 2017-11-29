@@ -29,19 +29,7 @@ white-space: nowrap;
   display: block;
   padding: 10px 10px !important;
 }
-@media (min-width: 1400px) {
 
-  .dropdown-menu {
-/*-webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  border-radius: 0; */
-  /* Alteração do bootstrap */
-  right: 0 !important;
-  left: unset !important
-  /*  margin-top: -35px !important; */ 
-}
-}
 .red2{
   color: red;
 }
@@ -7547,9 +7535,9 @@ fieldset[disabled] .form-control {
   -ms-border-radius: 0;
   border-radius: 0;
   /* Alteração do bootstrap */
-  right: unset;
-  left: 0;
-  /*margin-top: -35px !important; */ 
+  /* right: unset;*/
+  left: 0; 
+  /* margin-top: -35px !important;   */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   border: none; }
   .dropdown-menu .divider {
