@@ -115,7 +115,11 @@ class UserController extends Controller
 		
 		$meus = $repo->getSolicitacaoCoordenador(config('constantes.status_coordenador_aberto'));
 		$finalizadas = $repo->getSolicitacaoCoordenador(config('constantes.status_finalizado'));
-		return view('dashboard.coordenador',compact('abertas','aprovadas','reprovados','devolvidas','recorrentes','meus','finalizadas'));
+		$finalizadas_meu =$repo->getSolicitacaoAdvogado(config('constantes.status_finalizado'));
+		if ($finalizadas_meu !=null) {
+			$finalizadas = $this->pushSolicitacao($recorrentes,$finalizadas_meu);			
+		}
+		return view('dashboard.coordenador',compact('abertas','aprovadas','reprovados','devolvidas','recorrentes','finalizadas','meus'));
 	}
 	public function financeiroDash()
 	{

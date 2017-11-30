@@ -68,7 +68,7 @@
 							<span>ADICIONAR DESPESA</span>
 						</a>
 						@if($solicitacao->despesa->count() == 0)
-						<a href="{{ route('adv.finalizar', $solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+						<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
 							<i class="material-icons">done_all</i>
 							<!-- <span class="hidden-xs">ADD</span> -->
 							<span>FINALIZAR</span>

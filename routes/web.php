@@ -68,6 +68,7 @@ Route::get('advogado-dashboard', ['uses' => 'UserController@advogadoDash','middl
 // INICIO ROTAS DE SOLICITAÇÃO
 Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGADO|FINANCEIRO|GOD|COORDENADOR']],function()
 {
+    Route::get('set-finalizar/{id}', ['uses' => 'SolicitacaoController@finalizar', 'as' => 'solicitacao.finalizar']);
     Route::get('analisar-compra/{id}', ['uses' => 'CompraController@analisar', 'as' => 'compra.analisar']);
     Route::get('analisar-antecipacao/{id}', ['uses' => 'AntecipacaoController@analisar', 'as' => 'antecipacao.analisar']);
     Route::get('analisar-guia/{id}', ['uses' => 'GuiaController@analisar', 'as' => 'guia.analisar']);
