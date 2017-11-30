@@ -16,7 +16,7 @@ class Processos extends Migration
          Schema::create('processos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('codigo');
-            $table->integer('clientes_id')->unsigned();
+            $table->integer('clientes_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -8,6 +8,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Repositories\SolicitacaoRepository;
 use Illuminate\Support\Facades\Auth;
+use App\Comentario;
 use App\Despesa;
 use App\Processo;
 use App\Translado;
@@ -25,6 +26,20 @@ class SolicitacaoController extends Controller
 		
 	}
 
+    //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
+	public function atualizarCabecalho(Request $request,$id)
+	{   
+		$repo = new SolicitacaoRepository();
+		$solicitacao = $repo->update($request,$id);
+		$solicitacao = Solicitacao::where('id',$id)->first();
+		
+		\Session::flash('flash_message',[
+			'msg'=>"Solicitação Atualizada com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+		return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.editar', $id);
+	}
+
 	public function andamento($id)
 	{
 
@@ -33,6 +48,10 @@ class SolicitacaoController extends Controller
 		if ($solicitacao->status[0]->descricao == config('constantes.status_devolvido')) 
 		{
 			$andamento = Status::where('descricao', config('constantes.status_andamento_recorrente'))->first();
+
+		} elseif ($solicitacao->status[0]->descricao == config('constantes.status_coordenador_aberto')) {
+			
+			$andamento = Status::where('descricao', config('constantes.status_coordenador_aprovado'))->first();
 
 		} elseif($solicitacao->tipo == "COMPRA"){
 			
@@ -56,8 +75,11 @@ class SolicitacaoController extends Controller
 	{
 
 		$solicitacao = Solicitacao::find($id);
-		
-		if ($solicitacao->status[0]->descricao == config('constantes.status_devolvido_financeiro')) {
+		if ($solicitacao->status[0]->descricao == config('constantes.status_andamento_etapa2')) { 
+			
+			$aprovado = Status::where('descricao', config('constantes.status_aprovado_etapa2'))->first();
+
+		} elseif ($solicitacao->status[0]->descricao == config('constantes.status_devolvido_financeiro')) {
 			
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado_recorrente'))->first();
 
@@ -65,7 +87,7 @@ class SolicitacaoController extends Controller
 			
 			$aprovado = Status::where('descricao', config('constantes.status_andamento_financeiro'))->first();
 
-		}else{			
+		}else {			
 
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado'))->first();
 		}
@@ -83,28 +105,39 @@ class SolicitacaoController extends Controller
 		return redirect()->route('user.index');
 	}
 	
-	public function devolver($id)
+	public function devolver(Request $request, $id)
 	{
 
+
 		$solicitacao = Solicitacao::find($id);
+		$data = 
+		[
+			'comentario' => $request->comentario,
+			'solicitacoes_id' => $id,
+			'users_id' => Auth::user()->id,
+			'status' => "DEVOLVIDO",
+		];
 		if ($solicitacao->status[0]->descricao == config('constantes.status_andamento_financeiro')) {
 
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
 				$devolvido = Status::where('descricao', config('constantes.status_recorrente_financeiro'))->first();
+				$data['publico'] = false;
 			}
 
 		} elseif($solicitacao->status[0]->descricao == config('constantes.status_andamento_etapa2')) {
 			$devolvido = Status::where('descricao', config('constantes.status_devolvido_etapa2'))->first();
+			$data['publico'] = true;
 
 		} elseif (Auth::user()->hasRole(config('constantes.user_financeiro'))) {
 			
 			$devolvido = Status::where('descricao', config('constantes.status_recorrente'))->first();
-
-		}else{
+			$data['publico'] = false;
+		} else {
 
 			$devolvido = Status::where('descricao', config('constantes.status_devolvido'))->first();
-
+			$data['publico'] = true;
 		}
+		Comentario::create($data);
 		$this->trocarStatus($solicitacao,$devolvido);
 		return redirect()->route('user.index');
 	}

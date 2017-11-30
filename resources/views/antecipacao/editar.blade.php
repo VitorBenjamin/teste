@@ -44,7 +44,7 @@
 						</a> -->
 					</div>
 				</div>
-				<form action="{{ route('antecipacao.atualizarCabecalho',$solicitacao->id)}}" method="POST">
+				<form action="{{ route('solicitacao.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
 					{{ method_field('PUT') }}
 					@include('layouts._includes.cabecalho._cabecalho-editar')
@@ -53,6 +53,11 @@
 		</div>
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
+	
+	<!-- LISTAGEM DA VIAGEM  -->
+	@include('layouts._includes._comentario')
+	<!-- FIM LISTAGEM DA VIAGEM  -->
+
 	@if(empty($solicitacao->antecipacao[0]))
 	<!-- MODAL CADASTRO DA ANTECIPAÇÂO -->
 	<div class="modal fade" id="modalAntecipacao" tabindex="-1" role="dialog">

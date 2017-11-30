@@ -27,6 +27,8 @@ return [
 	'status_andamento_financeiro' => 'ANDAMENTO-FINANCEIRO',
 	'status_aprovado_financeiro' => 'APROVADO-FINANCEIRO',
 	'status_recorrente_financeiro' => 'RECORRENTE-FINANCEIRO',
+	'status_coordenador_aberto' => 'COORDENADOR-ABERTO',
+	'status_coordenador_aprovado' => 'COORDENADOR-APROVADO',
 	'tipo_reembolso' => 'REEMBOLSO',
 	'tipo_viagem' => 'VIAGEM',
 	'tipo_guia' => 'GUIA',

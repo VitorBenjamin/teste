@@ -49,7 +49,7 @@
 						</a> -->
 					</div>
 				</div>
-				<form action="{{ route('reembolso.atualizarCabecalho',$solicitacao->id)}}" method="POST">
+				<form action="{{ route('solicitacao.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
 					{{ method_field('PUT') }}
 					@include('layouts._includes.cabecalho._cabecalho-editar')
@@ -59,6 +59,10 @@
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
 	
+	<!-- LISTAGEM DA VIAGEM  -->
+	@include('layouts._includes._comentario')
+	<!-- FIM LISTAGEM DA VIAGEM  -->
+
 	<!-- LISTAGEM DOS TRANSLADOS  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

@@ -81,6 +81,11 @@
                                 <i style="color: #deb422" class="material-icons">restore_page</i> <span class="hidden-xs"> DEVOLVIDO </span> <span class="badge">{{count($devolvidas->solicitacao)}}</span>
                             </a>
                         </li>
+                        <li class="azed-tab">
+                            <a href="" data-toggle="tab" role="tab" data-target="#finalizado">
+                                <i style="color: #0db174" class="material-icons">thumb_up</i> <span class="hidden-xs"> FINALIZADO </span> <span class="badge">{{count($finalizadas->solicitacao)}}</span>
+                            </a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
@@ -215,6 +220,7 @@
                         </table>
                     </div>
                     <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
+                    
                     <!-- LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
                     <div id="reprovado" class="tab-pane fade in" role="tabpanel">
                         <h1 class="visible-xs" style="text-align: center"> REPROVADO </h1>
@@ -257,10 +263,11 @@
                         </table>
                     </div>
                     <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
+                    
                     <!-- LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
                     <div id="devolvido" class="tab-pane fade in" role="tabpanel">
                         <h1 class="visible-xs" style="text-align: center"> DEVOLVIDO </h1>
-                        <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                        <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -286,26 +293,69 @@
                                     <td>R$ {{ $devolvida->total }}</td>
                                     <td class="acoesTD">
                                         <div class="icon-button-demo" >
-                                         <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                         <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.editar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                            <i class="material-icons">settings</i>
-                                        </a>
-                                        <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$devolvida->id}}">
-                                            <i class="material-icons">delete_sweep</i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach                                                     
-                            
-                        </tbody>
-                    </table>
+                                            <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                            <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.editar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <i class="material-icons">settings</i>
+                                            </a>
+                                            <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$devolvida->id}}">
+                                                <i class="material-icons">delete_sweep</i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach                                                                                     
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
+
+                    <!-- LISTAGEM DAS SOLICITAÇÕES EM FINALIZADAS -->
+                    <div id="finalizado" class="tab-pane fade in" role="tabpanel">
+                        <h1 class="visible-xs" style="text-align: center"> FINALIZADAS </h1>
+                        <table id="finalizado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>ID</th>
+                                    <th>Data</th>
+                                    <th>Cliente</th>
+                                    <th>Tipo</th>
+                                    <th>Solicitante</th>
+                                    <th>Valor</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($finalizadas->solicitacao as $finalizado)
+                                
+                                <tr>
+                                    <td></td>
+                                    <td>{{ $finalizado->id }}</td>
+                                    <td>{{ date('d/m/y',strtotime($finalizado->created_at)) }}</td>
+                                    <td>{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
+                                    <td>{{ $finalizado->tipo }}</td>
+                                    <td>{{ $finalizado->solicitante->nome }}</td>
+                                    <td>R$ {{ $finalizado->total }}</td>
+                                    <td class="acoesTD">
+                                        <div class="icon-button-demo" >
+                                            <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                            <a href="{{ route(strtolower($finalizado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizado->tipo).'.analisar', $finalizado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <i class="material-icons">launch</i>
+                                            </a>                                           
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach                                                     
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
+
                 </div>
-                <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
             </div>
         </div>
     </div>
-</div>
 </div>
 <!-- #END# Tabs With Icon Title -->
 </section>

@@ -32,6 +32,14 @@ class Solicitacao extends Model
         return $this->hasMany('App\Viagem','solicitacoes_id');
     }
 
+        /** Consulta as Despesas da  solicitação
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function comentarios()
+    {
+        return $this->hasMany('App\Comentario','solicitacoes_id');
+    }
+
     /** Consulta as Despesas da  solicitação
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -104,7 +112,6 @@ class Solicitacao extends Model
     {
         return $this->belongsTo('App\Processo','processos_id');
     }
-
 
     /** Consulta o usuário da solicitação
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

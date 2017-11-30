@@ -44,7 +44,7 @@
 					</div>
 				</div>
 
-				<form action="{{ route('compra.atualizarCabecalho',$solicitacao->id)}}" method="POST">
+				<form action="{{ route('solicitacao.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
 					{{ method_field('PUT') }}
 					@include('layouts._includes.cabecalho._cabecalho-editar')
@@ -53,7 +53,11 @@
 		</div>
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
-
+	
+	<!-- LISTAGEM DA VIAGEM  -->
+	@include('layouts._includes._comentario')
+	<!-- FIM LISTAGEM DA VIAGEM  -->
+	
 	<!-- MODAL CADASTRO DO PRODUTO -->
 	<div class="modal fade" id="modalCompra" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">

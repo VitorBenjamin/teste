@@ -22,6 +22,7 @@ use App\Status;
 class ReembolsoController extends Controller
 {
     //Buscando todas as informações das solicitacao e enviando para a view de listagem das solicitacao
+
     public function index()
     {
 
@@ -34,7 +35,7 @@ class ReembolsoController extends Controller
     //Retorna a View de cadastro da unidade
     public function cadastrar()
     {    	
-     
+
     	$areas = AreaAtuacao::all('id','tipo'); 
         $processos = Processo::all();
         $clientes = Cliente::all('id','nome');
@@ -56,19 +57,6 @@ class ReembolsoController extends Controller
         return redirect()->route('reembolso.editar', $solicitacao->id);
     }
     
-    //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
-    public function atualizarCabecalho(Request $request,$id)
-    {   
-        $repo = new SolicitacaoRepository();
-        $solicitacao = $repo->update($request,$id);
-
-        Session::flash('flash_message',[
-            'msg'=>"Solicitação Atualizada com Sucesso!!!",
-            'class'=>"alert bg-green alert-dismissible"
-        ]);
-        return redirect()->route('reembolso.editar',$id);
-    }
-
     //Adicionar um novo translado a uma solicitação
     public function addTranslado(Request $request,$id)
     {

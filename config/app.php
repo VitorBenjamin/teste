@@ -250,6 +250,7 @@ return [
         'User' => App\User::class,
         'Viagem' => App\Viagem::class,        
         'ViagemComprovante' => App\ViagemComprovante::class,
+        'Comentario' => App\Comentario::class,
 
         'SolicitacaoHelper' => App\Http\Helpers\SolicitacaoHelper::class,
 

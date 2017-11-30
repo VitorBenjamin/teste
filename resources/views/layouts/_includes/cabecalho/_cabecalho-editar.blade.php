@@ -44,7 +44,7 @@
 		<div class="col-md-3">
 			<div class="form-line">
 				<label class="form-label">Número de Processo</label>
-				<input type="text" id="processo" value="{{$solicitacao->processo->codigo}}" name="processo" class="form-control" autocomplete="off" placeholder="Ex: 9999999-99.9999.9.99.9999" />
+				<input type="text" id="processo" value="{{$solicitacao->processo == null ? '' : $solicitacao->processo->codigo}}" name="processo" class="form-control" autocomplete="off" placeholder="Ex: 9999999-99.9999.9.99.9999" />
 			</div>
 		</div>
 
@@ -52,20 +52,10 @@
 	<div class="row clearfix">
 		<div class="col-md-3">
 			<label for="area_atuacoes_id">Área de Atendimento</label>
-			<select id="area_atuacoes_id" name="area_atuacoes_id" class="form-control show-tick" data-live-search="true">									
+			<select id="area_atuacoes_id" name="area_atuacoes_id" class="form-control show-tick" data-live-search="true" required>									
+				<option value="">SELECIONE</option>
 				@foreach ($areas as $area)
-				@if($solicitacao->area_atuacoes_id == $area->id)
-				<option value="{{$solicitacao->area_atuacoes_id}}">{{ $area->tipo }}</option>
-				@break							
-				@endif
-				@endforeach
-
-				<option value="null">SELECIONE</option>
-
-				@foreach ($areas as $area)
-				@unless ($solicitacao->area_atuacoes_id == $area->id)
-				<option value="{{ $area->id }}">{{ $area->tipo }}</option>
-				@endunless												
+				<option value="{{$area->id}}" {{$solicitacao->area_atuacoes_id == $area->id ? 'selected' : ''}}>{{ $area->tipo }}</option>						
 				@endforeach
 			</select>
 		</div>
@@ -108,6 +98,6 @@
 			</a>
 		</div>		
 		
-																	
+
 	</div>			
 </div>

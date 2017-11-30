@@ -45,7 +45,7 @@
 					</div>
 				</div>
 
-				<form action="{{ route('compra.atualizarCabecalho',$solicitacao->id)}}" method="POST">
+				<form action="{{ route('solicitacao.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
 					{{ method_field('PUT') }}
 					@include('layouts._includes.cabecalho._cabecalho-editar')
@@ -182,7 +182,10 @@
 	@include('layouts._includes.cabecalho._cabecalho_analise')
 	<!-- FIM CABEÇALHO PADRAO -->
 	@endif
-
+	
+	<!-- LISTAGEM DA VIAGEM  -->
+	@include('layouts._includes._comentario')
+	<!-- FIM LISTAGEM DA VIAGEM  -->
 	@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO")
 	
 	<!-- MODAL VIAGEM -->

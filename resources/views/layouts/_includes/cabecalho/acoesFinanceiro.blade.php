@@ -9,7 +9,7 @@
 	<span>FINALIZAR</span>
 </a>										
 @endif
-<a href="{{ route('solicitacao.devolver',$solicitacao->id) }}" class="btn bg-lime waves-effect" role="button">
+<a  data-toggle="modal" data-target="#modalDevolver" href="{{ route('solicitacao.devolver',$solicitacao->id) }}" class="btn bg-lime waves-effect" role="button">
 	<i class="material-icons">report_problem</i>
 	<span>DEVOLVER</span>
 </a>

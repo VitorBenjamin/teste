@@ -22,7 +22,7 @@ class SolicitacaoHelper
     {
         foreach ($solicitacao->status as $status) {
             
-            if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_aberto_etapa2') || $status->descricao == config('constantes.status_devolvido')) {
+            if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_aberto_etapa2') || $status->descricao == config('constantes.status_devolvido') || $status->descricao == config('constantes.status_coordenador_aberto')) {
                 
                 return "ok";
             }elseif ($status->descricao == config('constantes.status_andamento')) {

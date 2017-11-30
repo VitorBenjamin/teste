@@ -11,10 +11,18 @@ class ClienteTableSeeder extends Seeder
      */
     public function run()
     {
+        Cliente::create([
+            'nome' => 'MOSELLO LIMA',
+            'cnpj' => '854236',
+            'valor_km' => 1.7,
+            'saldo' => 50000,
+            'unidades_id' => 1,
+        ]);
+
     	Cliente::create([
     		'nome' => 'VERACEL',
     		'cnpj' => '652143',
-    		'valor_km' => 5,
+    		'valor_km' => 2.9,
     		'saldo' => 2000,
     		'unidades_id' => 1,
     	]);
@@ -22,7 +30,7 @@ class ClienteTableSeeder extends Seeder
     	Cliente::create([
     		'nome' => 'BRASMOTO',
     		'cnpj' => '142365',
-    		'valor_km' => 3,
+    		'valor_km' => 2.5,
     		'saldo' => 5000,
     		'unidades_id' => 2,
     	]);
@@ -38,7 +46,7 @@ class ClienteTableSeeder extends Seeder
     	Cliente::create([
     		'nome' => 'AGENCIA VILACA',
     		'cnpj' => '451623',
-    		'valor_km' => 1,
+    		'valor_km' => 1.3,
     		'saldo' => 50000,
     		'unidades_id' => 2,
     	]);
@@ -46,7 +54,7 @@ class ClienteTableSeeder extends Seeder
         Cliente::create([
             'nome' => 'PORTOVEL',
             'cnpj' => '451206',
-            'valor_km' => 1,
+            'valor_km' => 1.4,
             'saldo' => 50000,
             'unidades_id' => 3,
         ]);
@@ -54,7 +62,7 @@ class ClienteTableSeeder extends Seeder
         Cliente::create([
             'nome' => '2TREE',
             'cnpj' => '984513',
-            'valor_km' => 1,
+            'valor_km' => 1.3,
             'saldo' => 50000,
             'unidades_id' => 3,
         ]);
@@ -62,17 +70,9 @@ class ClienteTableSeeder extends Seeder
         Cliente::create([
             'nome' => 'EXPRESSO NEPOMUCENO',
             'cnpj' => '321546',
-            'valor_km' => 1,
+            'valor_km' => 1.8,
             'saldo' => 50000,
             'unidades_id' => 2,
-        ]);
-
-        Cliente::create([
-            'nome' => 'MOSELLO LIMA',
-            'cnpj' => '854236',
-            'valor_km' => 1,
-            'saldo' => 50000,
-            'unidades_id' => 1,
         ]);
     }
 }

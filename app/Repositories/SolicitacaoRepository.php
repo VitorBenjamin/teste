@@ -27,16 +27,27 @@ class SolicitacaoRepository
         $data['tipo'] = $tipo;
         if ($request->processo != "") 
         {
-            $processo = Processo::where('id',$request->processo)->first();
+            $processo = Processo::where('codigo',$request->processo)->first();
             if ($processo != "") 
             {
 
                 $data['processos_id'] = $processo->id;
+            }else{
+                $processo = Processo::create([
+                    'codigo' => $request->processo,
+                    'clientes_id' => $request->clientes_id,
+                ]);
+                $data['processos_id'] = $processo->id;
             }
         }
         $solicitacao = Solicitacao::create($data);
+        if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
+            $status = Status::where('descricao',config('constantes.status_coordenador_aberto'))->first();
 
-        $status = Status::where('descricao',config('constantes.status_aberto'))->first();
+        }else {
+            $status = Status::where('descricao',config('constantes.status_aberto'))->first();
+
+        }
         $solicitacao->status()->attach($status);
 
         return $solicitacao;
@@ -88,7 +99,7 @@ class SolicitacaoRepository
         $solicitacoes = $this->valorTotalAdvogado($status);
         return $solicitacoes;
     }
-    
+
     public function getSolicitacaoCoordenador($status)
     {
         $area_id = array();
@@ -113,7 +124,7 @@ class SolicitacaoRepository
         }else {
             $status = Status::with('solicitacao')->where('descricao',$status)->first();
         }
-        
+
         $solicitacoes = $this->valorTotalCoordenador($status,$limites);
         return $solicitacoes;
     }
@@ -129,11 +140,18 @@ class SolicitacaoRepository
             {
 
                 $data['processos_id'] = $processo->id;
+            }else{
+                $processo = Processo::create([
+                    'codigo' => $request->processo,
+                    'clientes_id' => $request->clientes_id,
+                ]);
+                $data['processos_id'] = $processo->id;
             }
+        }else{
+            $data['processos_id'] = null;  
         }
 
         $solicitacao = Solicitacao::where('id',$id)->update($data);
-
         return $solicitacao;
     }
 
@@ -147,11 +165,11 @@ class SolicitacaoRepository
 
         }
         //dd($area_id[0]);
-        
+
         foreach ($limites as $limite) 
         {
-           if (empty($area_id)) 
-           {
+         if (empty($area_id)) 
+         {
             //dd($limite);
             if ($total >= $limite->de && $total <= $limite->ate) 
             {
@@ -337,19 +355,19 @@ public function totalViagem($viagens)
     foreach ($viagens->viagem as $viagem) 
     {
         if ($viagem->viagens_comprovantes_id != null ) {
-                $total += $viagem->comprovante->custo_passagem;
-                $total += $viagem->comprovante->custo_hospedagem;
-                $total += $viagem->comprovante->custo_locacao;
+            $total += $viagem->comprovante->custo_passagem;
+            $total += $viagem->comprovante->custo_hospedagem;
+            $total += $viagem->comprovante->custo_locacao;
         }
         
     }
     //dd($viagens->despesa);
 
     if (!empty($viagens->despesa)) {
-            foreach ($viagens->despesa as $despesa) {
-                $total += $despesa->valor;
-            }
+        foreach ($viagens->despesa as $despesa) {
+            $total += $despesa->valor;
         }
+    }
     return $total;
 }
 

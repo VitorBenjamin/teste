@@ -37,7 +37,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable js-exportable ">
+					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example">
 						<thead>
 							<tr>
 								<th></th>
