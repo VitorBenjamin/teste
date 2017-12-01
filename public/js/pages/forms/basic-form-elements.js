@@ -10,10 +10,12 @@ $(function () {
         format: 'DD-MM-YYYY HH:mm:00',
         minDate : new Date(),
         lang: 'pt-br',
-        clearButton: true,
-        clearText: 'Limpar',
-        cancelText : 'Cancelar',
-        weekStart: 0,
+        // clearButton: true,
+        // clearText: 'Limpar',
+        switchOnClick:true,
+        // cancelText : 'Cancelar',
+        autoClose: true,
+        weekStart: 0
     });
 
     $('.datepicker').bootstrapMaterialDatePicker({
@@ -21,9 +23,11 @@ $(function () {
         //format : 'YYYY-MM-DD',
         format : 'DD-MM-YYYY',
         lang: 'pt-br',
-        clearButton: true,
-        clearText: 'Limpar',
-        cancelText : 'Cancelar',
+        // clearButton: true,
+        // clearText: 'Limpar',
+        switchOnClick:true,
+        // cancelText : 'Cancelar',
+        autoClose: true,
         weekStart: 0,
         time: false
     });
@@ -33,9 +37,11 @@ $(function () {
         format : 'DD-MM-YYYY',
         minDate : new Date(),
         lang: 'pt-br',
-        clearButton: true,
-        clearText: 'Limpar',
-        cancelText : 'Cancelar',
+        // clearButton: true,
+        // clearText: 'Limpar',
+        // cancelText : 'Cancelar',
+        switchOnClick:true,
+        autoClose: true,
         weekStart: 0,
         time: false
     });
@@ -43,19 +49,23 @@ $(function () {
         format : 'DD-MM-YYYY HH:mm:00',
         minDate : new Date(),
         lang: 'pt-br',
-        clearButton: true,
-        clearText: 'Limpar',
-        cancelText : 'Cancelar',
-        weekStart: 0,
+        // clearButton: true,
+        // clearText: 'Limpar',
+        switchOnClick:true,
+        // cancelText : 'Cancelar',
+        autoClose: true,
+        weekStart: 0
     });
     $('.ida').bootstrapMaterialDatePicker({
         format : 'DD-MM-YYYY HH:mm:00',
         minDate : new Date(),
         lang: 'pt-br',
-        clearButton: true,
-        clearText: 'Limpar',
-        cancelText : 'Cancelar',
-        weekStart: 0,
+        // clearButton: true,
+        // clearText: 'Limpar',
+        switchOnClick:true,
+        // cancelText : 'Cancelar',
+        autoClose: true,
+        weekStart: 0
     }).on('change', function(e, date)
     {
         $('.volta').bootstrapMaterialDatePicker('setMinDate', date);

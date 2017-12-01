@@ -58,7 +58,7 @@
 			<select id="contrato" name="contrato" class="form-control show-tick" data-live-search="true" required>
 				<option value="">SELECIONE</option>
 				<option value="CONSULTIVO">CONSULTIVO</option>
-				<option value="CONTECIOSO">CONTECIOSO</option>
+				<option value="CONTENSIOSO">CONTENSIOSO</option>
 				<option value="PREVENTIVO">PREVENTIVO</option>
 			</select>
 		</div>

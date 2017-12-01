@@ -36,6 +36,7 @@
 										<option value="HOSPEDAGEM" {{$despesa->tipo_comprovante == 'HOSPEDAGEM' ? 'selected' : ''}}>HOSPEDAGEM</option>
 										<option value="ALIMENTAÇÂO" {{$despesa->tipo_comprovante == 'ALIMENTAÇÃO' ? 'selected' : ''}}>ALIMENTAÇÃO</option>
 										<option value="TRANSPORTE" {{$despesa->tipo_comprovante == 'TRANSPORTE' ? 'selected' : ''}}>TRANSPORTE</option>
+										<option value="OUTROS" {{$despesa->tipo_comprovante == 'OUTROS' ? 'selected' : ''}}>OUTROS</option>
 
 									</select>
 								</div>

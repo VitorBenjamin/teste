@@ -4,6 +4,11 @@ $(function() {
   $('input:text').keyup(function() {
     this.value = this.value.toLocaleUpperCase()
   });
+  $('.show-tick').selectpicker({
+    noneResultsText: 'Nenhum Resultado Encontrado',
+    deselectAllText:'DESELECIONAR TODOS',
+    selectAllText: 'SELECIONAR TODOS'
+  });
 
 });
 $( window ).load(function() {
@@ -51,6 +56,14 @@ $(document).ready(function () {
 });
 
 //Desativa o select de CLIENTES Caso Origem da despesa seja = Escritório
+$('#contrato').change(function() {
+  var value = $(this).val();
+  if (value =="CONTENSIOSO") {
+    $('#processo').attr('required', true);
+  }else{
+    $('#processo').removeAttr('required', false);
+  }
+});
 $('#origem_despesa').change(function() {
 
   var value = $(this).val();

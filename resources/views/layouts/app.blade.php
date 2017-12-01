@@ -177,6 +177,8 @@
     {!! Html::script('/js/pages/tables/jquery-datatable.js') !!}
     {!! Html::script('/js/pages/forms/basic-form-elements.js') !!}
     {!! Html::script('/js/pages/forms/advanced-form-elements.js') !!}
+    {!! Html::script('/js/pages/ui/tooltips-popovers.js') !!}
+
     {!! Html::script('/js/pages/ui/modals.js') !!}
     @endif
     <!-- {!! Html::script('/js/pages/index.js') !!} -->

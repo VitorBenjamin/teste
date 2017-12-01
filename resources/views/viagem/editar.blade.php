@@ -22,7 +22,7 @@
 			</div>
 		</div>
 	</div>
-	@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO") 
+	@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO" || $solicitacao->status[0]->descricao =="COORDENADOR-ABERTO") 
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -122,6 +122,7 @@
 														<option value="HOSPEDAGEM">HOSPEDAGEM</option>
 														<option value="ALIMENTAÇÂO">ALIMENTAÇÃO</option>
 														<option value="TRANSPORTE">TRANSPORTE</option>
+														<option value="OUTROS">OUTROS</option>
 													</select>
 												</div>
 												<div class="col-md-6">
@@ -186,7 +187,7 @@
 	<!-- LISTAGEM DA VIAGEM  -->
 	@include('layouts._includes._comentario')
 	<!-- FIM LISTAGEM DA VIAGEM  -->
-	@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO")
+	@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO" || $solicitacao->status[0]->descricao =="COORDENADOR-ABERTO")
 	
 	<!-- MODAL VIAGEM -->
 	<div class="modal fade" id="modalViagem" tabindex="-1" role="dialog">

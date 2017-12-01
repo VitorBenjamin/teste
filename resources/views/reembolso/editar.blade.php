@@ -365,6 +365,7 @@
 														<option value="HOSPEDAGEM">HOSPEDAGEM</option>
 														<option value="ALIMENTAÇÂO">ALIMENTAÇÃO</option>
 														<option value="TRANSPORTE">TRANSPORTE</option>
+														<option value="OUTROS">OUTROS</option>
 													</select>
 												</div>
 												<div class="col-md-6">

@@ -64,7 +64,7 @@
 				<label for="contrato">Tipo de Contrato</label>
 				<select id="contrato" name="contrato" class="form-control show-tick" data-live-search="true">
 					<option value="CONSULTIVO" {{ $solicitacao->contrato == "CONSULTIVO" ? 'selected' : '' }}>CONSULTIVO</option>
-					<option value="CONTECIOSO" {{ $solicitacao->contrato == "CONTECIOSO" ? 'selected' : '' }}>CONTECIOSO</option>
+					<option value="CONTENSIOSO" {{ $solicitacao->contrato == "CONTENSIOSO" ? 'selected' : '' }}>CONTENSIOSO</option>
 					<option value="PREVENTIVO" {{ $solicitacao->contrato == "PREVENTIVO" ? 'selected' : '' }}>PREVENTIVO</option>
 				</select>
 			</div>

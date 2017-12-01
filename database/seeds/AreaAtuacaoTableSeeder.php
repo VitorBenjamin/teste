@@ -20,7 +20,7 @@ class AreaAtuacaoTableSeeder extends Seeder
         ]);
 
         AreaAtuacao::create([
-        	'tipo' => 'CIVIL'
+        	'tipo' => 'CÍVIL'
         ]);
 
         AreaAtuacao::create([

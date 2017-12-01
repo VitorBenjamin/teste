@@ -122,7 +122,18 @@ class CreateFks extends Migration
         Schema::table('users_limites', function (Blueprint $table) {
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('limites_id')->references('id')->on('limites')->onDelete('cascade');
-        });        
+        }); 
+    //Foreign Keys Tabela users_limites
+        Schema::table('users_clientes', function (Blueprint $table) {
+            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('clientes_id')->references('id')->on('clientes')->onDelete('cascade');
+        });
+    //Foreign Keys Tabela users_limites
+        Schema::table('coordenador_advogado', function (Blueprint $table) {
+            $table->foreign('coordenador_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('advogado_id')->references('id')->on('users')->onDelete('cascade');
+        });      
+
     }
     /**
      * Reverse the migrations.

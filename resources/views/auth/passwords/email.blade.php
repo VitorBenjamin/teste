@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content-login')
 
 <div class="login-box">
@@ -14,6 +13,11 @@
             border-bottom-width: 3px;
             border-bottom-color: #FF9800;
             border-bottom-style: solid">
+            @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+            @endif
             <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
                 {{ csrf_field() }}
 

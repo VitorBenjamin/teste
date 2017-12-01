@@ -29,6 +29,8 @@ return [
 	'status_recorrente_financeiro' => 'RECORRENTE-FINANCEIRO',
 	'status_coordenador_aberto' => 'COORDENADOR-ABERTO',
 	'status_coordenador_aprovado' => 'COORDENADOR-APROVADO',
+	'status_coordenador_aberto2' => 'COORDENADOR-ABERTO2',
+	'status_coordenador_aprovado2' => 'COORDENADOR-APROVADO2',
 	'tipo_reembolso' => 'REEMBOLSO',
 	'tipo_viagem' => 'VIAGEM',
 	'tipo_guia' => 'GUIA',
@@ -37,6 +39,8 @@ return [
 	'user_advogado' =>'ADVOGADO',
 	'user_coordenador' =>'COORDENADOR',
 	'user_financeiro' =>'FINANCEIRO',
+	'user_admistrativo' =>'ADMINISTRATIVO',
+	
 	'user_god' =>'GOD',
 	'km' => 2.50,
 

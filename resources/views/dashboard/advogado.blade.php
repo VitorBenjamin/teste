@@ -120,10 +120,10 @@
                                     <td class="acoesTD">
                                         <div class="icon-button-demo" >
                                             <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($aberto->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aberto->tipo).'.editar', $aberto->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                            <a href="{{ route(strtolower($aberto->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aberto->tipo).'.editar', $aberto->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$aberto->tipo}}">
                                                 <i class="material-icons">settings</i>
                                             </a>
-                                            <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$aberto->id}}">
+                                            <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$aberto->id}}" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$aberto->tipo}}">
                                                 <i class="material-icons">delete_sweep</i>
                                             </a>
                                         </div>
@@ -165,8 +165,8 @@
                                     <td class="acoesTD">
                                         <div class="icon-button-demo" >
                                             <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($andamento->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $andamento->tipo).'.analisar', $andamento->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                                <i class="material-icons">launch</i>
+                                            <a href="{{ route(strtolower($andamento->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $andamento->tipo).'.analisar', $andamento->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$andamento->tipo}}">
+                                                <i class="material-icons">search</i>
                                             </a>
                                         </div>
                                     </td>
@@ -208,8 +208,8 @@
                                     <td class="acoesTD">
                                         <div class="icon-button-demo" >
                                             <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($aprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aprovado->tipo).'.analisar', $aprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                                <i class="material-icons">launch</i>
+                                            <a href="{{ route(strtolower($aprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aprovado->tipo).'.analisar', $aprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$aprovado->tipo}}">
+                                                <i class="material-icons">search</i>
                                             </a>
                                         </div>
                                     </td>
@@ -251,8 +251,8 @@
                                     <td class="acoesTD">
                                         <div class="icon-button-demo" >
                                             <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($reprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $reprovado->tipo).'.analisar', $reprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                                <i class="material-icons">launch</i>
+                                            <a href="{{ route(strtolower($reprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $reprovado->tipo).'.analisar', $reprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$reprovado->tipo}}">
+                                                <i class="material-icons">search</i>
                                             </a>                                           
                                         </div>
                                     </td>
@@ -294,10 +294,10 @@
                                     <td class="acoesTD">
                                         <div class="icon-button-demo" >
                                             <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.editar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                            <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.editar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$devolvida->tipo}}">
                                                 <i class="material-icons">settings</i>
                                             </a>
-                                            <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$devolvida->id}}">
+                                            <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$devolvida->id}}" data-toggle="tooltip" data-placement="top" title="VIZUALIZAR {{$devolvida->tipo}}">
                                                 <i class="material-icons">delete_sweep</i>
                                             </a>
                                         </div>
@@ -339,8 +339,8 @@
                                     <td class="acoesTD">
                                         <div class="icon-button-demo" >
                                             <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($finalizado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizado->tipo).'.analisar', $finalizado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                                <i class="material-icons">launch</i>
+                                            <a href="{{ route(strtolower($finalizado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizado->tipo).'.analisar', $finalizado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$finalizado->tipo}}">
+                                                <i class="material-icons">search</i>
                                             </a>                                           
                                         </div>
                                     </td>

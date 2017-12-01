@@ -92,15 +92,14 @@
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
                                                 <a href="{{ route(strtolower($aberto->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aberto->tipo).'.analisar', $aberto->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                                    <i class="material-icons">launch</i>
+                                                    <i class="material-icons">search</i>
                                                 </a>
-                                                <a href="{{ route('solicitacao.finalizar',$aberto->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float">
+                                                <!-- <a href="{{ route('solicitacao.finalizar',$aberto->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float">
                                                     <i class="material-icons">done_all</i>
-                                                    <!-- <span class="hidden-xs">ADD</span> -->
                                                 </a>
                                                 <a href="{{ route('solicitacao.devolver',$aberto->id) }}" class="btn bg-amber btn-circle waves-effect waves-circle waves-float">
                                                     <i class="material-icons">report_problem</i>
-                                                </a>
+                                                </a> -->
                                             </div>
                                         </td>
                                     </tr>
@@ -138,7 +137,7 @@
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <a href="{{ route(strtolower($finalizada->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizada->tipo).'.analisar', $finalizada->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                                    <i class="material-icons">launch</i>
+                                                    <i class="material-icons">search</i>
                                                 </a>                                            
                                             </div>
                                         </td>
@@ -178,7 +177,7 @@
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.analisar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                                    <i class="material-icons">launch</i>
+                                                    <i class="material-icons">search</i>
                                                 </a>                                                
                                             </div>
                                         </td>
@@ -220,15 +219,14 @@
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
                                                 <a href="{{ route(strtolower($recorrente->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $recorrente->tipo).'.analisar', $recorrente->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-                                                    <i class="material-icons">launch</i>
+                                                    <i class="material-icons">search</i>
                                                 </a>
-                                                <a href="{{ route('solicitacao.finalizar',$recorrente->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float">
+                                                <!-- <a href="{{ route('solicitacao.finalizar',$recorrente->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float">
                                                     <i class="material-icons">done_all</i>
-                                                    <!-- <span class="hidden-xs">ADD</span> -->
                                                 </a>
                                                 <a href="{{ route('solicitacao.devolver',$recorrente->id) }}" class="btn bg-amber btn-circle waves-effect waves-circle waves-float">
                                                     <i class="material-icons">report_problem</i>
-                                                </a>
+                                                </a> -->
                                             </div>
                                         </td>
                                     </tr>
