@@ -156,7 +156,7 @@
                                         <td>R$ {{ $aprovado->total }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
-                                                <a href="{{ route(strtolower($aprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aprovado->tipo).'.analisar', $aprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($aprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aprovado->tipo).'.analisar', $aprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$aprovado->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>                                            
                                             </div>
@@ -196,7 +196,7 @@
                                         <td>R$ {{ $reprovado->total }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
-                                                <a href="{{ route(strtolower($reprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $reprovado->tipo).'.analisar', $reprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($reprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $reprovado->tipo).'.analisar', $reprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$reprovado->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>   
 
@@ -239,19 +239,19 @@
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.analisar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.analisar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$devolvida->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>
-                                                <a href="{{ route('solicitacao.aprovar',$devolvida->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route('solicitacao.aprovar',$devolvida->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="APROVAR {{$devolvida->tipo}}">
                                                     <i class="material-icons">done_all</i>
                                                     <!-- <span class="hidden-xs">ADD</span> -->
                                                 </a>
-                                                <a href="{{ route('solicitacao.reprovar',$devolvida->id) }}" class="btn bg-red btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route('solicitacao.reprovar',$devolvida->id) }}" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="REPROVAR {{$devolvida->tipo}}">
                                                     <i class="material-icons">cancel</i>
                                                 </a>
-                                                <a href="{{ route('solicitacao.devolver',$devolvida->id) }}" class="btn bg-amber btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route('solicitacao.devolver',$devolvida->id) }}" class="btn bg-amber btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="DEVOLVER {{$devolvida->tipo}}">
                                                     <i class="material-icons">report_problem</i>
-                                                </a>                                                
+                                                </a>   
                                             </div>
                                         </td>
                                     </tr>
@@ -291,17 +291,17 @@
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($recorrente->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $recorrente->tipo).'.analisar', $recorrente->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($recorrente->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $recorrente->tipo).'.analisar', $recorrente->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$recorrente->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>
-                                                <a href="{{ route('solicitacao.aprovar',$recorrente->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route('solicitacao.aprovar',$recorrente->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="APROVAR {{$recorrente->tipo}}">
                                                     <i class="material-icons">done_all</i>
                                                     <!-- <span class="hidden-xs">ADD</span> -->
                                                 </a>
-                                                <a href="{{ route('solicitacao.reprovar',$recorrente->id) }}" class="btn bg-red btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route('solicitacao.reprovar',$recorrente->id) }}" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="REPROVAR {{$recorrente->tipo}}">
                                                     <i class="material-icons">cancel</i>
                                                 </a>
-                                                <a href="{{ route('solicitacao.devolver',$recorrente->id) }}" class="btn bg-amber btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route('solicitacao.devolver',$recorrente->id) }}" class="btn bg-amber btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="DEVOLVER {{$recorrente->tipo}}">
                                                     <i class="material-icons">report_problem</i>
                                                 </a>
                                             </div>
@@ -342,15 +342,15 @@
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($meu->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $meu->tipo).'.editar', $meu->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($meu->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $meu->tipo).'.editar', $meu->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$meu->tipo}}">
                                                     <i class="material-icons">settings</i>
                                                 </a>
-                                                <a style="margin-left: 10px" href="{{ route('solicitacao.aprovar',$meu->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float">
+                                                <a style="margin-left: 10px" href="{{ route('solicitacao.aprovar',$meu->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="ENVIAR {{$meu->tipo}}">
                                                     <i class="material-icons">done_all</i>
                                                     <!-- <span class="hidden-xs">ADD</span> -->
                                                 </a>
                                                 @if($meu->status[0]->descricao =="COORDENADOR-ABERTO")
-                                                <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$meu->id}}">
+                                                <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$meu->id}}" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$meu->tipo}}">
                                                     <i class="material-icons">delete_sweep</i>
                                                 </a>
                                                 @endif
@@ -394,7 +394,7 @@
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($finalizado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizado->tipo).'.analisar', $finalizado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($finalizado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizado->tipo).'.analisar', $finalizado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$finalizado->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>                                           
                                             </div>
