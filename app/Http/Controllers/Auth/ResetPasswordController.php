@@ -36,4 +36,17 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+    /**
+     * Build the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+            ->line('Você está recebendo este e-mail porque recebemos um pedido de redefinição de senha para sua conta.')
+            ->action('Resetar Senha', url(config('app.url').route('password.reset', $this->token, false)))
+            ->line('Se você não solicitou uma reinicialização da senha, nenhuma ação adicional será necessária.');
+    }
 }

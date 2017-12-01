@@ -13,7 +13,7 @@ $(function () {
         clearButton: true,
         clearText: 'Limpar',
         cancelText : 'Cancelar',
-        weekStart: 1,
+        weekStart: 0,
     });
 
     $('.datepicker').bootstrapMaterialDatePicker({
@@ -24,7 +24,7 @@ $(function () {
         clearButton: true,
         clearText: 'Limpar',
         cancelText : 'Cancelar',
-        weekStart: 1,
+        weekStart: 0,
         time: false
     });
     $('.datepicker2').bootstrapMaterialDatePicker({
@@ -36,7 +36,7 @@ $(function () {
         clearButton: true,
         clearText: 'Limpar',
         cancelText : 'Cancelar',
-        weekStart: 1,
+        weekStart: 0,
         time: false
     });
     $('.volta').bootstrapMaterialDatePicker({
@@ -46,7 +46,7 @@ $(function () {
         clearButton: true,
         clearText: 'Limpar',
         cancelText : 'Cancelar',
-        weekStart: 1,
+        weekStart: 0,
     });
     $('.ida').bootstrapMaterialDatePicker({
         format : 'DD-MM-YYYY HH:mm:00',
@@ -55,7 +55,7 @@ $(function () {
         clearButton: true,
         clearText: 'Limpar',
         cancelText : 'Cancelar',
-        weekStart: 1,
+        weekStart: 0,
     }).on('change', function(e, date)
     {
         $('.volta').bootstrapMaterialDatePicker('setMinDate', date);
