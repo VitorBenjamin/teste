@@ -116,12 +116,68 @@
                                                 <a href="{{ route('solicitacao.reprovar',$aberto->id) }}" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="REPROVAR {{$aberto->tipo}}">
                                                     <i class="material-icons">cancel</i>
                                                 </a>
-                                                <a href="{{ route('solicitacao.devolver',$aberto->id) }}" class="btn bg-amber btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="DEVOLVER {{$aberto->tipo}}">
-                                                    <i class="material-icons">report_problem</i>
-                                                </a>
+                                                <span data-toggle="modal" data-target="#modalDevolver">
+                                                    <a class="btn bg-amber btn-circle waves-effect waves-circle waves-float" data-placement="top" title="DEVOLVER {{$aberto->tipo}}" data-toggle="tooltip">
+                                                        <i class="material-icons">report_problem</i>
+                                                    </a>
+                                                </span>
                                             </div>
                                         </td>
                                     </tr>
+                                    <!-- MODAL COMENTÁRIO -->
+                                    <div class="modal fade" id="modalDevolver" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="largeModalLabel">DESEJA DEVOLVER ESSA SOLICITAÇÂO?</h4>
+                                                </div>
+                                                <!-- INCIO SESSÃO DESPESA -->
+                                                <div class="modal-body">
+                                                    <form action="{{ route('solicitacao.devolver',$aberto->id)}}" method="POST" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('PUT') }}
+                                                        <div class="body">
+                                                            <div class="row clearfix">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="card">
+                                                                        <div class="header">
+                                                                            <h2>
+                                                                                Deixe uma Observação 
+                                                                            </h2>
+                                                                        </div>
+                                                                        <div class="body">
+                                                                            <div class="row clearfix">
+                                                                                <div class="col-md-12">
+                                                                                    <div class="form-group">
+                                                                                        <div class="form-line">
+                                                                                            <label for="comentario">Observação</label>
+                                                                                            <textarea name="comentario" class="form-control" placeholder="..." required></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <div class="form-group">
+                                                                                <button class="btn btn-info">
+                                                                                    <i class="material-icons">replay</i>
+                                                                                    <span>DEVOLVER</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+                                                                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FIM SESSÃO DESPESA -->
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <!-- FIM MODAL COMENTÁRIO -->
                                     @endforeach                                                     
                                     
                                 </tbody>
@@ -301,12 +357,68 @@
                                                 <a href="{{ route('solicitacao.reprovar',$recorrente->id) }}" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="REPROVAR {{$recorrente->tipo}}">
                                                     <i class="material-icons">cancel</i>
                                                 </a>
-                                                <a href="{{ route('solicitacao.devolver',$recorrente->id) }}" class="btn bg-amber btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="DEVOLVER {{$recorrente->tipo}}">
-                                                    <i class="material-icons">report_problem</i>
-                                                </a>
+                                                <span data-toggle="modal" data-target="#modalDevolver2">
+                                                    <a class="btn bg-amber btn-circle waves-effect waves-circle waves-float" data-placement="top" title="DEVOLVER {{$recorrente->tipo}}" data-toggle="tooltip">
+                                                        <i class="material-icons">report_problem</i>
+                                                    </a>
+                                                </span>
                                             </div>
                                         </td>
                                     </tr>
+                                    <!-- MODAL COMENTÁRIO -->
+                                    <div class="modal fade" id="modalDevolver2" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="largeModalLabel">DESEJA DEVOLVER ESSA SOLICITAÇÂO?</h4>
+                                                </div>
+                                                <!-- INCIO SESSÃO DESPESA -->
+                                                <div class="modal-body">
+                                                    <form action="{{ route('solicitacao.devolver',$recorrente->id)}}" method="POST" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('PUT') }}
+                                                        <div class="body">
+                                                            <div class="row clearfix">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <div class="card">
+                                                                        <div class="header">
+                                                                            <h2>
+                                                                                Deixe uma Observação 
+                                                                            </h2>
+                                                                        </div>
+                                                                        <div class="body">
+                                                                            <div class="row clearfix">
+                                                                                <div class="col-md-12">
+                                                                                    <div class="form-group">
+                                                                                        <div class="form-line">
+                                                                                            <label for="comentario">Observação</label>
+                                                                                            <textarea name="comentario" class="form-control" placeholder="..." required></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <div class="form-group">
+                                                                                <button class="btn btn-info">
+                                                                                    <i class="material-icons">replay</i>
+                                                                                    <span>DEVOLVER</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+                                                                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- FIM SESSÃO DESPESA -->
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <!-- FIM MODAL COMENTÁRIO -->
                                     @endforeach                                                                                         
                                 </tbody>
                             </table>

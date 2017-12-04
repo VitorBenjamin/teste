@@ -8,7 +8,7 @@
 					@role(['COORDENADOR'])
 					@include('layouts._includes.cabecalho.acoesCoordenador')
 					@endrole
-					@role(['FINANCEIRO'])
+					@role(['FINANCEIRO','ADMINISTRATIVO'])
 					@include('layouts._includes.cabecalho.acoesFinanceiro')
 					@endrole
 				</div>

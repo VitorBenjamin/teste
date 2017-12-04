@@ -94,7 +94,9 @@ class RegisterController extends Controller
 
         $user = $this->create($request->all());
 
-        $this->attachRole($user,$request);
+        //$this->attachRole($user,$request);
+        $role = Role::where('name',$request->role)->first();
+        $user->attachRole($role);
         
         if ($request->role == config('constantes.user_coordenador')) {
             $this->setLimite($user,$request);
@@ -147,22 +149,6 @@ class RegisterController extends Controller
         
     }
 
-    public function attachRole($user,$request)
-    {
-        if ($request->role == config('constantes.user_advogado')) 
-        {
-            $role = Role::where('name',config('constantes.user_advogado'))->first();
-            $user->attachRole($role);
-        }
-        if ($request->role == config('constantes.user_coordenador')) {
-            $role = Role::where('name',config('constantes.user_coordenador'))->first();
-            $user->attachRole($role);
-        }
-        if ($request->role == config('constantes.user_financeiro')) {
-            $role = Role::where('name',config('constantes.user_financeiro'))->first();
-            $user->attachRole($role);
-        }
-    }
     /**
      * Create a new user instance after a valid registration.
      *

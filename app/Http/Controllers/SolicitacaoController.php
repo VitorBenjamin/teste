@@ -45,7 +45,6 @@ class SolicitacaoController extends Controller
 
 		$solicitacao = Solicitacao::find($id);
 		$status = $solicitacao->status[0]->descricao;
-		$status = $solicitacao->status[0]->descricao;
 		
 		if ($status == config('constantes.status_devolvido')) 
 		{
@@ -59,9 +58,9 @@ class SolicitacaoController extends Controller
 			
 			$andamento = Status::where('descricao', config('constantes.status_coordenador_aprovado2'))->first();
 
-		} elseif($solicitacao->tipo == "COMPRA"){
+		} elseif ($solicitacao->tipo == "COMPRA"){
 			
-			$andamento = Status::where('descricao', config('constantes.status_andamento_financeiro'))->first();
+			$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
 
 		} elseif ($status == "ABERTO-ETAPA2" || $status == config('constantes.status_devolvido_etapa2')) {
 
@@ -90,11 +89,11 @@ class SolicitacaoController extends Controller
 			
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado_recorrente'))->first();
 
-		}elseif($status == config('constantes.status_aberto_financeiro')){
+		} elseif ($status == config('constantes.status_aberto_financeiro')) {
 			
 			$aprovado = Status::where('descricao', config('constantes.status_andamento_financeiro'))->first();
 
-		}else {			
+		} else {			
 
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado'))->first();
 		}
@@ -142,7 +141,7 @@ class SolicitacaoController extends Controller
 			$devolvido = Status::where('descricao', config('constantes.status_devolvido_etapa2'))->first();
 			$data['publico'] = true;
 
-		} elseif (Auth::user()->hasRole(config('constantes.user_financeiro'))) {
+		} elseif (Auth::user()->hasRole(config('constantes.user_financeiro')) || Auth::user()->hasRole(config('constantes.user_administrativo'))) {
 			
 			$devolvido = Status::where('descricao', config('constantes.status_recorrente'))->first();
 			$data['publico'] = false;

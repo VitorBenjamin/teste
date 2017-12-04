@@ -70,7 +70,29 @@ class SolicitacaoRepository
         return $dados;
     }
 
-    public function getSolicitacaoFinanceiro($status)
+    public function getSolicitacaoFinanceiro($status2)
+    {
+        //  $status = Status::with(['solicitacao' => function($q){
+        //     $q->select('id','codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato')->take(10);
+        //  }])->where('descricao',$status)->first();
+
+        $status = Status::with(['solicitacao' => function($q) use ($status2)
+        {
+            if ($status2 == config('constantes.status_aprovado') || $status2 == config('constantes.status_recorrente')) {
+                $q
+                ->where('tipo','<>','VIAGEM')
+                ->where('tipo','<>','COMPRA')
+                ->orderBy('created_at');
+            }else {
+                $q->orderBy('created_at');
+            }
+            
+        }])->where('descricao',$status2)->first();
+
+        $solicitacoes = $this->valorTotalAdvogado($status);
+        return $solicitacoes;
+    }
+    public function getSolicitacaoAdministrativo($status)
     {
         //  $status = Status::with(['solicitacao' => function($q){
         //     $q->select('id','codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato')->take(10);
@@ -78,7 +100,11 @@ class SolicitacaoRepository
 
         $status = Status::with(['solicitacao' => function($q)
         {
-            $q->orderBy('created_at');
+            $q
+            ->where('tipo','=','VIAGEM')
+            ->orWhere('tipo','=','COMPRA')
+            ->orderBy('created_at');
+
         }])->where('descricao',$status)->first();
 
         $solicitacoes = $this->valorTotalAdvogado($status);

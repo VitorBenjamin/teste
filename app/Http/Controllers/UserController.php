@@ -30,6 +30,10 @@ class UserController extends Controller
 			
 			//return $this->coordenadorDash();
 			return redirect()->route('user.financeiroDash');
+		}elseif (Auth::user()->hasRole(config('constantes.user_administrativo'))) {
+			
+			//return $this->coordenadorDash();
+			return redirect()->route('user.administrativoDash');
 		}
 	}
 
@@ -130,8 +134,11 @@ class UserController extends Controller
 		$repo = new SolicitacaoRepository();
 
 		$abertas = $repo->getSolicitacaoFinanceiro(config('constantes.status_aprovado'));
-		$aprovado_etapa2 = $repo->getSolicitacaoFinanceiro(config('constantes.status_coordenador_aprovado2'));
-		
+		$coordenador_aprovado_etapa2 = $repo->getSolicitacaoFinanceiro(config('constantes.status_coordenador_aprovado2'));
+		if ($coordenador_aprovado_etapa2 !=null) {
+			$abertas = $this->pushSolicitacao($abertas,$coordenador_aprovado_etapa2);			
+		}
+		$aprovado_etapa2 = $repo->getSolicitacaoFinanceiro(config('constantes.status_aprovado_etapa2'));
 		if ($aprovado_etapa2 !=null) {
 			$abertas = $this->pushSolicitacao($abertas,$aprovado_etapa2);			
 		}
@@ -145,6 +152,7 @@ class UserController extends Controller
 		}
 		$finalizadas = $repo->getSolicitacaoFinanceiro(config('constantes.status_finalizado'));
 		$devolvidas = $repo->getSolicitacaoFinanceiro(config('constantes.status_devolvido_financeiro'));
+
 		$recorrentes_devolvidas = $repo->getSolicitacaoFinanceiro(config('constantes.status_recorrente'));
 		if ($devolvidas !=null) {
 			$devolvidas= $this->pushSolicitacao($devolvidas,$recorrentes_devolvidas);
@@ -152,6 +160,30 @@ class UserController extends Controller
 		$recorrentes = $repo->getSolicitacaoFinanceiro(config('constantes.status_aprovado_recorrente'));
 
 		return view('dashboard.financeiro',compact('abertas','finalizadas','devolvidas','recorrentes'));
+
+	}
+	public function administrativoDash()
+	{
+		$repo = new SolicitacaoRepository();
+
+		$abertas = $repo->getSolicitacaoAdministrativo(config('constantes.status_aprovado'));
+
+		$andamento = $repo->getSolicitacaoAdministrativo(config('constantes.status_andamento_administrativo'));
+		if ($andamento !=null) {
+			$abertas= $this->pushSolicitacao($abertas,$andamento);
+		}
+		$andamento_coordenador = $repo->getSolicitacaoAdministrativo(config('constantes.status_coordenador_aprovado'));
+		if ($andamento_coordenador !=null) {
+			$abertas= $this->pushSolicitacao($abertas,$andamento_coordenador);
+		}
+		$devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_devolvido_financeiro'));
+		$recorrentes_devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_recorrente'));
+		if ($devolvidas !=null) {
+			$devolvidas= $this->pushSolicitacao($devolvidas,$recorrentes_devolvidas);
+		}
+		$recorrentes = $repo->getSolicitacaoAdministrativo(config('constantes.status_aprovado_recorrente'));
+
+		return view('dashboard.administrativo',compact('abertas','devolvidas','recorrentes'));
 
 	}
 

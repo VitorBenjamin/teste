@@ -17,49 +17,58 @@
                         <h2>Preencha os Dados Com Atenção</h2>
                     </div>
                     <div class="body">
-                        <form id="wizard_with_validation" method="POST" action="{{ route('register') }}">
+                        <form id="wizard_with_validation" method="POST" autocomplete="off" action="{{ route('register') }}">
                             {{ csrf_field() }}
-                            <input type="hidden" name="role" value="{{config('constantes.user_financeiro')}}">
-
                             <h3>SEGURANÇA</h3>
                             <fieldset>
-                                <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }} form-float">
-                                    <div class="form-line">
-                                        <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}" required autofocus>
-                                        <label class="form-label">Nome do Analista*</label>
-                                        @if ($errors->has('nome'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('nome') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
+                                <div class="col-md-3">
+                                    <label for="role">Função</label>
+                                    <select id="role" name="role" class="form-control show-tick" required>
+                                        <option value="{{config('constantes.user_financeiro')}}">FINANCEIRO</option>
+                                        <option value="{{config('constantes.user_administrativo')}}">ADMINISTRATIVO</option>
+                                    </select>
                                 </div>
-                                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} form-float">
-                                    <div class="form-line">
-                                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-                                        <label class="form-label">E-mail*</label>
-                                        @if ($errors->has('email'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
-                                        @endif
+                                <div class="col-md-12">
+                                    <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }} form-float">
+                                        <div class="form-line">
+                                            <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}" required autofocus>
+                                            <label class="form-label">Nome *</label>
+                                            @if ($errors->has('nome'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('nome') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} form-float">
-                                    <div class="form-line">
-                                        <input id="password" type="password" class="form-control" name="password" required>
-                                        <label class="form-label">Senha*</label>
-                                        @if ($errors->has('password'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
-                                        @endif
+
+                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} form-float">
+                                        <div class="form-line">
+                                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                            <label class="form-label">E-mail*</label>
+                                            @if ($errors->has('email'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group form-float">
-                                    <div class="form-line">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                                        <label class="form-label">Confirmação de Senha*</label>
+
+                                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} form-float">
+                                        <div class="form-line">
+                                            <input id="password" type="password" class="form-control" autocomplete="off" name="password" required>
+                                            <label class="form-label">Senha*</label>
+                                            @if ($errors->has('password'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input id="password-confirm" type="password" class="form-control" autocomplete="off" name="password_confirmation" aria-hidden="true" required>
+                                            <label class="form-label">Confirmação de Senha*</label>
+                                        </div>
                                     </div>
                                 </div>
                             </fieldset>

@@ -26,7 +26,8 @@
 	<!-- INCIO CABEÇALHO PADRAO -->
 	@include('layouts._includes.cabecalho._cabecalho_analise')
 	<!-- FIM CABEÇALHO PADRAO -->
-		<!-- MODAL COMENTÁRIO -->
+
+	<!-- MODAL COMENTÁRIO -->
 	<div class="modal fade" id="modalDevolver" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">

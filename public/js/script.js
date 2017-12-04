@@ -22,6 +22,8 @@ $( window ).load(function() {
    $('#cliente').selectpicker('hide');
    $('#cliente').selectpicker('refresh');
 
+ }else{
+  $('#cliente').attr('required', true);
  }
     //$('.js-basic-example').DataTable().responsive.recalc();
     //console.log($('.js-basic-example').DataTable().responsive.recalc());
@@ -39,7 +41,7 @@ $(document).ready(function () {
     source: function(query, result)
     {
      $.ajax({
-      url: "/ajax/processo",
+      url: "/mosello-oficial/public/ajax/processo",
       method:"GET",
       data:{query:query},
       dataType:"json",
@@ -75,6 +77,7 @@ $('#origem_despesa').change(function() {
    //console.log('ghjhgjgj');
   // $('#clientes').attr("disabled", true);
   $('#cliente').selectpicker('deselectAll');
+  $('#cliente').removeAttr('required', false);
   $('#cliente').selectpicker('hide');
   $('#cliente').selectpicker('refresh');
 
@@ -82,7 +85,10 @@ $('#origem_despesa').change(function() {
   $('#label').css("color","#555"); 
   $('#cliente').removeAttr('disabled',false);
   $('#cliente').selectpicker('show');
+  $('#cliente').attr('required', true);
   $('#cliente').selectpicker('refresh');
+
+
 
 }
 });

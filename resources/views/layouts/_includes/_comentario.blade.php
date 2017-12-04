@@ -13,7 +13,7 @@
 					@role('COORDENADOR','FINANCEIRO')
 					<a class="list-group-item ">							
 						<h5 class="list-group-item-heading">{{$comentario->status}} -> {{$comentario->user->nome}}</h5>
-						<h4 class="list-group-item-heading">{{date('d-m-y H:m',strtotime($comentario->created_at))}} </h4>
+						<h4 class="list-group-item-heading">{{date('d-m-y H:i:s',strtotime($comentario->created_at))}} </h4>
 						<br>
 						<p class="list-group-item-text">
 							{{$comentario->comentario}}
@@ -23,7 +23,7 @@
 					@else
 					<a class="list-group-item ">							
 						<h5 class="list-group-item-heading">{{$comentario->status}} -> {{$comentario->user->nome}}</h5>
-						<h4 class="list-group-item-heading">{{date('d-m-y H:m',strtotime($comentario->created_at))}} </h4>
+						<h4 class="list-group-item-heading">{{date('d-m-y H:i:s',strtotime($comentario->created_at))}} </h4>
 						<br>
 						<p class="list-group-item-text">
 							{{$comentario->comentario}}

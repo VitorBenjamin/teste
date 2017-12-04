@@ -25,6 +25,7 @@ return [
 	'status_devolvido_financeiro' => 'DEVOLVIDO-FINANCEIRO',
 	'status_aprovado_recorrente' => 'APROVADO-RECORRENTE',
 	'status_andamento_financeiro' => 'ANDAMENTO-FINANCEIRO',
+	'status_andamento_administrativo' => 'ANDAMENTO-ADMINISTRATIVO',
 	'status_aprovado_financeiro' => 'APROVADO-FINANCEIRO',
 	'status_recorrente_financeiro' => 'RECORRENTE-FINANCEIRO',
 	'status_coordenador_aberto' => 'COORDENADOR-ABERTO',
@@ -39,8 +40,7 @@ return [
 	'user_advogado' =>'ADVOGADO',
 	'user_coordenador' =>'COORDENADOR',
 	'user_financeiro' =>'FINANCEIRO',
-	'user_admistrativo' =>'ADMINISTRATIVO',
-	
+	'user_administrativo' =>'ADMINISTRATIVO',
 	'user_god' =>'GOD',
 	'km' => 2.50,
 
