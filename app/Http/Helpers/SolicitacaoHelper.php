@@ -23,17 +23,17 @@ class SolicitacaoHelper
 
         foreach ($solicitacao->status as $status) {
             
-            if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_aberto_etapa2') || $status->descricao == config('constantes.status_devolvido') || $status->descricao == config('constantes.status_coordenador_aberto') || $status->descricao == config('constantes.status_coordenador_aberto2')) {
+            if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_aberto_etapa2') || $status->descricao == config('constantes.status_devolvido') || $status->descricao == config('constantes.status_coordenador_aberto') || $status->descricao == config('constantes.status_coordenador_aberto2') || $status->descricao == config('constantes.status_devolvido_etapa2')) {
                 
                 return "ok";
-            }elseif ($status->descricao == config('constantes.status_andamento')) {
+            }else {
                
                 \Session::flash('flash_message',[
                     'msg'=>"Solicitação em Andamento. Aguarde um Parecer da Coordenação ",
                     'class'=>"alert bg-green alert-dismissible"
 
                 ]);
-
+ 
                 return redirect()->route('user.index');
             }   
         }

@@ -12,26 +12,15 @@
 	<!-- INCIO CABEÇALHO PADRAO -->
 	@include('layouts._includes.cabecalho._cabecalho_analise')
 	<!-- FIM CABEÇALHO PADRAO -->
-	<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="defaultModalLabel">Modal title</h4>
-				</div>
-				<div class="modal-body">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales orci ante, sed ornare eros vestibulum ut. Ut accumsan
-					vitae eros sit amet tristique. Nullam scelerisque nunc enim, non dignissim nibh faucibus ullamcorper.
-					Fusce pulvinar libero vel ligula iaculis ullamcorper. Integer dapibus, mi ac tempor varius, purus
-					nibh mattis erat, vitae porta nunc nisi non tellus. Vivamus mollis ante non massa egestas fringilla.
-					Vestibulum egestas consectetur nunc at ultricies. Morbi quis consectetur nunc.
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
-					<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
+	<!-- MODAL COMENTÁRIO -->
+	@include('layouts._includes._modalComentario')
+	<!-- FIM MODAL COMENTÁRIO -->
+	
+	<!-- SESSÂO COMENTÁRIO -->
+	@include('layouts._includes._comentario')
+	<!-- FIM SESSÂO COMENTÁRIO  -->
+	
 	<!-- LISTAGEM DA ANTECIPAÇÃO  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -56,37 +45,43 @@
 							@foreach ($solicitacao->antecipacao as $key => $antecipacao)
 							<tr>
 								<td></td>
-								<td>{{date('d/m/y',strtotime($antecipacao->data_recebimento))}}</td>
+								<td>{{date('d-m-y',strtotime($antecipacao->data_recebimento))}}</td>
 								<td>{{$antecipacao->descricao}}</td>
 								<td>{{$antecipacao->valor}}</td>
 								<td class="acoesTD">
 									@role('FINANCEIRO')
-									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">ANEXO</button>
+									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#addComprovante{{$antecipacao->id}}">ANEXAR</button>
 									@endrole
-									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" {{$antecipacao->anexo_comprovante == null ? 'disabled' : ''}} 
-										onclick="{{$antecipacao->anexo_comprovante == null ? '' : 'openModal();currentSlide($key+1)'}}" >
+									@if($antecipacao->anexo_comprovante == null)
+									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" disabled>
 										<i class="material-icons">photo_library</i>
 									</a>
+									@else
+									
+									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key}})"  data-placement="top" title="VISUALIZAR COMPROVANTE" data-toggle="tooltip">
+										<i class="material-icons">photo_library</i>
+									</a>
+									@endif
 								</td>									
 							</tr>
-							<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+							<div class="modal fade" id="addComprovante{{$antecipacao->id}}" tabindex="-1" role="dialog">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h4 class="modal-title" id="defaultModalLabel">COMPROVANTE DE ENTREGA DA ANTECIPAÇÂO</h4>
+											<h4 class="modal-title" id="defaultModalLabel">COMPROVANTE DA ANTECIPAÇÃO</h4>
 										</div>
 										<div class="modal-body">
-											<form action="{{ route('antecipacao.addComprovante',$antecipacao->id)}}" method="POST" enctype="multipart/form-data">
+											<form action="{{ route('antecipacao.addComprovante',$solicitacao->id)}}" method="POST" enctype="multipart/form-data">
 												{{ csrf_field() }}
 												{{ method_field('PUT') }}
+												<input type="hidden" name="antecipacao_id" value="{{$antecipacao->id}}">
 												<div class="col-md-12">
-													<div class="form-group">
-														<div class="form-line">
-															<label for="anexo_comprovante">Envie um Arquivo</label>
-															<input type="file" name="anexo_comprovante" id="anexo_comprovante" required/>
-															<button type="reset" id="pseudoCancel">
-																Cancel
-															</button>
+													<div class="col-md-8">
+														<div class="form-group">
+															<div class="form-line">
+																<label style="margin-bottom: 20px" for="anexo_comprovante">Comprovante da Antecipação (jpeg,bmp,png)</label>
+																<input type="file" name="anexo_comprovante" id="anexo_comprovante" required/>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -102,7 +97,7 @@
 												</div>
 											</form>
 										</div>
-										
+
 									</div>
 								</div>
 							</div>
@@ -126,84 +121,11 @@
 			</div>
 			@endforeach														
 
-			<!-- <a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
-				<a class="next-2" onclick="plusSlides(1)">&#10095;</a> -->
+			<!-- <a class="prev-2" onclick="plusSlides(-1)">&#10094;</a> -->
+			<!-- <a class="next-2" onclick="plusSlides(1)">&#10095;</a> -->
 
 			</div>
 		</div>
 		<!-- FIM MODAL GALERIA -->
-
-		<!-- ANEXAR COMPROVANTE DE ANTECIPAÇÂO -->
-		<div class="row clearfix">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div class="card">
-					<div class="header">
-						<h2>
-							Preencha os campos abaixo com atenção
-						</h2>
-					</div>
-					<div class="body">
-						<form action="{{ route('antecipacao.addComprovante',$solicitacao->antecipacao->get(0)->id)}}" method="POST" enctype="multipart/form-data">
-							{{ csrf_field() }}
-							{{ method_field('PUT') }}
-							<div class="row clearfix">
-								<div class="col-md-2">
-									<div class="form-group">
-										<div class="form-line">
-											<label for="data_despesa">Data</label>
-											<input type="text" name="data_despesa" class="datepicker form-control" placeholder="Escolha uma Data" required />
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<label for="tipo_comprovante">Comprovante</label>
-									<select id="tipo_comprovante" name="tipo_comprovante" class="form-control show-tick" required>
-										<option value="HOSPEDAGEM">HOSPEDAGEM</option>
-										<option value="ALIMENTAÇÂO">ALIMENTAÇÃO</option>
-										<option value="TRANSPORTE">TRANSPORTE</option>
-									</select>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<div class="form-line">
-											<label for="descricao">Descrição</label>
-											<input type="text" name="descricao" class="form-control" placeholder="Deixe uma breve descrição" required/>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<div class="form-line">
-											<label for="valor_aprovado">Valor</label>
-											<input type="text" id="valor_aprovado" name="valor_aprovado" class="form-control" placeholder="R$." required/>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-12">
-									<div class="form-group">
-										<div class="form-line">
-											<label for="anexo_comprovante">Envie um Arquivo</label>
-											<input type="file" name="anexo_comprovante" id="anexo_comprovante" required/>
-											<button type="reset" id="pseudoCancel">
-												Cancel
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<div class="form-group">
-							<button class="btn btn-info">
-								<i class="material-icons">save</i>
-								<span>ADD DESPESA</span>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- FIM ANEXO COMPROVANTE DE ANTECIPAÇÂO -->
 	</section>
 	@endsection

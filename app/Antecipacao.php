@@ -20,12 +20,12 @@ class Antecipacao extends Model
         return $this->belongsTo('App\Solicitacao','solicitacoes_id');
     }
 
-    /** Consulta os comprovantes da Antecipacão
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    /** Consulta as Despesas da  solicitação
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-     public function antecipacao_comprovante()
+    public function despesa()
     {
-        return $this->hasMany('App\AntecipacaoComprovante','antecipacoes_id');
+        return $this->hasMany('App\Despesa','solicitacoes_id');
     }    
 
 }

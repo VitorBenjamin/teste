@@ -24,7 +24,7 @@ class AntecipacaoController extends Controller
 		$areas = AreaAtuacao::all('id','tipo');
 		$processos = Processo::all();
 		$clientes = Cliente::all('id','nome');
-        $solicitantes = Solicitante::all('id','nome');
+		$solicitantes = Solicitante::all('id','nome');
 		return view('antecipacao.cadastrar', compact('areas','processos','solicitantes','clientes'));
 	}
 
@@ -70,7 +70,7 @@ class AntecipacaoController extends Controller
 	{
 		$file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);
 		$img_64 = (string) $file->encode('data-url');
-		$antecipacao = Antecipacao::find($id);
+		$antecipacao = Antecipacao::find($request->antecipacao_id);
 
 		$antecipacao->update(['anexo_comprovante' => $img_64]);
 
@@ -82,6 +82,78 @@ class AntecipacaoController extends Controller
 
 	}
 
+	//Adcionar uma nova despesa a solicitação
+	public function addDespesa(Request $request,$id)
+	{
+		$solicitacao = Solicitacao::find($id);
+
+		$file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);
+		$img_64 = (string) $file->encode('data-url');
+		$despesa = Despesa::create(
+			[   
+				'descricao' => $request->descricao,
+				'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
+				'tipo_comprovante' => $request->tipo_comprovante,
+				'valor' => $request->valor,
+				'anexo_comprovante' => $img_64,
+				'solicitacoes_id' => $solicitacao->id,
+			]
+		);
+
+		\Session::flash('flash_message',[
+			'msg'=>"Cadastro da Despesa Realizado com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+
+		return redirect()->route('antecipacao.editar',$id);
+	}
+	public function editarDespesa($id)
+	{   
+		$despesa = Despesa::find($id);
+
+		return view('antecipacao.despesa', compact('despesa'));
+	}
+
+    //Atualiza uma Despesa e redireciona para a tela de edição da Solicitação
+	public function atualizarDespesa(Request $request,$id)
+	{   
+		$despesa = Despesa::find($id);
+		if ($request->hasFile('anexo_comprovante')) {
+			$file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);            
+			$img_64 = (string) $file->encode('data-url');
+		}else{
+			$img_64 = $despesa->anexo_comprovante;
+		}
+
+		$despesa->update(
+			[   
+				'descricao' => $request->descricao,
+				'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
+				'tipo_comprovante' => $request->tipo_comprovante,
+				'valor' => $request->valor,
+				'anexo_comprovante' => $img_64,
+			]
+		);
+
+		\Session::flash('flash_message',[
+			'msg'=>"Despesa Atualizada com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+		return redirect()->route('antecipacao.editar', $despesa->solicitacoes_id);
+	}
+    //Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
+	public function deletarDespesa($id)
+	{
+
+		$despesa = Despesa::find($id);
+		$s_id = $despesa->solicitacoes_id;
+		$despesa->delete();
+		\Session::flash('flash_message',[
+			'msg'=>"Despesas Removida com Sucesso!!!",
+			'class'=>"alert bg-red alert-dismissible"
+		]);
+		return redirect()->route('antecipacao.editar',$s_id);       
+	}
 	public function analisar($id)
 	{
 
@@ -98,7 +170,7 @@ class AntecipacaoController extends Controller
 		$solicitacao = $soli;
 		$areas = AreaAtuacao::all('id','tipo'); 
 		$clientes = Cliente::all('id','nome');
-        $solicitantes = Solicitante::all('id','nome');
+		$solicitantes = Solicitante::all('id','nome');
 
 		return view('antecipacao.editar', compact('solicitacao','clientes','areas','solicitantes'));
 	}

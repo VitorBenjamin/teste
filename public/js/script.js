@@ -41,7 +41,7 @@ $(document).ready(function () {
     source: function(query, result)
     {
      $.ajax({
-      url: "/mosello-oficial/public/ajax/processo",
+      url: "/ajax/processo",
       method:"GET",
       data:{query:query},
       dataType:"json",

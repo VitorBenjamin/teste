@@ -107,12 +107,11 @@
                             </thead>
                             <tbody>
                                 @foreach ($abertas->solicitacao as $aberto)
-                                
                                 <tr>
                                     <td></td>
                                     <td>{{ $aberto->id }}</td>
-                                    <td>{{ date('d/m/y',strtotime($aberto->created_at)) }}</td>
-                                    <!-- <td>{{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> -->
+                                    <td>{{ date('d-m-y',strtotime($aberto->created_at)) }}</td>
+                                <!-- <td> {{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }} </td> -->
                                     <td class="teste">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                     <td>{{ $aberto->tipo }}</td>
                                     <td>{{ $aberto->solicitante->nome }}</td>
@@ -135,6 +134,7 @@
                         </table>
                     </div>
                     <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
+                    
                     <!-- LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
                     <div id="andamento" class="tab-pane fade in" role="tabpanel">
                         <h1 class="visible-xs" style="text-align: center"> ANDAMENTO </h1>
@@ -157,7 +157,7 @@
                                 <tr>
                                     <td></td>
                                     <td>{{ $andamento->id }}</td>
-                                    <td>{{ date('d/m/y',strtotime($andamento->created_at)) }}</td>
+                                    <td>{{ date('d-m-y',strtotime($andamento->created_at)) }}</td>
                                     <td class="teste">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
                                     <td>{{ $andamento->tipo }}</td>
                                     <td>{{ $andamento->solicitante->nome }}</td>
@@ -200,7 +200,7 @@
                                 <tr>
                                     <td></td>
                                     <td>{{ $aprovado->id }}</td>
-                                    <td>{{ date('d/m/y',strtotime($aprovado->created_at)) }}</td>
+                                    <td>{{ date('d-m-y',strtotime($aprovado->created_at)) }}</td>
                                     <td>{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
                                     <td>{{ $aprovado->tipo }}</td>
                                     <td>{{ $aprovado->solicitante->nome }}</td>
@@ -243,7 +243,7 @@
                                 <tr>
                                     <td></td>
                                     <td>{{ $reprovado->id }}</td>
-                                    <td>{{ date('d/m/y',strtotime($reprovado->created_at)) }}</td>
+                                    <td>{{ date('d-m-y',strtotime($reprovado->created_at)) }}</td>
                                     <td>{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
                                     <td>{{ $reprovado->tipo }}</td>
                                     <td>{{ $reprovado->solicitante->nome }}</td>
@@ -286,7 +286,7 @@
                                 <tr>
                                     <td></td>
                                     <td>{{ $devolvida->id }}</td>
-                                    <td>{{ date('d/m/y',strtotime($devolvida->created_at)) }}</td>
+                                    <td>{{ date('d-m-y',strtotime($devolvida->created_at)) }}</td>
                                     <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                     <td>{{ $devolvida->tipo }}</td>
                                     <td>{{ $devolvida->solicitante->nome }}</td>
@@ -331,7 +331,7 @@
                                 <tr>
                                     <td></td>
                                     <td>{{ $finalizado->id }}</td>
-                                    <td>{{ date('d/m/y',strtotime($finalizado->created_at)) }}</td>
+                                    <td>{{ date('d-m-y',strtotime($finalizado->created_at)) }}</td>
                                     <td>{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
                                     <td>{{ $finalizado->tipo }}</td>
                                     <td>{{ $finalizado->solicitante->nome }}</td>

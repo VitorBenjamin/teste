@@ -117,6 +117,10 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
         Route::get('deletar-antecipacao/{id}', ['uses' => 'AntecipacaoController@deletarAntecipacao', 'as' => 'antecipacao.deletarAntecipacao']);
         Route::get('editar-antecipacao/{id}', ['uses' => 'AntecipacaoController@verificarSolicitacao', 'as' => 'antecipacao.editar']);
         Route::put('atualizar-antecipacao/{id}', ['uses' => 'AntecipacaoController@atualizarAntecipacao', 'as' => 'antecipacao.atualizarAntecipacao']);
+        Route::put('add-despesa/{id}', ['uses' => 'AntecipacaoController@addDespesa', 'as' => 'antecipacao.addDespesa']);
+        Route::put('atualizar-despesa/{id}', ['uses' => 'AntecipacaoController@atualizarDespesa', 'as' => 'antecipacao.atualizarDespesa']);
+        Route::get('deletar-despesa/{id}', ['uses' => 'AntecipacaoController@deletarDespesa', 'as' => 'antecipacao.deletarDespesa']);
+        Route::get('editar-despesa/{id}', ['uses' => 'AntecipacaoController@editarDespesa', 'as' => 'antecipacao.editarDespesa']);
         
 
 

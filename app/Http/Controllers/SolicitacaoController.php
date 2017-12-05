@@ -45,18 +45,27 @@ class SolicitacaoController extends Controller
 
 		$solicitacao = Solicitacao::find($id);
 		$status = $solicitacao->status[0]->descricao;
-		
+		$repo = new SolicitacaoRepository();
+		$limites = auth()->user()->limites;
 		if ($status == config('constantes.status_devolvido')) 
 		{
 			$andamento = Status::where('descricao', config('constantes.status_andamento_recorrente'))->first();
 
 		} elseif ($status == config('constantes.status_coordenador_aberto')) {
 			
-			$andamento = Status::where('descricao', config('constantes.status_coordenador_aprovado'))->first();
+			if (!$repo->teste($solicitacao,$limites)) {
+				$andamento = Status::where('descricao', config('constantes.status_coordenador_andamento'))->first();
+			} else {
+				$andamento = Status::where('descricao', config('constantes.status_coordenador_aprovado'))->first();
+			}
 
 		} elseif ($status == config('constantes.status_coordenador_aberto2')) {
 			
-			$andamento = Status::where('descricao', config('constantes.status_coordenador_aprovado2'))->first();
+			if ($repo->teste($solicitacao,$limites)) {
+				$andamento = Status::where('descricao', config('constantes.status_coordenador_andamento2'))->first();
+			} else {
+				$andamento = Status::where('descricao', config('constantes.status_coordenador_aprovado2'))->first();
+			}
 
 		} elseif ($solicitacao->tipo == "COMPRA"){
 			
@@ -161,7 +170,7 @@ class SolicitacaoController extends Controller
 		$status = $solicitacao->status[0]->descricao;
 		if ($status == config('constantes.status_aprovado_etapa2') || $status == config('constantes.status_coordenador_aprovado2')) {
 			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();
-		}elseif ($solicitacao->tipo == "VIAGEM" || $solicitacao->tipo == "ANTECIPAÇÂO" ) {			
+		}elseif ($solicitacao->tipo == "VIAGEM" || $solicitacao->tipo == "ANTECIPAÇÃO" ) {			
 			if ($status == config('constantes.status_coordenador_aprovado')) {
 				$finalizar = Status::where('descricao', config('constantes.status_coordenador_aberto2'))->first();
 			} else {

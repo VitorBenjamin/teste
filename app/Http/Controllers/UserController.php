@@ -16,25 +16,30 @@ class UserController extends Controller
 
 	public function index()
 	{
-		//dd(Auth::user()->limites[0]->unidades);
-		//dd(Auth::user()->hasRole(config('constantes.user_advogado')));
+		
 		if (Auth::user()->hasRole(config('constantes.user_advogado'))) {
-			//dd(Auth::user()->hasRole(config('constantes.user_advogado')));
-			//return $this->advogadoDash();
-			return redirect()->route('user.advogadoDash');
+
+			$dash = redirect()->route('user.advogadoDash');
 		} elseif (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
 			
-			//return $this->coordenadorDash();
-			return redirect()->route('user.coordenadorDash');
+			$dash = redirect()->route('user.coordenadorDash');
 		} elseif (Auth::user()->hasRole(config('constantes.user_financeiro'))) {
 			
-			//return $this->coordenadorDash();
-			return redirect()->route('user.financeiroDash');
-		}elseif (Auth::user()->hasRole(config('constantes.user_administrativo'))) {
+			$dash = redirect()->route('user.financeiroDash');
+		} elseif (Auth::user()->hasRole(config('constantes.user_administrativo'))) {
 			
-			//return $this->coordenadorDash();
-			return redirect()->route('user.administrativoDash');
+			$dash = redirect()->route('user.administrativoDash');
 		}
+		
+		if(\Session::has('flash_message')){
+
+			\Session::flash('flash_message',[
+				'msg'=>\Session::get('flash_message')['msg'],
+				'class'=>"alert bg-green alert-dismissible"
+
+			]);
+		}
+		return $dash;
 	}
 
 	public function advogadoDash()
@@ -67,7 +72,10 @@ class UserController extends Controller
 		$finalizadas = $repo->getSolicitacaoAdvogado(config('constantes.status_finalizado'));	
 		$reprovados = $repo->getSolicitacaoAdvogado(config('constantes.status_reprovado'));
 		$devolvidas = $repo->getSolicitacaoAdvogado(config('constantes.status_devolvido'));
-
+		$devolvidas_etapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_devolvido_etapa2'));
+		if ($devolvidas_etapa2 !=null) {
+			$devolvidas=$this->pushSolicitacao($devolvidas,$devolvidas_etapa2);
+		}
 		return view('dashboard.advogado',compact('abertas','andamentos','aprovadas','reprovados','devolvidas','finalizadas'));
 	}
 
@@ -91,12 +99,41 @@ class UserController extends Controller
 		if ($abertas2 !=null) {
 			$abertas =$this->pushSolicitacao($abertas,$abertas2);			
 		}
+		$coordenador_andamento = $repo->getSolicitacaoCoordenador(config('constantes.status_coordenador_andamento'));
+		
+		if ($coordenador_andamento !=null) {
+			$abertas =$this->pushSolicitacao($abertas,$coordenador_andamento);			
+		}
+		$coordenador_andamento2 = $repo->getSolicitacaoCoordenador(config('constantes.status_coordenador_andamento2'));
+		
+		if ($coordenador_andamento2 !=null) {
+			$abertas =$this->pushSolicitacao($abertas,$coordenador_andamento2);			
+		}
+
+		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_coordenador_andamento'));
+		$andamentos2 = $repo->getSolicitacaoAdvogado(config('constantes.status_coordenador_andamento2'));
+		if ($andamentos !=null) {
+			$andamentos=$this->pushSolicitacao($andamentos,$andamentos2);
+		}
+		$recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_recorrente'));
+		$andamento_recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_recorrente'));
+
+		if ($recorrente !=null) {
+			$andamentos=$this->pushSolicitacao($andamentos,$recorrente);
+		}
+		if ($andamento_recorrente !=null) {
+			$andamentos=$this->pushSolicitacao($andamentos,$andamento_recorrente);
+		}
 
 		$aprovadas = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado'));
 
 		$coordenador_aprovado = $repo->getSolicitacaoAdvogado(config('constantes.status_coordenador_aprovado'));
 		if ($coordenador_aprovado !=null) {
 			$aprovadas = $this->pushSolicitacao($aprovadas,$coordenador_aprovado);			
+		}
+		$coordenador_aprovado2 = $repo->getSolicitacaoAdvogado(config('constantes.status_coordenador_aprovado2'));
+		if ($coordenador_aprovado2 !=null) {
+			$aprovadas = $this->pushSolicitacao($aprovadas,$coordenador_aprovado2);			
 		}
 
 		$aprovado_etapa2 = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado_etapa2'));
@@ -127,7 +164,7 @@ class UserController extends Controller
 		if ($finalizadas_meu !=null) {
 			$finalizadas = $this->pushSolicitacao($recorrentes,$finalizadas_meu);			
 		}
-		return view('dashboard.coordenador',compact('abertas','aprovadas','reprovados','devolvidas','recorrentes','finalizadas','meus'));
+		return view('dashboard.coordenador',compact('abertas','andamentos','aprovadas','reprovados','devolvidas','recorrentes','finalizadas','meus'));
 	}
 	public function financeiroDash()
 	{

@@ -29,6 +29,8 @@ return [
 	'status_aprovado_financeiro' => 'APROVADO-FINANCEIRO',
 	'status_recorrente_financeiro' => 'RECORRENTE-FINANCEIRO',
 	'status_coordenador_aberto' => 'COORDENADOR-ABERTO',
+	'status_coordenador_andamento' => 'COORDENADOR-ANDAMENTO',
+	'status_coordenador_andamento2' => 'COORDENADOR-ANDAMENTO2',
 	'status_coordenador_aprovado' => 'COORDENADOR-APROVADO',
 	'status_coordenador_aberto2' => 'COORDENADOR-ABERTO2',
 	'status_coordenador_aprovado2' => 'COORDENADOR-APROVADO2',

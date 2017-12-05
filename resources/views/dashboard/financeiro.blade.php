@@ -82,7 +82,7 @@
                                     <tr>
                                         <td></td>
                                         <td>{{ $aberto->id }}</td>
-                                        <td>{{ date('d/m/y',strtotime($aberto->created_at)) }}</td>
+                                        <td>{{ date('d-m-y',strtotime($aberto->created_at)) }}</td>
                                         <!-- <td>{{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> -->
                                         <td>{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
@@ -129,7 +129,7 @@
                                     <tr>
                                         <td></td>
                                         <td>{{ $finalizada->id }}</td>
-                                        <td>{{ date('d/m/y',strtotime($finalizada->created_at)) }}</td>
+                                        <td>{{ date('d-m-y',strtotime($finalizada->created_at)) }}</td>
                                         <td>{{ $finalizada->cliente == null ? 'MOSELLO LIMA' : $finalizada->cliente->nome }}</td>
                                         <td>{{ $finalizada->tipo }}</td>
                                         <td>{{ $finalizada->solicitante->nome }}</td>
@@ -169,7 +169,7 @@
                                     <tr>
                                         <td></td>
                                         <td>{{ $devolvida->id }}</td>
-                                        <td>{{ date('d/m/y',strtotime($devolvida->created_at)) }}</td>
+                                        <td>{{ date('d-m-y',strtotime($devolvida->created_at)) }}</td>
                                         <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
                                         <td>{{ $devolvida->solicitante->nome }}</td>
@@ -210,7 +210,7 @@
                                     <tr>
                                         <td></td>
                                         <td>{{ $recorrente->id }}</td>
-                                        <td>{{ date('d/m/y',strtotime($recorrente->created_at)) }}</td>
+                                        <td>{{ date('d-m-y',strtotime($recorrente->created_at)) }}</td>
                                         <td>{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
                                         <td>{{ $recorrente->solicitante->nome }}</td>

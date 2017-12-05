@@ -11,63 +11,12 @@
 	<!-- FIM CABEÇALHO PADRAO -->
 
 	<!-- MODAL COMENTÁRIO -->
-	<div class="modal fade" id="modalDevolver" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="largeModalLabel">DESEJA DEVOLVER ESSA SOLICITAÇÂO?</h4>
-				</div>
-				<!-- INCIO SESSÃO DESPESA -->
-				<div class="modal-body">
-					<form action="{{ route('solicitacao.devolver',$solicitacao->id)}}" method="POST" enctype="multipart/form-data">
-						{{ csrf_field() }}
-						{{ method_field('PUT') }}
-						<div class="body">
-							<div class="row clearfix">
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-									<div class="card">
-										<div class="header">
-											<h2>
-												Deixe uma Observação 
-											</h2>
-										</div>
-										<div class="body">
-											<div class="row clearfix">
-												<div class="col-md-12">
-													<div class="form-group">
-														<div class="form-line">
-															<label for="comentario">Observação</label>
-															<textarea name="comentario" class="form-control" placeholder="..." required></textarea>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<div class="form-group">
-												<button class="btn btn-info">
-													<i class="material-icons">replay</i>
-													<span>DEVOLVER</span>
-												</button>
-											</div>
-											<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
-											<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- FIM SESSÃO DESPESA -->
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>	
+	@include('layouts._includes._modalComentario')
 	<!-- FIM MODAL COMENTÁRIO -->
 	
-	<!-- LISTAGEM DA VIAGEM  -->
+	<!-- SESSÂO COMENTÁRIO -->
 	@include('layouts._includes._comentario')
-	<!-- FIM LISTAGEM DA VIAGEM  -->
+	<!-- FIM SESSÂO COMENTÁRIO  -->
 	
 	<!-- LISTAGEM DA VIAGEM  -->
 	<div class="row clearfix">
@@ -99,16 +48,16 @@
 							<tr>
 								<td></td>
 								<td>{{$viagem->origem}}</td>
-								<td>{{date('d-m-y H:m',strtotime($viagem->data_ida))}}</td>
+								<td>{{date('d-m-y H:i',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
-								<td>{{date('d-m-y H:m',strtotime($viagem->data_volta))}}</td>
+								<td>{{date('d-m-y H:i',strtotime($viagem->data_volta))}}</td>
 								<td>{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$viagem->bagagem == 1 ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$viagem->kg}}</td>
 								<td>{{$viagem->locacao == 1 ? 'SIM' : 'NÃO'}}</td>
 
 								<td class="acoesTD">
-									@role('FINANCEIRO')
+									@role('ADMINISTRATIVO')
 									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#addComprovante{{$viagem->id}}">ANEXAR</button>
 									@endrole
 									@if($viagem->viagens_comprovantes_id == null)
@@ -287,6 +236,7 @@
 								<td>{{$despesa->valor}}</td>
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
+										@if($solicitacao->status[0]->descricao == "ABERTO-ETAPA2" || $solicitacao->status[0]->descricao == "DEVOLVIDO-ETAPA2")
 										<a href="{{ route('viagem.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
 											<i class="material-icons">settings</i>
 										</a>
@@ -294,6 +244,7 @@
 										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('viagem.deletarDespesa',$despesa->id)}}">
 											<i class="material-icons">delete_sweep</i>
 										</a>
+										@endif
 										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key2}})">
 											<i class="material-icons">photo_library</i>
 										</a>

@@ -7,7 +7,7 @@
 	<div class="block-header">
 		<h2>Atualização da Despesa</h2>
 	</div>
-	<form action="{{ route('reembolso.atualizarDespesa',$despesa->id)}}" method="POST" enctype="multipart/form-data">
+	<form action="{{ route('viagem.atualizarDespesa',$despesa->id)}}" method="POST" enctype="multipart/form-data">
 		{{ csrf_field() }}
 		{{ method_field('PUT') }}
 		<div class="body">
@@ -65,9 +65,6 @@
 										<div class="form-line">
 											<label for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>
 											<input type="file" name="anexo_comprovante" id="anexo_comprovante"/>
-											<button type="reset" id="pseudoCancel">
-												Cancel
-											</button>
 										</div>
 									</div>								
 								</div>											

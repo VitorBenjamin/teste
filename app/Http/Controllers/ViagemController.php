@@ -173,7 +173,6 @@ class ViagemController extends Controller
         ]);
         return redirect()->route('viagem.editar',$id);
     }
-    //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
     
     public function editarDespesa($id)
     {   
@@ -209,7 +208,7 @@ class ViagemController extends Controller
         ]);
         return redirect()->route('viagem.editar', $despesa->solicitacoes_id);
     }
-//Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
+    //Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
     public function deletarDespesa($id)
     {
 
