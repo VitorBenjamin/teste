@@ -56,7 +56,8 @@
 											R$
 										</span>
 										<div class="form-line">
-											<input type="numeric" id="valor" name="valor" class="form-control valor" value="{{$despesa->valor}}" required/>
+											<input type="numeric" name="valor" style="text-align:right" name="valor" class="form-control" size="11"  value="{{$despesa->valor}}" onKeyUp="moeda(this);" required>
+											<!-- <input type="numeric" id="valor" name="valor" class="form-control valor" value="{{$despesa->valor}}" required/> -->
 										</div>
 									</div>							
 								</div>
@@ -65,9 +66,6 @@
 										<div class="form-line">
 											<label for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>
 											<input type="file" name="anexo_comprovante" id="anexo_comprovante"/>
-											<button type="reset" id="pseudoCancel">
-												Cancel
-											</button>
 										</div>
 									</div>								
 								</div>											

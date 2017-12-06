@@ -33,7 +33,7 @@ class User extends Authenticatable
      */
      public function unidades()
     {
-        return $this->belongsTo('App\Unidades','unidades_id');
+        return $this->belongsTo('App\Unidade','unidades_id');
     } 
     
     /** Consulta a unidade do usuário

@@ -67,7 +67,7 @@
                             <fieldset>
                                 <div class="form-group form-float">
                                     <label for="area_atuacoes_id">Área de Origem</label>
-                                    <select id="area_atuacoes_id" name="area_atuacoes_id" data-container="body" class="form-control show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" required>
+                                    <select id="area_atuacoes_id" name="area_atuacoes_id" class="form-control show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" required>
                                         <option value="">SELECIONE</option>
                                         @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">{{ $area->tipo }}</option>
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <label for="unidades_id">Unidade e Origem</label>
-                                    <select id="unidades_id" name="unidades_id" data-container="body" class="form-control show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" required>
+                                    <select id="unidades_id" name="unidades_id" class="form-control show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" required>
                                         <option value="">SELECIONE</option>
                                         @foreach ($unidades as $unidade)
                                         <option value="{{ $unidade->id }}">{{ $unidade->localidade }}</option>
@@ -111,7 +111,7 @@
                                 <div class="row clearfix">
                                     <div class="col-md-6">
                                         <label for="area_atuacoes_limite">Área de Atendimento</label>
-                                        <select id="area_atuacoes_limite" name="area_atuacoes_limite[]" data-container="body" class="form-control show-tick" data-dropup-auto="false" multiple data-actions-box="true"  data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado">
+                                        <select id="area_atuacoes_limite" name="area_atuacoes_limite[]" class="form-control show-tick" data-dropup-auto="false" multiple data-actions-box="true"  data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado">
                                             @foreach ($areas as $area)
                                             <option value="{{ $area->id }}">{{ $area->tipo }}</option>
                                             @endforeach
@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="unidades_limite">Unidades de Coordenação</label>
-                                        <select id="unidades_limite" name="unidades_limite[]" data-container="body" class="form-control show-tick" data-dropup-auto="false" multiple data-actions-box="true"  data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado">
+                                        <select id="unidades_limite" name="unidades_limite[]" class="form-control show-tick" data-dropup-auto="false" multiple data-actions-box="true"  data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado">
                                             @foreach ($unidades as $unidade)
                                             <option value="{{ $unidade->id }}">{{ $unidade->localidade }}</option>
                                             @endforeach
@@ -160,9 +160,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </fieldset>
-                    </form>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

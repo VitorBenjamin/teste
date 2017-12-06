@@ -1,92 +1,108 @@
 ﻿//Deixa todas os inputs UpperCase
 
 $(function() {
-  $('input:text').keyup(function() {
-    this.value = this.value.toLocaleUpperCase()
-  });
-  $('.show-tick').selectpicker({
-    noneResultsText: 'Nenhum Resultado Encontrado',
-    deselectAllText:'DESELECIONAR TODOS',
-    selectAllText: 'SELECIONAR TODOS'
-  });
+    $('input:text').keyup(function() {
+        this.value = this.value.toLocaleUpperCase()
+    });
+    $('.show-tick').selectpicker({
+        noneResultsText: 'Nenhum Resultado Encontrado',
+        deselectAllText:'DESELECIONAR TODOS',
+        selectAllText: 'SELECIONAR TODOS'
+    });
 
 });
 $( window ).load(function() {
 
-  var value = $('#origem_despesa').val();
+    var value = $('#origem_despesa').val();
 
-  if (value == "ESCRITÓRIO") {
+    if (value == "ESCRITÓRIO") {
 
-   $('#label').css("color","#ded5d5");
-   $('#cliente').selectpicker('deselectAll');
-   $('#cliente').selectpicker('hide');
-   $('#cliente').selectpicker('refresh');
+        $('#label').css("color","#ded5d5");
+        $('#cliente').selectpicker('deselectAll');
+        $('#cliente').selectpicker('hide');
+        $('#cliente').selectpicker('refresh');
 
- }else{
-  $('#cliente').attr('required', true);
- }
+    }else{
+      $('#cliente').attr('required', true);
+  }
     //$('.js-basic-example').DataTable().responsive.recalc();
     //console.log($('.js-basic-example').DataTable().responsive.recalc());
-  });
+});
 
+function moeda(z)
+{     
+    v = z.value;    
+    v=v.replace(/\D/g,"")  
+    //permite digitar apenas números  
+    v=v.replace(/[0-9]{12}/,"inválido")   
+    //limita pra máximo 999.999.999,99  
+    // v=v.replace(/(\d{1})(\d{8})$/,"$1.$2") 
+    //coloca ponto antes dos últimos 8 digitos  
+    // v=v.replace(/(\d{1})(\d{5})$/,"$1.$2")  
+    //coloca ponto antes dos últimos 5 digitos
+    v=v.replace(/(\d{1})(\d{1,2})$/,"$1.$2")  
+    //coloca virgula antes dos últimos 2 digitos    
+    z.value = v;  
+}
 $(document).ready(function () {
 
-  $("a[data-toggle=\"tab\"]").on("shown.bs.tab", function (e) {
-    $($.fn.dataTable.tables(true)).DataTable()
-    .columns.adjust()
-    .responsive.recalc();
-  });
+    $("a[data-toggle=\"tab\"]").on("shown.bs.tab", function (e) {
+        $($.fn.dataTable.tables(true)).DataTable()
+        .columns.adjust()
+        .responsive.recalc();
+    });
 
-  $('#processo').typeahead({
-    source: function(query, result)
-    {
-     $.ajax({
-      url: "/ajax/processo",
-      method:"GET",
-      data:{query:query},
-      dataType:"json",
-      success:function(data)
-      {
-       result($.map(data, function(item){
-        return item;
-      }));
-     }
-   })
-   }
- });
+    $('#processo').typeahead({
+        source: function(query, result)
+        {
+            $.ajax(
+            {
+                url: "/ajax/processo",
+                method:"GET",
+                data:{query:query},
+                dataType:"json",
+                success:function(data)
+                {
+                    result($.map(data, function(item){
+                        return item;
+                    }));
+                }
+            })
+        }
+    });
 
 });
 
 //Desativa o select de CLIENTES Caso Origem da despesa seja = Escritório
 $('#contrato').change(function() {
-  var value = $(this).val();
-  if (value =="CONTENSIOSO") {
-    $('#processo').attr('required', true);
-  }else{
-    $('#processo').removeAttr('required', false);
-  }
+    var value = $(this).val();
+    if (value =="CONTENSIOSO") {
+        $('#processo').attr('required', true);
+    }else{
+        $('#processo').removeAttr('required', false);
+    }
 });
 $('#origem_despesa').change(function() {
 
-  var value = $(this).val();
+    var value = $(this).val();
 
-  if (value == "ESCRITÓRIO") {
-    $('#label').css("color","#ded5d5");
+    if (value == "ESCRITÓRIO") {
+        $('#label').css("color","#ded5d5");
 
-      // $('#clientes').closest('label').addClass("red2");
-   //console.log('ghjhgjgj');
-  // $('#clientes').attr("disabled", true);
-  $('#cliente').selectpicker('deselectAll');
-  $('#cliente').removeAttr('required', false);
-  $('#cliente').selectpicker('hide');
-  $('#cliente').selectpicker('refresh');
+        // $('#clientes').closest('label').addClass("red2");
+    //console.log('ghjhgjgj');
+    // $('#clientes').attr("disabled", true);
+    $('#cliente').selectpicker('deselectAll');
+    $('#cliente').removeAttr('required', false);
+    $('#cliente').selectpicker('hide');
+    $('#cliente').selectpicker('refresh');
 
 }else{
-  $('#label').css("color","#555"); 
-  $('#cliente').removeAttr('disabled',false);
-  $('#cliente').selectpicker('show');
-  $('#cliente').attr('required', true);
-  $('#cliente').selectpicker('refresh');
+    $('#label').css("color","#555"); 
+    $('#cliente').removeAttr('disabled',false);
+    $('#cliente').selectpicker('show');
+    $('#cliente').attr('required', true);
+    $('#cliente').selectpicker('refresh');
 
 
 
@@ -98,7 +114,7 @@ $('#origem_despesa').change(function() {
 //Ajax para trazer os clientes
 $('#solicitantes')
 .selectpicker({
-  liveSearch: true
+    liveSearch: true
 })
 .ajaxSelectPicker({
   ajax: {
@@ -107,17 +123,17 @@ $('#solicitantes')
     data: function () {
       var params = {
         q: '{{{q}}}'
-      };
-    }
-  },
-  locale: {
+    };
+}
+},
+locale: {
     emptyTitle: 'Buscar Por Solicitantes...',
     statusInitialized: 'Digite para Buscar',
     statusNoResults: 'Nenhum Resultado',
     statusSearching: 'Buscando',
     searchPlaceholder: 'Buscar...'
-  },
-  preprocessData: function(data){
+},
+preprocessData: function(data){
     var solicitantes = [];
     if(data.hasOwnProperty('solicitantes')){
       var len = data.solicitantes.length;
@@ -132,19 +148,19 @@ $('#solicitantes')
                             //     // 'subtext': 'Internal'
                             // },
                             'disabled': false
-                          }
-                          );
-      }
+                        }
+                        );
     }
-    return solicitantes;
-  },
-  preserveSelected: false
+}
+return solicitantes;
+},
+preserveSelected: false
 });
 
 //Ajax para trazer os clientes
 $('#clientes')
 .selectpicker({
-  liveSearch: true
+    liveSearch: true
 })
 .ajaxSelectPicker({
   ajax: {
@@ -153,18 +169,18 @@ $('#clientes')
     data: function () {
       var params = {
         q: '{{{q}}}'
-      };
-    }
-  },
-  locale: {
+    };
+}
+},
+locale: {
     emptyTitle: 'Buscar Por Clientes...',
     statusInitialized: 'Digite para Buscar',
     statusNoResults: 'Nenhum Resultado',
     statusSearching: 'Buscando',
     searchPlaceholder: 'Buscar...'
 
-  },
-  preprocessData: function(data){
+},
+preprocessData: function(data){
     var clientes = [];
     if(data.hasOwnProperty('clientes')){
       var len = data.clientes.length;
@@ -179,14 +195,14 @@ $('#clientes')
                             //     // 'subtext': 'Internal'
                             // },
                             'disabled': false
-                          }
-                          );
-      }
+                        }
+                        );
     }
-    return clientes;
-  },
-  preserveSelected: false,
-  langCode: 'pt-BR'
+}
+return clientes;
+},
+preserveSelected: false,
+langCode: 'pt-BR'
 });
 
 function openModal() {
@@ -217,11 +233,11 @@ function showSlides(n) {
     if (n < 1) {slideIndex = slides.length}
       for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
-      }
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " active";
-      captionText.innerHTML = dots[slideIndex-1].alt;
     }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex-1].style.display = "block";
+    dots[slideIndex-1].className += " active";
+    captionText.innerHTML = dots[slideIndex-1].alt;
+}

@@ -41,13 +41,7 @@ class SolicitacaoRepository
             }
         }
         $solicitacao = Solicitacao::create($data);
-        if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
-            $status = Status::where('descricao',config('constantes.status_coordenador_aberto'))->first();
-
-        }else {
-            $status = Status::where('descricao',config('constantes.status_aberto'))->first();
-
-        }
+        $status = Status::where('descricao',config('constantes.status_aberto'))->first();
         $solicitacao->status()->attach($status);
 
         return $solicitacao;
@@ -231,7 +225,7 @@ class SolicitacaoRepository
         }
 
     }
-    public function teste($s, $limites)
+    public function verificaLimite($s, $limites)
     {
         $temp = 0;
         if ($s->tipo=="REEMBOLSO") 
@@ -429,7 +423,7 @@ class SolicitacaoRepository
                 $total += $viagem->comprovante->custo_hospedagem;
                 $total += $viagem->comprovante->custo_locacao;
             }
-            
+
         }
     //dd($viagens->despesa);
 

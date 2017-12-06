@@ -90,7 +90,7 @@
 											R$
 										</span>
 										<div class="form-line">
-											<input type="text" value="{{$guia->valor}}" name="valor" class="form-control" placeholder="R$." required/>
+											<input type="numeric" name="valor" style="text-align:right" name="valor" class="form-control" size="11"  value="{{$guia->valor}}" onKeyUp="moeda(this);" required>
 										</div>
 									</div>
 								</div>

@@ -88,275 +88,275 @@
                         </li>
                     </ul>
                     <div class="tab-content">
+
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
-
                         <div id="aberto" class="tab-pane fade in active" role="tabpanel">
-                         <h1 class="visible-xs" style="text-align: center"> ABERTO </h1>
-                         <table id="aberto" class="table table-bordered table-striped table-hover dataTable js-basic-example">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th>Data</th>
-                                    <th>Cliente</th>
-                                    <th>Tipo</th>
-                                    <th>Solicitante</th>
-                                    <th>Valor</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($abertas->solicitacao as $aberto)
-                                <tr>
-                                    <td></td>
-                                    <td>{{ $aberto->id }}</td>
-                                    <td>{{ date('d-m-y',strtotime($aberto->created_at)) }}</td>
-                                <!-- <td> {{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }} </td> -->
-                                    <td class="teste">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
-                                    <td>{{ $aberto->tipo }}</td>
-                                    <td>{{ $aberto->solicitante->nome }}</td>
-                                    <td>R$ {{ $aberto->total }}</td>
-                                    <td class="acoesTD">
-                                        <div class="icon-button-demo" >
-                                            <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($aberto->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aberto->tipo).'.editar', $aberto->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$aberto->tipo}}">
-                                                <i class="material-icons">settings</i>
-                                            </a>
-                                            <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$aberto->id}}" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$aberto->tipo}}">
-                                                <i class="material-icons">delete_sweep</i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach                                                     
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
-                    
-                    <!-- LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
-                    <div id="andamento" class="tab-pane fade in" role="tabpanel">
-                        <h1 class="visible-xs" style="text-align: center"> ANDAMENTO </h1>
-                        <table id="andamento" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th>Data</th>
-                                    <th>Cliente</th>
-                                    <th>Tipo</th>
-                                    <th>Solicitante</th>
-                                    <th>Valor</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($andamentos->solicitacao as $andamento)
-                                
-                                <tr>
-                                    <td></td>
-                                    <td>{{ $andamento->id }}</td>
-                                    <td>{{ date('d-m-y',strtotime($andamento->created_at)) }}</td>
-                                    <td class="teste">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
-                                    <td>{{ $andamento->tipo }}</td>
-                                    <td>{{ $andamento->solicitante->nome }}</td>
-                                    <td>R$ {{ $andamento->total }}</td>
-                                    <td class="acoesTD">
-                                        <div class="icon-button-demo" >
-                                            <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($andamento->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $andamento->tipo).'.analisar', $andamento->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$andamento->tipo}}">
-                                                <i class="material-icons">search</i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach                                                     
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
-                    
-                    <!-- LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
-                    <div id="aprovado" class="tab-pane fade in" role="tabpanel">
-                        <h1 class="visible-xs" style="text-align: center"> APROVADO </h1>
-                        <table id="aprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th>Data</th>
-                                    <th>Cliente</th>
-                                    <th>Tipo</th>
-                                    <th>Solicitante</th>
-                                    <th>Valor</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($aprovadas->solicitacao as $aprovado)
-                                
-                                <tr>
-                                    <td></td>
-                                    <td>{{ $aprovado->id }}</td>
-                                    <td>{{ date('d-m-y',strtotime($aprovado->created_at)) }}</td>
-                                    <td>{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
-                                    <td>{{ $aprovado->tipo }}</td>
-                                    <td>{{ $aprovado->solicitante->nome }}</td>
-                                    <td>R$ {{ $aprovado->total }}</td>
-                                    <td class="acoesTD">
-                                        <div class="icon-button-demo" >
-                                            <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($aprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aprovado->tipo).'.analisar', $aprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$aprovado->tipo}}">
-                                                <i class="material-icons">search</i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach                                                     
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
-                    
-                    <!-- LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
-                    <div id="reprovado" class="tab-pane fade in" role="tabpanel">
-                        <h1 class="visible-xs" style="text-align: center"> REPROVADO </h1>
-                        <table id="reprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th>Data</th>
-                                    <th>Cliente</th>
-                                    <th>Tipo</th>
-                                    <th>Solicitante</th>
-                                    <th>Valor</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($reprovados->solicitacao as $reprovado)
-                                
-                                <tr>
-                                    <td></td>
-                                    <td>{{ $reprovado->id }}</td>
-                                    <td>{{ date('d-m-y',strtotime($reprovado->created_at)) }}</td>
-                                    <td>{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
-                                    <td>{{ $reprovado->tipo }}</td>
-                                    <td>{{ $reprovado->solicitante->nome }}</td>
-                                    <td>R$ {{ $reprovado->total }}</td>
-                                    <td class="acoesTD">
-                                        <div class="icon-button-demo" >
-                                            <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($reprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $reprovado->tipo).'.analisar', $reprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$reprovado->tipo}}">
-                                                <i class="material-icons">search</i>
-                                            </a>                                           
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach                                                     
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
-                    
-                    <!-- LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
-                    <div id="devolvido" class="tab-pane fade in" role="tabpanel">
-                        <h1 class="visible-xs" style="text-align: center"> DEVOLVIDO </h1>
-                        <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th>Data</th>
-                                    <th>Cliente</th>
-                                    <th>Tipo</th>
-                                    <th>Solicitante</th>
-                                    <th>Valor</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($devolvidas->solicitacao as $devolvida)
-                                
-                                <tr>
-                                    <td></td>
-                                    <td>{{ $devolvida->id }}</td>
-                                    <td>{{ date('d-m-y',strtotime($devolvida->created_at)) }}</td>
-                                    <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
-                                    <td>{{ $devolvida->tipo }}</td>
-                                    <td>{{ $devolvida->solicitante->nome }}</td>
-                                    <td>R$ {{ $devolvida->total }}</td>
-                                    <td class="acoesTD">
-                                        <div class="icon-button-demo" >
-                                            <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.editar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$devolvida->tipo}}">
-                                                <i class="material-icons">settings</i>
-                                            </a>
-                                            <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$devolvida->id}}" data-toggle="tooltip" data-placement="top" title="VIZUALIZAR {{$devolvida->tipo}}">
-                                                <i class="material-icons">delete_sweep</i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach                                                                                     
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
+                            <h1 class="visible-xs" style="text-align: center"> ABERTO </h1>
+                            <table id="aberto" class="table table-bordered table-striped table-hover dataTable js-basic-example">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>ID</th>
+                                        <th>Data</th>
+                                        <th>Cliente</th>
+                                        <th>Tipo</th>
+                                        <th>Solicitante</th>
+                                        <th>Valor</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($abertas->solicitacao as $aberto)
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $aberto->id }}</td>
+                                        <td>{{ date('d-m-y',strtotime($aberto->created_at)) }}</td>
+                                        <!-- <td> {{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }} </td> -->
+                                        <td class="teste">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
+                                        <td>{{ $aberto->tipo }}</td>
+                                        <td>{{ $aberto->solicitante->nome }}</td>
+                                        <td>{{ 'R$ '.number_format($aberto->total, 2, ',', '.') }}</td>
+                                        <td class="acoesTD">
+                                            <div class="icon-button-demo" >
+                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                                <a href="{{ route(strtolower($aberto->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aberto->tipo).'.editar', $aberto->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$aberto->tipo}}">
+                                                    <i class="material-icons">mode_edit</i>
+                                                </a>
+                                                <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$aberto->id}}" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$aberto->tipo}}">
+                                                    <i class="material-icons">delete_sweep</i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach                                                     
 
-                    <!-- LISTAGEM DAS SOLICITAÇÕES EM FINALIZADAS -->
-                    <div id="finalizado" class="tab-pane fade in" role="tabpanel">
-                        <h1 class="visible-xs" style="text-align: center"> FINALIZADAS </h1>
-                        <table id="finalizado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>ID</th>
-                                    <th>Data</th>
-                                    <th>Cliente</th>
-                                    <th>Tipo</th>
-                                    <th>Solicitante</th>
-                                    <th>Valor</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($finalizadas->solicitacao as $finalizado)
-                                
-                                <tr>
-                                    <td></td>
-                                    <td>{{ $finalizado->id }}</td>
-                                    <td>{{ date('d-m-y',strtotime($finalizado->created_at)) }}</td>
-                                    <td>{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
-                                    <td>{{ $finalizado->tipo }}</td>
-                                    <td>{{ $finalizado->solicitante->nome }}</td>
-                                    <td>R$ {{ $finalizado->total }}</td>
-                                    <td class="acoesTD">
-                                        <div class="icon-button-demo" >
-                                            <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                            <a href="{{ route(strtolower($finalizado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizado->tipo).'.analisar', $finalizado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$finalizado->tipo}}">
-                                                <i class="material-icons">search</i>
-                                            </a>                                           
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach                                                     
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
+                        
+                        <!-- LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
+                        <div id="andamento" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> ANDAMENTO </h1>
+                            <table id="andamento" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>ID</th>
+                                        <th>Data</th>
+                                        <th>Cliente</th>
+                                        <th>Tipo</th>
+                                        <th>Solicitante</th>
+                                        <th>Valor</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($andamentos->solicitacao as $andamento)
+                                    
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $andamento->id }}</td>
+                                        <td>{{ date('d-m-y',strtotime($andamento->created_at)) }}</td>
+                                        <td class="teste">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
+                                        <td>{{ $andamento->tipo }}</td>
+                                        <td>{{ $andamento->solicitante->nome }}</td>
+                                        <td>{{ 'R$ '.number_format($andamento->total, 2, ',', '.') }}</td>
+                                        <td class="acoesTD">
+                                            <div class="icon-button-demo" >
+                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                                <a href="{{ route(strtolower($andamento->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $andamento->tipo).'.analisar', $andamento->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$andamento->tipo}}">
+                                                    <i class="material-icons">search</i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach                                                     
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
+                        
+                        <!-- LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
+                        <div id="aprovado" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> APROVADO </h1>
+                            <table id="aprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>ID</th>
+                                        <th>Data</th>
+                                        <th>Cliente</th>
+                                        <th>Tipo</th>
+                                        <th>Solicitante</th>
+                                        <th>Valor</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($aprovadas->solicitacao as $aprovado)
+                                    
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $aprovado->id }}</td>
+                                        <td>{{ date('d-m-y',strtotime($aprovado->created_at)) }}</td>
+                                        <td>{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
+                                        <td>{{ $aprovado->tipo }}</td>
+                                        <td>{{ $aprovado->solicitante->nome }}</td>
+                                        <td>{{ 'R$ '.number_format($aprovado->total, 2, ',', '.') }}</td>
+                                        <td class="acoesTD">
+                                            <div class="icon-button-demo" >
+                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                                <a href="{{ route(strtolower($aprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aprovado->tipo).'.analisar', $aprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$aprovado->tipo}}">
+                                                    <i class="material-icons">search</i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach                                                     
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
+                        
+                        <!-- LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
+                        <div id="reprovado" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> REPROVADO </h1>
+                            <table id="reprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>ID</th>
+                                        <th>Data</th>
+                                        <th>Cliente</th>
+                                        <th>Tipo</th>
+                                        <th>Solicitante</th>
+                                        <th>Valor</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($reprovados->solicitacao as $reprovado)
+                                    
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $reprovado->id }}</td>
+                                        <td>{{ date('d-m-y',strtotime($reprovado->created_at)) }}</td>
+                                        <td>{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
+                                        <td>{{ $reprovado->tipo }}</td>
+                                        <td>{{ $reprovado->solicitante->nome }}</td>
+                                        <td>{{ 'R$ '.number_format($reprovado->total, 2, ',', '.') }}</td>
+                                        <td class="acoesTD">
+                                            <div class="icon-button-demo" >
+                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                                <a href="{{ route(strtolower($reprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $reprovado->tipo).'.analisar', $reprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$reprovado->tipo}}">
+                                                    <i class="material-icons">search</i>
+                                                </a>                                           
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach                                                     
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
+                        
+                        <!-- LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
+                        <div id="devolvido" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> DEVOLVIDO </h1>
+                            <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>ID</th>
+                                        <th>Data</th>
+                                        <th>Cliente</th>
+                                        <th>Tipo</th>
+                                        <th>Solicitante</th>
+                                        <th>Valor</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($devolvidas->solicitacao as $devolvida)
+                                    
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $devolvida->id }}</td>
+                                        <td>{{ date('d-m-y',strtotime($devolvida->created_at)) }}</td>
+                                        <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
+                                        <td>{{ $devolvida->tipo }}</td>
+                                        <td>{{ $devolvida->solicitante->nome }}</td>
+                                        <td>{{ 'R$ '.number_format($devolvida->total, 2, ',', '.') }}</td>
+                                        <td class="acoesTD">
+                                            <div class="icon-button-demo" >
+                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                                <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.editar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$devolvida->tipo}}">
+                                                    <i class="material-icons">mode_edit</i>
+                                                </a>
+                                                <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$devolvida->id}}" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$devolvida->tipo}}">
+                                                    <i class="material-icons">delete_sweep</i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach                                                                                     
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
 
+                        <!-- LISTAGEM DAS SOLICITAÇÕES EM FINALIZADOS -->
+                        <div id="finalizado" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> FINALIZADAS </h1>
+                            <table id="finalizado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>ID</th>
+                                        <th>Data</th>
+                                        <th>Cliente</th>
+                                        <th>Tipo</th>
+                                        <th>Solicitante</th>
+                                        <th>Valor</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($finalizadas->solicitacao as $finalizado)
+                                    
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $finalizado->id }}</td>
+                                        <td>{{ date('d-m-y',strtotime($finalizado->created_at)) }}</td>
+                                        <td>{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
+                                        <td>{{ $finalizado->tipo }}</td>
+                                        <td>{{ $finalizado->solicitante->nome }}</td>
+                                        <td>{{ 'R$ '.number_format($finalizado->total, 2, ',', '.') }}</td>
+                                        <td class="acoesTD">
+                                            <div class="icon-button-demo" >
+                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                                <a href="{{ route(strtolower($finalizado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizado->tipo).'.analisar', $finalizado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$finalizado->tipo}}">
+                                                    <i class="material-icons">search</i>
+                                                </a>                                           
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach                                                     
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM FINALIZADOS -->
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- #END# Tabs With Icon Title -->
+    <!-- #END# Tabs With Icon Title -->
 </section>
 @endsection

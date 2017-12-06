@@ -187,4 +187,11 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
     });
     // FIM ROTAS DE VIAGEM
 });
+Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR']],function()
+{
+    Route::get('listagem-users', ['uses' => 'UserController@getAll', 'as' => 'user.getAll']);
+    Route::get('editar-user/{id}', ['uses' => 'UserController@edit', 'as' => 'user.editar']);
+    Route::put('atualizar-user/{id}', ['uses' => 'UserController@atualizar', 'as' => 'user.atualizar']);
+    
+});
 // FIM DAS ROTAS DE SOLICITAÇÃO

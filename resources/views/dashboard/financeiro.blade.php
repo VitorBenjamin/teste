@@ -83,15 +83,14 @@
                                         <td></td>
                                         <td>{{ $aberto->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($aberto->created_at)) }}</td>
-                                        <!-- <td>{{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> -->
-                                        <td>{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
                                         <td>{{ $aberto->solicitante->nome }}</td>
-                                        <td>R$ {{ $aberto->total }}</td>
+                                        <td>{{ 'R$ '.number_format($aberto->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($aberto->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aberto->tipo).'.analisar', $aberto->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($aberto->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aberto->tipo).'.analisar', $aberto->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$aberto->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>
                                                 <!-- <a href="{{ route('solicitacao.finalizar',$aberto->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float">
@@ -130,13 +129,13 @@
                                         <td></td>
                                         <td>{{ $finalizada->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($finalizada->created_at)) }}</td>
-                                        <td>{{ $finalizada->cliente == null ? 'MOSELLO LIMA' : $finalizada->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $finalizada->cliente == null ? 'MOSELLO LIMA' : $finalizada->cliente->nome }}</td>
                                         <td>{{ $finalizada->tipo }}</td>
                                         <td>{{ $finalizada->solicitante->nome }}</td>
-                                        <td>R$ {{ $finalizada->total }}</td>
+                                        <td>{{ 'R$ '.number_format($finalizada->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
-                                                <a href="{{ route(strtolower($finalizada->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizada->tipo).'.analisar', $finalizada->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($finalizada->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizada->tipo).'.analisar', $finalizada->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$finalizada->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>                                            
                                             </div>
@@ -170,13 +169,13 @@
                                         <td></td>
                                         <td>{{ $devolvida->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($devolvida->created_at)) }}</td>
-                                        <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
                                         <td>{{ $devolvida->solicitante->nome }}</td>
-                                        <td>R$ {{ $devolvida->total }}</td>
+                                        <td>{{ 'R$ '.number_format($devolvida->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
-                                                <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.analisar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.analisar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$devolvida->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>                                                
                                             </div>
@@ -211,14 +210,14 @@
                                         <td></td>
                                         <td>{{ $recorrente->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($recorrente->created_at)) }}</td>
-                                        <td>{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
                                         <td>{{ $recorrente->solicitante->nome }}</td>
-                                        <td>R$ {{ $recorrente->total }}</td>
+                                        <td>{{ 'R$ '.number_format($recorrente->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($recorrente->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $recorrente->tipo).'.analisar', $recorrente->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+                                                <a href="{{ route(strtolower($recorrente->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $recorrente->tipo).'.analisar', $recorrente->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VIZUALIZAR {{$devolvida->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>
                                                 <!-- <a href="{{ route('solicitacao.finalizar',$recorrente->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float">

@@ -67,7 +67,7 @@
 								<td>{{$guia->banco}}</td>
 								<td>{{$guia->tipoGuia()->first()->tipo}}</td>
 								<td>{{$guia->tipoGuia()->first()->descricao}}</td>
-								<td>{{  'R$ '.number_format($guia->valor, 2, ',', '.') }} </td>
+								<td>{{ 'R$ '.number_format($guia->valor, 2, ',', '.') }}</td>
 								<td><a target="_blank" href="{{URL::to('storage/guias/'.$guia->anexo_pdf)}}" class="btn btn-primary waves-effect">
 									<i class="material-icons">file_download</i>EXIBIR PDF</a>
 								</td>

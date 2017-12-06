@@ -137,7 +137,7 @@
 											R$
 										</span>
 										<div class="form-line">
-											<input type="numeric" name="valor" class="form-control valor" required/>
+											<input type="numeric" name="valor" style="text-align:right" name="valor" class="form-control" size="11" onKeyUp="moeda(this);" required>
 										</div>
 									</div>
 								</div>

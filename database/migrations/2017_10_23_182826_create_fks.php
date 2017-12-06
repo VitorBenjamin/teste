@@ -107,6 +107,7 @@ class CreateFks extends Migration
         Schema::table('solicitacoes_status', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
+            $table->primary(['solicitacoes_id', 'status_id']);
         });
 
     //Foreign Keys Tabela limites_unidades
@@ -122,16 +123,20 @@ class CreateFks extends Migration
         Schema::table('users_limites', function (Blueprint $table) {
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('limites_id')->references('id')->on('limites')->onDelete('cascade');
+            $table->primary(['users_id', 'limites_id']);
+
         }); 
     //Foreign Keys Tabela users_limites
         Schema::table('users_clientes', function (Blueprint $table) {
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('clientes_id')->references('id')->on('clientes')->onDelete('cascade');
+            $table->primary(['users_id', 'clientes_id']);
         });
     //Foreign Keys Tabela users_limites
         Schema::table('coordenador_advogado', function (Blueprint $table) {
             $table->foreign('coordenador_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('advogado_id')->references('id')->on('users')->onDelete('cascade');
+            $table->primary(['coordenador_id', 'advogado_id']);
         });      
 
     }

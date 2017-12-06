@@ -12,7 +12,7 @@ table.dataTable thead th {
   background-color: #ddcfbe;
 }
 @media (max-width: 420px){
-.teste{
+.quebra-texto {
 max-width: 70px;
 overflow: hidden;
 text-overflow: ellipsis;
@@ -7534,6 +7534,7 @@ fieldset[disabled] .form-control {
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   border-radius: 0;
+  min-width: 210px;
   /* Alteração do bootstrap */
   /* right: unset;*/
   left: 0; 

@@ -8,6 +8,11 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Repositories\SolicitacaoRepository;
 use Illuminate\Support\Facades\Auth;
+use App\Role;
+use App\User;
+use App\AreaAtuacao; 
+use App\Unidade; 
+use App\Limite;
 
 
 class UserController extends Controller
@@ -41,6 +46,56 @@ class UserController extends Controller
 		}
 		return $dash;
 	}
+
+	public function getAll()
+	{
+		$role = config('constantes.user_coordenador');
+		$users = Role::with('user')->where('name', $role)->first();
+		//
+		return view('advogado.listagem',compact('users'));
+	}
+
+	public function edit($id)
+	{
+		$user = User::where('id',$id)->with('limites','area_atuacao','unidades')->first();
+		foreach ($user->limites as $limite) {
+			$limites[] = $limite->area_atuacoes_id;
+			foreach ($limite->unidades as $unidade) {
+				$limite_unidades[] = $unidade->id;
+			}
+		}
+		
+		$areas = AreaAtuacao::all(); 
+		$unidades = Unidade::all(); 
+		return view('advogado.editar',compact('user','areas','limites','limite_unidades','unidades'));
+	}
+
+	public function atualizar(Request $request,$id)
+	{
+		if ($request->password != "") {
+			Validator::make($request->all(), [
+				'password' => 'confirmed|min:6',
+				'password-confirm' => 'required_if:password,!=,',
+			])->validate();
+		}
+		
+		$data = [
+			'nome' => $request->nome,
+			'email' => $request->email,
+			'codigo' => 000,
+			'cpf' => $request->cpf,
+			'telefone' => $request->telefone ,
+			'area_atuacoes_id' => $request->area_atuacoes_id,
+			'unidades_id' => $request->unidades_id,
+		];
+
+		$user = User::where('id',$id)->update($data);
+		$user->forceFill([
+			'password' => bcrypt($password),
+			'remember_token' => Str::random(60),
+		])->save();
+	}
+	
 
 	public function advogadoDash()
 	{
@@ -94,44 +149,20 @@ class UserController extends Controller
 
 		$abertas = $repo->getSolicitacaoCoordenador(config('constantes.status_andamento'));
 
-		$abertas2 = $repo->getSolicitacaoCoordenador(config('constantes.status_andamento_etapa2'));
+		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento'));
 		
-		if ($abertas2 !=null) {
-			$abertas =$this->pushSolicitacao($abertas,$abertas2);			
-		}
-		$coordenador_andamento = $repo->getSolicitacaoCoordenador(config('constantes.status_coordenador_andamento'));
+		$andamentos_etapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_etapa2'));
 		
-		if ($coordenador_andamento !=null) {
-			$abertas =$this->pushSolicitacao($abertas,$coordenador_andamento);			
+		if ($andamentos_etapa2 !=null) {
+			$andamentos=$this->pushSolicitacao($andamentos,$andamentos_etapa2);
 		}
-		$coordenador_andamento2 = $repo->getSolicitacaoCoordenador(config('constantes.status_coordenador_andamento2'));
-		
-		if ($coordenador_andamento2 !=null) {
-			$abertas =$this->pushSolicitacao($abertas,$coordenador_andamento2);			
-		}
-
-		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_coordenador_andamento'));
-		$andamentos2 = $repo->getSolicitacaoAdvogado(config('constantes.status_coordenador_andamento2'));
-		if ($andamentos !=null) {
-			$andamentos=$this->pushSolicitacao($andamentos,$andamentos2);
-		}
-		$recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_recorrente'));
-		$andamento_recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_recorrente'));
-
-		if ($recorrente !=null) {
-			$andamentos=$this->pushSolicitacao($andamentos,$recorrente);
-		}
-		if ($andamento_recorrente !=null) {
-			$andamentos=$this->pushSolicitacao($andamentos,$andamento_recorrente);
-		}
-
 		$aprovadas = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado'));
 
-		$coordenador_aprovado = $repo->getSolicitacaoAdvogado(config('constantes.status_coordenador_aprovado'));
+		$coordenador_aprovado = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado'));
 		if ($coordenador_aprovado !=null) {
 			$aprovadas = $this->pushSolicitacao($aprovadas,$coordenador_aprovado);			
 		}
-		$coordenador_aprovado2 = $repo->getSolicitacaoAdvogado(config('constantes.status_coordenador_aprovado2'));
+		$coordenador_aprovado2 = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado_etapa2'));
 		if ($coordenador_aprovado2 !=null) {
 			$aprovadas = $this->pushSolicitacao($aprovadas,$coordenador_aprovado2);			
 		}
@@ -147,15 +178,17 @@ class UserController extends Controller
 		}
 		$reprovados = $repo->getSolicitacaoCoordenador(config('constantes.status_reprovado'));		
 		$devolvidas = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido'));
-		$recorrentes = $repo->getSolicitacaoCoordenador(config('constantes.status_recorrente'));
+
+		$recorrentes = $repo->getSolicitacaoAdvogado(config('constantes.status_recorrente'));
+
 		$andamento_recorrente = $repo->getSolicitacaoCoordenador(config('constantes.status_andamento_recorrente'));
 		
 		if ($andamento_recorrente !=null) {
 			$recorrentes = $this->pushSolicitacao($recorrentes,$andamento_recorrente);			
 		}
 		
-		$meus = $repo->getSolicitacaoCoordenador(config('constantes.status_coordenador_aberto'));
-		$meus_etapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_coordenador_aberto2'));
+		$meus = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto'));
+		$meus_etapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto_etapa2'));
 		if ($meus_etapa2 !=null) {
 			$meus = $this->pushSolicitacao($meus,$meus_etapa2);			
 		}
@@ -171,10 +204,6 @@ class UserController extends Controller
 		$repo = new SolicitacaoRepository();
 
 		$abertas = $repo->getSolicitacaoFinanceiro(config('constantes.status_aprovado'));
-		$coordenador_aprovado_etapa2 = $repo->getSolicitacaoFinanceiro(config('constantes.status_coordenador_aprovado2'));
-		if ($coordenador_aprovado_etapa2 !=null) {
-			$abertas = $this->pushSolicitacao($abertas,$coordenador_aprovado_etapa2);			
-		}
 		$aprovado_etapa2 = $repo->getSolicitacaoFinanceiro(config('constantes.status_aprovado_etapa2'));
 		if ($aprovado_etapa2 !=null) {
 			$abertas = $this->pushSolicitacao($abertas,$aprovado_etapa2);			
@@ -182,10 +211,6 @@ class UserController extends Controller
 		$andamento = $repo->getSolicitacaoFinanceiro(config('constantes.status_andamento_financeiro'));
 		if ($andamento !=null) {
 			$abertas= $this->pushSolicitacao($abertas,$andamento);
-		}
-		$andamento_coordenador = $repo->getSolicitacaoFinanceiro(config('constantes.status_coordenador_aprovado'));
-		if ($andamento_coordenador !=null) {
-			$abertas= $this->pushSolicitacao($abertas,$andamento_coordenador);
 		}
 		$finalizadas = $repo->getSolicitacaoFinanceiro(config('constantes.status_finalizado'));
 		$devolvidas = $repo->getSolicitacaoFinanceiro(config('constantes.status_devolvido_financeiro'));
@@ -208,10 +233,6 @@ class UserController extends Controller
 		$andamento = $repo->getSolicitacaoAdministrativo(config('constantes.status_andamento_administrativo'));
 		if ($andamento !=null) {
 			$abertas= $this->pushSolicitacao($abertas,$andamento);
-		}
-		$andamento_coordenador = $repo->getSolicitacaoAdministrativo(config('constantes.status_coordenador_aprovado'));
-		if ($andamento_coordenador !=null) {
-			$abertas= $this->pushSolicitacao($abertas,$andamento_coordenador);
 		}
 		$devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_devolvido_financeiro'));
 		$recorrentes_devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_recorrente'));

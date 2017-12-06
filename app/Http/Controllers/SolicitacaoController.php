@@ -51,34 +51,32 @@ class SolicitacaoController extends Controller
 		{
 			$andamento = Status::where('descricao', config('constantes.status_andamento_recorrente'))->first();
 
-		} elseif ($status == config('constantes.status_coordenador_aberto')) {
-			
-			if (!$repo->teste($solicitacao,$limites)) {
-				$andamento = Status::where('descricao', config('constantes.status_coordenador_andamento'))->first();
-			} else {
-				$andamento = Status::where('descricao', config('constantes.status_coordenador_aprovado'))->first();
-			}
-
-		} elseif ($status == config('constantes.status_coordenador_aberto2')) {
-			
-			if ($repo->teste($solicitacao,$limites)) {
-				$andamento = Status::where('descricao', config('constantes.status_coordenador_andamento2'))->first();
-			} else {
-				$andamento = Status::where('descricao', config('constantes.status_coordenador_aprovado2'))->first();
-			}
-
 		} elseif ($solicitacao->tipo == "COMPRA"){
 			
 			$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
 
 		} elseif ($status == "ABERTO-ETAPA2" || $status == config('constantes.status_devolvido_etapa2')) {
 
-			$andamento = Status::where('descricao', config('constantes.status_andamento_etapa2'))->first();
-
+			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
+				if (!$repo->verificaLimite($solicitacao,$limites)) {
+					$andamento = Status::where('descricao', config('constantes.status_andamento_etapa2'))->first();
+				}else{
+					$andamento = Status::where('descricao', config('constantes.status_aprovado_etapa2'))->first();
+				}
+			} else {
+				$andamento = Status::where('descricao', config('constantes.status_andamento_etapa2'))->first();
+			}
 		} else {			
 			
-			$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
-
+			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
+				if (!$repo->verificaLimite($solicitacao,$limites)) {
+					$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
+				}else{
+					$andamento = Status::where('descricao', config('constantes.status_aprovado'))->first();
+				}
+			} else {
+				$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
+			}
 		}
 		$this->trocarStatus($solicitacao,$andamento);
 

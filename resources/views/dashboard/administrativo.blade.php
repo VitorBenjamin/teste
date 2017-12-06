@@ -82,7 +82,7 @@
                                         <td>{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
                                         <td>{{ $aberto->solicitante->nome }}</td>
-                                        <td>R$ {{ $aberto->total }}</td>
+                                        <td>{{ 'R$ '.number_format($aberto->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
@@ -129,7 +129,7 @@
                                         <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
                                         <td>{{ $devolvida->solicitante->nome }}</td>
-                                        <td>R$ {{ $devolvida->total }}</td>
+                                        <td>{{ 'R$ '.number_format($devolvida->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.analisar', $devolvida->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
@@ -170,7 +170,7 @@
                                         <td>{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
                                         <td>{{ $recorrente->solicitante->nome }}</td>
-                                        <td>R$ {{ $recorrente->total }}</td>
+                                        <td>{{ 'R$ '.number_format($recorrente->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->

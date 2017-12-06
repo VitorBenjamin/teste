@@ -85,30 +85,6 @@ class StatusTableSeeder extends Seeder
             
         ]);
         Status::create([
-            'descricao' => 'COORDENADOR-ABERTO',
-            
-        ]);
-        Status::create([
-            'descricao' => 'COORDENADOR-APROVADO',
-            
-        ]);
-         Status::create([
-            'descricao' => 'COORDENADOR-ANDAMENTO',
-            
-        ]);
-        Status::create([
-            'descricao' => 'COORDENADOR-ANDAMENTO2',
-            
-        ]);
-        Status::create([
-            'descricao' => 'COORDENADOR-ABERTO2',
-            
-        ]);
-        Status::create([
-            'descricao' => 'COORDENADOR-APROVADO2',
-            
-        ]);
-        Status::create([
             'descricao' => 'ANDAMENTO-ADMINISTRATIVO',
             
         ]);

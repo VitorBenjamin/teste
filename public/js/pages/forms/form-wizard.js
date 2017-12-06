@@ -35,15 +35,15 @@ $(function () {
         next: 'Proximo',
         bodyTag: 'fieldset',
         transitionEffect: 'slideLeft',
-
-        labels: {
-        cancel: "Cancelar",
-        current: "current step:",
-        pagination: "Pagination",
-        finish: "Finalizar",
-        next: "Próximo",
-        previous: "Anterior",
-        loading: "Carregando ..."
+        labels: 
+        {
+            cancel: "Cancelar",
+            current: "current step:",
+            pagination: "Pagination",
+            finish: "Finalizar",
+            next: "Próximo",
+            previous: "Anterior",
+            loading: "Carregando..."
         },
         onInit: function (event, currentIndex) {
             $.AdminBSB.input.activate();
@@ -74,7 +74,7 @@ $(function () {
             form.validate().settings.ignore = ':disabled';
             return form.valid();
         },
-       onFinished: function(e, currentIndex) {
+        onFinished: function(e, currentIndex) {
                 // Uncomment the following line to submit the form using the defaultSubmit() method
                 //$('#wizard_with_validation').formValidation('defaultSubmit');
                 $( "#wizard_with_validation" ).submit();

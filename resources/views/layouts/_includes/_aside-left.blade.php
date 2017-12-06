@@ -13,9 +13,13 @@
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
                         @role(['FINANCEIRO','GOD','COORDENADOR'])
-                        <li><a href="{{ route('registerAdvogado') }}"><i class="material-icons">sd_storage</i>Reg. Advogado</a></li>
-                        <li><a href="{{ route('registerCoordenador') }}"><i class="material-icons">sd_storage</i>Reg. Coordenador</a></li>
-                        <li><a href="{{ route('registerFinanceiro') }}"><i class="material-icons">sd_storage</i>Reg. Financeiro</a></li>
+                        <li><a href="{{ route('user.getAll') }}"><i class="material-icons">list</i>Listar. Advogados</a></li>
+                        <li><a href="{{ route('user.getAll') }}"><i class="material-icons">list</i>Cadastrar. Cliente</a></li>
+                        <li><a href="{{ route('user.getAll') }}"><i class="material-icons">list</i>Cadastrar. Unidade</a></li>
+                        <li role="seperator" class="divider"></li>
+                        <li><a href="{{ route('registerAdvogado') }}"><i class="material-icons">sd_storage</i>Cadastrar Advogado</a></li>
+                        <li><a href="{{ route('registerCoordenador') }}"><i class="material-icons">sd_storage</i>Cadastrar Coordenador</a></li>
+                        <li><a href="{{ route('registerFinanceiro') }}"><i class="material-icons">sd_storage</i>Cadastrar Financeiro</a></li>
                         <li role="seperator" class="divider"></li>
                         @endrole
                         <!-- <li role="seperator" class="divider"></li> -->

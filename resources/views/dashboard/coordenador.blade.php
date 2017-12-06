@@ -103,11 +103,10 @@
                                         <td></td>
                                         <td>{{ $aberto->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($aberto->created_at)) }}</td>
-                                        <!-- <td>{{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> -->
-                                        <td>{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
                                         <td>{{ $aberto->solicitante->nome }}</td>
-                                        <td>R$ {{ $aberto->total }}</td>
+                                        <td>{{ 'R$ '.number_format($aberto->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
@@ -159,10 +158,10 @@
                                         <td></td>
                                         <td>{{ $andamento->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($andamento->created_at)) }}</td>
-                                        <td class="teste">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
                                         <td>{{ $andamento->tipo }}</td>
                                         <td>{{ $andamento->solicitante->nome }}</td>
-                                        <td>R$ {{ $andamento->total }}</td>
+                                        <td>{{ 'R$ '.number_format($andamento->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
@@ -200,10 +199,10 @@
                                         <td></td>
                                         <td>{{ $aprovado->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($aprovado->created_at)) }}</td>
-                                        <td>{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
                                         <td>{{ $aprovado->tipo }}</td>
                                         <td>{{ $aprovado->solicitante->nome }}</td>
-                                        <td>R$ {{ $aprovado->total }}</td>
+                                        <td>{{ 'R$ '.number_format($aprovado->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <a href="{{ route(strtolower($aprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aprovado->tipo).'.analisar', $aprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$aprovado->tipo}}">
@@ -240,10 +239,10 @@
                                         <td></td>
                                         <td>{{ $reprovado->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($reprovado->created_at)) }}</td>
-                                        <td>{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
                                         <td>{{ $reprovado->tipo }}</td>
                                         <td>{{ $reprovado->solicitante->nome }}</td>
-                                        <td>R$ {{ $reprovado->total }}</td>
+                                        <td>{{ 'R$ '.number_format($reprovado->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <a href="{{ route(strtolower($reprovado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $reprovado->tipo).'.analisar', $reprovado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$reprovado->tipo}}">
@@ -280,10 +279,10 @@
                                         <td></td>
                                         <td>{{ $devolvida->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($devolvida->created_at)) }}</td>
-                                        <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
                                         <td>{{ $devolvida->solicitante->nome }}</td>
-                                        <td>R$ {{ $devolvida->total }}</td>
+                                        <td>{{ 'R$ '.number_format($devolvida->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
@@ -329,17 +328,24 @@
                                     <tr>
                                         <td></td>
                                         <td>{{ $recorrente->id }}</td>
-                                        <td>{{ date('d-m-y',strtotime($recorrente->created_at)) }}</td>
-                                        <td>{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
+                                        <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
+                                        <td class="quebra-texto">{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
                                         <td>{{ $recorrente->solicitante->nome }}</td>
-                                        <td>R$ {{ $recorrente->total }}</td>
+                                        <td>{{ 'R$ '.number_format($recorrente->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
+                                                @if($recorrente->users_id != auth()->user()->id)
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
                                                 <a href="{{ route(strtolower($recorrente->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $recorrente->tipo).'.analisar', $recorrente->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$recorrente->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>
+                                                @else
+                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                                <a href="{{ route(strtolower($recorrente->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $recorrente->tipo).'.editar', $recorrente->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$recorrente->tipo}}">
+                                                    <i class="material-icons">mode_edit</i>
+                                                </a>
+                                                @endif
                                                 <a href="{{ route('solicitacao.aprovar',$recorrente->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="APROVAR {{$recorrente->tipo}}">
                                                     <i class="material-icons">done_all</i>
                                                     <!-- <span class="hidden-xs">ADD</span> -->
@@ -378,15 +384,15 @@
                                         <td></td>
                                         <td>{{ $meu->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($meu->created_at)) }}</td>
-                                        <td>{{ $meu->cliente == null ? 'MOSELLO LIMA' : $meu->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $meu->cliente == null ? 'MOSELLO LIMA' : $meu->cliente->nome }}</td>
                                         <td>{{ $meu->tipo }}</td>
                                         <td>{{ $meu->solicitante->nome }}</td>
-                                        <td>R$ {{ $meu->total }}</td>
+                                        <td>{{ 'R$ '.number_format($meu->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
                                                 <a href="{{ route(strtolower($meu->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $meu->tipo).'.editar', $meu->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$meu->tipo}}">
-                                                    <i class="material-icons">settings</i>
+                                                    <i class="material-icons">mode_edit</i>
                                                 </a>
                                                 <a style="margin-left: 10px" href="{{ route('solicitacao.aprovar',$meu->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="ENVIAR {{$meu->tipo}}">
                                                     <i class="material-icons">done_all</i>
@@ -430,7 +436,7 @@
                                         <td></td>
                                         <td>{{ $finalizado->id }}</td>
                                         <td>{{ date('d/m/y',strtotime($finalizado->created_at)) }}</td>
-                                        <td>{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
                                         <td>{{ $finalizado->tipo }}</td>
                                         <td>{{ $finalizado->solicitante->nome }}</td>
                                         <td>R$ {{ $finalizado->total }}</td>
