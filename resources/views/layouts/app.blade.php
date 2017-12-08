@@ -48,15 +48,15 @@
     <!-- <link href="../../plugins/waitme/waitMe.css" rel="stylesheet" /> -->
     {!! Html::style('plugins/waitme/waitMe.css') !!}
 
+    {!! Html::style('css/ajax-bootstrap-select.css') !!}
     <!-- <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" /> -->
     {!! Html::style('plugins/bootstrap-select/css/bootstrap-select.css') !!}
-
-    {!! Html::style('css/ajax-bootstrap-select.css') !!}
 
     <!-- Custom Css -->
     <!-- <link href="css/style.css" rel="stylesheet">-->
     {!! Html::style('css/style.css') !!}
 
+    
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <!-- <link href="css/themes/all-themes.css" rel="stylesheet" />-->
     {!! Html::style('css/themes/theme-black.css') !!}

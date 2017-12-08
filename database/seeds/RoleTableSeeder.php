@@ -33,9 +33,9 @@ class RoleTableSeeder extends Seeder
     		'description' => 'USUÁRIO COM PRIVILÉGIOS DE FINANCEIRO',
     	]);
         DB::table('roles')->insert([
-            'name' => config('constantes.user_admistrativo'),
+            'name' => config('constantes.user_administrativo'),
             'display_name' => 'ADMINISTRATIVO',
-            'description' => 'USUÁRIO COM PRIVILÉGIOS DE FINANCEIRO',
+            'description' => 'USUÁRIO COM PRIVILÉGIOS DE ADMINISTRATIVO',
         ]);
     }
 }

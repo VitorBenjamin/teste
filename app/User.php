@@ -43,6 +43,22 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Limite','users_limites','users_id','limites_id');
     }
+
+    /** Consulta os clientes do usuário
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+     public function clientes()
+    {
+        return $this->belongsToMany('App\Cliente','users_clientes','users_id','clientes_id');
+    }
+
+    /** Consulta os advogado do usuário
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+     public function users()
+    {
+        return $this->belongsToMany('App\User','coordenador_advogado','coordenador_id','advogado_id');
+    }
     
     /**
      * The attributes that should be hidden for arrays.

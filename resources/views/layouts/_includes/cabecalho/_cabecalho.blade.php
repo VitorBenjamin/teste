@@ -73,9 +73,6 @@
 				<label style="margin: 15px 15px 0px 0px" for="nao">Não</label>
 			</div>
 		</div>
-		{{-- 		<div id="remote">
-			<input class="typeahead" type="text" placeholder="Oscar winners for Best Picture">
-		</div> --}}
 		<div class="col-md-2" style="margin-top: 20px">
 			<button class="btn bg-green waves-effect">
 				<i class="material-icons">send</i>

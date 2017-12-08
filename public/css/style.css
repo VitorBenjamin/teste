@@ -1,6 +1,14 @@
 ﻿/* Navbar ====================================== */
 @import url(materialize.css);
 
+.menuDireito li a{
+  font-size: 16px;
+  color: black;
+  text-decoration: none;
+}
+ .menuDireito li a .material-icons {
+  font-size: 28px !important;
+}
 table.dataTable tbody td {
   vertical-align: baseline;
 }
@@ -6335,7 +6343,7 @@ fieldset[disabled] .form-control {
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   border-radius: 0;
-  overflow-y: auto; }
+  /* overflow-y: auto; */ }
   .wizard .content .body {
     padding: 15px; }
 
@@ -7762,7 +7770,9 @@ fieldset[disabled] .form-control {
         font-weight: 600;
         padding: 8px 16px; }
       .sidebar .menu .list i.material-icons {
-        margin-top: 4px; }
+        margin-top: 4px; 
+        font-size: 28px
+      }
       .sidebar .menu .list .menu-toggle:after, .sidebar .menu .list .menu-toggle:before {
         position: absolute;
         top: calc(50% - 14px);

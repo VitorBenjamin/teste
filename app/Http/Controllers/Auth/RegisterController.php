@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\User;
 use App\AreaAtuacao; 
 use App\Unidade; 
 use App\Role;
 use App\Limite;
+use App\Cliente;
 
 class RegisterController extends Controller
 {
@@ -64,8 +65,13 @@ class RegisterController extends Controller
     {
         $areas = AreaAtuacao::all(); 
         $unidades = Unidade::all(); 
-
-        return view('auth.registerCoordenador', compact('areas','unidades'));
+        $clientes = Cliente::all(); 
+        $advogados = Role::with(['user' => function ($q)
+        {
+           $q->orderBy('nome');
+        }])->where('name',config('constantes.user_advogado'))->first();
+        //dd($advogados);
+        return view('auth.registerCoordenador', compact('areas','unidades','clientes','advogados'));
     }
 
     /**
@@ -100,15 +106,16 @@ class RegisterController extends Controller
         
         if ($request->role == config('constantes.user_coordenador')) {
             $this->setLimite($user,$request);
-        }
+            $this->setCliente($user,$request);
+            $this->setAdvogado($user,$request);
+        } 
         
         \Session::flash('flash_message',[
             'msg'=> "Dr(a) ".$user->nome." Cadastrado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
         ]);
-        return redirect($this->redirectPath());
+        return redirect()->route('user.editar', $user->id);
     }
-
 
     protected function validator(array $data)
     {
@@ -121,6 +128,16 @@ class RegisterController extends Controller
             'area_atuacoes_id' => 'required',
             'unidades_id' => 'required',
         ]);
+    }
+    
+    public function setAdvogado($user,$request)
+    {
+        $user->users()->sync($request->get('advogados'));        
+    }
+    
+    public function setCliente($user,$request)
+    {
+        $user->clientes()->sync($request->get('clientes'));
     }
 
     public function setLimite($user,$request)

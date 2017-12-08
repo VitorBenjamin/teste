@@ -89,6 +89,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Dr(ª)</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -103,6 +104,7 @@
                                         <td></td>
                                         <td>{{ $aberto->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($aberto->created_at)) }}</td>
+                                        <td>{{ $aberto->user->nome}}</td>
                                         <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
                                         <td>{{ $aberto->solicitante->nome }}</td>
@@ -113,7 +115,7 @@
                                                 <a href="{{ route(strtolower($aberto->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aberto->tipo).'.analisar', $aberto->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$aberto->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>
-                                                <a href="{{ route('solicitacao.aprovar',$aberto->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="APROVAR {{$aberto->tipo}}">
+                                                <a style="margin:0px 5px" href="{{ route('solicitacao.aprovar',$aberto->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="APROVAR {{$aberto->tipo}}">
                                                     <i class="material-icons">done_all</i>
                                                     <!-- <span class="hidden-xs">ADD</span> -->
                                                 </a>
@@ -144,6 +146,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Dr(ª)</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -156,8 +159,9 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $andamento->id }}</td>
+                                        <td>{{ $andamento->id }}</td>                                    
                                         <td>{{ date('d-m-y',strtotime($andamento->created_at)) }}</td>
+                                        <td>{{ $aberto->user->nome }}</td>
                                         <td class="quebra-texto">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
                                         <td>{{ $andamento->tipo }}</td>
                                         <td>{{ $andamento->solicitante->nome }}</td>
@@ -186,6 +190,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Dr(ª)</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -199,6 +204,7 @@
                                         <td></td>
                                         <td>{{ $aprovado->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($aprovado->created_at)) }}</td>
+                                        <td>{{ $aprovado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
                                         <td>{{ $aprovado->tipo }}</td>
                                         <td>{{ $aprovado->solicitante->nome }}</td>
@@ -225,6 +231,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Dr(ª)</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -239,6 +246,7 @@
                                         <td></td>
                                         <td>{{ $reprovado->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($reprovado->created_at)) }}</td>
+                                        <td>{{ $reprovado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
                                         <td>{{ $reprovado->tipo }}</td>
                                         <td>{{ $reprovado->solicitante->nome }}</td>
@@ -265,6 +273,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Dr(ª)</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -279,6 +288,7 @@
                                         <td></td>
                                         <td>{{ $devolvida->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($devolvida->created_at)) }}</td>
+                                        <td>{{ $devolvida->user->nome }}</td>
                                         <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
                                         <td>{{ $devolvida->solicitante->nome }}</td>
@@ -315,6 +325,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Dr(ª)</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -329,6 +340,7 @@
                                         <td></td>
                                         <td>{{ $recorrente->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
+                                        <td>{{ $recorrente->user->nome }}</td>
                                         <td class="quebra-texto">{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
                                         <td>{{ $recorrente->solicitante->nome }}</td>
@@ -370,6 +382,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Dr(ª)</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -384,6 +397,7 @@
                                         <td></td>
                                         <td>{{ $meu->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($meu->created_at)) }}</td>
+                                        <td>{{ $meu->user->nome }}</td>
                                         <td class="quebra-texto">{{ $meu->cliente == null ? 'MOSELLO LIMA' : $meu->cliente->nome }}</td>
                                         <td>{{ $meu->tipo }}</td>
                                         <td>{{ $meu->solicitante->nome }}</td>
@@ -422,6 +436,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Dr(ª)</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -434,8 +449,9 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $finalizado->id }}</td>
+                                        <td>{{ $finalizado->id }}</td>                    
                                         <td>{{ date('d/m/y',strtotime($finalizado->created_at)) }}</td>
+                                        <td>{{ $finalizado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
                                         <td>{{ $finalizado->tipo }}</td>
                                         <td>{{ $finalizado->solicitante->nome }}</td>

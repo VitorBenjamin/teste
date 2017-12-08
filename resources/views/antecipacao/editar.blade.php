@@ -347,7 +347,7 @@
 									<div class="icon-button-demo" >
 										<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$antecipacao->id}}" role="button"><i class="material-icons">settings</i></a>
 
-										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('antecipacao.deletarAntecipacao', $antecipacao->id)}}"><i class="material-icons">delete_sweep</i></a>
+										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('antecipacao.deletarAntecipacao', $antecipacao->id)}}"><i class="material-icons">delete_sweep</i></a>
 										@if($antecipacao->anexo_comprovante != null)
 										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key}})">
 											<i class="material-icons">photo_library</i>
@@ -394,7 +394,7 @@
 														<div class="form-group">
 															<div class="form-line">
 																<label for="valor_solicitado">Valor Solicitado</label>
-																<input type="text" value="{{$antecipacao->valor_solicitado}}" name="valor_solicitado" class="form-control" placeholder="Qtd."/>
+																<input type="text" value="{{$antecipacao->valor}}" name="valor" style="text-align:right" class="form-control" size="11" onKeyUp="moeda(this);" required/>
 															</div>
 														</div>								
 													</div>
@@ -494,7 +494,7 @@
 			@foreach ($solicitacao->antecipacao as $key => $antecipacao)
 			@if($antecipacao->anexo_comprovante != null)		
 			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal"><span class="label bg-green">COMPROVANTE</span></h3></div>
+				<div class="numbertext"><h3><span class="label bg-green">COMPROVANTE DE PAGAMENTO DA ANTECIPAÇÃO</span></h3></div>
 				<img src="{{$antecipacao->anexo_comprovante}}" style="width:100%; max-height: 70%">
 			</div>
 			@endif	

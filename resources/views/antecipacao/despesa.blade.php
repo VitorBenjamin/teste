@@ -7,7 +7,7 @@
 	<div class="block-header">
 		<h2>Atualização da Despesa</h2>
 	</div>
-	<form action="{{ route('viagem.atualizarDespesa',$despesa->id)}}" method="POST" enctype="multipart/form-data">
+	<form action="{{ route('antecipacao.atualizarDespesa',$despesa->id)}}" method="POST" enctype="multipart/form-data">
 		{{ csrf_field() }}
 		{{ method_field('PUT') }}
 		<div class="body">

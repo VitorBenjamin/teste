@@ -22,7 +22,6 @@ class SolicitacaoHelper
     {
 
         foreach ($solicitacao->status as $status) {
-            
             if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_aberto_etapa2') || $status->descricao == config('constantes.status_recorrente') || $status->descricao == config('constantes.status_devolvido') || $status->descricao == config('constantes.status_devolvido_etapa2')) {
                 
                 return "ok";

@@ -96,7 +96,6 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
                                         <th>Data</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -109,10 +108,9 @@
                                     @foreach ($abertas->solicitacao as $aberto)
                                     <tr>
                                         <td></td>
-                                        <td>{{ $aberto->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($aberto->created_at)) }}</td>
                                         <!-- <td> {{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }} </td> -->
-                                        <td class="teste">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
                                         <td>{{ $aberto->solicitante->nome }}</td>
                                         <td>{{ 'R$ '.number_format($aberto->total, 2, ',', '.') }}</td>
@@ -158,7 +156,7 @@
                                         <td></td>
                                         <td>{{ $andamento->id }}</td>
                                         <td>{{ date('d-m-y',strtotime($andamento->created_at)) }}</td>
-                                        <td class="teste">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
+                                        <td class="quebra-texto">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
                                         <td>{{ $andamento->tipo }}</td>
                                         <td>{{ $andamento->solicitante->nome }}</td>
                                         <td>{{ 'R$ '.number_format($andamento->total, 2, ',', '.') }}</td>

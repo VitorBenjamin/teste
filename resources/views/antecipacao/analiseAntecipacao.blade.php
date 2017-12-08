@@ -31,10 +31,10 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
+					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
 						<thead>
 							<tr>
-								<th></th>
+								
 								<th>Data</th>
 								<th>Descrição</th>
 								<th>Valor</th>
@@ -44,7 +44,7 @@
 						<tbody>
 							@foreach ($solicitacao->antecipacao as $key => $antecipacao)
 							<tr>
-								<td></td>
+								
 								<td>{{date('d-m-y',strtotime($antecipacao->data_recebimento))}}</td>
 								<td>{{$antecipacao->descricao}}</td>
 								<td>{{$antecipacao->valor}}</td>
@@ -109,6 +109,71 @@
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DA ANTECIPAÇÃO -->
+	
+	<!-- LISTAGEM DAS DESPESAS  -->
+	<div class="row clearfix">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="card">
+				<div class="header">
+					<h2>
+						LISTAGEM DAS DESPESAS
+					</h2>
+				</div>
+				<div class="body">
+					<table class="table table-bordered table-striped table-hover dataTable">
+						<thead>
+							<tr>
+								
+								<th>Data</th>
+								<th>Descricao</th>
+								<th>Comprovante</th>
+								<th>Valor</th>
+								<th>Ação</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Data</th>
+								<th>Descricao</th>
+								<th>Comprovante</th>
+								<th>Valor</th>
+								<th>Ação</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							@foreach ($solicitacao->despesa as $key2 => $despesa)
+							<tr>
+								
+								<td>{{date('d-m-y',strtotime($despesa->data_despesa))}}</td>
+								<td>{{$despesa->descricao}}</td>
+								<td>{{$despesa->tipo_comprovante}}</td>
+								<td>{{$despesa->valor}}</td>
+								<td class="acoesTD">
+									<div class="icon-button-demo" >
+
+										@if(($solicitacao->status[0]->descricao == "ABERTO-ETAPA2" || $solicitacao->status[0]->descricao == "DEVOLVIDO-ETAPA2") && auth()->user()->id == $solicitacao->users_id)
+										<a href="{{ route('antecipacao.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+											<i class="material-icons">settings</i>
+										</a>
+
+										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('antecipacao.deletarDespesa',$despesa->id)}}">
+											<i class="material-icons">delete_sweep</i>
+										</a>
+										@endif
+										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key2}})">
+											<i class="material-icons">photo_library</i>
+										</a>
+									</div>
+								</td>
+							</tr>							
+							@endforeach														
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIM LISTAGEM DAS DESPESAS --> 
 
 	<!-- MODAL GALERIA -->
 	<div id="myModal" class="modal-2">
@@ -121,11 +186,11 @@
 			</div>
 			@endforeach														
 
-			<!-- <a class="prev-2" onclick="plusSlides(-1)">&#10094;</a> -->
-			<!-- <a class="next-2" onclick="plusSlides(1)">&#10095;</a> -->
+			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
+			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
 
-			</div>
 		</div>
-		<!-- FIM MODAL GALERIA -->
-	</section>
-	@endsection
+	</div>
+	<!-- FIM MODAL GALERIA -->
+</section>
+@endsection

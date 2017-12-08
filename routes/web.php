@@ -187,11 +187,21 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
     });
     // FIM ROTAS DE VIAGEM
 });
+Route::group(['prefix' => 'cliente','middleware' => ['check.user.role:COORDENADOR']],function()
+{
+    Route::get('listagem-cliente', ['uses' => 'ClienteController@getAll', 'as' => 'cliente.getAll']);
+    Route::get('editar-cliente/{id}', ['uses' => 'ClienteController@edit', 'as' => 'cliente.editar']);
+    Route::put('atualizar-cliente/{id}', ['uses' => 'ClienteController@atualizar', 'as' => 'cliente.atualizar']);
+    Route::get('deletar-limite/{cliente}/teste/{limite}', ['uses' => 'ClienteController@deletarLimite', 'as' => 'cliente.deletarLimite']);
+    Route::put('editar-limite/{id}', ['uses' => 'ClienteController@atualizarLimite', 'as' => 'limite.atualizar']);
+});
 Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR']],function()
 {
     Route::get('listagem-users', ['uses' => 'UserController@getAll', 'as' => 'user.getAll']);
     Route::get('editar-user/{id}', ['uses' => 'UserController@edit', 'as' => 'user.editar']);
     Route::put('atualizar-user/{id}', ['uses' => 'UserController@atualizar', 'as' => 'user.atualizar']);
-    
+    Route::put('add-limite/{id}', ['uses' => 'UserController@addLimite', 'as' => 'limite.add']);
+    Route::get('deletar-limite/{user}/{limite}', ['uses' => 'UserController@deletarLimite', 'as' => 'user.deletarLimite']);
+    Route::put('editar-limite/{id}', ['uses' => 'UserController@atualizarLimite', 'as' => 'limite.atualizar']);
 });
 // FIM DAS ROTAS DE SOLICITAÇÃO

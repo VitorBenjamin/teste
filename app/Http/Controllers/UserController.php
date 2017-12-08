@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\SolicitacaoRequest;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
@@ -13,6 +14,7 @@ use App\User;
 use App\AreaAtuacao; 
 use App\Unidade; 
 use App\Limite;
+use App\Cliente;
 
 
 class UserController extends Controller
@@ -58,25 +60,27 @@ class UserController extends Controller
 	public function edit($id)
 	{
 		$user = User::where('id',$id)->with('limites','area_atuacao','unidades')->first();
-		foreach ($user->limites as $limite) {
-			$limites[] = $limite->area_atuacoes_id;
-			foreach ($limite->unidades as $unidade) {
-				$limite_unidades[] = $unidade->id;
-			}
-		}
-		
+		$clientes = Cliente::all(); 
+        $advogados = Role::with(['user' => function ($q)
+        {
+           $q->orderBy('nome');
+        }])->where('name',config('constantes.user_advogado'))->first();
 		$areas = AreaAtuacao::all(); 
 		$unidades = Unidade::all(); 
-		return view('advogado.editar',compact('user','areas','limites','limite_unidades','unidades'));
+		return view('advogado.editar',compact('user','areas','limites','advogados','clientes','unidades'));
 	}
 
 	public function atualizar(Request $request,$id)
 	{
+		$messages = [
+			'password.confirmed' => 'Confirme a senha no campo auxiliar',
+			'password.min' => 'Tamanho miníno de 6 digitos',
+		];
 		if ($request->password != "") {
 			Validator::make($request->all(), [
 				'password' => 'confirmed|min:6',
 				'password-confirm' => 'required_if:password,!=,',
-			])->validate();
+			],$messages)->validate();
 		}
 		
 		$data = [
@@ -89,18 +93,85 @@ class UserController extends Controller
 			'unidades_id' => $request->unidades_id,
 		];
 
-		$user = User::where('id',$id)->update($data);
-		$user->forceFill([
-			'password' => bcrypt($password),
-			'remember_token' => Str::random(60),
-		])->save();
+		$user = User::where('id',$id)->first();
+		$user->update($data);
+		if ($request->password != "") {
+			$user->forceFill([
+				'password' => bcrypt($request->password),
+				'remember_token' => Str::random(60),
+			])->save();
+		}
+		//$user->users()->detach();
+		//$user->clientes()->detach();
+		$user->users()->sync($request->get('advogados'));
+		$user->clientes()->sync($request->get('clientes'));
+
+		\Session::flash('flash_message',[
+			'msg'=>"Dr(ª) ".$user->nome." Atualizado com Sucesso",
+			'class'=>"alert bg-green alert-dismissible"
+
+		]);
+
+		return redirect()->route('user.editar',$user->id);
 	}
-	
+
+	public function deletarLimite($user,$limite_id)
+	{
+		$user = User::find($user);
+		$limite = Limite::find($limite_id);
+		$user->limites()->detach($limite_id);
+		$limite->unidades()->detach();
+		$limite->delete();
+
+		\Session::flash('flash_message',[
+			'msg'=>"Limite Removido com Sucesso",
+			'class'=>"alert bg-green alert-dismissible"
+
+		]);
+
+		return redirect()->route('user.editar',$user->id);
+	}
+	public function addLimite(Request $request,$id)
+	{
+		$user = User::find($id);
+		$limite = Limite::create([
+			'de' => $request->de,
+			'ate' => $request->ate,
+			'area_atuacoes_id' => $request->area_atuacoes_id,
+		]);
+		$limite->unidades()->sync($request->get('unidades_limite'));
+		$user->limites()->attach($limite->id);
+		\Session::flash('flash_message',[
+			'msg'=>"Limite Adicionado com Sucesso",
+			'class'=>"alert bg-green alert-dismissible"
+
+		]);
+
+		return redirect()->route('user.editar',$id);
+	}
+	public function atualizarLimite(Request $request,$id)
+	{	
+		//dd($request->all());
+		$limite = Limite::find($id);
+		$limite->unidades()->detach();
+		$limite->update($request->all());
+		
+		$limite->unidades()->sync($request->get('unidades_limite'));
+
+		\Session::flash('flash_message',[
+			'msg'=>"Limite Atualizado com Sucesso",
+			'class'=>"alert bg-green alert-dismissible"
+
+		]);
+
+		return redirect()->route('user.editar',$limite->users[0]->id);
+	}
+
 
 	public function advogadoDash()
 	{
 		$repo = new SolicitacaoRepository();
-		
+
 		$abertas = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto'));
 		$abertasEtapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto_etapa2'));
 
@@ -149,10 +220,16 @@ class UserController extends Controller
 
 		$abertas = $repo->getSolicitacaoCoordenador(config('constantes.status_andamento'));
 
+		$andamentos_etapa2 = $repo->getSolicitacaoCoordenador(config('constantes.status_andamento_etapa2'));
+
+		if ($andamentos_etapa2 !=null) {
+			$abertas=$this->pushSolicitacao($abertas,$andamentos_etapa2);
+		}
+
 		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento'));
-		
+
 		$andamentos_etapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_etapa2'));
-		
+
 		if ($andamentos_etapa2 !=null) {
 			$andamentos=$this->pushSolicitacao($andamentos,$andamentos_etapa2);
 		}
@@ -172,21 +249,24 @@ class UserController extends Controller
 			$aprovadas = $this->pushSolicitacao($aprovadas,$aprovado_etapa2);			
 		}
 		$aprovadas_recorrente = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado_recorrente'));
-		
+
 		if ($aprovadas_recorrente !=null) {
 			$aprovadas =$this->pushSolicitacao($aprovadas,$aprovadas_recorrente);			
 		}
 		$reprovados = $repo->getSolicitacaoCoordenador(config('constantes.status_reprovado'));		
 		$devolvidas = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido'));
-
+		$devolvida_etapa2 = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido_etapa2'));
+		if ($devolvida_etapa2 !=null) {
+			$devolvidas = $this->pushSolicitacao($devolvidas,$devolvida_etapa2);			
+		}
 		$recorrentes = $repo->getSolicitacaoAdvogado(config('constantes.status_recorrente'));
 
 		$andamento_recorrente = $repo->getSolicitacaoCoordenador(config('constantes.status_andamento_recorrente'));
-		
+
 		if ($andamento_recorrente !=null) {
 			$recorrentes = $this->pushSolicitacao($recorrentes,$andamento_recorrente);			
 		}
-		
+
 		$meus = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto'));
 		$meus_etapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto_etapa2'));
 		if ($meus_etapa2 !=null) {

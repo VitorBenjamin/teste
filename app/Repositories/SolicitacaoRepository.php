@@ -123,22 +123,37 @@ class SolicitacaoRepository
     public function getSolicitacaoCoordenador($status)
     {
         $area_id = array();
+        $advogados = array();
+        $clientes = array();
         //dd(count($area_id));
         $limites = auth()->user()->limites;
-       // dd(empty($area_id));
+
+        // dd(empty($area_id));
         foreach ($limites as $limite) 
         {
-
             array_push($area_id,$limite->area_atuacoes_id);
-
         }
+
+        foreach (auth()->user()->clientes as $cliente) 
+        {
+            array_push($clientes,$cliente->id);
+        }
+        
+        foreach (auth()->user()->users as $advogado) 
+        {
+            array_push($advogados,$advogado->id);
+        }
+        //dd($clientes);
         if (!empty($area_id)) 
         {
-//            dd('asdasdasd');
-            $status = Status::with(['solicitacao' => function($q) use ($area_id)
+        //dd('asdasdasd');
+            $status = Status::with(['solicitacao' => function($q) use ($area_id,$advogados,$clientes)
             {           
 
-                $q->whereIn('area_atuacoes_id', $area_id);
+                $q
+                ->whereIn('area_atuacoes_id', $area_id)
+                ->whereIn('users_id', $advogados)
+                ->whereIn('clientes_id', $clientes);
 
             }])->where('descricao',$status)->first();
         }else {

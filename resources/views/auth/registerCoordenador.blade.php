@@ -83,6 +83,22 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="form-group form-float">
+                                    <label for="clientes">Clientes</label>
+                                    <select id="clientes" name="clientes[]" class="form-control show-tick" data-container="body" data-dropup-auto="false" data-size="5" data-actions-box="true" data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado" data-none-results-text="Nenhum Resultado Encontrado" data-deselect-all-text="DESELECIONAR TODOS" data-select-all-text="SELECIONAR TODOS" multiple required>
+                                        @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group form-float">
+                                    <label for="advogados">Advogados</label>
+                                    <select id="advogados" name="advogados[]" class="form-control show-tick" data-container="body" data-dropup-auto="false" data-size="5" data-actions-box="true" data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado" data-none-results-text="Nenhum Resultado Encontrado" data-deselect-all-text="DESELECIONAR TODOS" data-select-all-text="SELECIONAR TODOS" multiple required>
+                                        @foreach ($advogados->user as $advogado)
+                                        <option value="{{ $advogado->id }}">{{ $advogado->nome }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="form-group{{ $errors->has('cpf') ? ' has-error' : '' }} form-float">
                                     <div class="form-line">
                                         <input id="cpf" type="text" class="form-control" name="cpf" value="{{ old('cpf') }}" required autofocus>
@@ -111,7 +127,7 @@
                                 <div class="row clearfix">
                                     <div class="col-md-6">
                                         <label for="area_atuacoes_limite">Área de Atendimento</label>
-                                        <select id="area_atuacoes_limite" name="area_atuacoes_limite[]" class="form-control show-tick" data-dropup-auto="false" multiple data-actions-box="true"  data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado">
+                                        <select id="area_atuacoes_limite" name="area_atuacoes_limite[]" class="form-control show-tick" data-container="body" data-dropup-auto="false" data-size="5" data-actions-box="true" data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado" data-none-results-text="Nenhum Resultado Encontrado" data-deselect-all-text="DESELECIONAR TODOS" data-select-all-text="SELECIONAR TODOS" multiple>
                                             @foreach ($areas as $area)
                                             <option value="{{ $area->id }}">{{ $area->tipo }}</option>
                                             @endforeach
@@ -119,7 +135,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="unidades_limite">Unidades de Coordenação</label>
-                                        <select id="unidades_limite" name="unidades_limite[]" class="form-control show-tick" data-dropup-auto="false" multiple data-actions-box="true"  data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado">
+                                        <select id="unidades_limite" name="unidades_limite[]" class="form-control show-tick" data-container="body" data-dropup-auto="false" data-size="5" data-actions-box="true" data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado" data-none-results-text="Nenhum Resultado Encontrado" data-deselect-all-text="DESELECIONAR TODOS" data-select-all-text="SELECIONAR TODOS" multiple>
                                             @foreach ($unidades as $unidade)
                                             <option value="{{ $unidade->id }}">{{ $unidade->localidade }}</option>
                                             @endforeach

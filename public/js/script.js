@@ -4,13 +4,8 @@ $(function() {
     $('input:text').keyup(function() {
         this.value = this.value.toLocaleUpperCase()
     });
-    $('.show-tick').selectpicker({
-        noneResultsText: 'Nenhum Resultado Encontrado',
-        deselectAllText:'DESELECIONAR TODOS',
-        selectAllText: 'SELECIONAR TODOS'
-    });
-
 });
+
 $( window ).load(function() {
 
     var value = $('#origem_despesa').val();
@@ -118,7 +113,7 @@ $('#solicitantes')
 })
 .ajaxSelectPicker({
   ajax: {
-    url: urlSoli,
+    url: "/ajax/solicitantes",
     type: 'GET',
     data: function () {
       var params = {
@@ -158,13 +153,13 @@ preserveSelected: false
 });
 
 //Ajax para trazer os clientes
-$('#clientes')
+$('#clientesAjax')
 .selectpicker({
     liveSearch: true
 })
 .ajaxSelectPicker({
   ajax: {
-    url: urlClientes,
+    url: "/ajax/solicitantes",
     type: 'GET',
     data: function () {
       var params = {

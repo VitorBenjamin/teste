@@ -15,6 +15,7 @@ use App\Solicitante;
 use App\Cliente;
 use App\AreaAtuacao;
 use App\Status;
+use App\Despesa;
 
 class AntecipacaoController extends Controller
 {
@@ -50,7 +51,7 @@ class AntecipacaoController extends Controller
 		->where('id',$id)
 		->first();
 		$solicitacaoHelper = new SolicitacaoHelper();
-		$exist = $solicitacaoHelper->solicitacaoExist($solicitacao,config('constantes.tipo_reembolso'));
+		$exist = $solicitacaoHelper->solicitacaoExist($solicitacao,config('constantes.tipo_antecipacao'));
 		if ($exist == "ok") 
 		{
 			$verificarStatus = $solicitacaoHelper->verificarStatus($solicitacao);
@@ -134,12 +135,11 @@ class AntecipacaoController extends Controller
 				'anexo_comprovante' => $img_64,
 			]
 		);
-
 		\Session::flash('flash_message',[
 			'msg'=>"Despesa Atualizada com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
 		]);
-		return redirect()->route('antecipacao.editar', $despesa->solicitacoes_id);
+		return $this->verificarSolicitacao($despesa->solicitacoes_id);
 	}
     //Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
 	public function deletarDespesa($id)
