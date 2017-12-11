@@ -41,7 +41,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active sais-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#aberto">
-                                <i style="color: #bb7408" class="material-icons">build</i> ABERTO <span class="badge">{{count($abertas->solicitacao)}}</span>
+                                <i style="color: #bb7408" class="material-icons">build</i> <span class="hidden-xs"> ABERTO </span> <span class="badge">{{count($abertas->solicitacao)}}</span>
                             </a>
                         </li>
                         <li class="azed-tab">
@@ -51,27 +51,27 @@
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#aprovado">
-                                <i style="color: #3ecc1b" class="material-icons">done_all</i> APROVADO <span class="badge">{{count($aprovadas->solicitacao)}}</span>
+                                <i style="color: #3ecc1b" class="material-icons">done_all</i> <span class="hidden-xs"> APROVADO </span> <span class="badge">{{count($aprovadas->solicitacao)}}</span>
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#reprovado">
-                                <i style="color: #ff0000" class="material-icons">highlight_off</i> REPROVADO <span class="badge">{{count($reprovados->solicitacao)}}</span>
+                                <i style="color: #ff0000" class="material-icons">highlight_off</i> <span class="hidden-xs"> REPROVADO </span> <span class="badge">{{count($reprovados->solicitacao)}}</span>
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#devolvido">
-                                <i style="color: #deb422" class="material-icons">restore_page</i> DEVOLVIDO <span class="badge">{{count($devolvidas->solicitacao)}}</span>
+                                <i style="color: #deb422" class="material-icons">restore_page</i> <span class="hidden-xs"> DEVOLVIDO </span> <span class="badge">{{count($devolvidas->solicitacao)}}</span>
                             </a>
                         </li>
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#recorrente">
-                                <i style="color: #30b1b1" class="material-icons">hourglass_empty</i> RECORRENTE <span class="badge">{{count($recorrentes->solicitacao)}}</span>
+                                <i style="color: #30b1b1" class="material-icons">hourglass_empty</i> <span class="hidden-xs"> RECORRENTE </span> <span class="badge">{{count($recorrentes->solicitacao)}}</span>
                             </a>
                         </li>
                         <li class="sais-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#meus">
-                                <i style="color: #00c6f3" class="material-icons">person_pin</i> MINHAS <span class="badge">{{count($meus->solicitacao)}}</span>
+                                <i style="color: #00c6f3" class="material-icons">person_pin</i> <span class="hidden-xs"> MINHAS </span> <span class="badge">{{count($meus->solicitacao)}}</span>
                             </a>
                         </li>
                         <li class="azed-tab">
@@ -83,11 +83,12 @@
                     <div class="tab-content">
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
                         <div id="aberto" class="tab-pane fade in active" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> ABERTO </h1>
                             <table id="aberto" class="table table-bordered table-striped table-hover dataTable js-basic-example">
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        {{-- <th>ID</th> --}}
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -102,7 +103,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $aberto->id }}</td>
+                                        {{-- <td>{{ $aberto->id }}</td> --}}
                                         <td>{{ date('d-m-y',strtotime($aberto->created_at)) }}</td>
                                         <td>{{ $aberto->user->nome}}</td>
                                         <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
@@ -144,7 +145,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        {{-- <th>ID</th> --}}
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -159,7 +160,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $andamento->id }}</td>                                    
+                                        {{-- <td>{{ $andamento->id }}</td>                                     --}}
                                         <td>{{ date('d-m-y',strtotime($andamento->created_at)) }}</td>
                                         <td>{{ $aberto->user->nome }}</td>
                                         <td class="quebra-texto">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
@@ -184,11 +185,12 @@
                         
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
                         <div id="aprovado" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> APROVADAS </h1>
                             <table id="aprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example">
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        {{-- <th>ID</th> --}}
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -202,7 +204,7 @@
                                     @foreach ($aprovadas->solicitacao as $aprovado)
                                     <tr>
                                         <td></td>
-                                        <td>{{ $aprovado->id }}</td>
+                                        {{-- <td>{{ $aprovado->id }}</td> --}}
                                         <td>{{ date('d-m-y',strtotime($aprovado->created_at)) }}</td>
                                         <td>{{ $aprovado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
@@ -225,11 +227,12 @@
 
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
                         <div id="reprovado" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> REPROVADAS </h1>
                             <table id="reprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        {{-- <th>ID</th> --}}
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -244,7 +247,7 @@
                                     
                                     <tr>
                                         <td></td>
-                                        <td>{{ $reprovado->id }}</td>
+                                        {{-- <td>{{ $reprovado->id }}</td> --}}
                                         <td>{{ date('d-m-y',strtotime($reprovado->created_at)) }}</td>
                                         <td>{{ $reprovado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
@@ -267,11 +270,12 @@
 
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
                         <div id="devolvido" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> DEVOLVIDAS </h1>
                             <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        {{-- <th>ID</th> --}}
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -286,7 +290,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $devolvida->id }}</td>
+                                        {{-- <td>{{ $devolvida->id }}</td> --}}
                                         <td>{{ date('d-m-y',strtotime($devolvida->created_at)) }}</td>
                                         <td>{{ $devolvida->user->nome }}</td>
                                         <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
@@ -319,11 +323,12 @@
                         
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
                         <div id="recorrente" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> RECORRENTES </h1>
                             <table id="recorrente" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        {{-- <th>ID</th> --}}
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -338,7 +343,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $recorrente->id }}</td>
+                                        {{-- <td>{{ $recorrente->id }}</td> --}}
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
                                         <td>{{ $recorrente->user->nome }}</td>
                                         <td class="quebra-texto">{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
@@ -376,11 +381,12 @@
 
                         <!-- LISTAGEM DAS SOLICITAÇÕES DO COORDENADOR -->
                         <div id="meus" class="tab-pane fade in" role="tabpanel">
+                            <h1 class="visible-xs" style="text-align: center"> MINHAS </h1>
                             <table id="meus" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead> 
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        {{-- <th>ID</th> --}}
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -395,7 +401,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $meu->id }}</td>
+                                        {{-- <td>{{ $meu->id }}</td> --}}
                                         <td>{{ date('d-m-y',strtotime($meu->created_at)) }}</td>
                                         <td>{{ $meu->user->nome }}</td>
                                         <td class="quebra-texto">{{ $meu->cliente == null ? 'MOSELLO LIMA' : $meu->cliente->nome }}</td>
@@ -434,7 +440,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        {{-- <th>ID</th> --}}
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -449,7 +455,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $finalizado->id }}</td>                    
+                                        {{-- <td>{{ $finalizado->id }}</td>                     --}}
                                         <td>{{ date('d/m/y',strtotime($finalizado->created_at)) }}</td>
                                         <td>{{ $finalizado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
