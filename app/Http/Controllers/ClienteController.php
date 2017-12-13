@@ -23,15 +23,15 @@ class ClienteController extends Controller
     public function getAll(){
     	
     	$clientes = Cliente::orderBy('id')->get();
-
+        $unidades = Unidade::all('id','localidade');
         //dd($clientes);
-    	return view('cliente.listagem',compact('clientes'));
+        return view('cliente.listagem',compact('clientes','unidades'));
     }
 
     //Retorna a View de cadastro da cliente
     public function cadastrar(){
         $unidades = Unidade::all('id','localidade');
-    	return view('cliente.cadastrar',compact('unidades'));	
+        return view('cliente.cadastrar',compact('unidades'));	
     }
 
     //Cadatra um cliente e redireciona novamente para um tela de cadastro
