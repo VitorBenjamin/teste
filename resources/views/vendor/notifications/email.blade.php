@@ -45,13 +45,13 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-Saldações,<br>{{ config('app.name') }}
+Saudações,<br>{{ config('app.name') }}
 @endif
 
 {{-- Subcopy --}}
 @isset($actionText)
 @component('mail::subcopy')
-Se você tiver problemas para clicar no botão "Redefinir senha", copie e cole o URL abaixo em seu navegador da Web: [{{ $actionUrl }}]({{ $actionUrl }})
+Se você tiver problemas para clicar no botão "Redefinir senha", copie e cole a URL abaixo em seu navegador Web de Preferência: [{{ $actionUrl }}]({{ $actionUrl }})
 @endcomponent
 @endisset
 @endcomponent

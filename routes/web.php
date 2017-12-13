@@ -187,13 +187,32 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
     });
     // FIM ROTAS DE VIAGEM
 });
-Route::group(['prefix' => 'cliente','middleware' => ['check.user.role:COORDENADOR']],function()
+Route::group(['prefix' => 'admin','middleware' => ['check.user.role:COORDENADOR']],function()
 {
+    Route::get('cadastrar' , ['uses' => 'ClienteController@cadastrar', 'as' => 'cliente.cadastrar']);
+    Route::post('salvar', ['uses' => 'ClienteController@salvar', 'as' => 'cliente.salvar']);
     Route::get('listagem-cliente', ['uses' => 'ClienteController@getAll', 'as' => 'cliente.getAll']);
-    Route::get('editar-cliente/{id}', ['uses' => 'ClienteController@edit', 'as' => 'cliente.editar']);
+    Route::get('editar-cliente/{id}', ['uses' => 'ClienteController@editar', 'as' => 'cliente.editar']);
     Route::put('atualizar-cliente/{id}', ['uses' => 'ClienteController@atualizar', 'as' => 'cliente.atualizar']);
-    Route::get('deletar-limite/{cliente}/teste/{limite}', ['uses' => 'ClienteController@deletarLimite', 'as' => 'cliente.deletarLimite']);
-    Route::put('editar-limite/{id}', ['uses' => 'ClienteController@atualizarLimite', 'as' => 'limite.atualizar']);
+    Route::get('deletar-cliente/{id}', ['uses' => 'ClienteController@deletarLimite', 'as' => 'cliente.deletarLimite']);
+
+    Route::group(['prefix' => 'unidade','middleware' => ['check.user.role:COORDENADOR']],function()
+    {
+        Route::post('salvar', ['uses' => 'UnidadeController@salvar', 'as' => 'unidade.salvar']);
+        Route::get('listagem-unidade', ['uses' => 'UnidadeController@getAll', 'as' => 'unidade.getAll']);
+        Route::put('atualizar-unidade/{id}', ['uses' => 'UnidadeController@atualizar', 'as' => 'unidade.atualizar']);
+        Route::get('deletar-unidade/{id}', ['uses' => 'UnidadeController@deletarLimite', 'as' => 'unidade.deletarLimite']);
+    });
+    Route::group(['prefix' => 'processo','middleware' => ['check.user.role:COORDENADOR']],function()
+    {
+        Route::get('cadastrar' , ['uses' => 'ProcessoController@cadastrar', 'as' => 'processo.cadastrar']);
+        Route::post('salvar', ['uses' => 'ProcessoController@salvar', 'as' => 'processo.salvar']);
+        Route::get('listagem-processo', ['uses' => 'ProcessoController@getAll', 'as' => 'processo.getAll']);
+        Route::get('editar-processo/{id}', ['uses' => 'ProcessoController@editar', 'as' => 'processo.editar']);
+        Route::put('atualizar-processo/{id}', ['uses' => 'ProcessoController@atualizar', 'as' => 'processo.atualizar']);
+        Route::get('deletar-processo/{id}', ['uses' => 'ProcessoController@deletarLimite', 'as' => 'processo.deletarLimite']);
+    });
+
 });
 Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR']],function()
 {

@@ -143,10 +143,10 @@ class SolicitacaoRepository
         {
             array_push($advogados,$advogado->id);
         }
-        //dd($clientes);
+        array_push($advogados, auth()->user()->id);
+        
         if (!empty($area_id)) 
         {
-        //dd('asdasdasd');
             $status = Status::with(['solicitacao' => function($q) use ($area_id,$advogados,$clientes)
             {           
 
@@ -193,13 +193,13 @@ class SolicitacaoRepository
     public function getRange($total, $limites, $s)
     {
         $area_id = array();
+        
         foreach ($limites as $limite) 
         {
 
             array_push($area_id,$limite->area_atuacoes_id);
 
         }
-        //dd($area_id[0]);
 
         foreach ($limites as $limite) 
         {
@@ -240,20 +240,70 @@ class SolicitacaoRepository
         }
 
     }
+    public function getUnidadeLimites($total, $limites, $s)
+    {
+        $area_id = array();
+        
+        foreach ($limites as $limite) 
+        {
+
+            array_push($area_id,$limite->area_atuacoes_id);
+
+        }
+
+        foreach ($limites as $limite) 
+        {
+            if (empty($area_id)) 
+            {
+            //dd($limite);
+                if ($total <= $limite->ate) 
+                {
+
+                    return true;
+
+                }else {
+                    return false;
+                }
+            }else{
+
+                if ($s->area_atuacoes_id == $limite->area_atuacoes_id) 
+                {
+                    $unidades = $limite->unidades;
+
+                    if ($unidades !=null)
+                    {
+                        if (!$unidades->contains('id',$s->unidades_id)) {
+                            return false;
+                        }
+
+                        if ($total <= $limite->ate) 
+                        {
+
+                            return true;
+
+                        }else {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
     public function verificaLimite($s, $limites)
     {
         $temp = 0;
         if ($s->tipo=="REEMBOLSO") 
         {
             $temp = $this->totalReembolso($s);
-            if ($this->getRange($temp,$limites,$s) ) 
+            if ($this->getUnidadeLimites($temp,$limites,$s) ) 
             {
                 return true;
             }                    
         }elseif ($s->tipo=="VIAGEM") 
         {
             $temp = $this->totalViagem($s);
-            if ($this->getRange($temp,$limites,$s) ) 
+            if ($this->getUnidadeLimites($temp,$limites,$s) ) 
             {
                 return true;
             } 
@@ -261,21 +311,21 @@ class SolicitacaoRepository
         }elseif($s->tipo=="GUIA") 
         {
             $temp = $this->totalGuia($s);
-            if ($this->getRange($temp,$limites,$s) ) 
+            if ($this->getUnidadeLimites($temp,$limites,$s) ) 
             {
                 return true;
             } 
         }elseif ($s->tipo=="COMPRA") 
         {
             $temp = $this->totalCompra($s);
-            if ($this->getRange($temp,$limites,$s) ) 
+            if ($this->getUnidadeLimites($temp,$limites,$s) ) 
             {
                 return true;
             } 
         }elseif ($s->tipo=="ANTECIPAÇÃO") 
         {
             $temp = $this->totalAntecipacao($s);
-            if ($this->getRange($temp,$limites,$s) ) 
+            if ($this->getUnidadeLimites($temp,$limites,$s) ) 
             {
                 return true;
             } 

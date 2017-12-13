@@ -8,9 +8,11 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
                 <ul class="demo-choose-skin menuDireito">
-                    <li><a href="{{ route('user.getAll') }}"><i class="material-icons">sd_storage</i><span>Cadastrar. Cliente</span></a></li>
-                    <li><a href="{{ route('user.getAll') }}"><i class="material-icons">sd_storage</i><span>Cadastrar. Unidade</span></a></li>
-                    <li><a href="{{ route('user.getAll') }}"><i class="material-icons">sd_storage</i><span>Cadastrar. Processo</span></a></li>
+                    <a href="{{ route('cliente.cadastrar') }}"><li><i class="material-icons">sd_storage</i><span>Cadastrar Cliente</span></li></a>
+                    <a href="{{ route('cliente.getAll') }}"><li><i class="material-icons">list</i><span>Listar Clientes</span></li></a>
+                    <a href="{{ route('unidade.getAll') }}"><li><i class="material-icons">list</i><span>Listar Unidades</span></li></a>
+                    <a href="{{ route('processo.getAll') }}"><li><i class="material-icons">list</i><span>Listar Processos</span></li></a>
+
                 </ul>
 
             </div>

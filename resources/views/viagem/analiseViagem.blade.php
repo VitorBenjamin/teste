@@ -322,3 +322,17 @@
 	<!-- FIM MODAL GALERIA -->
 </section>
 @endsection
+<!-- @push('scripts2')
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.4.3/js/ajax-bootstrap-select.min.js') !!}
+@endpush
+@push('scripts')
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/locale/pt-br.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.5/waves.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-datetimepicker/2.7.1/js/bootstrap-material-datetimepicker.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/dataTables.bootstrap.min.js') !!}
+{!! Html::script('https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js')!!}
+@endpush -->

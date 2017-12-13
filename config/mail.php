@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'mail.betsoccer.club'),
+    'host' => env('MAIL_HOST', 'moselo@betsoccer.club'),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 25),
+    'port' => env('MAIL_PORT', 587),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'moselo@betsoccer.club'),
-        'name' => env('MAIL_FROM_NAME', 'Teste'),
+        'name' => env('MAIL_FROM_NAME', 'nao-responder'),
     ],
 
     /*

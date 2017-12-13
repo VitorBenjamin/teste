@@ -94,7 +94,7 @@
         <!-- Footer -->
         <div class="legal">
             <div class="copyright">
-                &copy; 2017 {{ HTML::link('http://agenciavilaca.com.br', 'Prototipo | Agencia Vilaca') }}
+                &copy; 2017 {{ HTML::link('http://agenciavilaca.com.br', 'Protótipo | Agência Vilaca') }}
             </div>
             <div class="version">
                 <b>Version: </b> 1.0

@@ -41,3 +41,7 @@
 	</form>
 </section>
 @endsection
+<!-- @push('scripts2')
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.4.3/js/ajax-bootstrap-select.min.js') !!}
+@endpush -->

@@ -1,13 +1,13 @@
 ﻿/* Navbar ====================================== */
 @import url(materialize.css);
 
-.menuDireito li a{
-  font-size: 16px;
+.menuDireito a{
+  font-size: 14px;
   color: black;
   text-decoration: none;
 }
- .menuDireito li a .material-icons {
-  font-size: 28px !important;
+ .menuDireito a .material-icons {
+  font-size: 22px !important;
 }
 table.dataTable tbody td {
   vertical-align: baseline;

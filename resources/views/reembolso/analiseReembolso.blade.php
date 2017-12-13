@@ -159,14 +159,13 @@
 	</div>
 </section>
 @endsection
-<!-- @push('scripts')
-<script src="{{ URL::asset('/plugins/jquery-datatable/jquery.dataTables.js') }}"></script>
-<script src="{{ URL::asset('/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js') }}"></script>
-<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js') }}"></script>
-<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/buttons.flash.min.js') }}"></script>
-<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/jszip.min.js') }}"></script>
-<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/pdfmake.min.js') }}"></script>
-<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/vfs_fonts.js') }}"></script>
-<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') }}"></script>
-<script src="{{ URL::asset('/plugins/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
+<!-- @push('scripts2')
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.4.3/js/ajax-bootstrap-select.min.js') !!}
+@endpush
+@push('scripts')
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.5/waves.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js') !!}
+{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/dataTables.bootstrap.min.js') !!}
+{!! Html::script('https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js')!!}
 @endpush -->
