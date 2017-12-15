@@ -212,6 +212,15 @@ Route::group(['prefix' => 'admin','middleware' => ['check.user.role:COORDENADOR'
         Route::put('atualizar-processo/{id}', ['uses' => 'ProcessoController@atualizar', 'as' => 'processo.atualizar']);
         Route::get('deletar-processo/{id}', ['uses' => 'ProcessoController@deletarLimite', 'as' => 'processo.deletarLimite']);
     });
+    Route::group(['prefix' => 'solicitante','middleware' => ['check.user.role:COORDENADOR']],function()
+    {
+        Route::get('cadastrar' , ['uses' => 'SolicitanteController@cadastrar', 'as' => 'solicitante.cadastrar']);
+        Route::post('salvar', ['uses' => 'SolicitanteController@salvar', 'as' => 'solicitante.salvar']);
+        Route::get('listagem-solicitante', ['uses' => 'SolicitanteController@getAll', 'as' => 'solicitante.getAll']);
+        Route::get('editar-solicitante/{id}', ['uses' => 'SolicitanteController@editar', 'as' => 'solicitante.editar']);
+        Route::put('atualizar-solicitante/{id}', ['uses' => 'SolicitanteController@atualizar', 'as' => 'solicitante.atualizar']);
+        Route::get('deletar-solicitante/{id}', ['uses' => 'SolicitanteController@deletarLimite', 'as' => 'solicitante.deletarLimite']);
+    });
 
 });
 Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR']],function()

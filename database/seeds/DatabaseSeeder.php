@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UnidadeTableSeeder::class);
         $this->call(StatusTableSeeder::class);
         $this->call(TipoGuiaTableSeeder::class);
-        $this->call(ClienteTableSeeder::class);
-        $this->call(SolicitanteTableSeeder::class);
+        //$this->call(ClienteTableSeeder::class);
+        //$this->call(SolicitanteTableSeeder::class);
         $this->call(UserTableSeeder::class);
-        $this->call(ProcessoTableSeeder::class);
+        //$this->call(ProcessoTableSeeder::class);
         $this->call(RoleTableSeeder::class);
 
         // $this->call([

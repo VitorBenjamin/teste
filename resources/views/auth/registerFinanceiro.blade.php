@@ -77,7 +77,7 @@
                             <fieldset>
                                 <div class="form-group form-float">
                                     <label for="area_atuacoes_id">Área de Atendimento</label>
-                                    <select id="area_atuacoes_id" name="area_atuacoes_id" class="form-control show-tick" data-live-search="true" required>
+                                    <select id="area_atuacoes_id" name="area_atuacoes_id" class="form-control show-tick" data-container="body" data-dropup-auto="false" data-size="5" data-live-search="true" required>
                                         <option value="">SELECIONE</option>
                                         @foreach ($areas as $area)
                                         <option value="{{ $area->id }}">{{ $area->tipo }}</option>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="form-group form-float">
                                     <label for="unidades_id">Unidades</label>
-                                    <select id="unidades_id" name="unidades_id" class="form-control show-tick" data-live-search="true" required>
+                                    <select id="unidades_id" name="unidades_id" class="form-control show-tick" data-container="body" data-dropup-auto="false" data-size="5" data-live-search="true" requiredeu>
                                         <option value="">SELECIONE</option>
                                         @foreach ($unidades as $unidade)
                                         <option value="{{ $unidade->id }}">{{ $unidade->localidade }}</option>

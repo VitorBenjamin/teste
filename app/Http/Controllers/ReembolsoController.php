@@ -98,7 +98,7 @@ class ReembolsoController extends Controller
         // $file = base64_encode(file_get_contents($path_name));
         // $src  = 'data: image/'.$extension.';base64,'.$file;
 
-        $file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);
+        $file = Image::make($request->file('anexo_comprovante'));
         $img_64 = (string) $file->encode('data-url');
         $despesa = Despesa::create(
             [   
@@ -197,7 +197,7 @@ class ReembolsoController extends Controller
     {   
         $despesa = Despesa::find($id);
         if ($request->hasFile('anexo_comprovante')) {
-            $file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);            
+            $file = Image::make($request->file('anexo_comprovante'));            
             $img_64 = (string) $file->encode('data-url');
         }else{
             $img_64 = $despesa->anexo_comprovante;

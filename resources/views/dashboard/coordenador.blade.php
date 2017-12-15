@@ -11,7 +11,6 @@
         <h2>DASHBOARD</h2>
     </div>
     {{ csrf_field() }}
-    
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="header">

@@ -249,10 +249,10 @@
 						<thead>
 							<tr>
 								<th></th>
-								<th>Área de Atendimento</th>
+								<th>Área. Atend..</th>
 								<th>Unidades de Coordenação</th>
-								<th>Aprovação (Mínimo)</th>
-								<th>Aprovação (Máximo)</th>
+								<th>Aprov. Min</th>
+								<th>Aprov. Max</th>
 								<th>Ações</th>
 							</tr>
 						</thead>

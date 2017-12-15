@@ -204,7 +204,7 @@ class SolicitacaoController extends Controller
 				$tipo = $solicitacao->tipo;
 				if ($solicitacao->delete()) {
 					\Session::flash('flash_message',[
-						'msg'=> $tipo. "Removido com Sucesso!!!",
+						'msg'=> $tipo. " Removido com Sucesso!!!",
 						'class'=>"alert bg-red alert-dismicssible"
 					]);
 					return route('user.index');

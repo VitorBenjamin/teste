@@ -201,7 +201,7 @@
 			@foreach ($solicitacao->despesa as $key => $despesa)
 			<div class="mySlides">
 				<div class="numbertext"><span class="badge bg-cyan">{{$key+1}} / {{count($solicitacao->despesa)}}</span></div>
-				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
+				<img src="{{$despesa->anexo_comprovante}}">				
 			</div>
 			@endforeach														
 

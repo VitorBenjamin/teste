@@ -98,12 +98,13 @@ $('#origem_despesa').change(function() {
     $('#cliente').selectpicker('show');
     $('#cliente').attr('required', true);
     $('#cliente').selectpicker('refresh');
-
-
-
 }
 });
-
+// $( "#cliente" ).change(function () {
+//     var str = "";
+//     alert($(this).val());
+    
+// });
 
 
 //Ajax para trazer os clientes

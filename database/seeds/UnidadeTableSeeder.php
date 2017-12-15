@@ -27,19 +27,25 @@ class UnidadeTableSeeder extends Seeder
         ]);
 
         Unidade::create([
+            'localidade' => 'MUCUGÊ',
+            
+        ]); 
+
+        Unidade::create([
             'localidade' => 'SALVADOR',
             
         ]);
 
         Unidade::create([
-            'localidade' => 'NANUQUE',
+            'localidade' => 'VITÓRIA',
+            
+        ]); 
+
+        Unidade::create([
+            'localidade' => 'TELEMACO BORBA',
             
         ]);
 
-        Unidade::create([
-            'localidade' => 'GUARAPARI',
-            
-        ]);        
 
     }
 }
