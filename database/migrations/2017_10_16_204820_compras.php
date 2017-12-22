@@ -17,6 +17,7 @@ class Compras extends Migration
             //
             $table->increments('id');
             $table->date('data_compra');
+            $table->boolean('estornado')->default(false);
             $table->string('descricao');
             $table->integer('quantidade');
             $table->integer('solicitacoes_id')->unsigned();

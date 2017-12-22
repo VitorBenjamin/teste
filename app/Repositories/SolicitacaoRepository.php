@@ -423,6 +423,29 @@ class SolicitacaoRepository
         }
         return $solicitacoes;
     }
+    public function valorTotal($solicitacoes)
+    {
+        //dd($solicitacoes);
+
+        foreach ($solicitacoes as $s) {
+            if ($s->tipo=="REEMBOLSO") {
+                $s['total']=$this->totalReembolso($s);
+            }
+            if ($s->tipo=="VIAGEM") {
+                $s['total']=$this->totalViagem($s);
+            }
+            if ($s->tipo=="GUIA") {
+                $s['total']=$this->totalGuia($s);
+            }
+            if ($s->tipo=="COMPRA") {
+                $s['total']=$this->totalCompra($s);
+            }
+            if ($s->tipo=="ANTECIPAÇÃO") {
+                $s['total']=$this->totalAntecipacao($s);
+            }           
+        }
+        return $solicitacoes;
+    }
 
     public function totalReembolso($reembolso)
     {
@@ -437,6 +460,7 @@ class SolicitacaoRepository
         if ($reembolso->translado != null) {
 
             foreach ($reembolso->translado as $translado) {
+                $translado['valor'] = $translado->distancia*$km;
                 $total += $translado->distancia*$km;
             }
         }

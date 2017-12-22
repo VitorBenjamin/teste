@@ -251,7 +251,7 @@ return [
         'Viagem' => App\Viagem::class,        
         'ViagemComprovante' => App\ViagemComprovante::class,
         'Comentario' => App\Comentario::class,
-
+        'Relatorio' => App\Relatorio::class,
         'SolicitacaoHelper' => App\Http\Helpers\SolicitacaoHelper::class,
 
 

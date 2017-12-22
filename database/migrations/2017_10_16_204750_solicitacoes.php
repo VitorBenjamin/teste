@@ -15,6 +15,7 @@ class Solicitacoes extends Migration
     {
         Schema::create('solicitacoes', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('data_finalizado')->nullable();
             $table->integer('codigo');
             $table->boolean('urgente')->default(false);
             $table->string('tipo');
@@ -26,6 +27,7 @@ class Solicitacoes extends Migration
             $table->integer('processos_id')->unsigned()->nullable();
             $table->integer('unidades_id')->unsigned();
             $table->integer('users_id')->unsigned();
+            $table->integer('relatorios_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

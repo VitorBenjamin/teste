@@ -16,6 +16,7 @@ class Viagens extends Migration
         Schema::create('viagens', function (Blueprint $table) {
             $table->increments('id');
             $table->string('observacao')->nullable();
+            $table->boolean('estornado')->default(false);
             $table->string('origem');
             $table->string('destino');
             $table->datetime('data_ida');

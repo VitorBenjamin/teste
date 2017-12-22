@@ -17,6 +17,7 @@ class Despesas extends Migration
             //DB::statement("ALTER TABLE despesas ADD anexo_comprovante LONGBLOB");
             $table->increments('id');
             $table->string('descricao');
+            $table->boolean('estornado')->default(false);
             $table->date('data_despesa');
             $table->string('tipo_comprovante');
             $table->decimal('valor', 10,2);

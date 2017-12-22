@@ -18,6 +18,7 @@ class Guias extends Migration
             $table->increments('id');
             $table->date('data_limite');
             $table->boolean('prioridade')->default(false);
+            $table->boolean('estornado')->default(false);
             $table->string('observacao')->nullable();
             $table->string('reclamante');
             $table->string('perfil_pagamento');

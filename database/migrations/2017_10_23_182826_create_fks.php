@@ -42,6 +42,7 @@ class CreateFks extends Migration
             $table->foreign('clientes_id')->references('id')->on('clientes');
             $table->foreign('processos_id')->references('id')->on('processos');
             $table->foreign('users_id')->references('id')->on('users');
+            $table->foreign('relatorios_id')->references('id')->on('relatorios');
         }); 
 
     //Foreign Keys Tabela comentarios
@@ -53,6 +54,7 @@ class CreateFks extends Migration
     //Foreign Keys Tabela compras
         Schema::table('compras', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
+
         });  
 
     //Foreign Keys Tabela contacoes
@@ -65,6 +67,7 @@ class CreateFks extends Migration
         Schema::table('viagens', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             $table->foreign('viagens_comprovantes_id')->references('id')->on('viagens_comprovantes')->onDelete('cascade');
+
         });
 
     //Foreign Keys Tabela viagens_comprovantes
@@ -78,6 +81,7 @@ class CreateFks extends Migration
         Schema::table('antecipacoes', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             DB::statement("ALTER TABLE antecipacoes ADD anexo_comprovante LONGBLOB");
+
         });
 
     //Foreign Keys Tabela antecipacoes_comprovantes
@@ -90,11 +94,13 @@ class CreateFks extends Migration
         Schema::table('despesas', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             DB::statement("ALTER TABLE despesas ADD anexo_comprovante LONGBLOB");
+
         });
 
     //Foreign Keys Tabela translados
         Schema::table('translados', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
+
         });
 
     //Foreign Keys Tabela guias
@@ -137,7 +143,12 @@ class CreateFks extends Migration
             $table->foreign('coordenador_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('advogado_id')->references('id')->on('users')->onDelete('cascade');
             $table->primary(['coordenador_id', 'advogado_id']);
-        });      
+        });     
+    //Foreign Keys Tabela users_limites
+        Schema::table('relatorios', function (Blueprint $table) {
+            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('clientes_id')->references('id')->on('clientes')->onDelete('cascade');
+        }); 
 
     }
     /**

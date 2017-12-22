@@ -223,6 +223,12 @@ Route::group(['prefix' => 'admin','middleware' => ['check.user.role:COORDENADOR'
     });
 
 });
+Route::group(['prefix' => 'administrativo/relatorio','middleware' => ['check.user.role:COORDENADOR']],function()
+{
+    Route::get('gerar', ['uses' => 'RelatorioController@relatorio', 'as' => 'relatorio.buscar']);
+    Route::get('busca', ['uses' => 'RelatorioController@gerarRelatorio', 'as' => 'relatorio.gerar']);
+
+});
 Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR']],function()
 {
     Route::get('listagem-users', ['uses' => 'UserController@getAll', 'as' => 'user.getAll']);

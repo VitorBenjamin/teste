@@ -17,6 +17,7 @@ class Antecipacoes extends Migration
             //DB::statement("ALTER TABLE antecipacoes ADD anexo_comprovante LONGBLOB");
             $table->increments('id');
             $table->string('descricao');
+            $table->boolean('estornado')->default(false);
             $table->datetime('data_recebimento');
             $table->decimal('valor', 10, 2);
             $table->integer('solicitacoes_id')->unsigned();      
