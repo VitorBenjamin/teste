@@ -29,8 +29,7 @@
 						<table class="table table-bordered table-striped table-hover dataTable js-exportable">
 							<thead>
 								<tr>
-									<th></th>
-									<th>DATA</th>
+									<th class="uk-date-column">DATA</th>
 									<th>CÓDIGO</th>
 									<th>DADOS GERAIS</th>
 									<th style="width: 110px">VALORES</th>
@@ -40,12 +39,11 @@
 								<tr>
 									<th></th>
 									<th></th>
-									<th></th>
 									<th style="white-space: nowrap;"></th>
 									<th style="text-align:right;white-space: nowrap;"></th>
 								</tr>
 							</tfoot>
-							<tbody>
+							<tbody style="font-size: 13px;">
 								@foreach ($solicitacoes as $solicitacao)
 								@if($solicitacao->tipo == "REEMBOLSO")
 

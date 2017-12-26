@@ -159,6 +159,7 @@
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js') !!}
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/dataTables.bootstrap.min.js') !!}
     {!! Html::script('https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js')!!}
+    {!! Html::script('https://cdn.datatables.net/plug-ins/1.10.16/sorting/date-uk.js')!!}
     {!! Html::script('https://cdn.datatables.net/buttons/1.5.0/js/dataTables.buttons.min.js') !!}
     {!! Html::script('https://cdn.datatables.net/buttons/1.5.0/js/buttons.flash.min.js') !!}
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js') !!}

@@ -512,10 +512,16 @@ class SolicitacaoRepository
                 $total += $viagem->comprovante->custo_hospedagem;
                 $total += $viagem->comprovante->custo_locacao;
             }
-
+            $viagem['total']=$total;
         }
-    //dd($viagens->despesa);
 
+        $total += $this->totalViagemDespesa($viagens);
+        return $total;
+    }
+
+    public function totalViagemDespesa($viagens)
+    {
+        $total = 0;
         if (!empty($viagens->despesa)) {
             foreach ($viagens->despesa as $despesa) {
                 $total += $despesa->valor;
