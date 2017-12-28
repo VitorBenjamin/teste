@@ -125,6 +125,11 @@
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.4.3/js/ajax-bootstrap-select.min.js') !!}
     
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js') !!}
+    <!-- Moment Plugin Js -->
+    {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js') !!}
+    {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/locale/pt-br.js') !!}
+<!-- Bootstrap Material Datetime Picker Plugin Js -->
+    {!! Html::script('/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') !!}
     
     {!! Html::script('/js/script.js') !!}
     
@@ -139,9 +144,7 @@
     <!-- Autosize Plugin Js -->
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.0/autosize.min.js') !!}
 
-    <!-- Moment Plugin Js -->
-    {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.min.js') !!}
-    {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/locale/pt-br.js') !!}
+    
 
     <!-- Waves Effect Plugin Js -->
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.5/waves.min.js') !!}
@@ -149,8 +152,7 @@
     <!-- Input Mask Plugin Js -->
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js') !!}
 
-    <!-- Bootstrap Material Datetime Picker Plugin Js -->
-    {!! Html::script('/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') !!}
+    
 
     <!-- Jquery DataTable Plugin Js -->
     @yield('scripts')

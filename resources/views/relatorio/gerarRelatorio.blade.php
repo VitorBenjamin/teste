@@ -56,5 +56,38 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="row clearfix">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="card">
+				<div class="header">
+					<h2>
+						Relátorio Gerados
+					</h2>
+					<br>
+				</div>
+				<div class="body">
+					<table class="table table-bordered table-striped table-hover dataTable exportacao-simples">
+						<thead>
+							<tr>
+								<th class="uk-date-column">DATA</th>
+								<th>CLIENTE</th>
+								<th>COORDENADOR</th>
+							</tr>
+						</thead>
+						<tbody style="font-size: 13px;">
+							@foreach ($relatorios as $relatorio)
+							<tr>
+								<td>{{$relatorio->data}}</td>
+								<td>{{$relatorio->cliente->nome}}</td>
+								<td>{{$relatorio->user->nome}}</td>
+							</tr>
+							@endforeach                                
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 @endsection

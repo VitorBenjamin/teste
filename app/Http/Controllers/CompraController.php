@@ -26,7 +26,7 @@ class CompraController extends Controller
 		$areas = AreaAtuacao::all('id','tipo');
 		$processos = Processo::all();
 		$clientes = Cliente::all('id','nome');
-        $solicitantes = Solicitante::all('id','nome');
+		$solicitantes = Solicitante::all('id','nome');
 		return view('compra.cadastrar', compact('areas','processos','clientes','solicitantes'));  	
 	}
 
@@ -85,8 +85,8 @@ class CompraController extends Controller
 		$areas = AreaAtuacao::all('id','tipo'); 
 		//$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
 		$clientes = Cliente::all('id','nome');
-        $solicitantes = Solicitante::all('id','nome');
-        return view('compra.editar', compact('solicitacao','clientes','areas','solicitantes'));
+		$solicitantes = Solicitante::all('id','nome');
+		return view('compra.editar', compact('solicitacao','clientes','areas','solicitantes'));
 	}
 
     //Atualiza uma compra e redireciona para a tela de edição da Solicitação
@@ -107,6 +107,21 @@ class CompraController extends Controller
 			'class'=>"alert bg-green alert-dismissible"
 		]);
 		return redirect()->route('compra.editar', $compra->solicitacoes_id);
+	}
+	public function addCotacao(Request $request,$id)
+	{
+		//dd($request->all());
+		foreach ($request->data_cotacao as $key => $value) {
+			Contacao::create([
+				'descricao' => $request->descricao,
+				'data_cotacao' => $request->data_cotacao,
+				'fornecedor' => $request->fornecedor,
+				'quantidade' => $request->quantidade, 
+				'anexo_comprovante' => $request->anexo_comprovante, 
+				'compras_id' => $id,
+			]);
+		}
+		
 	}
 	public function addCompra(Request $request,$id){
 		Compra::create([

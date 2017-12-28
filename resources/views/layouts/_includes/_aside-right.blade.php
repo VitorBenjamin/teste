@@ -18,8 +18,8 @@
             <div role="tabpanel" class="tab-pane fade" id="settings">
                 <ul class="demo-choose-skin menuDireito">
                     <a href="{{ route('relatorio.buscar') }}"><li><i class="material-icons">list</i><span>Buscar Relatório</span></li></a>
-<!--                     <a href="{{ route('relatorio.gerar') }}"><li><i class="material-icons">list</i><span>Listar Solicitante</span></li></a>
- -->                </ul>
+                    <!-- <a href="{{ route('relatorio.gerar') }}"><li><i class="material-icons">list</i><span>Listar Solicitante</span></li></a> -->
+                </ul>
                 <!-- <ul class="demo-choose-skin menuDireito">
                     <a href="{{ route('cliente.getAll') }}"><li><i class="material-icons">list</i><span>Listar Clientes</span></li></a>
                     <a href="{{ route('unidade.getAll') }}"><li><i class="material-icons">list</i><span>Listar Unidades</span></li></a>

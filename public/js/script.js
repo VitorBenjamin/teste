@@ -1,9 +1,100 @@
 ﻿//Deixa todas os inputs UpperCase
-
 $(function() {
+    var i=1;  
     $('input:text').keyup(function() {
         this.value = this.value.toLocaleUpperCase()
     });
+    $('#add').click(function(){  
+
+        i++;  
+
+        $('#dynamic_field').append(
+            '<div class="row clearfix" id="row'+i+'">'
+            +'<div class="col-md-2">'
+            +'<div class="form-group">'
+            +'<div class="form-line">'
+            +'<label for="data_cotacao">Data</label>'
+            +'<input id="data_cotacao" type="text" value="" name="data_cotacao[]" class="datepicker form-control" placeholder="Escolha uma Data" required/>'
+            +'</div>'
+            +'</div>'
+            +'</div>'
+            +'<div class="col-md-3">'
+            +'<div class="form-group">'
+            +'<div class="form-line">'
+            +'<label for="descricao">Descrição</label>'
+            +'<input id="descricao" type="text" value="" name="descricao[]" class="form-control" placeholder="Descrição do produto" required/>'
+            +'</div>'
+            +'</div>'
+            +'</div>'
+            +'<div class="col-md-1">'
+            +'<div class="form-group">'
+            +'<div class="form-line">'
+            +'<label for="quantidade">Qtd.</label>'
+            +'<input type="text" value="" name="quantidade[]" class="form-control" placeholder="Qtd." required/>'
+            +'</div>'
+            +'</div>                              '
+            +'</div>'
+            +'<div class="col-md-3">'
+            +'<div class="form-group">'
+            +'<div class="form-line">'
+            +'<label style="margin-bottom: 17px;" for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>'
+            +'<input type="file" name="anexo_comprovante[]" id="anexo_comprovante" required/>'
+
+            +'</div>'
+            +'</div>'
+            +'</div>'
+            +'<div class="col-md-2" style="margin-top: 20px">'
+            +'<a name="remove" id="'+i+'" class="btn bg-red waves-effect btn_remove">'
+            +'<i class="material-icons">remove_circle</i>'
+            +'<span>REMOVER</span>'
+            +'</a>'
+            +'</div>'
+            +'</div>'); 
+        fazBind();
+        //$('.datepicker').bootstrapMaterialDatePicker('setDate', moment());
+    });  
+
+});
+
+
+function fazBind() {
+    $('.datepicker').bootstrapMaterialDatePicker({
+        // format: 'dddd DD MMMM YYYY',
+        //format : 'YYYY-MM-DD',
+        format : 'DD-MM-YYYY',
+        lang: 'pt-br',
+        // clearButton: true,
+        // clearText: 'Limpar',
+        // cancelText : 'Cancelar',
+        switchOnClick:true,
+        autoClose: true,
+        weekStart: 0,
+        time: false
+    });
+}
+
+$(document).on('click', '.btn_remove', function(){  
+
+    var button_id = $(this).attr("id");   
+    console.log(button_id);
+    $('#row'+button_id+'').remove();  
+
+});  
+$('.submit').click(function(event) {
+    $( '#relatorioForm' ).submit();
+});
+
+
+$('.checked_all').on('change', function() {     
+    $('.checkbox').prop('checked', $(this).prop("checked"));              
+});
+    //deselect "checked all", if one of the listed checkbox product is unchecked amd select "checked all" if all of the listed checkbox product is checked
+$('.checkbox').change(function(){ //".checkbox" change 
+    if($('.checkbox:checked').length == $('.checkbox').length){
+        $('.checked_all').prop('checked',true);
+    }else{
+        $('.checked_all').prop('checked',false);
+    }
 });
 
 $( window ).load(function() {
@@ -103,7 +194,7 @@ $('#origem_despesa').change(function() {
 // $( "#cliente" ).change(function () {
 //     var str = "";
 //     alert($(this).val());
-    
+
 // });
 
 

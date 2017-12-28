@@ -10,14 +10,23 @@
   font-size: 22px !important;
 }
 table.dataTable tbody td {
-  vertical-align: baseline;
+  vertical-align: middle;
 }
+
+[type="checkbox"] + label:before,
+[type="checkbox"]:not(.filled-in) + label:after { 
+  margin-top: 9px !important;
+ }
+
 .acoesTD{
   text-align: center
 }
 
 table.dataTable thead th {
   background-color: #ddcfbe;
+}
+table.dataTable label {
+  margin-bottom: 0px;
 }
 @media (max-width: 420px){
 .quebra-texto {

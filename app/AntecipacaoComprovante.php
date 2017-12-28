@@ -8,7 +8,7 @@ class AntecipacaoComprovante extends Model
 {
     protected $table = 'antecipacoes_comprovantes';
     protected $fillable = [
-        'descricao', 'data', 'tipo_comprovante','valor', 'antecipacoes_id'
+        'descricao', 'estornado', 'data', 'tipo_comprovante','valor', 'antecipacoes_id'
     ];
 
     

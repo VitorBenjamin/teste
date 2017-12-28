@@ -25,8 +25,10 @@ class Viagens extends Migration
             $table->boolean('bagagem')->nullable();
             $table->boolean('locacao')->nullable();
             $table->integer('kg')->nullable();
+            $table->string('observacao_comprovante')->nullable();
+            $table->datetime('data_compra')->nullable();
+            $table->decimal('valor', 10, 2)->nullable();
             $table->integer('solicitacoes_id')->unsigned();
-            $table->integer('viagens_comprovantes_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

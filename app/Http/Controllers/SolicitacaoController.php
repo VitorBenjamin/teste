@@ -168,6 +168,8 @@ class SolicitacaoController extends Controller
 		$status = $solicitacao->status[0]->descricao;
 		if ($status == config('constantes.status_aprovado_etapa2') || $status == config('constantes.status_coordenador_aprovado2')) {
 			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();
+			$solicitacao->data_finalizado = date("Y-m-d");
+			$solicitacao->save();
 		}elseif ($solicitacao->tipo == "VIAGEM" || $solicitacao->tipo == "ANTECIPAÇÃO" ) {			
 			if ($status == config('constantes.status_coordenador_aprovado')) {
 				$finalizar = Status::where('descricao', config('constantes.status_coordenador_aberto2'))->first();
@@ -177,7 +179,9 @@ class SolicitacaoController extends Controller
 			
 			
 		}else{
-			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();				
+			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();	
+			$solicitacao->data_finalizado = date("Y- -d");
+			$solicitacao->save();			
 		}
 		$this->trocarStatus($solicitacao,$finalizar);
 		return redirect()->route('user.index');

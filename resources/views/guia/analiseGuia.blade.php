@@ -80,5 +80,6 @@
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DA ANTECIPAÇÃO -->
+	
 </section>
 @endsection

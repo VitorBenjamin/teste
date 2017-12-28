@@ -10,6 +10,8 @@ use Intervention\Image\Facades\Image;
 use App\Repositories\SolicitacaoRepository;
 use App\Processo;
 use App\Viagem;
+use App\Locacao;
+use App\Hospedagem;
 use App\ViagemComprovante;
 use App\Solicitacao;
 use App\Solicitante;
@@ -160,6 +162,7 @@ class ViagemController extends Controller
                 'destino' => $request->destino, 
                 'data_ida' => date('Y-m-d H:m:s', strtotime($request->data_ida)),
                 'data_volta' => $data, 
+                'locacao' => $request->locacao,
                 'hospedagem' => $request->hospedagem,
                 'bagagem' => $request->bagagem, 
                 'kg' => $request->kg,
@@ -225,9 +228,16 @@ class ViagemController extends Controller
     public function addComprovante(Request $request,$id)
     {
         //dd($request->all());
+        $viagem = Viagem::find($request->viagem_id);
         if ($request->file('anexo_passagem')) {
             $file = Image::make($request->file('anexo_passagem'))->resize(1200, 600);
             $anexo_passagem = (string) $file->encode('data-url');
+            $viagem->update([
+                'anexo_passagem' => $anexo_passagem,
+                'valor' => $request->custo_passagem,
+                'data_compra' => $request->data_compra,
+                'observacao_comprovante' => $request->oberservacao,
+            ]);
 
         } else {
             $anexo_passagem = null;
@@ -236,6 +246,14 @@ class ViagemController extends Controller
         if ($request->file('anexo_hospedagem')) {
             $file = Image::make($request->file('anexo_hospedagem'))->resize(1200, 600);
             $anexo_hospedagem = (string) $file->encode('data-url');
+
+            $hospedagem = Hospedagem::create([
+                'data_compra' => $request->data_hospedagem,
+                'observacao' => $request->observacao_hospedagem,
+                'custo_hospedagem' => $request->custo_hospedagem,
+                'viagens_id' => $request->viagem_id,
+                'anexo_hospedagem' => $anexo_hospedagem,
+            ]);
         } else {
             $anexo_hospedagem = null;
         }
@@ -244,26 +262,29 @@ class ViagemController extends Controller
         if ($request->file('anexo_locacao')) {
             $file = Image::make($request->file('anexo_locacao'))->resize(1200, 600);
             $anexo_locacao = (string) $file->encode('data-url');
+            $locacao = Locacao::create([
+                'data_compra' => $request->data_locacao,
+                'observacao' => $request->observacao_locacao,
+                'custo_locacao' => $request->custo_locacao,
+                'viagens_id' => $request->viagem_id,
+                'anexo_locacao' => $anexo_locacao,
+            ]);
         } else {
             $anexo_locacao = null;
         }
+        // $comprovante = ViagemComprovante::create([
+        //     'observacao' => $request->observacao,
+        //     'data_compra' => $request->data_compra,
+        //     'custo_passagem' => $request->custo_passagem,
+        //     'custo_hospedagem' => $request->custo_hospedagem,
+        //     'custo_locacao' => $request->custo_locacao,
+        //     'anexo_passagem' => $anexo_passagem,
+        //     'anexo_hospedagem' => $anexo_hospedagem,
+        //     'anexo_locacao' => $anexo_locacao,
+        // ]);
 
-
-        $comprovante = ViagemComprovante::create([
-            'observacao' => $request->observacao,
-            'data_compra' => $request->data_compra,
-            'custo_passagem' => $request->custo_passagem,
-            'custo_hospedagem' => $request->custo_hospedagem,
-            'custo_locacao' => $request->custo_locacao,
-            'anexo_passagem' => $anexo_passagem,
-            'anexo_hospedagem' => $anexo_hospedagem,
-            'anexo_locacao' => $anexo_locacao,
-        ]);
-
-        $viagem = Viagem::find($request->viagem_id);
-        //dd($comprovante->id);
         $solicitacao = Solicitacao::find($id);
-        $viagem->update(['viagens_comprovantes_id' => $comprovante->id]);        
+        //$viagem->update(['viagens_comprovantes_id' => $comprovante->id]);        
         return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.analisar', $solicitacao->id);
     }
 

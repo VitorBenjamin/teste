@@ -14,7 +14,7 @@ class Viagem extends Model
     protected $table = 'viagens';
 
     protected $fillable = [
-        'observacao', 'origem', 'destino', 'data_ida', 'data_volta', 'hospedagem', 'bagagem', 'kg', 'locacao', 'solicitacoes_id','viagens_comprovantes_id'
+        'observacao', 'estornado', 'origem', 'destino', 'data_ida', 'data_volta', 'hospedagem', 'bagagem', 'kg', 'locacao', 'solicitacoes_id','valor', 'observacao_comprovante', 'data_compra', 'anexo_passagem'
     ];
 
     /** Consulta a Solicitacao por Viagem
@@ -47,8 +47,16 @@ class Viagem extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     
-    public function comprovante(){
+    public function hospedagem(){
 
-        return $this->belongsTo('App\ViagemComprovante', 'viagens_comprovantes_id');
+        return $this->hasOne('App\Hospedagem', 'viagens_id');
+    }
+    /** Consulta a Comprovantes por Viagem
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    
+    public function locacao(){
+
+        return $this->hasOne('App\Hospedagem', 'viagens_id');
     }
 }

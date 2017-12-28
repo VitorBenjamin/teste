@@ -19,7 +19,7 @@ class Relatorio extends Model
     /** Consulta o cliente do Relátorio
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-     public function clientes()
+     public function cliente()
     {
         return $this->belongsTo('App\Cliente','clientes_id');
     }

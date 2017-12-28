@@ -72,7 +72,7 @@
 								</td>	
 							</tr>
 							<div class="modal fade" id="addComprovante{{$viagem->id}}" tabindex="-1" role="dialog">
-								<div class="modal-dialog" role="document">
+								<div class="modal-dialog modal-lg" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h4 class="modal-title" id="defaultModalLabel">COMPROVANTES DA VIAGEM</h4>
@@ -84,7 +84,7 @@
 												<input type="hidden" name="viagem_id" value="{{$viagem->id}}">
 												<div class="col-md-12">
 													<div class="row clearfix">
-														<div class="col-md-4">
+														<div class="col-md-2">
 															<div class="form-group">
 																<div class="form-line">
 																	<label for="data_compra">Data</label>
@@ -92,18 +92,16 @@
 																</div>
 															</div>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-4">
 															<div class="form-group">
 																<div class="form-line">
 																	<label for="observacao">Observação</label>
 																	<input type="text" value="{{old('observacao')}}" name="observacao" class="form-control" placeholder="Observação"/>										
 																</div>
 															</div>
-														</div>
-													</div>
-													<div class="row clearfix">														
-														<div class="col-md-4">
-															<b>Cursto da Passagem</b>
+														</div>											
+														<div class="col-md-2">
+															<b>Custo da Passagem</b>
 															<div class="input-group">
 																<span class="input-group-addon">
 																	R$
@@ -113,18 +111,34 @@
 																</div>
 															</div>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-4">
 															<div class="form-group">
 																<div class="form-line">
 																	<label style="margin-bottom: 20px" for="anexo_passagem">Anexar Passagem</label>
-																	<input type="file" name="anexo_passagem" id="anexo_passagem" required/>														
+																	<input type="file" name="anexo_passagem" id="anexo_passagem" required/>											
 																</div>
 															</div>
 														</div>
 													</div>
 													@if($viagem->hospedagem == 1)
 													<div class="row clearfix">
+														<div class="col-md-2">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="data_hospedagem">Data Hospedagem</label>
+																	<input type="text" id="data_hospedagem" value="{{old('data_hospedagem')}}" name="data_hospedagem" class="datepicker form-control" placeholder="Clique"/>
+																</div>
+															</div>
+														</div>
 														<div class="col-md-4">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="observacao_hospedagem">Observação Hospedagem</label>
+																	<input type="text" value="{{old('observacao_hospedagem')}}" name="observacao_hospedagem" class="form-control" placeholder="Observação"/>										
+																</div>
+															</div>
+														</div>
+														<div class="col-md-2">
 															<b>Custo da Hospedagem</b>
 															<div class="input-group">
 																<span class="input-group-addon">
@@ -135,7 +149,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-4">
 															<div class="form-group">
 																<div class="form-line">
 																	<label style="margin-bottom: 20px" for="anexo_hospedagem">Anexar Hospedagem</label>
@@ -148,7 +162,23 @@
 
 													@if($viagem->locacao == 1)
 													<div class="row clearfix">
+														<div class="col-md-2">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="data_locacao">Data Locação</label>
+																	<input type="text" id="data_locacao" value="{{old('data_locacao')}}"name="data_locacao" class="datepicker form-control" placeholder="Clique"/>
+																</div>
+															</div>
+														</div>
 														<div class="col-md-4">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="observacao_locacao">Observação Locação</label>
+																	<input type="text" value="{{old('observacao_locacao')}}" name="observacao_locacao" class="form-control" placeholder="Observação"/>										
+																</div>
+															</div>
+														</div>
+														<div class="col-md-2">
 															<b>Custo da Locação</b>
 															<div class="input-group">
 																<span class="input-group-addon">
@@ -159,7 +189,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="col-md-8">
+														<div class="col-md-4">
 															<div class="form-group">
 																<div class="form-line">
 																	<label style="margin-bottom: 20px" for="anexo_locacao">Anexar Locação</label>
@@ -174,7 +204,7 @@
 													<div class="form-group">
 														<button class="btn btn-info">
 															<i class="material-icons">save</i>
-															<span>ANEXAR COMPROVANTE</span>
+															<span>ANEXAR COMPROVANTES</span>
 														</button>
 													</div>
 													<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->

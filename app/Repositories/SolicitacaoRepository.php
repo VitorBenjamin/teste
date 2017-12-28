@@ -506,12 +506,21 @@ class SolicitacaoRepository
     {
         $total = 0;
         foreach ($viagens->viagem as $viagem) 
-        {
-            if ($viagem->viagens_comprovantes_id != null ) {
-                $total += $viagem->comprovante->custo_passagem;
-                $total += $viagem->comprovante->custo_hospedagem;
-                $total += $viagem->comprovante->custo_locacao;
+        {   
+            $total += $viagem->valor;
+            if (!$viagem->locacao()) {
+                $total += $viagem->locacao()->valor;
             }
+            if (!$viagem->hospedagem()) {
+                $total += $viagem->hospedagem()->valor;
+            }
+            
+
+            // if ($viagem->viagens_comprovantes_id != null ) {
+            //     $total += $viagem->comprovante->custo_passagem;
+            //     $total += $viagem->comprovante->custo_hospedagem;
+            //     $total += $viagem->comprovante->custo_locacao;
+            // }
             $viagem['total']=$total;
         }
 

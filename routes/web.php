@@ -78,6 +78,8 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
     Route::get('analisar-guia/{id}', ['uses' => 'GuiaController@analisar', 'as' => 'guia.analisar']);
     Route::get('analisar-reembolso/{id}', ['uses' => 'ReembolsoController@analisar', 'as' => 'reembolso.analisar']);
     Route::get('analisar-viagem/{id}', ['uses' => 'ViagemController@analisar',  'as' => 'viagem.analisar']);
+    Route::put('add-contacao/{id}', ['uses' => 'CompraController@addCotacao', 'as' => 'compra.addCotacao']);
+
 });
 
 Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGADO|GOD|COORDENADOR']],function()
@@ -227,6 +229,7 @@ Route::group(['prefix' => 'administrativo/relatorio','middleware' => ['check.use
 {
     Route::get('gerar', ['uses' => 'RelatorioController@relatorio', 'as' => 'relatorio.buscar']);
     Route::get('busca', ['uses' => 'RelatorioController@gerarRelatorio', 'as' => 'relatorio.gerar']);
+    Route::put('extornar', ['uses' => 'RelatorioController@extornar', 'as' => 'relatorio.extornar']);
 
 });
 Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR']],function()

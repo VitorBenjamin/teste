@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <section class="content">
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -22,17 +21,30 @@
 						Gerar Relátorio
 					</h2>
 					<br>
+					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
+						<a class="btn bg-light-green waves-effect submit" role="button">
+							<i class="material-icons">money_off</i>
+							<!-- <span class="hidden-xs">ADD</span> -->
+							<span>EXTORNAR DESPESAS SELECIONADAS</span>
+						</a>
+					</div>
 				</div>
 				<div class="body">
-					<form action="{{ route('relatorio.gerar')}}" method="GET">
+					<form id="relatorioForm" action="{{ route('relatorio.extornar')}}" method="POST">
 						{{ csrf_field() }}
-						<table class="table table-bordered table-striped table-hover dataTable js-exportable">
+						{{ method_field('PUT') }}
+						<table id="tableTeste" class="table table-bordered table-striped table-hover dataTable relatorio-dataTable">
 							<thead>
 								<tr>
 									<th class="uk-date-column">DATA</th>
 									<th>CÓDIGO</th>
 									<th>DADOS GERAIS</th>
-									<th style="width: 110px">VALORES</th>
+									<th style="width: 50px">VALORES</th>
+									<th style="width: 80px, padding-right: 0px;">
+										AÇÕES 
+										<input id="product_all" name="product_all" class="checked_all" type="checkbox">
+										<label for="product_all"></label>
+									</th>
 								</tr>
 							</thead>
 							<tfoot>
@@ -40,7 +52,7 @@
 									<th></th>
 									<th></th>
 									<th style="white-space: nowrap;"></th>
-									<th style="text-align:right;white-space: nowrap;"></th>
+									<th colspan="2" style="text-align:right;white-space: nowrap;"></th>
 								</tr>
 							</tfoot>
 							<tbody style="font-size: 13px;">

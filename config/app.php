@@ -253,6 +253,8 @@ return [
         'Comentario' => App\Comentario::class,
         'Relatorio' => App\Relatorio::class,
         'SolicitacaoHelper' => App\Http\Helpers\SolicitacaoHelper::class,
+        'Hospedagem' => App\Http\Helpers\Hospedagem::class,
+        'Locacao' => App\Http\Helpers\Locacao::class,
 
 
 
