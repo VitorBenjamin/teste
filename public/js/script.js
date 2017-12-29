@@ -1,13 +1,29 @@
 ﻿//Deixa todas os inputs UpperCase
 $(function() {
-    var i=1;  
     $('input:text').keyup(function() {
         this.value = this.value.toLocaleUpperCase()
     });
-    $('#add').click(function(){  
+    
+    var i=0;  
+    
+    // Wrap your File input in a wrapper <div>
+    var wrapper = $('<div/>').css({height:0,width:0,'overflow':'hidden'});
+    var fileInput = $('#anexo_comprovante0').wrap(wrapper);
+    // When your file input changes, update the text for your button
+    fileInput.change(function(){
+        $this = $(this);
+        // If the selection is empty, reset it
+        if($this.val().length != 0) {
+            $('#file0').text($this.val());
+        }
+    })
+      // When your fake button is clicked, simulate a click of the file button
+      $('#file0').click(function(){
+        fileInput.click();
+    }).show();
 
+      $('#add').click(function(){  
         i++;  
-
         $('#dynamic_field').append(
             '<div class="row clearfix" id="row'+i+'">'
             +'<div class="col-md-2">'
@@ -26,6 +42,14 @@ $(function() {
             +'</div>'
             +'</div>'
             +'</div>'
+            +'<div class="col-md-2">'
+            +'<div class="form-group">'
+            +'<div class="form-line">'
+            +'<label for="fornecedor">Fornecedor</label>'
+            +'<input id="fornecedor" type="text" value="" name="fornecedor[]" class="form-control" placeholder="Descrição do produto" required />                                     '
+            +'</div>'
+            +'</div>'
+            +'</div>'
             +'<div class="col-md-1">'
             +'<div class="form-group">'
             +'<div class="form-line">'
@@ -34,30 +58,65 @@ $(function() {
             +'</div>'
             +'</div>                              '
             +'</div>'
-            +'<div class="col-md-3">'
+            // +'<div class="col-md-3">'
+            // +'<div class="form-group">'
+            // +'<div class="form-line">'
+            // +'<label style="margin-bottom: 17px;" for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>'
+            // +'<input type="file" name="anexo_comprovante[]" id="anexo_comprovante" required/>'
+            // +'</div>'
+            // +'</div>'
+            // +'</div>'
+            +'<div class="col-md-1">'
             +'<div class="form-group">'
             +'<div class="form-line">'
-            +'<label style="margin-bottom: 17px;" for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>'
-            +'<input type="file" name="anexo_comprovante[]" id="anexo_comprovante" required/>'
-
+            +'<label for="quantidade">Valor R$</label>'
+            +'<input type="numeric" name="valor" style="text-align:right" name="valor" class="form-control" size="11"  value="" onKeyUp="moeda(this);" required>'
             +'</div>'
             +'</div>'
             +'</div>'
-            +'<div class="col-md-2" style="margin-top: 20px">'
-            +'<a name="remove" id="'+i+'" class="btn bg-red waves-effect btn_remove">'
+            +'<div class="col-md-2">'
+            +'<div class="form-line">'
+            +'<!-- Define your button -->'
+            +'<button type="button" style="padding: 0px 0;width:100%;overflow:hidden;margin-top: 16px;" id="file'+i+'">Anexar Arquivo (jpeg,bmp,png,pdf)</button>'
+            +'<!-- Your File element -->'
+            +' <input type="file" name="anexo_comprovante[]" id="anexo_comprovante'+i+'" />'
+            +'</div>'
+            +'</div>'
+            +'<div class="col-md-1" style="margin-top: 20px; padding-left: 0px !important;">'
+            +'<button type="button" name="remove" id="'+i+'" class="btn bg-red waves-effect btn_remove">'
             +'<i class="material-icons">remove_circle</i>'
-            +'<span>REMOVER</span>'
-            +'</a>'
+            +'<span>DEL.</span>'
+            +'</button>'
             +'</div>'
             +'</div>'); 
         fazBind();
+        changeFileInput(i);
         //$('.datepicker').bootstrapMaterialDatePicker('setDate', moment());
     });  
 
-});
+  });
 
-
-function fazBind() {
+function changeFileInput(i) {
+     // Wrap your File input in a wrapper <div>
+     $('input:text').keyup(function() {
+        this.value = this.value.toLocaleUpperCase()
+    });
+     var wrapper = $('<div/>').css({height:0,width:0,'overflow':'hidden'});
+     var fileInput = $('#anexo_comprovante'+i).wrap(wrapper);
+      // When your file input changes, update the text for your button
+      fileInput.change(function(){
+        $this = $(this);
+        // If the selection is empty, reset it
+        if($this.val().length != 0) {
+          $('#file'+i).text($this.val());
+      }
+  })
+      // When your fake button is clicked, simulate a click of the file button
+      $('#file'+i).click(function(){
+        fileInput.click();
+    }).show();
+  }
+  function fazBind() {
     $('.datepicker').bootstrapMaterialDatePicker({
         // format: 'dddd DD MMMM YYYY',
         //format : 'YYYY-MM-DD',
@@ -167,6 +226,12 @@ $('#contrato').change(function() {
     }else{
         $('#processo').removeAttr('required', false);
     }
+});
+$('#compra').change(function() {
+    var value = $(this).val();
+    //console.log(value);
+    $('#compras_id').val(value);
+
 });
 $('#origem_despesa').change(function() {
 

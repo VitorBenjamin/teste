@@ -45,6 +45,10 @@ class RelatorioController extends Controller
 			}
 		}
 
+		\Session::flash('flash_message',[
+			'msg'=>"Relátorio Alterado com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
 
 		return redirect()->back();
 	}
@@ -53,9 +57,10 @@ class RelatorioController extends Controller
 		//dd($request->all());
 		//$teste = "Cliente";
 		//dd($teste::find(1));
-		$cliente = Cliente::find($request->cliente_id);
+		$cliente = Cliente::find($request->clientes_id);
+		//dd($request->all());
 		$ultimo_relatorio = Relatorio::orderBy('id', 'desc')
-		->where('clientes_id',$request->cliente_id)
+		->where('clientes_id',$request->clientes_id)
 		->select('data')
 		->first();
 		//dd($ultimo_relatorio);
@@ -75,6 +80,6 @@ class RelatorioController extends Controller
 		//dd($solicitacoes);
 
 
-		return view('relatorio.relatorio', compact('solicitacoes'));
+		return view('relatorio.relatorio', compact('solicitacoes','cliente'));
 	}
 }

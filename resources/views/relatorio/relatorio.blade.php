@@ -18,14 +18,14 @@
 			<div class="card">
 				<div class="header">
 					<h2>
-						Gerar Relátorio
+						GERAR RELÁTORIO GERAL DOS GASTOS DA <span class="badge bg-cyan" style="padding: 8px 7px; font-size: 15px">{{$cliente->nome}}</span>
 					</h2>
 					<br>
 					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
-						<a class="btn bg-light-green waves-effect submit" role="button">
+						<a class="btn bg-orange waves-effect submit" role="button">
 							<i class="material-icons">money_off</i>
 							<!-- <span class="hidden-xs">ADD</span> -->
-							<span>EXTORNAR DESPESAS SELECIONADAS</span>
+							<span>EXTORNAR GASTOS SELECIONADOS</span>
 						</a>
 					</div>
 				</div>

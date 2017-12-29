@@ -15,6 +15,7 @@ use App\Solicitante;
 use App\Cliente;
 use App\AreaAtuacao;
 use App\Status;
+use App\Cotacao;
 
 
 class CompraController extends Controller
@@ -108,24 +109,31 @@ class CompraController extends Controller
 		]);
 		return redirect()->route('compra.editar', $compra->solicitacoes_id);
 	}
+	
 	public function addCotacao(Request $request,$id)
 	{
 		//dd($request->all());
 		foreach ($request->data_cotacao as $key => $value) {
-			Contacao::create([
-				'descricao' => $request->descricao,
-				'data_cotacao' => $request->data_cotacao,
-				'fornecedor' => $request->fornecedor,
-				'quantidade' => $request->quantidade, 
-				'anexo_comprovante' => $request->anexo_comprovante, 
-				'compras_id' => $id,
+			Cotacao::create([
+				'descricao' => $request->descricao[$key],
+				'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao[$key])),
+				'fornecedor' => $request->fornecedor[$key],
+				'quantidade' => $request->quantidade[$key],
+				'valor' => $request->valor[$key],
+				'anexo_comprovante' => $request->anexo_comprovante[$key], 
+				'compras_id' => $request->compras_id,
 			]);
 		}
+		\Session::flash('flash_message',[
+			'msg'=>"Cotações Cadastradas com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
 		
+		return redirect()->back();
 	}
 	public function addCompra(Request $request,$id){
 		Compra::create([
-			'data_compra' => $request->data_compra,
+			'data_compra' => date('Y-m-d', strtotime($request->data_compra)),
 			'descricao' => $request->descricao,
 			'quantidade' => $request->quantidade,
 			'solicitacoes_id' => $id,
