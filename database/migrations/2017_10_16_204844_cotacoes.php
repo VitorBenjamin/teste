@@ -21,6 +21,7 @@ class Cotacoes extends Migration
             $table->string('fornecedor');
             $table->integer('quantidade');
             $table->decimal('valor', 10,2);
+            $table->date('data_compra');
             $table->integer('compras_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

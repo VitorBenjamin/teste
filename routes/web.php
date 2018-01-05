@@ -79,17 +79,14 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
     Route::get('analisar-reembolso/{id}', ['uses' => 'ReembolsoController@analisar', 'as' => 'reembolso.analisar']);
     Route::get('analisar-viagem/{id}', ['uses' => 'ViagemController@analisar',  'as' => 'viagem.analisar']);
     Route::put('add-contacao/{id}', ['uses' => 'CompraController@addCotacao', 'as' => 'compra.addCotacao']);
+    Route::get('set-andamento/{id}', ['uses' => 'SolicitacaoController@andamento', 'as' => 'solicitacao.andamento']);
+
 
 });
 
 Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGADO|GOD|COORDENADOR']],function()
 
 {
-
-    Route::group(['middleware' => ['check.user.role:ADVOGADO|GOD|COORDENADOR']],function()
-    {
-        Route::get('set-andamento/{id}', ['uses' => 'SolicitacaoController@andamento', 'as' => 'solicitacao.andamento']);
-    });
     
     Route::put('atualizar-cabecalho/{id}', ['uses' => 'SolicitacaoController@atualizarCabecalho', 'as' => 'solicitacao.atualizarCabecalho']);
 
@@ -232,6 +229,13 @@ Route::group(['prefix' => 'administrativo/relatorio','middleware' => ['check.use
     Route::put('extornar', ['uses' => 'RelatorioController@extornar', 'as' => 'relatorio.extornar']);
 
 });
+Route::group(['prefix' => 'relatorio','middleware' => ['auth.basic']],function()
+{
+    Route::get('buscar', ['uses' => 'RelatorioController@gerarRelatorio', 'as' => 'relatorio.gerar']);
+    Route::get('listagem', ['uses' => 'RelatorioController@gerarRelatorio', 'as' => 'relatorio.gerar']);
+    
+});
+
 Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR']],function()
 {
     Route::get('listagem-users', ['uses' => 'UserController@getAll', 'as' => 'user.getAll']);

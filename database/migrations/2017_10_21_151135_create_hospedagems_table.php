@@ -28,10 +28,6 @@ class CreateHospedagemsTable extends Migration
             $table->foreign('viagens_id')->references('id')->on('viagens')
             ->onUpdate('cascade')->onDelete('cascade');
         });
-
-        Schema::table('viagens', function (Blueprint $table) {
-            DB::statement("ALTER TABLE viagens ADD anexo_passagem LONGBLOB");
-        });
     }
 
     /**

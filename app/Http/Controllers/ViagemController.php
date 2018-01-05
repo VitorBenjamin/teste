@@ -87,7 +87,7 @@ class ViagemController extends Controller
     {
         $solicitacao = Solicitacao::find($id);
 
-        $file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);
+        $file = Image::make($request->file('anexo_comprovante'));
         $img_64 = (string) $file->encode('data-url');
         $despesa = Despesa::create(
             [   
@@ -189,7 +189,7 @@ class ViagemController extends Controller
     {   
         $despesa = Despesa::find($id);
         if ($request->hasFile('anexo_comprovante')) {
-            $file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);            
+            $file = Image::make($request->file('anexo_comprovante'));            
             $img_64 = (string) $file->encode('data-url');
         }else{
             $img_64 = $despesa->anexo_comprovante;
@@ -230,12 +230,12 @@ class ViagemController extends Controller
         //dd($request->all());
         $viagem = Viagem::find($request->viagem_id);
         if ($request->file('anexo_passagem')) {
-            $file = Image::make($request->file('anexo_passagem'))->resize(1200, 600);
+            $file = Image::make($request->file('anexo_passagem'));
             $anexo_passagem = (string) $file->encode('data-url');
             $viagem->update([
                 'anexo_passagem' => $anexo_passagem,
                 'valor' => $request->custo_passagem,
-                'data_compra' => $request->data_compra,
+                'data_compra' => date('Y-m-d', strtotime($request->data_compra)),
                 'observacao_comprovante' => $request->oberservacao,
             ]);
 
@@ -244,31 +244,33 @@ class ViagemController extends Controller
         }
 
         if ($request->file('anexo_hospedagem')) {
-            $file = Image::make($request->file('anexo_hospedagem'))->resize(1200, 600);
+            $file = Image::make($request->file('anexo_hospedagem'));
             $anexo_hospedagem = (string) $file->encode('data-url');
 
             $hospedagem = Hospedagem::create([
-                'data_compra' => $request->data_hospedagem,
+                'data_compra' => date('Y-m-d', strtotime($request->data_hospedagem)),
                 'observacao' => $request->observacao_hospedagem,
                 'custo_hospedagem' => $request->custo_hospedagem,
                 'viagens_id' => $request->viagem_id,
                 'anexo_hospedagem' => $anexo_hospedagem,
             ]);
+            $viagem->update(['hospedagens_id' => $hospedagem->id]);
         } else {
             $anexo_hospedagem = null;
         }
         
         
         if ($request->file('anexo_locacao')) {
-            $file = Image::make($request->file('anexo_locacao'))->resize(1200, 600);
+            $file = Image::make($request->file('anexo_locacao'));
             $anexo_locacao = (string) $file->encode('data-url');
             $locacao = Locacao::create([
-                'data_compra' => $request->data_locacao,
+                'data_compra' => date('Y-m-d', strtotime($request->data_locacao)),
                 'observacao' => $request->observacao_locacao,
                 'custo_locacao' => $request->custo_locacao,
                 'viagens_id' => $request->viagem_id,
                 'anexo_locacao' => $anexo_locacao,
             ]);
+            $viagem->update(['hospedagens_id' => $locacao->id]);
         } else {
             $anexo_locacao = null;
         }

@@ -7,7 +7,6 @@
                 <a class="navbar-brand" href="/">{{config('constantes.title')}}</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
-                @role(['COORDENADOR'])
                 <ul class="nav navbar-nav navbar-right">
 
                     <!-- Notifications -->
@@ -199,6 +198,5 @@
                     <!-- #END# Tasks -->
                     <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
                 </ul>
-                @endrole
             </div>
         </nav>

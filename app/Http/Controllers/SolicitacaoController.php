@@ -47,14 +47,24 @@ class SolicitacaoController extends Controller
 		$status = $solicitacao->status[0]->descricao;
 		$repo = new SolicitacaoRepository();
 		$limites = auth()->user()->limites;
+		//dd($status);
 		if ($status == config('constantes.status_devolvido')) 
 		{
 			$andamento = Status::where('descricao', config('constantes.status_andamento_recorrente'))->first();
 
-		} elseif ($solicitacao->tipo == "COMPRA"){
+		}elseif ($solicitacao->tipo == "COMPRA"){
 			
-			$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
+			if ($status == config('constantes.status_andamento_administrativo')) {
+				$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
+			}elseif ($status == config('constantes.status_recorrente_financeiro')) {
+				
+				$andamento = Status::where('descricao',config('constantes.status_andamento_recorrente'))->first();
+			}else{
 
+				$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
+
+			}
+			
 		} elseif ($status == "ABERTO-ETAPA2" || $status == config('constantes.status_devolvido_etapa2')) {
 
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
@@ -108,15 +118,6 @@ class SolicitacaoController extends Controller
 
 		return redirect()->route('user.index');
 
-	}	
-
-	public function reprovar($id)
-	{
-		$solicitacao = Solicitacao::find($id);
-		$status = $solicitacao->status[0]->descricao;
-		$reprovado = Status::where('descricao', config('constantes.status_reprovado'))->first();				
-		$this->trocarStatus($solicitacao,$reprovado);
-		return redirect()->route('user.index');
 	}
 	
 	public function devolver(Request $request, $id)
@@ -131,15 +132,32 @@ class SolicitacaoController extends Controller
 			'users_id' => Auth::user()->id,
 			'status' => "DEVOLVIDO",
 		];
-		if ($status == config('constantes.status_coordenador_aprovado')) {
+		if ($solicitacao->tipo == "COMPRA"){
+
+			if ($status == config('constantes.status_andamento_administrativo') || $status == config('constantes.status_recorrente_financeiro')) {
+				
+				$devolvido = Status::where('descricao', config('constantes.status_devolvido'))->first();
+				$data['publico'] = true;
+			}elseif($status == config('constantes.status_andamento') || $status == config('constantes.status_andamento_recorrente')){
+
+				$devolvido = Status::where('descricao', config('constantes.status_recorrente_financeiro'))->first();
+				$data['publico'] = false;
+ 
+			}
+			
+		}elseif ($status == config('constantes.status_coordenador_aprovado')) {
+			
 			$devolvido = Status::where('descricao', config('constantes.status_coordenador_aberto'))->first();
 			$data['publico'] = false;
+
 		} elseif ($status == config('constantes.status_coordenador_aprovado2')) {
+
 			$devolvido = Status::where('descricao', config('constantes.status_coordenador_aberto2'))->first();
 			$data['publico'] = false;
 		} elseif ($status == config('constantes.status_andamento_financeiro')) {
 
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
+				
 				$devolvido = Status::where('descricao', config('constantes.status_recorrente_financeiro'))->first();
 				$data['publico'] = false;
 			}
@@ -162,6 +180,15 @@ class SolicitacaoController extends Controller
 		return redirect()->route('user.index');
 	}
 
+	public function reprovar($id)
+	{
+		$solicitacao = Solicitacao::find($id);
+		$status = $solicitacao->status[0]->descricao;
+		$reprovado = Status::where('descricao', config('constantes.status_reprovado'))->first();				
+		$this->trocarStatus($solicitacao,$reprovado);
+		return redirect()->route('user.index');
+	}
+
 	public function finalizar($id)
 	{
 		$solicitacao = Solicitacao::find($id);
@@ -180,7 +207,7 @@ class SolicitacaoController extends Controller
 			
 		}else{
 			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();	
-			$solicitacao->data_finalizado = date("Y- -d");
+			$solicitacao->data_finalizado = date("Y-m-d");
 			$solicitacao->save();			
 		}
 		$this->trocarStatus($solicitacao,$finalizar);

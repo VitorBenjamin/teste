@@ -5,6 +5,8 @@ namespace App\Repositories;
 use Illuminate\Support\Facades\Auth;
 use App\Despesa;
 use App\Processo;
+use App\Hospedagem;
+use App\Locacao;
 use App\Translado;
 use App\Solicitacao;
 use App\Solicitante;
@@ -480,6 +482,7 @@ class SolicitacaoRepository
 
     public function totalCompra($compras)
     {
+
         $total = 0;
         $menor = 999999;
         if ($compras->compra != null ) {
@@ -507,14 +510,15 @@ class SolicitacaoRepository
         $total = 0;
         foreach ($viagens->viagem as $viagem) 
         {   
+            //dd($viagem->locacoes);
+            //dd(Hospedagem::find($viagem->hospedagens_id));
             $total += $viagem->valor;
-            if (!$viagem->locacao()) {
-                $total += $viagem->locacao()->valor;
+            if (!$viagem->locacoes) {
+                $total += $viagem->locacoes->custo_locacao;
             }
-            if (!$viagem->hospedagem()) {
-                $total += $viagem->hospedagem()->valor;
+            if (!$viagem->hospedagens) {
+                $total += $viagem->hospedagens->custo_hospedagem;
             }
-            
 
             // if ($viagem->viagens_comprovantes_id != null ) {
             //     $total += $viagem->comprovante->custo_passagem;

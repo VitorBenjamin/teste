@@ -69,7 +69,7 @@ class AntecipacaoController extends Controller
 
 	public function addComprovante(Request $request,$id)
 	{
-		$file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);
+		$file = Image::make($request->file('anexo_comprovante'));
 		$img_64 = (string) $file->encode('data-url');
 		$antecipacao = Antecipacao::find($request->antecipacao_id);
 
@@ -88,7 +88,7 @@ class AntecipacaoController extends Controller
 	{
 		$solicitacao = Solicitacao::find($id);
 
-		$file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);
+		$file = Image::make($request->file('anexo_comprovante'));
 		$img_64 = (string) $file->encode('data-url');
 		$despesa = Despesa::create(
 			[   
@@ -120,7 +120,7 @@ class AntecipacaoController extends Controller
 	{   
 		$despesa = Despesa::find($id);
 		if ($request->hasFile('anexo_comprovante')) {
-			$file = Image::make($request->file('anexo_comprovante'))->resize(1200, 600);            
+			$file = Image::make($request->file('anexo_comprovante'));            
 			$img_64 = (string) $file->encode('data-url');
 		}else{
 			$img_64 = $despesa->anexo_comprovante;

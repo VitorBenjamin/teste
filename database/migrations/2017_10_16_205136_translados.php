@@ -17,6 +17,7 @@ class Translados extends Migration
            // 
             $table->increments('id');
             $table->date('data_translado');
+            $table->string('anexo_pdf')->nullable();
             $table->string('observacao')->nullable();
             $table->string('turno');
             $table->string('origem');

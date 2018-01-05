@@ -77,7 +77,7 @@ $(function() {
             +'<div class="col-md-2">'
             +'<div class="form-line">'
             +'<!-- Define your button -->'
-            +'<button type="button" style="padding: 0px 0;width:100%;overflow:hidden;margin-top: 16px;" id="file'+i+'">Anexar Arquivo (jpeg,bmp,png,pdf)</button>'
+            +'<button type="button" style="padding: 10px 0;width:100%;overflow:hidden;margin-top: 16px;" id="file'+i+'"> Anexar Arquivo </button>'
             +'<!-- Your File element -->'
             +' <input type="file" name="anexo_comprovante[]" id="anexo_comprovante'+i+'" />'
             +'</div>'

@@ -108,7 +108,7 @@
                                     @foreach ($abertas->solicitacao as $aberto)
                                     <tr>
                                         <td></td>
-                                        <td>{{ date('d-m-y',strtotime($aberto->created_at)) }}</td>
+                                        <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
                                         <!-- <td> {{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }} </td> -->
                                         <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
@@ -155,7 +155,7 @@
                                     <tr>
                                         <td></td>
                                         <!-- <td>{{ $andamento->id }}</td> -->
-                                        <td>{{ date('d-m-y',strtotime($andamento->created_at)) }}</td>
+                                        <td>{{ date('d/m/Y',strtotime($andamento->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
                                         <td>{{ $andamento->tipo }}</td>
                                         <td>{{ $andamento->solicitante->nome }}</td>
@@ -198,7 +198,7 @@
                                     <tr>
                                         <td></td>
                                         <!-- <td>{{ $aprovado->id }}</td> -->
-                                        <td>{{ date('d-m-y',strtotime($aprovado->created_at)) }}</td>
+                                        <td>{{ date('d/m/Y',strtotime($aprovado->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
                                         <td>{{ $aprovado->tipo }}</td>
                                         <td>{{ $aprovado->solicitante->nome }}</td>
@@ -241,7 +241,7 @@
                                     <tr>
                                         <td></td>
                                         <!-- <td>{{ $reprovado->id }}</td> -->
-                                        <td>{{ date('d-m-y',strtotime($reprovado->created_at)) }}</td>
+                                        <td>{{ date('d/m/Y',strtotime($reprovado->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
                                         <td>{{ $reprovado->tipo }}</td>
                                         <td>{{ $reprovado->solicitante->nome }}</td>
@@ -284,7 +284,7 @@
                                     <tr>
                                         <td></td>
                                         <!-- <td>{{ $devolvida->id }}</td> -->
-                                        <td>{{ date('d-m-y',strtotime($devolvida->created_at)) }}</td>
+                                        <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
                                         <td>{{ $devolvida->solicitante->nome }}</td>
@@ -328,7 +328,7 @@
                                     <tr>
                                         <td></td>
                                         <!-- <td>{{ $finalizado->id }}</td> -->
-                                        <td>{{ date('d-m-y',strtotime($finalizado->created_at)) }}</td>
+                                        <td>{{ date('d/m/Y',strtotime($finalizado->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
                                         <td>{{ $finalizado->tipo }}</td>
                                         <td>{{ $finalizado->solicitante->nome }}</td>

@@ -1,5 +1,5 @@
-@if(($solicitacao->tipo == "COMPRA") && $solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_financeiro'))
-<a href="{{ route('solicitacao.aprovar',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+@if(($solicitacao->tipo == "COMPRA") && $solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_administrativo') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_recorrente_financeiro'))
+<a href="{{ route('solicitacao.andamento',$solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
 	<i class="material-icons">low_priority</i>
 	<span>ENVIAR PARA APROVAÇÂO</span>
 </a>
@@ -13,8 +13,10 @@
 	<i class="material-icons">done_all</i>
 	<span>FINALIZAR</span>
 </a>
+@if($solicitacao->tipo == "COMPRA" && $solicitacao->status()->get()[0]->descricao != config('constantes.status_aprovado')) 
 <a  data-toggle="modal" data-target="#modalDevolver" class="btn bg-lime waves-effect" role="button">
 	<i class="material-icons">report_problem</i>
 	<span>DEVOLVER</span>
-</a>										
+</a>
+@endif										
 @endif

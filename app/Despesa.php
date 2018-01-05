@@ -12,7 +12,7 @@ class Despesa extends Model
      * @var array
      */
     protected $fillable = [
-        'descricao', 'estornado', 'data_despesa', 'tipo_comprovante', 'valor', 'anexo_comprovante', 'solicitacoes_id'
+        'descricao', 'estornado', 'data_despesa', 'tipo_comprovante', 'valor', 'anexo_comprovante', 'solicitacoes_id','anexo_pdf'
     ];
     
     /** Consulta a Solicitacao da Despesa

@@ -45,7 +45,7 @@
 							@foreach ($solicitacao->antecipacao as $key => $antecipacao)
 							<tr>
 								
-								<td>{{date('d-m-y',strtotime($antecipacao->data_recebimento))}}</td>
+								<td>{{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}</td>
 								<td>{{$antecipacao->descricao}}</td>
 								<td>{{$antecipacao->valor}}</td>
 								<td class="acoesTD">
@@ -144,7 +144,7 @@
 							@foreach ($solicitacao->despesa as $key2 => $despesa)
 							<tr>
 								
-								<td>{{date('d-m-y',strtotime($despesa->data_despesa))}}</td>
+								<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 								<td>{{$despesa->descricao}}</td>
 								<td>{{$despesa->tipo_comprovante}}</td>
 								<td>{{$despesa->valor}}</td>

@@ -4,21 +4,19 @@
 	<div class="block-header">
 		<h2>Dados da Solicitação</h2>
 	</div>
+	
 	<!-- COMEÇO CABEÇALHO PADRÃO -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="header">
 				@if(Session::has('flash_message'))
-				
 				<div align="center" class="{{ Session::get('flash_message')['class'] }}" role="alert">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					{{ Session::get('flash_message')['msg'] }}
-
 				</div>								
 				@endif
-
 			</div>
 		</div>
 	</div>
@@ -61,7 +59,7 @@
 
 							<tr>
 								<td></td>
-								<td>{{date('d/m/y',strtotime($translado->data_translado))}}</td>
+								<td>{{date('d/m/Y',strtotime($translado->data_translado))}}</td>
 								<td>{{$translado->origem}}</td>
 								<td>{{$translado->destino}}</td>
 								<td>{{$translado->ida_volta == 1 ? 'SIM' : 'NÃO'}}</td>
@@ -111,7 +109,7 @@
 							@foreach ($solicitacao->despesa as $key => $despesa)
 							<tr>
 								<td></td>
-								<td>{{date('d/m/y',strtotime($despesa->data_despesa))}}</td>
+								<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 								<td>{{$despesa->descricao}}</td>
 								<td>{{$despesa->tipo_comprovante}}</td>
 								<td>{{$despesa->valor}}</td>
@@ -137,7 +135,7 @@
 		<div class="modal-content-2">
 			@foreach ($solicitacao->despesa as $key => $despesa)
 			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/y',strtotime($despesa->data_despesa))}}</span></h3></div>
+				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/Y',strtotime($despesa->data_despesa))}}</span></h3></div>
 				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
 			</div>
 			@endforeach														

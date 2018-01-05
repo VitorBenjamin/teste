@@ -27,13 +27,21 @@
 
 	<!-- FIM CABEÇALHO PADRAO -->
 
+	<!-- MODAL COMENTÁRIO -->
+	@include('layouts._includes._modalComentario')
+	<!-- FIM MODAL COMENTÁRIO -->
+	
+	<!-- SESSÂO COMENTÁRIO -->
+	@include('layouts._includes._comentario')
+	<!-- FIM SESSÂO COMENTÁRIO  -->
+	
 	<!-- LISTAGEM DOS PRODUTOS  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
 					<h2>
-						LISTAGEM DOS PRODUTOS
+						LISTAGEM DOS PRODUTOS E SUAS RESPECTIVAS COTAÇÕES
 					</h2>
 				</div>
 				<div class="body">
@@ -54,41 +62,45 @@
 							</tr>												
 						</tbody>
 					</table>
-
-					<table class="table table-bordered table-striped nowrap table-hover dataTable">
-						<thead>
-							<tr>
-								<th>Data</th>
-								<th>Descrição</th>
-								<th>fornecedor</th>
-								<th>Quantidade</th>
-								<th>Valor</th>
-								<th>Imagem</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($compra->cotacao as $cotacao)
-							<tr>
-								<td>{{date('d/m/y',strtotime($cotacao->data_cotacao))}}</td>
-								<td>{{$cotacao->descricao}}</td>
-								<td>{{$cotacao->fornecedor}}</td>
-								<td>{{$cotacao->quantidade}}</td>
-								<td>{{$cotacao->valor}}</td>
-								<td>IMG</td>									
-							</tr>
-							@endforeach														
-						</tbody>
-					</table>
-					@endforeach	
-					
+					<h2><i class="material-icons">arrow_downward</i><span class="badge bg-cyan" style="padding: 8px 7px; font-size: 15px">COTAÇÕES</span><i class="material-icons">arrow_upward</i></h2>
+					<div class="row clearfix">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">				
+							<table class="table table-bordered table-striped nowrap table-hover dataTable">
+								<thead>
+									<tr>
+										<th>Data</th>
+										<th>Descrição</th>
+										<th>fornecedor</th>
+										<th>Quantidade</th>
+										<th>Valor</th>
+										<th>Imagem</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($compra->cotacao as $cotacao)
+									<tr>
+										<td>{{date('d/m/Y',strtotime($cotacao->data_cotacao))}}</td>
+										<td>{{$cotacao->descricao}}</td>
+										<td>{{$cotacao->fornecedor}}</td>
+										<td>{{$cotacao->quantidade}}</td>
+										<td>{{$cotacao->valor}}</td>
+										<td>IMG</td>									
+									</tr>
+									@endforeach														
+								</tbody>
+							</table>
+						</div>
+					</div>
+					@endforeach						
 				</div>
-
 			</div>
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DOS PRODUTOS -->
 
-	<!-- LISTAGEM DA GUIA  -->
+	<!-- CADASTRO DAS COTAÇÕES  -->
+	@role(['ADMINISTRATIVO'])
+	@if($solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_administrativo') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_recorrente_financeiro'))
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -164,7 +176,7 @@
 								<div class="col-md-3">
 									<div class="form-line">
 										<!-- Define your button -->
-										<button type="button" style="padding: 7px 0;width:200px;overflow:hidden;margin-top: 20px;" id="file0">Anexar Arquivo (jpeg,png,pdf)</button>
+										<button type="button" style="padding: 10px 0;width:186px;overflow:hidden;margin-top: 20px;" id="file0">Anexar Arquivo</button>
 										<!-- Your File element -->
 										<input type="file" name="anexo_comprovante[]" id="anexo_comprovante0" />
 									</div>
@@ -194,6 +206,8 @@
 			</div>
 		</div> 												
 	</div>
-	<!-- FIM LISTAGEM DA ANTECIPAÇÃO -->
+	<!-- FIM DO CADASTRO DAS COTAÇÕES -->
+	@endif
+	@endrole
 </section>
 @endsection

@@ -19,6 +19,7 @@ class Viagens extends Migration
             $table->boolean('estornado')->default(false);
             $table->string('origem');
             $table->string('destino');
+            $table->string('anexo_pdf')->nullable();
             $table->datetime('data_ida');
             $table->datetime('data_volta')->nullable();
             $table->boolean('hospedagem')->nullable();
@@ -29,6 +30,8 @@ class Viagens extends Migration
             $table->datetime('data_compra')->nullable();
             $table->decimal('valor', 10, 2)->nullable();
             $table->integer('solicitacoes_id')->unsigned();
+            $table->integer('hospedagens_id')->unsigned()->nullable();
+            $table->integer('locacoes_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

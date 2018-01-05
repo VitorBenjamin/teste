@@ -48,9 +48,9 @@
 							<tr>
 								<td></td>
 								<td>{{$viagem->origem}}</td>
-								<td>{{date('d-m-y H:i',strtotime($viagem->data_ida))}}</td>
+								<td>{{date('d/m/Y H:i',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
-								<td>{{date('d-m-y H:i',strtotime($viagem->data_volta))}}</td>
+								<td>{{date('d/m/Y H:i',strtotime($viagem->data_volta))}}</td>
 								<td>{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$viagem->bagagem == 1 ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$viagem->kg}}</td>
@@ -260,7 +260,7 @@
 							@foreach ($solicitacao->despesa as $key2 => $despesa)
 							<tr>
 								<td></td>
-								<td>{{date('d-m-y',strtotime($despesa->data_despesa))}}</td>
+								<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 								<td>{{$despesa->descricao}}</td>
 								<td>{{$despesa->tipo_comprovante}}</td>
 								<td>{{$despesa->valor}}</td>
@@ -296,32 +296,30 @@
 		<div class="modal-content-2">
 
 			@foreach ($solicitacao->viagem as $key => $viagem)
-			@if($viagem->viagens_comprovantes_id != null)
 			
-			@if($viagem->comprovante->anexo_passagem != null)
+			@if($viagem->anexo_passagem != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> <span class="label label-danger"> Passagem</span></h3></div>
-				<img src="{{$viagem->comprovante->anexo_passagem}}" style="width:100%; max-height: 70%">
+				<img src="{{$viagem->anexo_passagem}}" style="width:100%; max-height: 70%">
 			</div>
 			@endif
 
-			@if($viagem->comprovante->anexo_hospedagem != null)
+			@if($viagem->hospedagens->anexo_hospedagem != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> 
 					<span class="label label-warning"> Hospedagem</span> </h3>
 				</div>
-				<img src="{{$viagem->comprovante->anexo_hospedagem}}" style="width:100%; max-height: 70%">
+				<img src="{{$viagem->hospedagens->anexo_hospedagem}}" style="width:100%; max-height: 70%">
 			</div>
 			@endif
 
-			@if($viagem->comprovante->anexo_locacao != null)
+			@if($viagem->locacoes->anexo_locacao != null)
 			<div class="mySlides">
 				<div class="numbertext"><h3><span class="label label-info">{{$viagem->origem}} x {{$viagem->destino}} Locação</span></h3></div>
-				<img src="{{$viagem->comprovante->anexo_locacao}}" style="width:100%; max-height: 70%">
+				<img src="{{$viagem->locacoes->anexo_locacao}}" style="width:100%; max-height: 70%">
 			</div>
 			@endif
 
-			@endif	
 			@endforeach		
 			
 			@foreach ($solicitacao->despesa as $despesa)

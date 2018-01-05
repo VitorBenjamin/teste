@@ -15,6 +15,7 @@ use App\Viagem;
 use App\Guia;
 use App\Antecipacao;
 
+
 class RelatorioController extends Controller
 {
 
@@ -74,9 +75,13 @@ class RelatorioController extends Controller
 			->get();
 		}
 		//dd($solicitacoes);
-		
 		$repo = new SolicitacaoRepository();
 		$solicitacoes = $repo->valorTotal($solicitacoes);
+		// foreach ($solicitacoes as $value) {
+		// 	foreach ($value as $v) {
+		// 		dd($v);
+		// 	}
+		// }
 		//dd($solicitacoes);
 
 

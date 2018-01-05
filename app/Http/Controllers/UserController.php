@@ -181,8 +181,12 @@ class UserController extends Controller
 
 		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento'));
 		$andamentos2 = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_etapa2'));
-		if ($andamentos !=null) {
+		if ($andamentos2 !=null) {
 			$andamentos=$this->pushSolicitacao($andamentos,$andamentos2);
+		}
+		$andamentos_adm = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_administrativo'));
+		if ($andamentos_adm !=null) {
+			$andamentos=$this->pushSolicitacao($andamentos,$andamentos_adm);
 		}
 		$recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_recorrente'));
 		$andamento_recorrente = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_recorrente'));
@@ -314,13 +318,18 @@ class UserController extends Controller
 		if ($andamento !=null) {
 			$abertas= $this->pushSolicitacao($abertas,$andamento);
 		}
+		
 		$devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_devolvido_financeiro'));
 		$recorrentes_devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_recorrente'));
 		if ($devolvidas !=null) {
 			$devolvidas= $this->pushSolicitacao($devolvidas,$recorrentes_devolvidas);
 		}
-		$recorrentes = $repo->getSolicitacaoAdministrativo(config('constantes.status_aprovado_recorrente'));
 
+		$recorrente_financeiro = $repo->getSolicitacaoAdministrativo(config('constantes.status_recorrente_financeiro'));		
+		$recorrentes = $repo->getSolicitacaoAdministrativo(config('constantes.status_aprovado_recorrente'));
+		if ($recorrente_financeiro !=null) {
+			$recorrentes= $this->pushSolicitacao($recorrentes,$recorrente_financeiro);
+		}
 		return view('dashboard.administrativo',compact('abertas','devolvidas','recorrentes'));
 
 	}

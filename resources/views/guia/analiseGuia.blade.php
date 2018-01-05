@@ -42,25 +42,12 @@
 								<th>PDF</th>
 							</tr>
 						</thead>
-						<tfoot>
-							<tr>
-								<th></th>
-								<th>Data</th>
-								<th>Prioridade</th>
-								<th>Reclamante</th>
-								<th>Perfil Pagamento</th>
-								<th>Banco</th>
-								<th>Area</th>
-								<th>Tipo</th>
-								<th>Valor</th>
-								<th>PDF</th>
-							</tr>
-						</tfoot>
+						
 						<tbody> 
 							@foreach ($solicitacao->guia as $guia)
 							<tr>
 								<td></td>
-								<td>{{date('d/m/y',strtotime($guia->data_limite))}}</td>
+								<td>{{date('d/m/Y',strtotime($guia->data_limite))}}</td>
 								<td>{{$guia->prioridade == 1 ? 'SIM' : 'NÃO' }}</td>
 								<td>{{$guia->reclamante}}</td>									
 								<td>{{$guia->perfil_pagamento}}</td>

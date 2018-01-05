@@ -10,7 +10,7 @@
 				<div class="list-group">
 					@foreach($solicitacao->comentarios as $comentario)
 					@if($comentario->publico == false)
-					@role('COORDENADOR','FINANCEIRO')
+					@role('ADMINISTRATIVO' || 'FINANCEIRO' || 'COORDENADOR')
 					<a class="list-group-item ">							
 						<h5 class="list-group-item-heading">{{$comentario->status}} -> {{$comentario->user->nome}}</h5>
 						<h4 class="list-group-item-heading">{{date('d-m-y H:i:s',strtotime($comentario->created_at))}} </h4>

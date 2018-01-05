@@ -12,7 +12,7 @@ class Compra extends Model
      * @var array
      */
     protected $fillable = [
-        'data_compra','descricao', 'quantidade', 'solicitacoes_id'
+        'data_compra','descricao', 'quantidade', 'solicitacoes_id','anexo_pdf'
     ];
     
     /** Consulta a Solicitacao da Compra

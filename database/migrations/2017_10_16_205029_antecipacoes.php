@@ -19,6 +19,7 @@ class Antecipacoes extends Migration
             $table->string('descricao');
             $table->boolean('estornado')->default(false);
             $table->datetime('data_recebimento');
+            $table->string('anexo_pdf')->nullable();
             $table->decimal('valor', 10, 2);
             $table->integer('solicitacoes_id')->unsigned();      
             $table->timestamps();
