@@ -87,7 +87,7 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
 Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGADO|GOD|COORDENADOR']],function()
 
 {
-    
+
     Route::put('atualizar-cabecalho/{id}', ['uses' => 'SolicitacaoController@atualizarCabecalho', 'as' => 'solicitacao.atualizarCabecalho']);
 
     // INICIO ROTAS DE COMPRA
@@ -151,7 +151,7 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
         Route::get('editar-reembolso/{id}', ['uses' => 'ReembolsoController@verificarSolicitacao', 'as' => 'reembolso.editar']);
         Route::put('atualizar-despesa/{id}', ['uses' => 'ReembolsoController@atualizarDespesa', 'as' => 'reembolso.atualizarDespesa']);
         Route::put('atualizar-translado/{id}', ['uses' => 'ReembolsoController@atualizarTranslado', 'as' => 'reembolso.atualizarTranslado']);
-        Route::post('/deletar', ['uses' => 'ReembolsoController@deletar', 'as' => 'reembolso.deletar']);
+        Route::post('deletar', ['uses' => 'ReembolsoController@deletar', 'as' => 'reembolso.deletar']);
         Route::get('deletar-translado/{id}', ['uses' => 'ReembolsoController@deletarTranslado', 'as' => 'reembolso.deletarTranslado']); 
         Route::get('editar-translado/{id}', ['uses' => 'ReembolsoController@editarTranslado', 'as' => 'reembolso.editarTranslado']);        
         Route::get('deletar-despesa/{id}', ['uses' => 'ReembolsoController@deletarDespesa', 'as' => 'reembolso.deletarDespesa']);
@@ -224,16 +224,25 @@ Route::group(['prefix' => 'admin','middleware' => ['check.user.role:COORDENADOR'
 });
 Route::group(['prefix' => 'administrativo/relatorio','middleware' => ['check.user.role:COORDENADOR']],function()
 {
-    Route::get('gerar', ['uses' => 'RelatorioController@relatorio', 'as' => 'relatorio.buscar']);
-    Route::get('busca', ['uses' => 'RelatorioController@gerarRelatorio', 'as' => 'relatorio.gerar']);
+    Route::get('buscar', ['uses' => 'RelatorioController@relatorio', 'as' => 'relatorio.buscar']);
     Route::put('extornar', ['uses' => 'RelatorioController@extornar', 'as' => 'relatorio.extornar']);
+    Route::put('salvar', ['uses' => 'RelatorioController@salvarRelatorio', 'as' => 'relatorio.salvar']);
+    Route::get('finalizar/{id}', ['uses' => 'RelatorioController@finalizar', 'as' => 'relatorio.finalizar']);
+    Route::get('previa', ['uses' => 'RelatorioController@previa', 'as' => 'relatorio.previa']);
+    Route::get('visualizar/{id}', ['uses' => 'RelatorioController@visualizar', 'as' => 'relatorio.visualizar']);
+    Route::get('editar/{id}', ['uses' => 'RelatorioController@editar', 'as' => 'relatorio.editar']);
+    Route::get('deletar/{id}', ['uses' => 'RelatorioController@deletar', 'as' => 'relatorio.deletar']);
+    Route::get('listagem', ['uses' => 'RelatorioController@listagem', 'as' => 'relatorio.listar']);
+
+
 
 });
 Route::group(['prefix' => 'relatorio','middleware' => ['auth.basic']],function()
 {
-    Route::get('buscar', ['uses' => 'RelatorioController@gerarRelatorio', 'as' => 'relatorio.gerar']);
-    Route::get('listagem', ['uses' => 'RelatorioController@gerarRelatorio', 'as' => 'relatorio.gerar']);
-    
+    //Route::get('buscar', ['uses' => 'RelatorioController@gerarRelatorio', 'as' => 'relatorio.gerar']);
+
+
+
 });
 
 Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR']],function()

@@ -465,6 +465,7 @@ class SolicitacaoRepository
                 $translado['valor'] = $translado->distancia*$km;
                 $total += $translado->distancia*$km;
             }
+
         }
         return $total;
     }

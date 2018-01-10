@@ -142,12 +142,34 @@ $(document).on('click', '.btn_remove', function(){
 $('.submit').click(function(event) {
     $( '#relatorioForm' ).submit();
 });
+$('.submit2').click(function(event) {
+    $( '#relatorioForm2' ).submit();
+});
+$('.submit3').click(function(event) {
+    $( '#relatorioForm3' ).submit();
+});
 
 
 $('.checked_all').on('change', function() {     
     $('.checkbox').prop('checked', $(this).prop("checked"));              
 });
     //deselect "checked all", if one of the listed checkbox product is unchecked amd select "checked all" if all of the listed checkbox product is checked
+$('.checkbox').change(function(){ //".checkbox" change 
+    //console.log($(this).attr("id"));
+    var input = $(this).attr("id").toString();
+    //console.log("_"+input);
+    if ($(this).is(':checked')) {
+        $("#_"+input).prop('checked', false);
+        console.log("1");
+        console.log($("#_"+input).attr("id"));
+    }else{
+        $("#_"+input).prop('checked', true);
+        console.log("2");
+        console.log($("#_"+input).attr("id"));
+    }
+    
+});
+
 $('.checkbox').change(function(){ //".checkbox" change 
     if($('.checkbox:checked').length == $('.checkbox').length){
         $('.checked_all').prop('checked',true);

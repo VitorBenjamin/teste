@@ -74,6 +74,7 @@
 										<th>Quantidade</th>
 										<th>Valor</th>
 										<th>Imagem</th>
+										
 									</tr>
 								</thead>
 								<tbody>

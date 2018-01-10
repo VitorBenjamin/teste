@@ -16,6 +16,7 @@ class CreateRelatoriosTable extends Migration
         Schema::create('relatorios', function (Blueprint $table) {
             $table->increments('id');            
             $table->date('data');
+            $table->boolean('finalizado')->default(false);
             $table->integer('users_id')->unsigned();
             $table->integer('clientes_id')->unsigned();
             $table->timestamps();
