@@ -179,9 +179,14 @@
 										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('reembolso.deletarDespesa',$despesa->id)}}">
 											<i class="material-icons">delete_sweep</i>
 										</a>
-										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+1}})">
+										<!-- <a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+1}})">
 											<i class="material-icons">photo_library</i>
-										</a>
+										</a> -->
+										<div class="zoom-gallery">
+											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:25px;height:25px;">
+												<img src="{{$despesa->anexo_comprovante}}" width="25" height="25">
+											</a>
+										</div>
 									</div>
 								</td>
 							</tr>							
@@ -193,35 +198,6 @@
 		</div>
 	</div>
 	<!-- FIM LISTAGEM DAS DESPESAS -->
-
-	<!-- MODAL GALERIA -->
-	<div id="myModal" class="modal-2">
-		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
-		<div class="modal-content-2">
-			@foreach ($solicitacao->despesa as $key => $despesa)
-			<div class="mySlides">
-				<div class="numbertext"><span class="badge bg-cyan">{{$key+1}} / {{count($solicitacao->despesa)}}</span></div>
-				<img src="{{$despesa->anexo_comprovante}}">				
-			</div>
-			@endforeach														
-
-			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
-			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
-
-			<!-- <div class="caption-container">
-				<p id="caption"></p>
-			</div> -->
-			<!-- 
-			@foreach ($solicitacao->despesa as $key => $despesa)
-			<div class="column">
-				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
-			</div>
-			@endforeach -->
-
-		</div>
-	</div>
-	<!-- FIM MODAL GALERIA -->
-
 	<!-- MODAL TRANSLADO -->
 	<div class="modal fade" id="modalTranslado" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
@@ -420,9 +396,6 @@
 			</div>
 		</div>
 	</div>
-	
 	<!-- FIM MODAL DESPESA -->
-	
-
 </section>
 @endsection

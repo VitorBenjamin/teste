@@ -97,20 +97,34 @@ class ReembolsoController extends Controller
         // $path_name = $file->getPathName();
         // $file = base64_encode(file_get_contents($path_name));
         // $src  = 'data: image/'.$extension.';base64,'.$file;
+        $mime = $request->file('anexo_comprovante')->getClientMimeType();
+        $data = 
+        [   
+            'descricao' => $request->descricao,
+            'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
+            'tipo_comprovante' => $request->tipo_comprovante,
+            'valor' => $request->valor,
+            'solicitacoes_id' => $solicitacao->id,
+        ];
+        if ($mime == "image/jpeg" || $mime == "image/png") {
+            $file = Image::make($request->file('anexo_comprovante'));
+            $img_64 = (string) $file->encode('data-url');
+            $data['anexo_comprovante'] = $img_64;
+        }elseif ($mime == "application/pdf") {
+            $today = (string) date("Y-m-d");
+            $fileName = $today.'_'.$id.'_'.$request->anexo_comprovante->getClientOriginalName();    
+            $request->anexo_comprovante->storeAs('public/guias',$fileName);
+            $data['anexo_pdf'] = $fileName;
+        }else{
 
-        $file = Image::make($request->file('anexo_comprovante'));
-        $img_64 = (string) $file->encode('data-url');
-        $despesa = Despesa::create(
-            [   
-                'descricao' => $request->descricao,
-                'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
-                'tipo_comprovante' => $request->tipo_comprovante,
-                'valor' => $request->valor,
-                'anexo_comprovante' => $img_64,
-                'solicitacoes_id' => $solicitacao->id,
-            ]
-        );
+            Session::flash('flash_message',[
+                'msg'=>"Arquivo não suportado!!!",
+                'class'=>"alert bg-orange alert-dismissible"
+            ]);
+            return redirect()->back();
+        } 
 
+        $despesa = Despesa::create($data);
         Session::flash('flash_message',[
             'msg'=>"Cadastro da Despesa Realizado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"

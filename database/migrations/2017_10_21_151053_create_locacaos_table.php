@@ -25,7 +25,7 @@ class CreateLocacaosTable extends Migration
         });
         
         Schema::table('locacoes', function (Blueprint $table) {
-            DB::statement("ALTER TABLE locacoes ADD anexo_locacao LONGBLOB");
+            DB::statement("ALTER TABLE locacoes ADD anexo_locacao LONGBLOB NULL");
             $table->foreign('viagens_id')->references('id')->on('viagens')
             ->onUpdate('cascade')->onDelete('cascade');
         });

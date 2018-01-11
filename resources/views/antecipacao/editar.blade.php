@@ -37,7 +37,6 @@
 						<span>ANTECIPAÇÂO</span></a>
 					</div>
 				</div>
-
 				<form action="{{ route('solicitacao.atualizarCabecalho',$solicitacao->id)}}" method="POST">
 					{{ csrf_field() }}
 					{{ method_field('PUT') }}
@@ -46,9 +45,7 @@
 			</div>
 		</div>
 	</div>
-	
 	@else 
-	
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -76,8 +73,8 @@
 				</div>
 			</div>
 		</div>
-	</div><!-- MODAL DESPESA -->
-	
+	</div>
+	<!-- MODAL DESPESA -->
 	<div class="modal fade" id="modalDespesa" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
@@ -173,6 +170,7 @@
 
 	<!-- INCIO CABEÇALHO PADRAO -->
 	@include('layouts._includes.cabecalho._cabecalho_analise')
+	
 	<!-- FIM CABEÇALHO PADRAO -->
 	@endif
 	<!-- FIM CABEÇALHO PADRAO -->
@@ -224,12 +222,6 @@
 										</div>
 									</div>								
 								</div>
-								<!-- <div class="col-md-2" style="margin-top: 20px">
-									<button class="btn btn-primary waves-effect">
-										<i class="material-icons">save</i>
-										<span>ADD ANTECIPAÇÃO</span> 
-									</button>
-								</div> -->
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -313,7 +305,7 @@
 			<div class="card">
 				<div class="header">
 					<h2>
-						LISTA DA ANTECIPAÇÃO
+						LISTA DAS ANTECIPAÇÕES
 					</h2>
 				</div>
 				<div class="body">
@@ -345,18 +337,30 @@
 								<td>R$ {{$antecipacao->valor}}</td>									
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
-										<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$antecipacao->id}}" role="button"><i class="material-icons">settings</i></a>
+										<a class="btn bg-grey btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$antecipacao->id}}" role="button"><i class="material-icons">edit</i></a>
 
 										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('antecipacao.deletarAntecipacao', $antecipacao->id)}}"><i class="material-icons">delete_sweep</i></a>
-										@if($antecipacao->anexo_comprovante != null)
-										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key}})">
-											<i class="material-icons">photo_library</i>
-										</a>
-										@endif
+										<div class="zoom-gallery" style="display: inline;">
+											<a href="{{$antecipacao->anexo_comprovante}}" data-source="{{$antecipacao->anexo_comprovante}}" title="{{$antecipacao->descricao}} - {{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}" style="width:35px;height:35px;">
+												<img src="{{$antecipacao->anexo_comprovante}}" width="35" height="35">
+											</a>
+										</div>
+										@if($antecipacao->anexo_comprovante == null)
+										<div class="zoom-gallery">
+											<a href="#" data-source="#" title="#" style="width:32px;height:32px;">
+												<img src="#" width="32" height="32">
+											</a>
+										</div>
+										@else
+										<div class="zoom-gallery">
+											<a href="{{$antecipacao->anexo_comprovante}}" data-source="{{$antecipacao->anexo_comprovante}}" title="{{$antecipacao->descricao}} - {{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}" style="width:32px;height:32px;">
+												<img src="{{$antecipacao->anexo_comprovante}}" width="32" height="32">
+											</a>
+										</div>
+										@endif								
 									</div>
 								</td>
 							</tr>
-
 
 							<!-- MODAL EDIÇÂO DA ANTECIPAÇÂO -->
 							<div class="modal fade" id="modal{{$antecipacao->id}}" tabindex="-1" role="dialog">
@@ -472,9 +476,12 @@
 										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('antecipacao.deletarDespesa',$despesa->id)}}">
 											<i class="material-icons">delete_sweep</i>
 										</a>
-										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+1}})">
-											<i class="material-icons">photo_library</i>
-										</a>
+										<div class="zoom-gallery" style="display: inline;">
+
+											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:35px;height:35px;">
+												<img src="{{$despesa->anexo_comprovante}}" width="35px" height="35px">
+											</a>
+										</div>
 									</div>
 								</td>
 							</tr>							
@@ -486,44 +493,5 @@
 		</div>
 	</div>
 	<!-- FIM LISTAGEM DAS DESPESAS -->
-	<!-- MODAL GALERIA -->
-	<div id="myModal" class="modal-2">
-		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
-		<div class="modal-content-2">
-
-			@foreach ($solicitacao->antecipacao as $key => $antecipacao)
-			@if($antecipacao->anexo_comprovante != null)		
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-green">COMPROVANTE DE PAGAMENTO DA ANTECIPAÇÃO</span></h3></div>
-				<img src="{{$antecipacao->anexo_comprovante}}" style="width:100%; max-height: 70%">
-			</div>
-			@endif	
-			@endforeach		
-			
-			@foreach ($solicitacao->despesa as $despesa)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/y',strtotime($despesa->data_despesa))}}</span></h3></div>
-				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
-			</div>
-			@endforeach											
-
-			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
-			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
-
-			<!-- <div class="caption-container">
-				<p id="caption"></p>
-			</div> -->
-			
-			<!-- @foreach ($solicitacao->despesa as $key => $despesa)
-			<div class="column">
-				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
-			</div>
-
-			@endforeach -->
-
-		</div>
-	</div>
-	<!-- FIM MODAL GALERIA -->
-
 </section>
 @endsection

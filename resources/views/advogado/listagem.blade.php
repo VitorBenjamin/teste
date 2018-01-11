@@ -56,8 +56,8 @@
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
 										<!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-										<a href="{{ route('user.editar', $user->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$user->nome}}">
-											<i class="material-icons">search</i>
+										<a href="{{ route('user.editar', $user->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$user->nome}}">
+											<i class="material-icons">edit</i>
 										</a>									
 									</div>
 								</td>

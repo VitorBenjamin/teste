@@ -31,10 +31,9 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example">
 						<thead>
 							<tr>
-								
 								<th>Data</th>
 								<th>Descrição</th>
 								<th>Valor</th>
@@ -44,23 +43,32 @@
 						<tbody>
 							@foreach ($solicitacao->antecipacao as $key => $antecipacao)
 							<tr>
-								
 								<td>{{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}</td>
 								<td>{{$antecipacao->descricao}}</td>
 								<td>{{$antecipacao->valor}}</td>
 								<td class="acoesTD">
 									@role('FINANCEIRO')
-									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#addComprovante{{$antecipacao->id}}">ANEXAR</button>
+									<button type="button" class="btn btn-default waves-effect m-r-20" style="float: left" data-toggle="modal" data-target="#addComprovante{{$antecipacao->id}}">ANEXAR</button>
 									@endrole
 									@if($antecipacao->anexo_comprovante == null)
-									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" disabled>
+									<!-- <a class="btn bg-green btn-circle waves-effect waves-circle waves-float" disabled>
 										<i class="material-icons">photo_library</i>
-									</a>
+									</a> -->
+									<div class="zoom-gallery">
+										<a href="#" data-source="#" title="#" style="width:25px;height:25px;">
+											<img src="#" width="25" height="25">
+										</a>
+									</div>
 									@else
 									
-									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key}})"  data-placement="top" title="VISUALIZAR COMPROVANTE" data-toggle="tooltip">
+									<!-- <a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key}})"  data-placement="top" title="VISUALIZAR COMPROVANTE" data-toggle="tooltip">
 										<i class="material-icons">photo_library</i>
-									</a>
+									</a> -->
+									<div class="zoom-gallery">
+										<a href="{{$antecipacao->anexo_comprovante}}" data-source="{{$antecipacao->anexo_comprovante}}" title="{{$antecipacao->descricao}} - {{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}" style="width:25px;height:25px;">
+											<img src="{{$antecipacao->anexo_comprovante}}" width="25" height="25">
+										</a>
+									</div>
 									@endif
 								</td>									
 							</tr>
@@ -92,7 +100,6 @@
 															<span>ANEXAR COMPROVANTE</span>
 														</button>
 													</div>
-													<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
 													<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
 												</div>
 											</form>
@@ -120,7 +127,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped table-hover dataTable">
+					<table class="table table-bordered table-striped table-hover js-basic-example">
 						<thead>
 							<tr>
 								
@@ -160,9 +167,15 @@
 											<i class="material-icons">delete_sweep</i>
 										</a>
 										@endif
-										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key2}})">
+										<!-- <a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key2}})">
 											<i class="material-icons">photo_library</i>
-										</a>
+										</a> -->
+										<div class="zoom-gallery">
+
+											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:25px;height:25px;">
+												<img src="{{$despesa->anexo_comprovante}}" width="25" height="25">
+											</a>
+										</div>
 									</div>
 								</td>
 							</tr>							
@@ -174,23 +187,5 @@
 		</div>
 	</div>
 	<!-- FIM LISTAGEM DAS DESPESAS --> 
-
-	<!-- MODAL GALERIA -->
-	<div id="myModal" class="modal-2">
-		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
-		<div class="modal-content-2">
-			@foreach ($solicitacao->antecipacao as $key => $antecipacao)
-			<div class="mySlides">
-				<!-- <div class="numbertext"><span class="badge bg-cyan">{{$key+1}} / {{count($solicitacao->despesa)}}</span></div> -->
-				<img src="{{$antecipacao->anexo_comprovante}}" style="width:100%; max-height: 70%">
-			</div>
-			@endforeach														
-
-			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
-			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
-
-		</div>
-	</div>
-	<!-- FIM MODAL GALERIA -->
 </section>
 @endsection

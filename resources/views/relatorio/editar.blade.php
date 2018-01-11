@@ -19,7 +19,6 @@
 				<div class="header">
 					<a style="margin-bottom: 10px;" href="{{ route('relatorio.listar')}}" class="btn bg-grey waves-effect" role="button">
 						<i class="material-icons">keyboard_backspace</i>
-						<!-- <span class="hidden-xs">ADD</span> -->
 						<span>VOLTAR</span>
 					</a>
 					<h2>
@@ -30,12 +29,10 @@
 					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
 						<a class="btn bg-orange waves-effect submit" role="button">
 							<i class="material-icons">money_off</i>
-							<!-- <span class="hidden-xs">ADD</span> -->
 							<span>EXTORNAR GASTOS SELECIONADOS</span>
 						</a>
 						<a href="{{ route('relatorio.finalizar', $relatorio->id)}}" class="btn bg-green waves-effect" role="button">
 							<i class="material-icons">save</i>
-							<!-- <span class="hidden-xs">ADD</span> -->
 							<span>FINALIZAR RELÁTORIO</span>
 						</a>
 					</div>
@@ -53,49 +50,49 @@
 									<th style="width: 50px">VALORES</th>
 									<th style="width: 80px, padding-right: 0px;">
 										ESTORNADAS
-										<!-- <input id="product_all" name="product_all" class="checked_all" type="checkbox">
-											<label for="product_all"></label> -->
-										</th>
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th></th>
-										<th></th>
-										<th style="white-space: nowrap;"></th>
-										<th colspan="2" style="text-align:right;white-space: nowrap;"></th>
-									</tr>
-								</tfoot>
-								<tbody style="font-size: 13px;">
-									@foreach ($solicitacoes as $solicitacao)
-									@if($solicitacao->tipo == "REEMBOLSO")
+								    <!-- <input id="product_all" name="product_all" class="checked_all" type="checkbox">
+								    	<label for="product_all"></label> -->
+								    </th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th></th>
+									<th style="white-space: nowrap;"></th>
+									<th colspan="2" style="text-align:right;white-space: nowrap;"></th>
+								</tr>
+							</tfoot>
+							<tbody style="font-size: 13px;">
+								@foreach ($solicitacoes as $solicitacao)
+								@if($solicitacao->tipo == "REEMBOLSO")
 
-									@include('layouts._includes.solicitacoes._reembolso')
+								@include('layouts._includes.solicitacoes._reembolso')
 
-									@elseif($solicitacao->tipo == "GUIA")
+								@elseif($solicitacao->tipo == "GUIA")
 
-									@include('layouts._includes.solicitacoes._guia')
+								@include('layouts._includes.solicitacoes._guia')
 
-									@elseif($solicitacao->tipo == "VIAGEM")
+								@elseif($solicitacao->tipo == "VIAGEM")
 
-									@include('layouts._includes.solicitacoes._viagem')
+								@include('layouts._includes.solicitacoes._viagem')
 
-									@elseif($solicitacao->tipo == "COMPRA")
+								@elseif($solicitacao->tipo == "COMPRA")
 
-									@include('layouts._includes.solicitacoes._compra')
+								@include('layouts._includes.solicitacoes._compra')
 
-									@elseif($solicitacao->tipo == "ANTECIPAÇÃO")
+								@elseif($solicitacao->tipo == "ANTECIPAÇÃO")
 
-									@include('layouts._includes.solicitacoes._antecipacao')
+								@include('layouts._includes.solicitacoes._antecipacao')
 
-									@endif
-									@endforeach                                
-								</tbody>
-							</table>		
-						</form>
-					</div>
+								@endif
+								@endforeach                                
+							</tbody>
+						</table>		
+					</form>
 				</div>
 			</div>
 		</div>
-	</section>
-	@endsection
+	</div>
+</section>
+@endsection

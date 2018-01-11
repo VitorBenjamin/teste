@@ -28,7 +28,7 @@ class Despesa extends FormRequest
             'data_despesa' => 'required'
             'tipo_comprovante' => 'required',
             'valor' => 'required',
-            'anexo_comprovante' => 'required:image',
+            // 'anexo_comprovante' => 'required:image',
         ];
     }
 }

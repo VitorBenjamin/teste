@@ -19,7 +19,6 @@
 				<div class="header">
 					<a style="margin-bottom: 10px;" href="{{ route('relatorio.listar')}}" class="btn bg-grey waves-effect" role="button">
 						<i class="material-icons">keyboard_backspace</i>
-						<!-- <span class="hidden-xs">ADD</span> -->
 						<span>VOLTAR</span>
 					</a>
 					<h2>

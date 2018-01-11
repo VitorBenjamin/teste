@@ -114,47 +114,42 @@
 								<td>{{$despesa->tipo_comprovante}}</td>
 								<td>{{$despesa->valor}}</td>
 								<td class="acoesTD"> 
-									<div class="icon-button-demo" >
+									<!-- <div class="icon-button-demo" >
 										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+1}})">
 											<i class="material-icons">photo_library</i>
 										</a>
+									</div> -->
+									<div class="zoom-gallery">
+
+										<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+											<img src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+										</a>
 									</div>
+
 								</td>
 							</tr>
 							@endforeach														
 						</tbody>
 					</table>
+					<div class="row clearfix visible-xs">
+						<div class="body">
+							<div class="zoom-gallery2">
+								@foreach ($solicitacao->despesa as $key => $despesa)
+									<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+										<img style="margin-bottom: 15px" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+									</a>
+									<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+										<img style="margin-bottom: 15px" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+									</a>
+								@endforeach	
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- FIM LISTAGEM DOS DESPESAS -->
-	<!-- MODAL GALERIA -->
-	<div id="myModal" class="modal-2">
-		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
-		<div class="modal-content-2">
-			@foreach ($solicitacao->despesa as $key => $despesa)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/Y',strtotime($despesa->data_despesa))}}</span></h3></div>
-				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
-			</div>
-			@endforeach														
-
-			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
-			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
-
-			<!-- <div class="caption-container">
-				<p id="caption"></p>
-			</div> -->
-			<!-- 
-			@foreach ($solicitacao->despesa as $key => $despesa)
-			<div class="column">
-				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
-			</div>
-			@endforeach -->
-
-		</div>
-	</div>
 </section>
 @endsection
 <!-- @push('scripts2')

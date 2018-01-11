@@ -1,4 +1,73 @@
 ﻿//Deixa todas os inputs UpperCase
+$(document).ready(function() {
+    $.extend(true, $.magnificPopup.defaults, 
+    {
+        tClose: 'Fechar (Esc)', // Alt text on close button
+        tLoading: 'Carregando...', // Text that is displayed during loading. Can contain %curr% and %total% keys
+        gallery: {
+        tPrev: 'Anterior (Left arrow key)', // Alt text on left arrow
+        tNext: 'Próximo (Right arrow key)', // Alt text on right arrow
+        tCounter: '%curr% de %total%' // Markup for "1 of 7" counter
+    },
+    image: {
+        tError: '<a href="%url%">A imagem</a> Não pode ser carregada.' // Error message when image could not be loaded
+    },
+    ajax: {
+            tError: '<a href="%url%">The content</a> Não pode ser carregada.' // Error message when ajax request failed
+        }
+    });
+    $('.zoom-gallery').magnificPopup({
+        delegate: 'a',
+        type: 'image',
+        closeOnContentClick: false,
+        closeBtnInside: false,
+        mainClass: 'mfp-with-zoom mfp-img-mobile',
+        image: {
+            verticalFit: true,
+            titleSrc: function(item) {
+                return item.el.attr('title');
+            }
+        },
+        gallery: {
+            enabled: true
+        },
+        zoom: {
+            enabled: true,
+            duration: 300, // don't foget to change the duration also in CSS
+            opener: function(element) {
+                return element.find('img');
+            }
+        }
+        
+    });
+});
+
+$(document).ready(function() {
+    $('.zoom-gallery2').magnificPopup({
+        delegate: 'a',
+        type: 'image',
+        closeOnContentClick: false,
+        closeBtnInside: false,
+        mainClass: 'mfp-with-zoom mfp-img-mobile',
+        image: {
+            verticalFit: true,
+            titleSrc: function(item) {
+                return item.el.attr('title');
+            }
+        },
+        gallery: {
+            enabled: true
+        },
+        zoom: {
+            enabled: true,
+            duration: 300, // don't foget to change the duration also in CSS
+            opener: function(element) {
+                return element.find('img');
+            }
+        }
+        
+    });
+});
 $(function() {
     $('input:text').keyup(function() {
         this.value = this.value.toLocaleUpperCase()

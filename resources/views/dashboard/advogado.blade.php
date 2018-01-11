@@ -169,8 +169,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @endforeach                                                     
-                                    
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -194,7 +193,6 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($aprovadas->solicitacao as $aprovado)
-                                    
                                     <tr>
                                         <td></td>
                                         <!-- <td>{{ $aprovado->id }}</td> -->
@@ -255,8 +253,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @endforeach                                                     
-                                    
+                                    @endforeach 
                                 </tbody>
                             </table>
                         </div>
@@ -291,7 +288,7 @@
                                         <td>{{ 'R$ '.number_format($devolvida->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
-                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
+                                                <!-- REDIRECIONAMENTO DINÂMICO POR PARAMÊTRO -->
                                                 <a href="{{ route(strtolower($devolvida->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $devolvida->tipo).'.editar', $devolvida->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$devolvida->tipo}}">
                                                     <i class="material-icons">mode_edit</i>
                                                 </a>

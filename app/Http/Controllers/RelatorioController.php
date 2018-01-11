@@ -34,7 +34,6 @@ class RelatorioController extends Controller
 	}
 	public function extornar(Request $request)
 	{
-		//dd($request->all());
 		if ($request->desativar) {
 			foreach ($request->desativar as $i) {
 				$partes = explode("-",$i);
@@ -73,9 +72,7 @@ class RelatorioController extends Controller
 			$data_inicial = $ultimo_relatorio->data;
 		}
 		
-
 		return view('relatorio.visualizar', compact('solicitacoes','relatorio','data_inicial','exibir'));
-
 	}
 	public function editar($id)
 	{

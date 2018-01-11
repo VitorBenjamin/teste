@@ -45,9 +45,8 @@ class GuiaController extends Controller
 		return redirect()->route('guia.editar', $solicitacao->id);
 	}
 	public function addGuia(GuiaRequest $request,$id){
-		//dd($request->all());
-
-		$today = (string) date("Y-m-d H-i");
+		
+		$today = (string) date("Y-m-d");
 		$fileName = $today.'_'.$id.'_'.$request->anexo_pdf->getClientOriginalName();	
 		$request->anexo_pdf->storeAs('public/guias',$fileName);
 		$guia = Guia::create([
@@ -97,7 +96,6 @@ class GuiaController extends Controller
 	{
 
 		$solicitacao = Solicitacao::with('guia','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
-        //dd($solicitacao);
 
 		return view('guia.analiseGuia', compact('solicitacao'));
 

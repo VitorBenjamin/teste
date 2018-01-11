@@ -51,6 +51,8 @@
     <!--     {!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.4.3/css/ajax-bootstrap-select.min.css') !!} -->
     <!-- <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" /> -->
     {!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css') !!}
+    
+    {!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css') !!}
 
     <!-- Custom Css -->
     <!-- <link href="css/style.css" rel="stylesheet">-->
@@ -112,13 +114,16 @@
     <!-- Bootstrap Core Js -->
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js') !!}
 
+    
+    
     <!-- Jquery Validation Plugin Css -->
     {!! Html::script('/plugins/jquery-validation/jquery.validate.js') !!}
 
     <!-- JQuery Steps Plugin Js -->
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js') !!}
     {!! Html::script('/js/pages/forms/form-wizard.js') !!}
-
+    
+    {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js') !!}
     <!-- Select Plugin Js -->
     {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js') !!}
 

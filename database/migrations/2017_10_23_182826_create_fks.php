@@ -60,12 +60,12 @@ class CreateFks extends Migration
     //Foreign Keys Tabela contacoes
         Schema::table('cotacoes', function (Blueprint $table) {
             $table->foreign('compras_id')->references('id')->on('compras');
-            DB::statement("ALTER TABLE cotacoes ADD anexo_comprovante LONGBLOB");
+            DB::statement("ALTER TABLE cotacoes ADD anexo_comprovante LONGBLOB NULL");
         });             
 
     //Foreign Keys Tabela viagens
         Schema::table('viagens', function (Blueprint $table) {
-            DB::statement("ALTER TABLE viagens ADD anexo_passagem LONGBLOB");
+            DB::statement("ALTER TABLE viagens ADD anexo_passagem LONGBLOB NULL");
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
             $table->foreign('hospedagens_id')->references('id')->on('hospedagens')->onDelete('cascade');
             $table->foreign('locacoes_id')->references('id')->on('locacoes')->onDelete('cascade');
@@ -73,29 +73,29 @@ class CreateFks extends Migration
         });
 
     //Foreign Keys Tabela viagens_comprovantes
-        Schema::table('viagens_comprovantes', function (Blueprint $table) {
-            DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_passagem LONGBLOB");
-            DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_hospedagem LONGBLOB");
-            DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_locacao LONGBLOB");
-        });
+        // Schema::table('viagens_comprovantes', function (Blueprint $table) {
+        //     DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_passagem LONGBLOB NULL");
+        //     DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_hospedagem LONGBLOB NULL");
+        //     DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_locacao LONGBLOB NULL");
+        // });
 
     //Foreign Keys Tabela antecipacoes
         Schema::table('antecipacoes', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
-            DB::statement("ALTER TABLE antecipacoes ADD anexo_comprovante LONGBLOB");
+            DB::statement("ALTER TABLE antecipacoes ADD anexo_comprovante LONGBLOB NULL");
 
         });
 
     //Foreign Keys Tabela antecipacoes_comprovantes
         Schema::table('antecipacoes_comprovantes', function (Blueprint $table) {
             $table->foreign('antecipacoes_id')->references('id')->on('antecipacoes');
-            DB::statement("ALTER TABLE antecipacoes_comprovantes ADD anexo_comprovante LONGBLOB");
+            DB::statement("ALTER TABLE antecipacoes_comprovantes ADD anexo_comprovante LONGBLOB NULL");
         });  
 
     //Foreign Keys Tabela despesas
         Schema::table('despesas', function (Blueprint $table) {
             $table->foreign('solicitacoes_id')->references('id')->on('solicitacoes')->onDelete('cascade');
-            DB::statement("ALTER TABLE despesas ADD anexo_comprovante LONGBLOB");
+            DB::statement("ALTER TABLE despesas ADD anexo_comprovante LONGBLOB NULL");
 
         });
 
