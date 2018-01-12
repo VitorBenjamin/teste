@@ -22,8 +22,6 @@
 			</div>
 		</div>
 	</div>
-	
-
 	@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO" || $solicitacao->status[0]->descricao =="COORDENADOR-ABERTO") 
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -50,11 +48,9 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
-					<!-- <h2>Cabecalho da antecipacao</h2> -->
 					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
 						<a data-toggle="modal" data-target="#modalDespesa" class="btn bg-light-green waves-effect" role="button">
 							<i class="material-icons">exposure_plus_1</i>
-							<!-- <span class="hidden-xs">ADD</span> -->
 							<span>ADICIONAR DESPESA</span>
 						</a>
 						@if($solicitacao->despesa->count() == 0)
@@ -340,24 +336,15 @@
 										<a class="btn bg-grey btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$antecipacao->id}}" role="button"><i class="material-icons">edit</i></a>
 
 										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('antecipacao.deletarAntecipacao', $antecipacao->id)}}"><i class="material-icons">delete_sweep</i></a>
+										@if($antecipacao->anexo_pdf)
+										<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/antecipacao/'.$despesa->anexo_pdf)}}" style="display: inline;"><i class="material-icons">picture_as_pdf</i></a>
+										@elseif($antecipacao->anexo_comprovante)
 										<div class="zoom-gallery" style="display: inline;">
 											<a href="{{$antecipacao->anexo_comprovante}}" data-source="{{$antecipacao->anexo_comprovante}}" title="{{$antecipacao->descricao}} - {{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}" style="width:35px;height:35px;">
-												<img src="{{$antecipacao->anexo_comprovante}}" width="35" height="35">
+												<img class="img_popup" src="{{$antecipacao->anexo_comprovante}}" width="35" height="35">
 											</a>
 										</div>
-										@if($antecipacao->anexo_comprovante == null)
-										<div class="zoom-gallery">
-											<a href="#" data-source="#" title="#" style="width:32px;height:32px;">
-												<img src="#" width="32" height="32">
-											</a>
-										</div>
-										@else
-										<div class="zoom-gallery">
-											<a href="{{$antecipacao->anexo_comprovante}}" data-source="{{$antecipacao->anexo_comprovante}}" title="{{$antecipacao->descricao}} - {{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}" style="width:32px;height:32px;">
-												<img src="{{$antecipacao->anexo_comprovante}}" width="32" height="32">
-											</a>
-										</div>
-										@endif								
+										@endif						
 									</div>
 								</td>
 							</tr>
@@ -479,7 +466,7 @@
 										<div class="zoom-gallery" style="display: inline;">
 
 											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:35px;height:35px;">
-												<img src="{{$despesa->anexo_comprovante}}" width="35px" height="35px">
+												<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="35px" height="35px">
 											</a>
 										</div>
 									</div>

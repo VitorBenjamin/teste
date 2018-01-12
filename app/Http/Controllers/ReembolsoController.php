@@ -8,6 +8,7 @@ use App\Http\Requests\SolicitacaoRequest;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
+use App\Repositories\DespesaRepository;
 use App\Repositories\SolicitacaoRepository;
 use App\Despesa;
 use App\Processo;
@@ -90,41 +91,8 @@ class ReembolsoController extends Controller
     //Adcionar uma nova despesa a solicitação
     public function addDespesa(Request $request,$id)
     {
-        $solicitacao = Solicitacao::with('despesa','translado')->where('id',$id)->first();
-        
-        // $file = $request->file('anexo_comprovante');
-        // $extension = $request->anexo_comprovante->extension();
-        // $path_name = $file->getPathName();
-        // $file = base64_encode(file_get_contents($path_name));
-        // $src  = 'data: image/'.$extension.';base64,'.$file;
-        $mime = $request->file('anexo_comprovante')->getClientMimeType();
-        $data = 
-        [   
-            'descricao' => $request->descricao,
-            'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
-            'tipo_comprovante' => $request->tipo_comprovante,
-            'valor' => $request->valor,
-            'solicitacoes_id' => $solicitacao->id,
-        ];
-        if ($mime == "image/jpeg" || $mime == "image/png") {
-            $file = Image::make($request->file('anexo_comprovante'));
-            $img_64 = (string) $file->encode('data-url');
-            $data['anexo_comprovante'] = $img_64;
-        }elseif ($mime == "application/pdf") {
-            $today = (string) date("Y-m-d");
-            $fileName = $today.'_'.$id.'_'.$request->anexo_comprovante->getClientOriginalName();    
-            $request->anexo_comprovante->storeAs('public/guias',$fileName);
-            $data['anexo_pdf'] = $fileName;
-        }else{
-
-            Session::flash('flash_message',[
-                'msg'=>"Arquivo não suportado!!!",
-                'class'=>"alert bg-orange alert-dismissible"
-            ]);
-            return redirect()->back();
-        } 
-
-        $despesa = Despesa::create($data);
+        $despesa_repo = new DespesaRepository();
+        $despesa = $despesa_repo->create($request,$id);
         Session::flash('flash_message',[
             'msg'=>"Cadastro da Despesa Realizado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"

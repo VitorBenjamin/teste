@@ -9,7 +9,7 @@ class Antecipacao extends Model
 {
     protected $table = 'antecipacoes';
     protected $fillable = [
-        'descricao', 'data_recebimento', 'valor','anexo_comprovante', 'solicitacoes_id','anexo_pdf'
+        'descricao', 'estornado','data_recebimento', 'valor','anexo_comprovante', 'solicitacoes_id','anexo_pdf'
     ];
     
     /** Consulta a Solicitacao da Antecipacão

@@ -50,23 +50,14 @@
 									@role('FINANCEIRO')
 									<button type="button" class="btn btn-default waves-effect m-r-20" style="float: left" data-toggle="modal" data-target="#addComprovante{{$antecipacao->id}}">ANEXAR</button>
 									@endrole
-									@if($antecipacao->anexo_comprovante == null)
-									<!-- <a class="btn bg-green btn-circle waves-effect waves-circle waves-float" disabled>
-										<i class="material-icons">photo_library</i>
-									</a> -->
-									<div class="zoom-gallery">
-										<a href="#" data-source="#" title="#" style="width:25px;height:25px;">
-											<img src="#" width="25" height="25">
-										</a>
-									</div>
-									@else
-									
-									<!-- <a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key}})"  data-placement="top" title="VISUALIZAR COMPROVANTE" data-toggle="tooltip">
-										<i class="material-icons">photo_library</i>
-									</a> -->
+									@if($antecipacao->anexo_pdf)
+									<span>
+										<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/antecipacao/'.$antecipacao->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+									</span>
+									@elseif($antecipacao->anexo_comprovante)
 									<div class="zoom-gallery">
 										<a href="{{$antecipacao->anexo_comprovante}}" data-source="{{$antecipacao->anexo_comprovante}}" title="{{$antecipacao->descricao}} - {{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}" style="width:25px;height:25px;">
-											<img src="{{$antecipacao->anexo_comprovante}}" width="25" height="25">
+											<img style="border: 1px solid #9c9b9b; border-radius: 30px; margin-bottom: 0px" src="{{$antecipacao->anexo_comprovante}}" width="25" height="25">
 										</a>
 									</div>
 									@endif
@@ -162,19 +153,20 @@
 										<a href="{{ route('antecipacao.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
 											<i class="material-icons">settings</i>
 										</a>
-
 										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('antecipacao.deletarDespesa',$despesa->id)}}">
 											<i class="material-icons">delete_sweep</i>
 										</a>
 										@endif
-										<!-- <a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key2}})">
-											<i class="material-icons">photo_library</i>
-										</a> -->
-										<div class="zoom-gallery">
-
-											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:25px;height:25px;">
-												<img src="{{$despesa->anexo_comprovante}}" width="25" height="25">
+										<div class="zoom-gallery" style="display: inline;">
+											@if($despesa->anexo_pdf)
+											<span>
+												<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/antecipacao/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+											</span>
+											@elseif($despesa->anexo_comprovante)
+											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+												<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
 											</a>
+											@endif
 										</div>
 									</div>
 								</td>

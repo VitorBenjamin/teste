@@ -115,7 +115,7 @@
 								<td>{{$translado->distancia}}</td>
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
-										<a href="{{ route('reembolso.editarTranslado', $translado->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float"><i class="material-icons">settings</i></a>
+										<a href="{{ route('reembolso.editarTranslado', $translado->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float"><i class="material-icons">edit</i></a>
 
 										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('reembolso.deletarTranslado', $translado->id)}}"><i class="material-icons">delete_sweep</i></a>
 									</div>
@@ -172,20 +172,23 @@
 								<td>{{$despesa->valor}}</td>
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
-										<a href="{{ route('reembolso.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-											<i class="material-icons">settings</i>
+										<a href="{{ route('reembolso.editarDespesa', $despesa->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float">
+											<i class="material-icons">edit</i>
 										</a>
 
 										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('reembolso.deletarDespesa',$despesa->id)}}">
 											<i class="material-icons">delete_sweep</i>
 										</a>
-										<!-- <a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+1}})">
-											<i class="material-icons">photo_library</i>
-										</a> -->
-										<div class="zoom-gallery">
-											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:25px;height:25px;">
-												<img src="{{$despesa->anexo_comprovante}}" width="25" height="25">
+										<div class="zoom-gallery" style="display: inline;">
+											@if($despesa->anexo_pdf)
+											<span>
+												<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+											</span>
+											@elseif($despesa->anexo_comprovante)
+											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:35px;height:35px;">
+												<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="35" height="35">
 											</a>
+											@endif
 										</div>
 									</div>
 								</td>

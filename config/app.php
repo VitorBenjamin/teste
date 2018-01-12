@@ -252,9 +252,11 @@ return [
         'ViagemComprovante' => App\ViagemComprovante::class,
         'Comentario' => App\Comentario::class,
         'Relatorio' => App\Relatorio::class,
-        'SolicitacaoHelper' => App\Http\Helpers\SolicitacaoHelper::class,
         'Hospedagem' => App\Hospedagem::class,
         'Locacao' => App\Locacao::class,
+
+        //HELPERS
+        'SolicitacaoHelper' => App\Http\Helpers\SolicitacaoHelper::class,
 
 
 

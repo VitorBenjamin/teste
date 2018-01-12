@@ -113,19 +113,18 @@
 								<td>{{$despesa->descricao}}</td>
 								<td>{{$despesa->tipo_comprovante}}</td>
 								<td>{{$despesa->valor}}</td>
-								<td class="acoesTD"> 
-									<!-- <div class="icon-button-demo" >
-										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+1}})">
-											<i class="material-icons">photo_library</i>
-										</a>
-									</div> -->
+								<td class="acoesTD">
 									<div class="zoom-gallery">
-
+										@if($despesa->anexo_pdf)
+										<span>
+											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}">Broken image</a>
+										</span>
+										@else
 										<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
-											<img src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+											<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
 										</a>
+										@endif
 									</div>
-
 								</td>
 							</tr>
 							@endforeach														
@@ -135,12 +134,12 @@
 						<div class="body">
 							<div class="zoom-gallery2">
 								@foreach ($solicitacao->despesa as $key => $despesa)
-									<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
-										<img style="margin-bottom: 15px" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
-									</a>
-									<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
-										<img style="margin-bottom: 15px" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
-									</a>
+								<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+									<img style="margin-bottom: 15px" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+								</a>
+								<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+									<img style="margin-bottom: 15px" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+								</a>
 								@endforeach	
 							</div>
 						</div>

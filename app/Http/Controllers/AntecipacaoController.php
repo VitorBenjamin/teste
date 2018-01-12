@@ -7,6 +7,7 @@ use App\Http\Requests\SolicitacaoRequest;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
+use App\Repositories\DespesaRepository;
 use App\Repositories\SolicitacaoRepository;
 use App\Processo;
 use App\Antecipacao;
@@ -86,20 +87,8 @@ class AntecipacaoController extends Controller
 	//Adcionar uma nova despesa a solicitação
 	public function addDespesa(Request $request,$id)
 	{
-		$solicitacao = Solicitacao::find($id);
-
-		$file = Image::make($request->file('anexo_comprovante'));
-		$img_64 = (string) $file->encode('data-url');
-		$despesa = Despesa::create(
-			[   
-				'descricao' => $request->descricao,
-				'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
-				'tipo_comprovante' => $request->tipo_comprovante,
-				'valor' => $request->valor,
-				'anexo_comprovante' => $img_64,
-				'solicitacoes_id' => $solicitacao->id,
-			]
-		);
+		$despesa_repo = new DespesaRepository();
+		$despesa = $despesa_repo->create($request,$id);
 
 		\Session::flash('flash_message',[
 			'msg'=>"Cadastro da Despesa Realizado com Sucesso!!!",
@@ -118,23 +107,9 @@ class AntecipacaoController extends Controller
     //Atualiza uma Despesa e redireciona para a tela de edição da Solicitação
 	public function atualizarDespesa(Request $request,$id)
 	{   
-		$despesa = Despesa::find($id);
-		if ($request->hasFile('anexo_comprovante')) {
-			$file = Image::make($request->file('anexo_comprovante'));            
-			$img_64 = (string) $file->encode('data-url');
-		}else{
-			$img_64 = $despesa->anexo_comprovante;
-		}
-
-		$despesa->update(
-			[   
-				'descricao' => $request->descricao,
-				'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
-				'tipo_comprovante' => $request->tipo_comprovante,
-				'valor' => $request->valor,
-				'anexo_comprovante' => $img_64,
-			]
-		);
+		
+		$despesa_repo = new DespesaRepository();
+		$despesa = $despesa_repo->update($request,$id);
 		\Session::flash('flash_message',[
 			'msg'=>"Despesa Atualizada com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"

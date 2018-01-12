@@ -10,10 +10,10 @@ $(document).ready(function() {
         tCounter: '%curr% de %total%' // Markup for "1 of 7" counter
     },
     image: {
-        tError: '<a href="%url%">A imagem</a> Não pode ser carregada.' // Error message when image could not be loaded
+        tError: '<a target="_blank" href="%url%">Baixar o <i class="material-icons">picture_as_pdf</i> </a>&ensp; Imagem não pode ser carregada.' // Error message when image could not be loaded
     },
     ajax: {
-            tError: '<a href="%url%">The content</a> Não pode ser carregada.' // Error message when ajax request failed
+        tError: '<a href="%url%">The content</a> Não pode ser carregada.' // Error message when ajax request failed
         }
     });
     $('.zoom-gallery').magnificPopup({
