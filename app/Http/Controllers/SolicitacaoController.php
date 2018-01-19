@@ -8,7 +8,9 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Repositories\SolicitacaoRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Comentario;
+use App\Comprovante;
 use App\Despesa;
 use App\Processo;
 use App\Translado;
@@ -39,32 +41,120 @@ class SolicitacaoController extends Controller
 		]);
 		return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.editar', $id);
 	}
+	public function addComprovante(Request $request,$id)
+	{
+		//dd($request->all());
+		$solicitacao = Solicitacao::where('id',$id)->first();
+		$data = [
+			'data' => date('Y-m-d', strtotime($request->data)),
+			'solicitacoes_id' => $id,
+		];
+		$mime = $request->file('anexo_comprovante')->getClientMimeType();
+		if ($mime == "image/jpeg" || $mime == "image/png") {
+			$file = Image::make($request->file('anexo_comprovante'));
+			$img_64 = (string) $file->encode('data-url');
+			$data['anexo_comprovante'] = $img_64;
+		}elseif ($mime == "application/pdf") {
+			$today = (string) date("Y-m-d");
+			$fileName = $today.'_'.$id.'_'.$request->anexo_comprovante->getClientOriginalName();    
+			$request->anexo_comprovante->storeAs('public/comprovante',$fileName);
+			$data['anexo_pdf'] = $fileName;
+		}else{
+
+			\Session::flash('flash_message',[
+				'msg'=>"Arquivo não suportado!!!",
+				'class'=>"alert bg-orange alert-dismissible"
+			]);
+			return redirect()->back();
+		}
+		Comprovante::create($data);
+		\Session::flash('flash_message',[
+			'msg'=>"Comprovante Adicionado com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+		return redirect()->back();
+	}
+	public function editComprovante(Request $request,$id)
+	{
+		//dd($request->all());
+		$solicitacao = Solicitacao::where('id',$id)->first();
+		$comprovante = Comprovante::find($request->comprovante_id);
+		//dd($comprovante);
+		$data = [
+			'data' => date('Y-m-d', strtotime($request->data)),
+			'solicitacoes_id' => $request->$id,
+		];
+		//dd($request->all());
+		if ($request->hasFile('anexo_comprovante')) {
+			$mime = $request->file('anexo_comprovante')->getClientMimeType();
+			//dd($mime);
+			if ($mime == "image/jpeg" || $mime == "image/png") {
+				$file = Image::make($request->file('anexo_comprovante'));
+				$img_64 = (string) $file->encode('data-url');
+				$data['anexo_comprovante'] = $img_64;
+				if ($comprovante->anexo_pdf) {
+					Storage::delete('/public/comprovante/'. $comprovante->anexo_pdf);
+					$data['anexo_pdf'] = null;
+				}
+			}elseif ($mime == "application/pdf") {
+				$today = (string) date("Y-m-d");
+				$fileName = $today.'_'.$id.'_'.$request->anexo_comprovante->getClientOriginalName();    
+				$request->anexo_comprovante->storeAs('public/comprovante',$fileName);
+				$data['anexo_pdf'] = $fileName;
+				if ($comprovante->anexo_pdf) {
+					Storage::delete('/public/comprovante/'. $comprovante->anexo_pdf);
+					$data['anexo_pdf'] = null;
+				}
+				if ($comprovante->anexo_comprovante) {
+					$data['anexo_comprovante'] = null;
+				}
+			}else{
+
+				\Session::flash('flash_message',[
+					'msg'=>"Arquivo não suportado!!!",
+					'class'=>"alert bg-orange alert-dismissible"
+				]);
+				return redirect()->back();
+			}
+		}else{
+			if ($comprovante->anexo_comprovante) {
+				$data['anexo_comprovante'] = $comprovante->anexo_comprovante;
+			} else {
+				$data['anexo_pdf'] = $comprovante->anexo_pdf;
+			}
+		}
+		//dd($data);
+		$comprovante->update($data);
+		\Session::flash('flash_message',[
+			'msg'=>"Comprovante Adicionado com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+		return redirect()->back();
+	}
 
 	public function andamento($id)
 	{
-
 		$solicitacao = Solicitacao::find($id);
 		$status = $solicitacao->status[0]->descricao;
 		$repo = new SolicitacaoRepository();
 		$limites = auth()->user()->limites;
-		//dd($status);
 		if ($status == config('constantes.status_devolvido')) 
 		{
 			$andamento = Status::where('descricao', config('constantes.status_andamento_recorrente'))->first();
 
 		}elseif ($solicitacao->tipo == "COMPRA"){
-			
+
 			if ($status == config('constantes.status_andamento_administrativo')) {
 				$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
 			}elseif ($status == config('constantes.status_recorrente_financeiro')) {
-				
+
 				$andamento = Status::where('descricao',config('constantes.status_andamento_recorrente'))->first();
 			}else{
 
 				$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
 
 			}
-			
+
 		} elseif ($status == "ABERTO-ETAPA2" || $status == config('constantes.status_devolvido_etapa2')) {
 
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
@@ -77,7 +167,7 @@ class SolicitacaoController extends Controller
 				$andamento = Status::where('descricao', config('constantes.status_andamento_etapa2'))->first();
 			}
 		} else {			
-			
+
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
 				if (!$repo->verificaLimite($solicitacao,$limites)) {
 					$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
@@ -99,15 +189,15 @@ class SolicitacaoController extends Controller
 		$solicitacao = Solicitacao::find($id);
 		$status = $solicitacao->status[0]->descricao;
 		if ($status == config('constantes.status_andamento_etapa2')) { 
-			
+
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado_etapa2'))->first();
 
 		} elseif ($status == config('constantes.status_devolvido_financeiro')) {
-			
+
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado_recorrente'))->first();
 
 		} elseif ($status == config('constantes.status_aberto_financeiro')) {
-			
+
 			$aprovado = Status::where('descricao', config('constantes.status_andamento_financeiro'))->first();
 
 		} else {			
@@ -119,7 +209,7 @@ class SolicitacaoController extends Controller
 		return redirect()->route('user.index');
 
 	}
-	
+
 	public function devolver(Request $request, $id)
 	{
 
@@ -135,18 +225,18 @@ class SolicitacaoController extends Controller
 		if ($solicitacao->tipo == "COMPRA"){
 
 			if ($status == config('constantes.status_andamento_administrativo') || $status == config('constantes.status_recorrente_financeiro')) {
-				
+
 				$devolvido = Status::where('descricao', config('constantes.status_devolvido'))->first();
 				$data['publico'] = true;
 			}elseif($status == config('constantes.status_andamento') || $status == config('constantes.status_andamento_recorrente')){
 
 				$devolvido = Status::where('descricao', config('constantes.status_recorrente_financeiro'))->first();
 				$data['publico'] = false;
- 
+
 			}
-			
+
 		}elseif ($status == config('constantes.status_coordenador_aprovado')) {
-			
+
 			$devolvido = Status::where('descricao', config('constantes.status_coordenador_aberto'))->first();
 			$data['publico'] = false;
 
@@ -157,7 +247,7 @@ class SolicitacaoController extends Controller
 		} elseif ($status == config('constantes.status_andamento_financeiro')) {
 
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
-				
+
 				$devolvido = Status::where('descricao', config('constantes.status_recorrente_financeiro'))->first();
 				$data['publico'] = false;
 			}
@@ -167,7 +257,7 @@ class SolicitacaoController extends Controller
 			$data['publico'] = true;
 
 		} elseif (Auth::user()->hasRole(config('constantes.user_financeiro')) || Auth::user()->hasRole(config('constantes.user_administrativo'))) {
-			
+
 			$devolvido = Status::where('descricao', config('constantes.status_recorrente'))->first();
 			$data['publico'] = false;
 		} else {
@@ -203,8 +293,8 @@ class SolicitacaoController extends Controller
 			} else {
 				$finalizar = Status::where('descricao', config('constantes.status_aberto_etapa2'))->first();
 			}
-			
-			
+
+
 		}else{
 			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();	
 			$solicitacao->data_finalizado = date("Y-m-d");

@@ -5,8 +5,8 @@ $(document).ready(function() {
         tClose: 'Fechar (Esc)', // Alt text on close button
         tLoading: 'Carregando...', // Text that is displayed during loading. Can contain %curr% and %total% keys
         gallery: {
-        tPrev: 'Anterior (Left arrow key)', // Alt text on left arrow
-        tNext: 'Próximo (Right arrow key)', // Alt text on right arrow
+        tPrev: 'Anterior', // Alt text on left arrow (Left arrow key)
+        tNext: 'Próximo', // Alt text on right arrow (Right arrow key)
         tCounter: '%curr% de %total%' // Markup for "1 of 7" counter
     },
     image: {
@@ -14,8 +14,8 @@ $(document).ready(function() {
     },
     ajax: {
         tError: '<a href="%url%">The content</a> Não pode ser carregada.' // Error message when ajax request failed
-        }
-    });
+    }
+});
     $('.zoom-gallery').magnificPopup({
         delegate: 'a',
         type: 'image',
@@ -146,7 +146,7 @@ $(function() {
             +'<div class="col-md-2">'
             +'<div class="form-line">'
             +'<!-- Define your button -->'
-            +'<button type="button" style="padding: 10px 0;width:100%;overflow:hidden;margin-top: 16px;" id="file'+i+'"> Anexar Arquivo </button>'
+            +'<button type="button" style="padding: 10px 0;width:100%;overflow:hidden;margin-top: 16px;white-space: nowrap;" id="file'+i+'"> Anexar Arquivo </button>'
             +'<!-- Your File element -->'
             +' <input type="file" name="anexo_comprovante[]" id="anexo_comprovante'+i+'" />'
             +'</div>'
@@ -166,20 +166,20 @@ $(function() {
   });
 
 function changeFileInput(i) {
-     // Wrap your File input in a wrapper <div>
-     $('input:text').keyup(function() {
+    // Wrap your File input in a wrapper <div>
+    $('input:text').keyup(function() {
         this.value = this.value.toLocaleUpperCase()
     });
-     var wrapper = $('<div/>').css({height:0,width:0,'overflow':'hidden'});
-     var fileInput = $('#anexo_comprovante'+i).wrap(wrapper);
-      // When your file input changes, update the text for your button
-      fileInput.change(function(){
+    var wrapper = $('<div/>').css({height:0,width:0,'overflow':'hidden'});
+    var fileInput = $('#anexo_comprovante'+i).wrap(wrapper);
+    // When your file input changes, update the text for your button
+    fileInput.change(function(){
         $this = $(this);
         // If the selection is empty, reset it
         if($this.val().length != 0) {
-          $('#file'+i).text($this.val());
-      }
-  })
+            $('#file'+i).text($this.val());
+        }
+    })
       // When your fake button is clicked, simulate a click of the file button
       $('#file'+i).click(function(){
         fileInput.click();
@@ -259,8 +259,13 @@ $( window ).load(function() {
         $('#cliente').selectpicker('refresh');
 
     }else{
-      $('#cliente').attr('required', true);
-  }
+        $('#cliente').attr('required', true);
+    }
+    var value = $('#selecionar_compra').val();
+    if (value == "") {
+        $('#cadastrar_cotacao').attr('disabled', true);
+    }
+
     //$('.js-basic-example').DataTable().responsive.recalc();
     //console.log($('.js-basic-example').DataTable().responsive.recalc());
 });
@@ -318,12 +323,41 @@ $('#contrato').change(function() {
         $('#processo').removeAttr('required', false);
     }
 });
-$('#compra').change(function() {
+$('#selecionar_compra').change(function() {
     var value = $(this).val();
-    //console.log(value);
+    if ($(this).val() == "") {
+        $('#cadastrar_cotacao').attr('disabled', true);
+    }else{
+        $('#cadastrar_cotacao').removeAttr('disabled', false);
+    }
     $('#compras_id').val(value);
+    console.log($('#compras_id').val());
 
 });
+$('#origem_despesa').change(function() {
+
+    var value = $(this).val();
+
+    if (value == "ESCRITÓRIO") {
+        $('#label').css("color","#ded5d5");
+
+        // $('#clientes').closest('label').addClass("red2");
+    //console.log('ghjhgjgj');
+    // $('#clientes').attr("disabled", true);
+    $('#cliente').selectpicker('deselectAll');
+    $('#cliente').removeAttr('required', false);
+    $('#cliente').selectpicker('hide');
+    $('#cliente').selectpicker('refresh');
+
+}else{
+    $('#label').css("color","#555"); 
+    $('#cliente').removeAttr('disabled',false);
+    $('#cliente').selectpicker('show');
+    $('#cliente').attr('required', true);
+    $('#cliente').selectpicker('refresh');
+}
+});
+
 $('#origem_despesa').change(function() {
 
     var value = $(this).val();

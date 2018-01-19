@@ -13,7 +13,7 @@ class Solicitacao extends Model
      */ 
     protected $table = 'solicitacoes';
     protected $fillable = [
-    'codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato', 'area_atuacoes_id', 'clientes_id', 'solicitantes_id', 'processos_id', 'unidades_id', 'users_id', 'relatorios_id'
+        'codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato', 'area_atuacoes_id', 'clientes_id', 'solicitantes_id', 'processos_id', 'unidades_id', 'users_id', 'relatorios_id'
     ];
     
     /** Consulta os status de  solicitação
@@ -24,7 +24,7 @@ class Solicitacao extends Model
         return $this->belongsToMany('App\Status','solicitacoes_status','solicitacoes_id','status_id');
     }
     
-    /** Consulta as Despesas da  solicitação
+    /** Consulta as viagens da  solicitação
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function viagem()
@@ -32,12 +32,20 @@ class Solicitacao extends Model
         return $this->hasMany('App\Viagem','solicitacoes_id');
     }
 
-        /** Consulta as Despesas da  solicitação
+    /** Consulta os Comentarios da  solicitação
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function comentarios()
     {
         return $this->hasMany('App\Comentario','solicitacoes_id');
+    }
+    
+    /** Consulta os comprovante da solicitação
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function comprovante()
+    {
+        return $this->hasMany('App\Comprovante','solicitacoes_id');
     }
 
     /** Consulta as Despesas da  solicitação
@@ -72,7 +80,7 @@ class Solicitacao extends Model
         return $this->hasMany('App\Compra','solicitacoes_id');
     }
 
-    /** Consulta as compras da solicitação
+    /** Consulta a antecipação da solicitação
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function antecipacao()
@@ -104,7 +112,7 @@ class Solicitacao extends Model
     {
         return $this->belongsTo('App\Cliente','clientes_id');
     }
-    /** Consulta o cliente da solicitação
+    /** Consulta o relátorio da solicitação
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function relatorio()

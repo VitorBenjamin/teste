@@ -254,6 +254,7 @@ return [
         'Relatorio' => App\Relatorio::class,
         'Hospedagem' => App\Hospedagem::class,
         'Locacao' => App\Locacao::class,
+        'Comprovante' => App\Comprovante::class,
 
         //HELPERS
         'SolicitacaoHelper' => App\Http\Helpers\SolicitacaoHelper::class,

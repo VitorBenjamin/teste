@@ -318,6 +318,10 @@ class UserController extends Controller
 		if ($andamento !=null) {
 			$abertas= $this->pushSolicitacao($abertas,$andamento);
 		}
+		$andamento_recorrente = $repo->getSolicitacaoAdministrativo(config('constantes.status_andamento_recorrente'));
+		if ($andamento_recorrente !=null) {
+			$abertas= $this->pushSolicitacao($abertas,$andamento_recorrente);
+		}
 		
 		$devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_devolvido_financeiro'));
 		$recorrentes_devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_recorrente'));

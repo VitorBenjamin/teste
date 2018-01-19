@@ -60,7 +60,9 @@
 	<!-- FIM CABEÇALHO PADRAO -->
 	
 	<!-- LISTAGEM DA VIAGEM  -->
+	@if(count($solicitacao->comentarios)>0)
 	@include('layouts._includes._comentario')
+	@endif
 	<!-- FIM LISTAGEM DA VIAGEM  -->
 
 	<!-- LISTAGEM DOS TRANSLADOS  -->
@@ -166,7 +168,7 @@
 							@foreach ($solicitacao->despesa as $key => $despesa)
 							<tr>
 								<td></td>
-								<td>{{date('d/m/y',strtotime($despesa->data_despesa))}}</td>
+								<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 								<td>{{$despesa->descricao}}</td>
 								<td>{{$despesa->tipo_comprovante}}</td>
 								<td>{{$despesa->valor}}</td>
@@ -185,7 +187,7 @@
 												<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
 											</span>
 											@elseif($despesa->anexo_comprovante)
-											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:35px;height:35px;">
+											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="COMPROVANTE - {{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:35px;height:35px;">
 												<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="35" height="35">
 											</a>
 											@endif
@@ -201,6 +203,7 @@
 		</div>
 	</div>
 	<!-- FIM LISTAGEM DAS DESPESAS -->
+	
 	<!-- MODAL TRANSLADO -->
 	<div class="modal fade" id="modalTranslado" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">

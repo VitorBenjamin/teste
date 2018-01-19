@@ -127,10 +127,8 @@ class SolicitacaoRepository
         $area_id = array();
         $advogados = array();
         $clientes = array();
-        //dd(count($area_id));
         $limites = auth()->user()->limites;
 
-        // dd(empty($area_id));
         foreach ($limites as $limite) 
         {
             array_push($area_id,$limite->area_atuacoes_id);
@@ -257,7 +255,6 @@ class SolicitacaoRepository
         {
             if (empty($area_id)) 
             {
-            //dd($limite);
                 if ($total <= $limite->ate) 
                 {
 
@@ -485,19 +482,19 @@ class SolicitacaoRepository
     {
 
         $total = 0;
-        $menor = 999999;
         if ($compras->compra != null ) {
             foreach ($compras->compra as $compra) {
-                foreach ($compra->cotacao as $cotacao) {
+                if (count($compra->cotacao) >0) {
+                    $menor = $compra->cotacao[0]->valor;
 
-                    if ($cotacao->valor<$menor) {
+                    //dd($menor);
+                    //dd($compra->cotacao[0]);
+                    foreach ($compra->cotacao as $cotacao) {
 
-                        $menor = $cotacao->valor;
+                        if ($cotacao->valor<$menor) {
+                            $menor = $cotacao->valor;
+                        }
                     }
-
-                }
-                if ($menor != 999999) {
-
                     $total += $menor;
                 }
             }
@@ -514,10 +511,10 @@ class SolicitacaoRepository
             //dd($viagem->locacoes);
             //dd(Hospedagem::find($viagem->hospedagens_id));
             $total += $viagem->valor;
-            if (!$viagem->locacoes) {
+            if ($viagem->locacoes) {
                 $total += $viagem->locacoes->custo_locacao;
             }
-            if (!$viagem->hospedagens) {
+            if ($viagem->hospedagens) {
                 $total += $viagem->hospedagens->custo_hospedagem;
             }
 

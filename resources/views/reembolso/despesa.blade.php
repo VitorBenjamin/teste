@@ -61,30 +61,36 @@
 										</div>
 									</div>							
 								</div>
-								<div class="col-md-12">
+								<div class="col-md-4">
 									<div class="form-group">
 										<div class="form-line">
 											<label for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>
 											<input type="file" name="anexo_comprovante" id="anexo_comprovante"/>
 										</div>
 									</div>								
-								</div>											
+								</div>	
+								<div class="col-md-4">
+									<div class="zoom-gallery">
+										@if($despesa->anexo_pdf)
+										<b>Baixar</b>
+										<br>
+										<span>
+
+											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+										</span>
+										@else
+										<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="COMPROVANTE - {{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+											<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+										</a>
+										@endif
+									</div>								
+								</div>										
 							</div>
 							<div class="form-group">
 								<button class="btn btn-info">
 									<i class="material-icons">save</i>
 									<span>ATUALIZAR DESPESA</span> 
 								</button>
-							</div>
-							<div class="container">
-								<div class="row">
-									<div class="col-md-offset-1 col-md-10">
-										<!--Colocar a imagem-->  
-										<a href="{{$despesa->anexo_comprovante}}" download="COMPROVANTE {{$despesa->tipo_comprovante}} {{$despesa->data_despesa}} ">
-											<img border="0" src="{{$despesa->anexo_comprovante}}" alt="Comprovante Despesa" width="200" height="200">
-										</a>
-									</div>  
-								</div>
 							</div>
 						</div>
 					</div>

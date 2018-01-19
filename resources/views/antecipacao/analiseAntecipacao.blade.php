@@ -18,8 +18,20 @@
 	<!-- FIM MODAL COMENTÁRIO -->
 	
 	<!-- SESSÂO COMENTÁRIO -->
+	@if(count($solicitacao->comentarios) > 0)
 	@include('layouts._includes._comentario')
+	@endif
 	<!-- FIM SESSÂO COMENTÁRIO  -->
+
+	<!-- SESSÂO COMPROVANTE -->
+	@if(count($solicitacao->comprovante) == 0)
+	@role('FINANCEIRO')
+	@include('layouts._includes.solicitacoes._addComprovante')
+	@endrole
+	@else
+	@include('layouts._includes.solicitacoes._comprovante')
+	@endif 
+	<!-- FIM SESSÂO COMPROVANTE  -->
 	
 	<!-- LISTAGEM DA ANTECIPAÇÃO  -->
 	<div class="row clearfix">
@@ -50,17 +62,17 @@
 									@role('FINANCEIRO')
 									<button type="button" class="btn btn-default waves-effect m-r-20" style="float: left" data-toggle="modal" data-target="#addComprovante{{$antecipacao->id}}">ANEXAR</button>
 									@endrole
-									@if($antecipacao->anexo_pdf)
-									<span>
-										<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/antecipacao/'.$antecipacao->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-									</span>
-									@elseif($antecipacao->anexo_comprovante)
 									<div class="zoom-gallery">
+										@if($antecipacao->anexo_pdf)
+										<span>
+											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/antecipacao/'.$antecipacao->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+										</span>
+										@elseif($antecipacao->anexo_comprovante)
 										<a href="{{$antecipacao->anexo_comprovante}}" data-source="{{$antecipacao->anexo_comprovante}}" title="{{$antecipacao->descricao}} - {{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}" style="width:25px;height:25px;">
 											<img style="border: 1px solid #9c9b9b; border-radius: 30px; margin-bottom: 0px" src="{{$antecipacao->anexo_comprovante}}" width="25" height="25">
 										</a>
+										@endif
 									</div>
-									@endif
 								</td>									
 							</tr>
 							<div class="modal fade" id="addComprovante{{$antecipacao->id}}" tabindex="-1" role="dialog">

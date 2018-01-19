@@ -132,7 +132,7 @@
 												<div class="col-md-12">
 													<div class="form-group">
 														<div class="form-line">
-															<label for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>
+															<label for="anexo_comprovante">Envie um Arquivo (jpeg,png,pdf)</label>
 															<input type="file" name="anexo_comprovante" id="anexo_comprovante" required/>
 															<!-- <button type="reset" id="pseudoCancel">
 																Resetar
@@ -171,9 +171,11 @@
 	@endif
 	<!-- FIM CABEÇALHO PADRAO -->
 
-	<!-- LISTAGEM DA antecipacao  -->
+	<!-- SESSÂO COMENTÁRIO -->
+	@if(count($solicitacao->comentarios) > 0)
 	@include('layouts._includes._comentario')
-	<!-- FIM LISTAGEM DA antecipacao  -->
+	@endif
+	<!-- FIM SESSÂO COMENTÁRIO  -->
 
 	@if(empty($solicitacao->antecipacao[0]))
 	<!-- MODAL CADASTRO DA ANTECIPAÇÂO -->

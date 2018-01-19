@@ -14,7 +14,7 @@ class Viagem extends Model
     protected $table = 'viagens';
 
     protected $fillable = [
-        'observacao', 'estornado', 'origem', 'destino', 'data_ida', 'data_volta', 'hospedagem', 'bagagem', 'kg', 'locacao', 'solicitacoes_id','valor', 'observacao_comprovante', 'data_compra', 'anexo_passagem','hospedagens_id', 'locacoes_id'
+        'observacao', 'estornado', 'origem', 'destino', 'data_ida', 'data_volta', 'hospedagem', 'bagagem', 'kg', 'locacao', 'solicitacoes_id','valor', 'observacao_comprovante', 'data_compra', 'anexo_pdf','anexo_passagem','hospedagens_id', 'locacoes_id'
     ];
 
     /** Consulta a Solicitacao por Viagem

@@ -8,6 +8,7 @@ use App\Http\Requests\SolicitacaoRequest;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use App\Repositories\SolicitacaoRepository;
+use App\Repositories\DespesaRepository;
 use App\Processo;
 use App\Viagem;
 use App\Locacao;
@@ -85,21 +86,8 @@ class ViagemController extends Controller
     //Adcionar uma nova despesa a solicitação
     public function addDespesa(Request $request,$id)
     {
-        $solicitacao = Solicitacao::find($id);
-
-        $file = Image::make($request->file('anexo_comprovante'));
-        $img_64 = (string) $file->encode('data-url');
-        $despesa = Despesa::create(
-            [   
-                'descricao' => $request->descricao,
-                'data_despesa' => date('Y-m-d', strtotime($request->data_despesa)),
-                'tipo_comprovante' => $request->tipo_comprovante,
-                'valor' => $request->valor,
-                'anexo_comprovante' => $img_64,
-                'solicitacoes_id' => $solicitacao->id,
-            ]
-        );
-
+        $despesa_repo = new DespesaRepository();
+        $despesa = $despesa_repo->create($request,$id);
         \Session::flash('flash_message',[
             'msg'=>"Cadastro da Despesa Realizado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
@@ -230,60 +218,92 @@ class ViagemController extends Controller
         //dd($request->all());
         $viagem = Viagem::find($request->viagem_id);
         if ($request->file('anexo_passagem')) {
-            $file = Image::make($request->file('anexo_passagem'));
-            $anexo_passagem = (string) $file->encode('data-url');
-            $viagem->update([
-                'anexo_passagem' => $anexo_passagem,
+            $mime = $request->file('anexo_passagem')->getClientMimeType();
+            $data = [
                 'valor' => $request->custo_passagem,
                 'data_compra' => date('Y-m-d', strtotime($request->data_compra)),
                 'observacao_comprovante' => $request->oberservacao,
-            ]);
-
+            ];
+            if ($mime == "image/jpeg" || $mime == "image/png") {
+                $file = Image::make($request->file('anexo_passagem'));
+                $anexo_passagem = (string) $file->encode('data-url');
+                $data['anexo_passagem'] = $anexo_passagem;
+                $viagem->update($data);
+            }elseif ($mime == "application/pdf") {
+                $today = (string) date("Y-m-d");
+                $fileName = $today.'_'.$id.'_'.$request->anexo_passagem->getClientOriginalName();    
+                $request->anexo_passagem->storeAs('public/viagem',$fileName);
+                $data['anexo_pdf'] = $fileName;
+                $viagem->update($data);
+            }else{
+                Session::flash('flash_message',[
+                    'msg'=>"Arquivo não suportado!!!",
+                    'class'=>"alert bg-orange alert-dismissible"
+                ]);
+                return redirect()->back();
+            }
         } else {
             $anexo_passagem = null;
         }
-
         if ($request->file('anexo_hospedagem')) {
-            $file = Image::make($request->file('anexo_hospedagem'));
-            $anexo_hospedagem = (string) $file->encode('data-url');
-
-            $hospedagem = Hospedagem::create([
+            $mime = $request->file('anexo_hospedagem')->getClientMimeType();
+            $data2 = [
                 'data_compra' => date('Y-m-d', strtotime($request->data_hospedagem)),
                 'observacao' => $request->observacao_hospedagem,
                 'custo_hospedagem' => $request->custo_hospedagem,
                 'viagens_id' => $request->viagem_id,
-                'anexo_hospedagem' => $anexo_hospedagem,
-            ]);
-            $viagem->update(['hospedagens_id' => $hospedagem->id]);
-        } else {
-            $anexo_hospedagem = null;
+            ];
+            if ($mime == "image/jpeg" || $mime == "image/png") {
+                $file = Image::make($request->file('anexo_hospedagem'));
+                $anexo_hospedagem = (string) $file->encode('data-url');
+                $data2['anexo_hospedagem']=$anexo_hospedagem;
+                $hospedagem = Hospedagem::create($data2);
+                $viagem->update(['hospedagens_id' => $hospedagem->id]);
+            } elseif ($mime == "application/pdf") {
+                $today = (string) date("Y-m-d");
+                $fileName = $today.'_'.$id.'_'.$request->anexo_hospedagem->getClientOriginalName();    
+                $request->anexo_hospedagem->storeAs('public/hospedagem',$fileName);
+                $data2['anexo_pdf'] = $fileName;
+                $hospedagem = Hospedagem::create($data2);
+                $viagem->update(['hospedagens_id' => $hospedagem->id]);
+            }else{
+                Session::flash('flash_message',[
+                    'msg'=>"Arquivo não suportado!!!",
+                    'class'=>"alert bg-orange alert-dismissible"
+                ]);
+                return redirect()->back();
+            }
         }
-        
-        
+
         if ($request->file('anexo_locacao')) {
-            $file = Image::make($request->file('anexo_locacao'));
-            $anexo_locacao = (string) $file->encode('data-url');
-            $locacao = Locacao::create([
-                'data_compra' => date('Y-m-d', strtotime($request->data_locacao)),
-                'observacao' => $request->observacao_locacao,
-                'custo_locacao' => $request->custo_locacao,
+            $mime = $request->file('anexo_locacao')->getClientMimeType();
+            $data3 = [
+                'data_compra' => date('Y-m-d', strtotime($request->data_hospedagem)),
+                'observacao' => $request->observacao_hospedagem,
+                'custo_hospedagem' => $request->custo_hospedagem,
                 'viagens_id' => $request->viagem_id,
-                'anexo_locacao' => $anexo_locacao,
-            ]);
-            $viagem->update(['hospedagens_id' => $locacao->id]);
-        } else {
-            $anexo_locacao = null;
+            ];
+            if ($mime == "image/jpeg" || $mime == "image/png") {
+                $file = Image::make($request->file('anexo_locacao'));
+                $anexo_locacao = (string) $file->encode('data-url');
+                $data3['anexo_locacao']=$anexo_locacao;
+                $locacao = Locacao::create($data3);
+                $viagem->update(['locacoes_id' => $locacao->id]);
+            } elseif ($mime == "application/pdf") {
+                $today = (string) date("Y-m-d");
+                $fileName = $today.'_'.$id.'_'.$request->anexo_locacao->getClientOriginalName();    
+                $request->anexo_locacao->storeAs('public/locacao',$fileName);
+                $data3['anexo_pdf'] = $fileName;
+                $locacao = Locacao::create($data3);
+                $viagem->update(['locacoes_id' => $locacao->id]);
+            }else{
+                Session::flash('flash_message',[
+                    'msg'=>"Arquivo não suportado!!!",
+                    'class'=>"alert bg-orange alert-dismissible"
+                ]);
+                return redirect()->back();
+            }
         }
-        // $comprovante = ViagemComprovante::create([
-        //     'observacao' => $request->observacao,
-        //     'data_compra' => $request->data_compra,
-        //     'custo_passagem' => $request->custo_passagem,
-        //     'custo_hospedagem' => $request->custo_hospedagem,
-        //     'custo_locacao' => $request->custo_locacao,
-        //     'anexo_passagem' => $anexo_passagem,
-        //     'anexo_hospedagem' => $anexo_hospedagem,
-        //     'anexo_locacao' => $anexo_locacao,
-        // ]);
 
         $solicitacao = Solicitacao::find($id);
         //$viagem->update(['viagens_comprovantes_id' => $comprovante->id]);        
@@ -303,7 +323,7 @@ class ViagemController extends Controller
         ]);
         return redirect()->route('viagem.editar',$s_id);       
     }
-    
+
     //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
     public function atualizarCabecalho(Request $request,$id)
     {   

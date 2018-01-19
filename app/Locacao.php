@@ -14,7 +14,7 @@ class Locacao extends Model
     protected $table = 'locacoes';
 
     protected $fillable = [
-        'data_compra', 'estornado', 'custo_locacao', 'anexo_locacao', 'viagens_id'];
+        'data_compra', 'estornado', 'custo_locacao', 'anexo_pdf','anexo_locacao', 'viagens_id'];
     
     /** Consulta a viagem por Comprovante
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

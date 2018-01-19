@@ -184,11 +184,14 @@
 	<!-- FIM CABEÇALHO PADRAO -->
 	@endif
 	
-	<!-- LISTAGEM DA VIAGEM  -->
+	<!-- SESSÂO COMENTÁRIO -->
+	@if(count($solicitacao->comentarios) > 0)
 	@include('layouts._includes._comentario')
-	<!-- FIM LISTAGEM DA VIAGEM  -->
+	@endif
+	<!-- FIM SESSÂO COMENTÁRIO  -->
+
 	@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO" || $solicitacao->status[0]->descricao =="COORDENADOR-ABERTO")
-	
+
 	<!-- MODAL VIAGEM -->
 	<div class="modal fade" id="modalViagem" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
@@ -318,115 +321,9 @@
 		</div>
 	</div>
 	<!-- FIM MODAL VIAGEM -->
-	
 	@endif
-
-	<!-- SESSÃO CADASTRO DA VIAGEM -->
-	<!-- <div class="row clearfix">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<div class="card">
-				<div class="header">
-					<h2>
-						Adicione uma Passagem a sua Solicitação
-					</h2>
-				</div>
-				<div class="body">
-					<form action="{{ route('viagem.addViagem',$solicitacao->id)}}" method="POST">
-						{{ csrf_field() }}
-						{{ method_field('PUT') }}
-						<div class="row clearfix">
-							<div class="col-md-2">
-								<div class="form-group">
-									<div class="form-line">
-										<label for="origem">Origem</label>
-										<input type="text" value="" name="origem" class="form-control" placeholder="Cidade de Origem" required />										
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<div class="form-line">
-										<label for="data_ida">Data Ida</label>
-										<input type="text" value="" name="data_ida" class="ida form-control" placeholder="Data Obrigatória" required/>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<div class="form-line">
-										<label for="destino">Destino</label>
-										<input type="text" value="" name="destino" class="form-control" placeholder="Cidade de Destino" required/>										
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<div class="form-line">
-										<label for="data_volta">Data Volta</label>
-										<input type="text" value="" name="data_volta" class="volta form-control" placeholder="Data Opcional"/>
-									</div>
-								</div>
-							</div>
-							
-							<div class="col-md-2">
-								<div class="form-group">
-									<fieldset>
-										<legend style="margin: 0">Locação de Carro</legend>
-									</fieldset>
-									<input name="locacao" value="1" type="radio" id="simL" />
-									<label style="margin: 15px 15px 0px 0px" for="simL">Sim</label>
-									<input name="locacao" value="0" type="radio" id="naoL" checked />
-									<label style="margin: 15px 15px 0px 0px" for="naoL">Não</label>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<fieldset>
-										<legend style="margin: 0">Hospedagem</legend>
-									</fieldset>
-									<input name="hospedagem" value="1" type="radio" id="simH" />
-									<label style="margin: 15px 15px 0px 0px" for="simH">Sim</label>
-									<input name="hospedagem" value="0" type="radio" id="naoH" checked />
-									<label style="margin: 15px 15px 0px 0px" for="naoH">Não</label>
-								</div>
-							</div>
-							
-						</div>
-						<div class="row clearfix">
-							<div class="col-md-2">
-								<div class="form-group">
-									<fieldset>
-										<legend>Bagagem</legend>
-									</fieldset>
-									<input name="bagagem" value="1" type="radio" id="simB" />
-									<label style="margin: 15px 15px 0px 0px" for="simB">Sim</label>
-									<input name="bagagem" value="0" type="radio" id="naoB" checked/>
-									<label style="margin: 15px 15px 0px 0px" for="naoB">Não</label>
-								</div>
-							</div>
-							
-							<div class="col-md-2">
-								<div class="form-group">
-									<div class="form-line">
-										<label for="kg">Kg</label>
-										<input type="text" value="" name="kg" class="form-control" placeholder="Kilos"/>
-									</div>
-								</div>								
-							</div>
-							<div class="col-md-2" style="margin-top: 20px">
-								<button class="btn bg-deep-orange waves-effect">
-									<i class="material-icons">save</i>
-									<span>ADD VIAGEM</span> 
-								</button>
-							</div>							
-						</div>
-					</form>	
-				</div>
-			</div>			
-		</div>			
-	</div> -->
-
-
+	
+	@if(count($solicitacao->viagem) > 0)
 	<!-- LISTAGEM DAS VIAGENS  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -471,149 +368,60 @@
 							<tr>
 								<td></td>
 								<td>{{$viagem->origem}}</td>
-								<td>{{date('d-m-Y H:m',strtotime($viagem->data_ida))}}</td>
+								<td>{{date('d/m/Y H:i',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
-								@if($viagem->data_volta)
-								<td>{{date('d-m-Y H:m',strtotime($viagem->data_volta))}}</td>
-								@else
-								<td>SOMENTE IDA</td>
-								@endif
-								<td>{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}</td>
-								<td>{{$viagem->bagagem == 1 ? 'SIM' : 'NÃO'}}</td>
-								<td>{{$viagem->kg}}</td>
-								<td>{{$viagem->locacao == 1 ? 'SIM' : 'NÃO'}}</td>					
-								<td class="acoesTD">
-									@if($solicitacao->status[0]->descricao =="ABERTO" || $solicitacao->status[0]->descricao =="DEVOLVIDO")
-									<div class="icon-button-demo" >
-										<a class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#modal{{$viagem->id}}" role="button"><i class="material-icons">settings</i></a>
-
-										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('viagem.deletarViagem', $viagem->id)}}"><i class="material-icons">delete_sweep</i></a>
+								<td>{{date('d/m/Y H:i',strtotime($viagem->data_volta))}}</td>
+								<td>
+									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
+									@if($viagem->hospedagens)
+									<div class="zoom-gallery">
+										@if($viagem->hospedagens->anexo_pdf)
+										<span>
+											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/hospedagem/'.$viagem->hospedagens->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+										</span>
+										@else
+										<a href="{{$viagem->hospedagens->anexo_comprovante}}" data-source="{{$viagem->hospedagens->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->hospedagens->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->hospedagens->data_compra))}}" style="width:32px;height:32px;">
+											<img class="img_popup" src="{{$viagem->hospedagens->anexo_comprovante}}" width="32" height="32">
+										</a>
+										@endif
 									</div>
-									@else
-									@if($viagem->viagens_comprovantes_id == null)
-									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" disabled>
-										<i class="material-icons">photo_library</i>
-									</a>
-									@else
-									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key}})">
-										<i class="material-icons">photo_library</i>
-									</a>
-									@endif
 									@endif
 								</td>
-							</tr>
-
-							@if($viagem->viagens_comprovantes_id == null)
-							<!-- MODAL ATUALIZAÇÂO VIAGEM -->
-							<div class="modal fade" id="modal{{$viagem->id}}" tabindex="-1" role="dialog">
-								<div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h4 class="modal-title" id="largeModalLabel">Editar Viagem</h4>
-										</div>
-
-										<!-- INCIO SESSÃO ATUALIZAÇÂO DA VIAGEM -->
-										<form action="{{ route('viagem.atualizarViagem',$viagem->id)}}" method="POST">
-											{{ csrf_field() }}
-											{{ method_field('PUT') }}
-											<div class="modal-body">				
-
-												{{ csrf_field() }}
-												{{ method_field('PUT') }}
-												<div class="row clearfix">
-													<div class="col-md-2">
-														<div class="form-group">
-															<div class="form-line">
-																<label for="origem">Origem</label>
-																<input type="text" value="{{$viagem->origem}}" name="origem" class="form-control" placeholder="Cidade de Origem" required />										
-															</div>
-														</div>
-													</div>
-													<div class="col-md-2">
-														<div class="form-group">
-															<div class="form-line">
-																<label for="data_ida">Data Ida</label>
-																<input type="text" value="{{date('d-m-Y H:m:00',strtotime($viagem->data_ida))}}" name="data_ida" class="ida form-control" placeholder="Data Obrigatória" required/>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-2">
-														<div class="form-group">
-															<div class="form-line">
-																<label for="destino">Destino</label>
-																<input type="text" value="{{$viagem->destino}}" name="destino" class="form-control" placeholder="Cidade de Destino" required/>										
-															</div>
-														</div>
-													</div>
-													<div class="col-md-2">
-														<div class="form-group">
-															<div class="form-line">
-																<label for="data_volta">Data Volta</label>
-																<input type="text" value="{{$viagem->data_volta != null ? date('d-m-Y H:m:00',strtotime($viagem->data_volta)) : ''}}" name="data_volta" class="volta form-control" placeholder="Data Opcional"/>
-															</div>
-														</div>
-													</div>
-
-													<div class="col-md-2">
-														<div class="form-group">
-															<fieldset>
-																<legend style="margin: 0">Locação</legend>
-															</fieldset>
-															<input name="locacao" value="1" type="radio" id="simLM" {{$viagem->locacao == 1 ? 'checked' : ''}} />
-															<label style="margin: 15px 15px 0px 0px" for="simLM">Sim</label>
-															<input name="locacao" value="0" type="radio" id="naoLM" {{$viagem->locacao == 0 ? 'checked' : ''}} />
-															<label style="margin: 15px 15px 0px 0px" for="naoLM">Não</label>
-														</div>
-													</div>
-													<div class="col-md-2">
-														<div class="form-group">
-															<fieldset>
-																<legend style="margin: 0">Hospedagem</legend>
-															</fieldset>
-															<input name="hospedagem" value="1" type="radio" id="simHM" {{$viagem->hospedagem == 1 ? 'checked' : ''}}/>
-															<label style="margin: 15px 15px 0px 0px" for="simHM">Sim</label>
-															<input name="hospedagem" value="0" type="radio" id="naoHM" {{$viagem->hospedagem == 0 ? 'checked' : ''}} />
-															<label style="margin: 15px 15px 0px 0px" for="naoHM">Não</label>
-														</div>
-													</div>
-												</div>
-												<div class="row clearfix">
-													<div class="col-md-2">
-														<div class="form-group">
-															<fieldset>
-																<legend>Bagagem</legend>
-															</fieldset>
-															<input name="bagagem" value="1" type="radio" id="simBM" {{$viagem->bagagem == 1 ? 'checked' : ''}}/>
-															<label style="margin: 15px 15px 0px 0px" for="simBM">Sim</label>
-															<input name="bagagem" value="0" type="radio" id="naoBM" {{$viagem->bagagem == 0 ? 'checked' : ''}} />
-															<label style="margin: 15px 15px 0px 0px" for="naoBM">Não</label>
-														</div>
-													</div>
-													<div class="col-md-2">
-														<div class="form-group">
-															<div class="form-line">
-																<label for="kg">Kg</label>
-																<input type="text" value="{{$viagem->kg}}" name="kg" class="form-control" placeholder="Kilos"/>
-															</div>
-														</div>								
-													</div>
-													<div class="col-md-2" style="margin-top: 20px">
-														<button class="btn bg-deep-orange waves-effect">
-															<i class="material-icons">save</i>
-															<span>Atualizar Viagem</span> 
-														</button>
-													</div>
-												</div>
-												<div class="modal-footer">													
-													<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
-												</div>
-											</div>
-										</form>	
+								<td>{{$viagem->bagagem == 1 ? 'SIM' : 'NÃO'}}</td>
+								<td>{{$viagem->kg}}</td>
+								<td>
+									{{$viagem->locacao == 1 ? 'SIM' : 'NÃO'}}
+									@if($viagem->locacoes)
+									<div class="zoom-gallery">
+										@if($viagem->locacoes->anexo_pdf)
+										<span>
+											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/hospedagem/'.$$viagem->locacoes->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+										</span>
+										@else
+										<a href="{{$viagem->locacoes->anexo_comprovante}}" data-source="{{$viagem->locacoes->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->locacoes->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->locacoes->data_compra))}}" style="width:32px;height:32px;">
+											<img class="img_popup" src="{{$viagem->locacoes->anexo_comprovante}}" width="32" height="32">
+										</a>
+										@endif
 									</div>
-								</div>
-							</div>
-							<!-- FIM MODAL VIAGEM -->.
-							@endif
+									@endif
+								</td>
+
+								<td class="acoesTD">
+									@if($viagem->anexo_pdf || $viagem->anexo_comprovante)
+									<div class="zoom-gallery">
+										@if($viagem->anexo_pdf)
+										<span>
+											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/viagem/'.$viagem->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+										</span>
+										@else
+										<a href="{{$viagem->anexo_comprovante}}" data-source="{{$viagem->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->data_compra))}}" style="width:32px;height:32px;">
+											<img class="img_popup" src="{{$viagem->anexo_comprovante}}" width="32" height="32">
+										</a>
+										@endif
+									</div>
+									@endif
+								</td>	
+							</tr>
 							@endforeach														
 						</tbody>
 					</table>
@@ -622,7 +430,9 @@
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DA VIAGENS -->
+	@endif
 	
+	@if(count($solicitacao->despesa) > 0)
 	<!-- LISTAGEM DAS DESPESAS  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -664,16 +474,24 @@
 								<td>{{$despesa->valor}}</td>
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
-										<a href="{{ route('viagem.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-											<i class="material-icons">settings</i>
+										<a href="{{ route('reembolso.editarDespesa', $despesa->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float">
+											<i class="material-icons">edit</i>
 										</a>
 
-										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('viagem.deletarDespesa',$despesa->id)}}">
+										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('reembolso.deletarDespesa',$despesa->id)}}">
 											<i class="material-icons">delete_sweep</i>
 										</a>
-										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key}})">
-											<i class="material-icons">photo_library</i>
-										</a>
+										<div class="zoom-gallery" style="display: inline;">
+											@if($despesa->anexo_pdf)
+											<span>
+												<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+											</span>
+											@elseif($despesa->anexo_comprovante)
+											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="COMPROVANTE - {{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:35px;height:35px;">
+												<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="35" height="35">
+											</a>
+											@endif
+										</div>
 									</div>
 								</td>
 							</tr>							
@@ -685,63 +503,6 @@
 		</div>
 	</div>
 	<!-- FIM LISTAGEM DAS DESPESAS -->
-	<!-- MODAL GALERIA -->
-	<div id="myModal" class="modal-2">
-		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
-		<div class="modal-content-2">
-
-			@foreach ($solicitacao->viagem as $key => $viagem)
-			@if($viagem->viagens_comprovantes_id != null)
-			
-			@if($viagem->comprovante->anexo_passagem != null)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> <span class="label label-danger"> Passagem</span></h3></div>
-				<img src="{{$viagem->comprovante->anexo_passagem}}" style="width:100%; max-height: 70%">
-			</div>
-			@endif
-
-			@if($viagem->comprovante->anexo_hospedagem != null)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> 
-					<span class="label label-warning"> Hospedagem</span> </h3>
-				</div>
-				<img src="{{$viagem->comprovante->anexo_hospedagem}}" style="width:100%; max-height: 70%">
-			</div>
-			@endif
-
-			@if($viagem->comprovante->anexo_locacao != null)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label label-info">{{$viagem->origem}} x {{$viagem->destino}} Locação</span></h3></div>
-				<img src="{{$viagem->comprovante->anexo_locacao}}" style="width:100%; max-height: 70%">
-			</div>
-			@endif
-
-			@endif	
-			@endforeach		
-			
-			@foreach ($solicitacao->despesa as $despesa)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/y',strtotime($despesa->data_despesa))}}</span></h3></div>
-				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
-			</div>
-			@endforeach											
-
-			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
-			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
-
-			<!-- <div class="caption-container">
-				<p id="caption"></p>
-			</div> -->
-			
-			<!-- @foreach ($solicitacao->despesa as $key => $despesa)
-			<div class="column">
-				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
-			</div>
-
-			@endforeach -->
-
-		</div>
-	</div>
-	<!-- FIM MODAL GALERIA -->
+	@endif
 </section>
 @endsection

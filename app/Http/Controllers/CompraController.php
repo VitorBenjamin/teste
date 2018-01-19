@@ -62,7 +62,6 @@ class CompraController extends Controller
 			}else{
 				return $solicitacaoHelper->verificarStatus($solicitacao);
 			}
-
 		}else{
 			return $exist;
 		}
@@ -114,15 +113,47 @@ class CompraController extends Controller
 	{
 		//dd($request->all());
 		foreach ($request->data_cotacao as $key => $value) {
-			Cotacao::create([
+			//dd($request->valor[$key]);
+			// $cotacao = Cotacao::create([
+			// 	'descricao' => $request->descricao[$key],
+			// 	'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao[$key])),
+			// 	'fornecedor' => $request->fornecedor[$key],
+			// 	'quantidade' => $request->quantidade[$key],
+			// 	'valor' => $request->valor[$key],
+			// 	'anexo_comprovante' => $request->anexo_comprovante[$key], 
+			// 	'compras_id' => $request->compras_id,
+			// ]);
+			//dd( $request->file('anexo_comprovante')[$key]);
+			$data = [
 				'descricao' => $request->descricao[$key],
 				'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao[$key])),
 				'fornecedor' => $request->fornecedor[$key],
 				'quantidade' => $request->quantidade[$key],
 				'valor' => $request->valor[$key],
-				'anexo_comprovante' => $request->anexo_comprovante[$key], 
 				'compras_id' => $request->compras_id,
-			]);
+			];
+			$mime = $request->file('anexo_comprovante')[$key]->getClientMimeType();
+			$data['solicitacoes_id'] = $id;
+			if ($mime == "image/jpeg" || $mime == "image/png") {
+				$file = Image::make($request->file('anexo_comprovante')[$key]);
+				$img_64 = (string) $file->encode('data-url');
+				$data['anexo_comprovante'] = $img_64;
+			}elseif ($mime == "application/pdf") {
+				$today = (string) date("Y-m-d");
+				$fileName = $today.'_'.$id.'_'.$request->file('anexo_comprovante')[$key]->getClientOriginalName();    
+				$request->anexo_comprovante[$key]->storeAs('public/cotacoes',$fileName);
+				$data['anexo_pdf'] = $fileName;
+			}else{
+
+				Session::flash('flash_message',[
+					'msg'=>"Arquivo não suportado!!!",
+					'class'=>"alert bg-orange alert-dismissible"
+				]);
+				return redirect()->back();
+			}
+			
+			$cotacao = Cotacao::create($data);
+			//dd($cotacao);
 		}
 		\Session::flash('flash_message',[
 			'msg'=>"Cotações Cadastradas com Sucesso!!!",

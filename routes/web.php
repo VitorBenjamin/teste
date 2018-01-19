@@ -52,8 +52,6 @@ Route::group(['middleware' => ['check.user.role:FINANCEIRO|COORDENADOR|ADMINISTR
     Route::get('set-aprovar/{id}', ['uses' => 'SolicitacaoController@aprovar', 'as' => 'solicitacao.aprovar']);
     Route::put('set-devolver/{id}', ['uses' => 'SolicitacaoController@devolver', 'as' => 'solicitacao.devolver']);
     Route::get('set-devolvido/{id}', ['uses' => 'SolicitacaoController@devolvido', 'as' => 'solicitacao.devolvido']);
-
-
 });
 
 Route::group(['middleware' => ['check.user.role:FINANCEIRO|ADMINISTRATIVO']],function()
@@ -61,6 +59,8 @@ Route::group(['middleware' => ['check.user.role:FINANCEIRO|ADMINISTRATIVO']],fun
     Route::get('financeiro-dashboard', ['uses' => 'UserController@financeiroDash','middleware' => 'auth', 'as' => 'user.financeiroDash']);
     Route::get('administrativo-dashboard', ['uses' => 'UserController@administrativoDash','middleware' => 'auth', 'as' => 'user.administrativoDash']);
     Route::get('set-finalizar/{id}', ['uses' => 'SolicitacaoController@finalizar', 'as' => 'solicitacao.finalizar']);
+    Route::post('add-comprovante/{id}', ['uses' => 'SolicitacaoController@addComprovante', 'as' => 'solicitacao.addComprovante']);
+    Route::put('edit-comprovante/{id}', ['uses' => 'SolicitacaoController@editComprovante', 'as' => 'solicitacao.editComprovante']);
     Route::put('add-comprovante/{id}', ['uses' => 'AntecipacaoController@addComprovante', 'as' => 'antecipacao.addComprovante']);
     Route::put('add-viagem-comprovantes/{id}', ['uses' => 'ViagemController@addComprovante', 'as' => 'viagem.addComprovante']);
     Route::get('set-devolvido/{id}', ['uses' => 'SolicitacaoController@devolvido', 'as' => 'solicitacao.devolvido']);
@@ -222,7 +222,7 @@ Route::group(['prefix' => 'admin','middleware' => ['check.user.role:COORDENADOR'
     });
 
 });
-Route::group(['prefix' => 'administrativo/relatorio','middleware' => ['check.user.role:COORDENADOR']],function()
+Route::group(['prefix' => 'administrativo/relatorio','middleware' => ['check.user.role:FINANCEIRO']],function()
 {
     Route::get('buscar', ['uses' => 'RelatorioController@relatorio', 'as' => 'relatorio.buscar']);
     Route::put('extornar', ['uses' => 'RelatorioController@extornar', 'as' => 'relatorio.extornar']);

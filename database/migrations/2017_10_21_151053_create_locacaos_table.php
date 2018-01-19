@@ -20,6 +20,7 @@ class CreateLocacaosTable extends Migration
             $table->datetime('data_compra');
             $table->decimal('valor', 10, 2)->nullable();
             $table->integer('viagens_id')->unsigned();
+            $table->string('anexo_pdf')->nullable();
             $table->timestamps();
             
         });

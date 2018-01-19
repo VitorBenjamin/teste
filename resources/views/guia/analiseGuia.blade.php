@@ -14,8 +14,18 @@
 	<!-- FIM MODAL COMENTÁRIO -->
 	
 	<!-- SESSÂO COMENTÁRIO -->
+	@if(count($solicitacao->comentarios) > 0)
 	@include('layouts._includes._comentario')
+	@endif
 	<!-- FIM SESSÂO COMENTÁRIO  -->
+
+	<!-- SESSÂO COMPROVANTE -->
+	@if(count($solicitacao->comprovante) == 0)
+	@include('layouts._includes.solicitacoes._addComprovante')
+	@else
+	@include('layouts._includes.solicitacoes._comprovante')
+	@endif 
+	<!-- FIM SESSÂO COMPROVANTE  -->
 	
 	<!-- LISTAGEM DA GUIA  -->
 	<div class="row clearfix">

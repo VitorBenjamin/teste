@@ -54,9 +54,11 @@
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
 	
-	<!-- LISTAGEM DA VIAGEM  -->
+	<!-- SESSÂO COMENTÁRIO -->
+	@if(count($solicitacao->comentarios) > 0)
 	@include('layouts._includes._comentario')
-	<!-- FIM LISTAGEM DA VIAGEM  -->
+	@endif
+	<!-- FIM SESSÂO COMENTÁRIO  -->
 	
 	<!-- MODAL CADASTRO DO PRODUTO -->
 	<div class="modal fade" id="modalCompra" tabindex="-1" role="dialog">

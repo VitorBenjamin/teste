@@ -15,7 +15,9 @@
 	<!-- FIM MODAL COMENTÁRIO -->
 	
 	<!-- SESSÂO COMENTÁRIO -->
+	@if(count($solicitacao->comentarios) > 0)
 	@include('layouts._includes._comentario')
+	@endif
 	<!-- FIM SESSÂO COMENTÁRIO  -->
 	
 	<!-- LISTAGEM DA VIAGEM  -->
@@ -51,23 +53,57 @@
 								<td>{{date('d/m/Y H:i',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
 								<td>{{date('d/m/Y H:i',strtotime($viagem->data_volta))}}</td>
-								<td>{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}</td>
+								<td>
+									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
+									@if($viagem->hospedagens)
+									<div class="zoom-gallery">
+										@if($viagem->hospedagens->anexo_pdf)
+										<span>
+											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/hospedagem/'.$viagem->hospedagens->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+										</span>
+										@else
+										<a href="{{$viagem->hospedagens->anexo_comprovante}}" data-source="{{$viagem->hospedagens->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->hospedagens->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->hospedagens->data_compra))}}" style="width:32px;height:32px;">
+											<img class="img_popup" src="{{$viagem->hospedagens->anexo_comprovante}}" width="32" height="32">
+										</a>
+										@endif
+									</div>
+									@endif
+								</td>
 								<td>{{$viagem->bagagem == 1 ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$viagem->kg}}</td>
-								<td>{{$viagem->locacao == 1 ? 'SIM' : 'NÃO'}}</td>
+								<td>
+									{{$viagem->locacao == 1 ? 'SIM' : 'NÃO'}}
+									@if($viagem->locacoes)
+									<div class="zoom-gallery">
+										@if($viagem->locacoes->anexo_pdf)
+										<span>
+											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/hospedagem/'.$$viagem->locacoes->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+										</span>
+										@else
+										<a href="{{$viagem->locacoes->anexo_comprovante}}" data-source="{{$viagem->locacoes->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->locacoes->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->locacoes->data_compra))}}" style="width:32px;height:32px;">
+											<img class="img_popup" src="{{$viagem->locacoes->anexo_comprovante}}" width="32" height="32">
+										</a>
+										@endif
+									</div>
+									@endif
+								</td>
 
 								<td class="acoesTD">
 									@role('ADMINISTRATIVO')
 									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#addComprovante{{$viagem->id}}">ANEXAR</button>
 									@endrole
-									@if($viagem->viagens_comprovantes_id == null)
-									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" disabled>
-										<i class="material-icons">photo_library</i>
-									</a>
-									@else
-									<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key+$viagem->id+2}})">
-										<i class="material-icons">photo_library</i>
-									</a>
+									@if($viagem->anexo_pdf || $viagem->anexo_comprovante)
+									<div class="zoom-gallery">
+										@if($viagem->anexo_pdf)
+										<span>
+											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/viagem/'.$viagem->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+										</span>
+										@else
+										<a href="{{$viagem->anexo_comprovante}}" data-source="{{$viagem->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->data_compra))}}" style="width:32px;height:32px;">
+											<img class="img_popup" src="{{$viagem->anexo_comprovante}}" width="32" height="32">
+										</a>
+										@endif
+									</div>
 									@endif
 								</td>	
 							</tr>
@@ -95,8 +131,8 @@
 														<div class="col-md-4">
 															<div class="form-group">
 																<div class="form-line">
-																	<label for="observacao">Observação</label>
-																	<input type="text" value="{{old('observacao')}}" name="observacao" class="form-control" placeholder="Observação"/>										
+																	<label for="observacao_comprovante">Observação</label>
+																	<input type="text" value="{{old('observacao_comprovante')}}" name="observacao_comprovante" class="form-control" placeholder="Observação"/>										
 																</div>
 															</div>
 														</div>											
@@ -224,7 +260,8 @@
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DA VIAGEM  -->
-
+	@if(count($solicitacao->despesa) > 0)
+	
 	<!-- LISTAGEM DAS DESPESAS  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -275,9 +312,17 @@
 											<i class="material-icons">delete_sweep</i>
 										</a>
 										@endif
-										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" onclick="openModal();currentSlide({{$key2}})">
-											<i class="material-icons">photo_library</i>
-										</a>
+										<div class="zoom-gallery">
+											@if($despesa->anexo_pdf)
+											<span>
+												<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+											</span>
+											@else
+											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="COMPROVANTE - {{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+												<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+											</a>
+											@endif
+										</div>
 									</div>
 								</td>
 							</tr>							
@@ -289,64 +334,7 @@
 		</div>
 	</div>
 	<!-- FIM LISTAGEM DAS DESPESAS -->
-	
-	<!-- MODAL GALERIA -->
-	<div id="myModal" class="modal-2">
-		<span class="close-2 cursor" onclick="closeModal()">&times;</span>
-		<div class="modal-content-2">
-
-			@foreach ($solicitacao->viagem as $key => $viagem)
-			
-			@if($viagem->anexo_passagem != null)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> <span class="label label-danger"> Passagem</span></h3></div>
-				<img src="{{$viagem->anexo_passagem}}" style="width:100%; max-height: 70%">
-			</div>
-			@endif
-
-			@if($viagem->hospedagens->anexo_hospedagem != null)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal">{{$viagem->origem}}</span> x <span class="label bg-green">{{$viagem->destino }} </span> 
-					<span class="label label-warning"> Hospedagem</span> </h3>
-				</div>
-				<img src="{{$viagem->hospedagens->anexo_hospedagem}}" style="width:100%; max-height: 70%">
-			</div>
-			@endif
-
-			@if($viagem->locacoes->anexo_locacao != null)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label label-info">{{$viagem->origem}} x {{$viagem->destino}} Locação</span></h3></div>
-				<img src="{{$viagem->locacoes->anexo_locacao}}" style="width:100%; max-height: 70%">
-			</div>
-			@endif
-
-			@endforeach		
-			
-			@foreach ($solicitacao->despesa as $despesa)
-			<div class="mySlides">
-				<div class="numbertext"><h3><span class="label bg-teal">{{$despesa->tipo_comprovante}}</span><span class="label label-danger"> {{date('d/m/y',strtotime($despesa->data_despesa))}}</span></h3></div>
-				<img src="{{$despesa->anexo_comprovante}}" style="width:100%; max-height: 70%">
-			</div>
-			@endforeach											
-
-			<a class="prev-2" onclick="plusSlides(-1)">&#10094;</a>
-			<a class="next-2" onclick="plusSlides(1)">&#10095;</a>
-
-			<!-- <div class="caption-container">
-				<p id="caption"></p>
-			</div> -->
-			
-			<!-- @foreach ($solicitacao->despesa as $key => $despesa)
-			<div class="column">
-				<img class="demo cursor" src="{{$despesa->anexo_comprovante}}" style="width:100%" onclick="currentSlide({{$key}})" alt="{{$despesa->descricao}}">
-			</div>
-
-			@endforeach -->
-
-		</div>
-	</div>
-	<!-- FIM MODAL GALERIA -->
-
+	@endif
 	<!-- FIM MODAL GALERIA -->
 </section>
 @endsection

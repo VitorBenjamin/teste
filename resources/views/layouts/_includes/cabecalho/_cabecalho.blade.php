@@ -26,16 +26,6 @@
 				@endforeach
 			</select>
 		</div>
-
-<!-- 		<div class="col-md-3">
-			<label for="processo">Número de Processo</label>
-			<select id="processo" name="processo" class="form-control show-tick" data-size="5" data-live-search="true" >
-				<option value="">SELECIONE</option>
-				@foreach ($processos as $processo)
-				<option value="{{ $processo->id }}">{{ $processo->codigo }}</option>
-				@endforeach
-			</select>
-		</div> -->
 		<div class="col-md-3">
 			<div class="form-line">
 				<label class="form-label">Número de Processo</label>

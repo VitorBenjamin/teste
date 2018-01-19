@@ -32,8 +32,20 @@
 	<!-- FIM MODAL COMENTÁRIO -->
 	
 	<!-- SESSÂO COMENTÁRIO -->
+	@if(count($solicitacao->comentarios) > 0)
 	@include('layouts._includes._comentario')
+	@endif
 	<!-- FIM SESSÂO COMENTÁRIO  -->
+
+	<!-- SESSÂO COMPROVANTE -->
+	@role('FINANCEIRO')
+	@if(count($solicitacao->comprovante) == 0)
+	@include('layouts._includes.solicitacoes._addComprovante')
+	@else
+	@include('layouts._includes.solicitacoes._comprovante')
+	@endif
+	@endrole
+	<!-- FIM SESSÂO COMPROVANTE  -->
 	
 	<!-- LISTAGEM DOS PRODUTOS  -->
 	<div class="row clearfix">
@@ -85,7 +97,27 @@
 										<td>{{$cotacao->fornecedor}}</td>
 										<td>{{$cotacao->quantidade}}</td>
 										<td>{{$cotacao->valor}}</td>
-										<td>IMG</td>									
+										<td>
+											@if($cotacao->anexo_pdf)
+											<div class="zoom-gallery">
+												<span>
+													<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/cotacoes/'.$cotacao->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+												</span>
+											</div>
+											@elseif($cotacao->anexo_comprovante)
+											<div class="zoom-gallery">
+												<a href="{{$cotacao->anexo_comprovante}}" data-source="{{$cotacao->anexo_comprovante}}" title="COMPROVANTE - {{$cotacao->tipo_comprovante}} - {{date('d/m/Y',strtotime($cotacao->data))}}" style="width:32px;height:32px;">
+													<img class="img_popup" src="{{$cotacao->anexo_comprovante}}" width="32" height="32">
+												</a>
+												<!-- <a href="{{$cotacao->anexo_comprovante}}" data-source="{{$cotacao->anexo_comprovante}}" title="{{$cotacao->descricao}} - {{date('d/m/Y',strtotime($cotacao->data_compra))}}" style="width:25px;height:25px;">
+													<img style="border: 1px solid #9c9b9b; border-radius: 30px; margin-bottom: 0px" src="{{$cotacao->anexo_comprovante}}" width="25" height="25">
+												</a> -->
+											</div>
+											@else
+											Nenhum Arquivo Anexado
+											@endif
+											
+										</td>									
 									</tr>
 									@endforeach														
 								</tbody>
@@ -111,8 +143,8 @@
 							<h2 style="margin: 10px 0 0 0;"> <span style="vertical-align: -webkit-baseline-middle;
 							">CADASTRAR COTAÇÕES</span></h2>
 						</div>
-						<div class="col-sm-offset-3 col-sm-3">
-							<select id="compra" name="compra_id" class="selectpicker form-control show-tick" data-size="5" data-live-search="true">
+						<div class="col-sm-offset-2 col-sm-4">
+							<select id="selecionar_compra" name="compra_id" class="selectpicker form-control show-tick" data-size="5" data-live-search="true">
 								<option value="">SELECIONE UMA COMPRA</option>
 								@foreach ($solicitacao->compra as $compra)
 								<option value="{{ $compra->id }}">{{ $compra->descricao }}</option>
@@ -127,7 +159,7 @@
 						</div>
 					</div>
 				</div>
-				<form action="{{ route('compra.addCotacao',$solicitacao-> id)}}" method="POST">
+				<form action="{{ route('compra.addCotacao',$solicitacao-> id)}}" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="compras_id" id="compras_id" value="" required>
 					{{ csrf_field() }}
 					{{ method_field('PUT') }}
@@ -177,7 +209,7 @@
 								<div class="col-md-3">
 									<div class="form-line">
 										<!-- Define your button -->
-										<button type="button" style="padding: 10px 0;width:186px;overflow:hidden;margin-top: 20px;" id="file0">Anexar Arquivo</button>
+										<button type="button" style="padding: 10px 0;width:186px;overflow:hidden;margin-top: 16px; white-space: nowrap;" id="file0">Anexar Arquivo</button>
 										<!-- Your File element -->
 										<input type="file" name="anexo_comprovante[]" id="anexo_comprovante0" />
 									</div>
@@ -195,7 +227,7 @@
 						</div>
 						<div class="row clearfix">
 							<div class="col-md-12" style="margin-top: 20px">
-								<button type="submit" class="btn btn-block bg-green waves-effect">
+								<button type="submit" id="cadastrar_cotacao" class="btn btn-block bg-green waves-effect">
 									<i class="material-icons">send</i>
 									<span>CADASTRAR COTAÇÕES</span> 
 								</button>

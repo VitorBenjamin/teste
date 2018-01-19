@@ -30,9 +30,20 @@
 	<!-- FIM MODAL COMENTÁRIO -->
 	
 	<!-- SESSÂO COMENTÁRIO -->
+	@if(count($solicitacao->comentarios) > 0)
 	@include('layouts._includes._comentario')
+	@endif
 	<!-- FIM SESSÂO COMENTÁRIO  -->
 	
+	<!-- SESSÂO COMPROVANTE -->
+	@if(count($solicitacao->comprovante) == 0)
+	@include('layouts._includes.solicitacoes._addComprovante')
+	@else
+	@include('layouts._includes.solicitacoes._comprovante')
+	@endif 
+	<!-- FIM SESSÂO COMPROVANTE  -->
+
+
 	<!-- LISTAGEM DOS TRANSLADOS  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -117,10 +128,10 @@
 									<div class="zoom-gallery">
 										@if($despesa->anexo_pdf)
 										<span>
-											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}">Broken image</a>
+											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
 										</span>
 										@else
-										<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+										<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="COMPROVANTE - {{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
 											<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
 										</a>
 										@endif
@@ -134,12 +145,15 @@
 						<div class="body">
 							<div class="zoom-gallery2">
 								@foreach ($solicitacao->despesa as $key => $despesa)
-								<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
-									<img style="margin-bottom: 15px" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+								@if($despesa->anexo_pdf)
+								<span>
+									<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+								</span>
+								@else
+								<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="COMPROVANTE - {{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+									<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
 								</a>
-								<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="{{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
-									<img style="margin-bottom: 15px" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
-								</a>
+								@endif
 								@endforeach	
 							</div>
 						</div>

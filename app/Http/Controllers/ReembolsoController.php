@@ -10,6 +10,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Repositories\DespesaRepository;
 use App\Repositories\SolicitacaoRepository;
+use Illuminate\Support\Facades\Storage;
 use App\Despesa;
 use App\Processo;
 use App\Translado;
@@ -234,6 +235,9 @@ class ReembolsoController extends Controller
 
         $despesa = Despesa::find($id);
         $s_id = $despesa->solicitacoes_id;
+        if ($despesa->anexo_pdf) {
+            Storage::delete('/public/despesas/'. $despesa->anexo_pdf);
+        }
         $despesa->delete();
         Session::flash('flash_message',[
             'msg'=>"Despesas Removida com Sucesso!!!",
