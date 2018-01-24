@@ -136,8 +136,8 @@
 								<td></td>
 								<td>{{$solicitante->nome}}</td>
 								<td>{{$solicitante->cliente->nome}}</td>
-								<td>{{$solicitante->cpf}}</td>
-								<td>{{$solicitante->telefone}}</td>
+								<td>{{$solicitante->cpf ? $solicitante->cpf : 'NÃO CONSTA'}}</td>
+								<td>{{$solicitante->telefone ? $solicitante->telefone : 'NÃO CONSTA'}}</td>
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
 										<a data-toggle="modal" data-target="#atualizar{{$solicitante->id}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float">

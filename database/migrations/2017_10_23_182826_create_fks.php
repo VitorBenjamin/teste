@@ -16,6 +16,8 @@ class CreateFks extends Migration
     //Foreign Keys Tabela clientes
         Schema::table('clientes', function (Blueprint $table) {
             $table->foreign('unidades_id')->references('id')->on('unidades');
+            $table->foreign('estados_id')->references('id')->on('estados');
+            $table->foreign('cidades_id')->references('id')->on('cidades');
         });
 
     //Foreign Keys Tabela processo
@@ -150,7 +152,7 @@ class CreateFks extends Migration
         Schema::table('relatorios', function (Blueprint $table) {
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('clientes_id')->references('id')->on('clientes')->onDelete('cascade');
-        }); 
+        });
 
     }
     /**

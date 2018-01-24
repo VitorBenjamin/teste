@@ -10,7 +10,7 @@
 
 
 
-
+Route::post('/cadastro', ['uses' => 'ClienteController@index','as' => 'user.index']);
 Route::get('/', ['uses' => 'UserController@index','middleware' => 'auth', 'as' => 'user.index']);
 Route::post('solictacao-deletar', ['uses' => 'SolicitacaoController@deletar', 'as' => 'solicitacao.deletar']);
 Route::get('/ajax/clientes', ['uses' => 'ClienteController@getCliente', 'as' => 'cliente.getCliente']);

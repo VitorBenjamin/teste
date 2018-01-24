@@ -123,13 +123,13 @@
 								<td></td>
 								<td>{{$cliente->nome}}</td>
 								<td>{{$cliente->valor_km}}</td>
-								<td>{{$cliente->saldo}}</td>
-								<td>{{$cliente->unidade->localidade}}</td>
+								<td>{{$cliente->saldo ? $cliente->saldo : 'R$ 0'}}</td>
+								<td>{{$cliente->unidade ? $cliente->unidade->localidade : 'NÃO TEM UNIDADE'}}</td>
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
 										<!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-										<a href="{{ route('cliente.editar', $cliente->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$cliente->nome}}">
-											<i class="material-icons">search</i>
+										<a href="{{ route('cliente.editar', $cliente->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$cliente->nome}}">
+											<i class="material-icons">edit</i>
 										</a>									
 									</div>
 								</td>

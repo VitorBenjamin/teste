@@ -16,8 +16,9 @@ class Solicitantes extends Migration
          Schema::create('solicitantes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('cpf');
-            $table->string('telefone');
+            $table->string('email')->nullable();
+            $table->string('cpf')->nullable();
+            $table->string('telefone')->nullable();
             $table->integer('clientes_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();

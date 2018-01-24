@@ -46,7 +46,8 @@
 							</tr>
 						</tfoot>
 						<tbody>
-							@foreach ($users->user as $user)
+							@foreach ($users as $user)
+							@foreach ($user->user as $user)
 							<tr>
 								<td></td>
 								<td>{{$user->nome}}</td>
@@ -61,7 +62,8 @@
 										</a>									
 									</div>
 								</td>
-							</tr>					
+							</tr>		
+							@endforeach				
 							@endforeach														
 						</tbody>
 					</table>

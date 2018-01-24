@@ -51,9 +51,12 @@ class UserController extends Controller
 
 	public function getAll()
 	{
-		$role = config('constantes.user_coordenador');
-		$users = Role::with('user')->where('name', $role)->first();
-		//
+		$role = config('constantes.user_advogado');
+		$users = Role::with('user')
+		->orWhere('name', config('constantes.user_advogado'))
+		->orWhere('name', config('constantes.user_coordenador'))
+		->get();
+		//dd($users);
 		return view('advogado.listagem',compact('users'));
 	}
 
