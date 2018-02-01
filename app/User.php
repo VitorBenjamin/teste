@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nome', 'email', 'password','codigo','cpf','telefone','area_atuacoes_id','unidades_id'
+        'nome', 'email', 'password', 'codigo','cpf', 'telefone', 'area_atuacoes_id', 'unidades_id', 'dados_id'
     ];
     
     /** Consulta a area de atuação do usuário
@@ -34,6 +34,14 @@ class User extends Authenticatable
      public function unidades()
     {
         return $this->belongsTo('App\Unidade','unidades_id');
+    }
+
+    /** Consulta a dados do usuário
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+     public function dados()
+    {
+        return $this->belongsTo('App\Dados','dados_id');
     } 
     
     /** Consulta a unidade do usuário

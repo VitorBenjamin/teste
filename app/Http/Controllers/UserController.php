@@ -11,6 +11,7 @@ use App\Repositories\SolicitacaoRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Role;
 use App\User;
+use App\Dados;
 use App\AreaAtuacao; 
 use App\Unidade; 
 use App\Limite;
@@ -20,7 +21,43 @@ use App\Cliente;
 class UserController extends Controller
 {
 
+	public function createDados(Request $request)
+	{
+		$users = User::where('created_at','>','2018-01-31')->get();
 
+		foreach ($users as $u) {
+			$u->attachRole('ADVOGADO');
+		}
+		//dd($request->all());
+		// foreach ($request->all() as $val) {
+		// 	//dd($val);
+		// 	$dados = Dados::create([
+		// 		'rg' => $val['rg'],
+		// 		'data_nascimento' => $val['data_nascimento'],
+		// 		'endereco' => $val['endereco'],
+		// 		'cidade' => $val['cidade'],
+		// 		'estado' => $val['cidade'],
+		// 		'cep' => $val['cep'],
+		// 		'telefone' => $val['telefone'],
+		// 		'estado_civil' => $val['estado_civil'],
+		// 		'funcao' => $val['funcao'],
+		// 		'dados_bancarios' => $val['dados_bancarios'],
+		// 		'viagem' => $val['viagem'],
+		// 	]);
+		// 	$user = User::create([
+		// 		'nome' => $val['nome'],
+		// 		'email' => $val['email'],
+		// 		'password' => bcrypt('123456789'),
+		// 		'codigo' => 000,
+		// 		'cpf' => $val['cpf'],
+		// 		'telefone' => $val['telefone'] ,
+		// 		'area_atuacoes_id' => 1,
+		// 		'unidades_id' => $val['unidade'],
+		// 		'dados_id' => $dados->id,
+		// 	]);
+		// }
+	// 	return respose('tudo beleza');
+	}
 	public function index()
 	{
 		
@@ -64,10 +101,10 @@ class UserController extends Controller
 	{
 		$user = User::where('id',$id)->with('limites','area_atuacao','unidades')->first();
 		$clientes = Cliente::all(); 
-        $advogados = Role::with(['user' => function ($q)
-        {
-           $q->orderBy('nome');
-        }])->where('name',config('constantes.user_advogado'))->first();
+		$advogados = Role::with(['user' => function ($q)
+		{
+			$q->orderBy('nome');
+		}])->where('name',config('constantes.user_advogado'))->first();
 		$areas = AreaAtuacao::all(); 
 		$unidades = Unidade::all(); 
 		return view('advogado.editar',compact('user','areas','limites','advogados','clientes','unidades'));

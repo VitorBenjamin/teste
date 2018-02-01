@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    // 'default' => env('DB_CONNECTION', 'mysql'),
+    'default' =>  'mysql',
 
     /*
     |--------------------------------------------------------------------------
@@ -55,11 +56,11 @@ return [
         ],
         'mosello' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '69.64.57.177'),
+            'host' => '69.64.57.177',
             'port' => env('DB_PORT', '3306'),
             'database' =>  'mosellolima_sistema',
-            'username' => 'mosellolima_sistema',
-            'password' => env('DB_PASSWORD', 'Lifemetarecubuntu77'),
+            'username' => 'mosellolima_intranet',
+            'password' => '^cF3Z0nx45jX',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

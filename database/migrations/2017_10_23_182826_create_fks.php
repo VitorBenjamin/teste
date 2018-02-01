@@ -128,6 +128,7 @@ class CreateFks extends Migration
         Schema::table('limites_unidades', function (Blueprint $table) {
             $table->foreign('limites_id')->references('id')->on('limites')->onDelete('cascade');
             $table->foreign('unidades_id')->references('id')->on('unidades')->onDelete('cascade');
+            $table->primary(['limites_id', 'unidades_id']);
         });
     //Foreign Keys Tabela users_limites
         Schema::table('users_limites', function (Blueprint $table) {

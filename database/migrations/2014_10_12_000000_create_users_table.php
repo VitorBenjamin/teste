@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('telefone',11);
             $table->integer('area_atuacoes_id')->unsigned();
             $table->integer('unidades_id')->unsigned();
+            $table->integer('dados_id')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

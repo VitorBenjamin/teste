@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\User;
+use App\Dados;
 use App\AreaAtuacao; 
 use App\Unidade; 
 use App\Role;
@@ -68,8 +69,8 @@ class RegisterController extends Controller
         $clientes = Cliente::all(); 
         $advogados = Role::with(['user' => function ($q)
         {
-           $q->orderBy('nome');
-        }])->where('name',config('constantes.user_advogado'))->first();
+         $q->orderBy('nome');
+     }])->where('name',config('constantes.user_advogado'))->first();
         //dd($advogados);
         return view('auth.registerCoordenador', compact('areas','unidades','clientes','advogados'));
     }
@@ -99,17 +100,16 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         $user = $this->create($request->all());
-
         //$this->attachRole($user,$request);
         $role = Role::where('name',$request->role)->first();
         $user->attachRole($role);
-        
+
         if ($request->role == config('constantes.user_coordenador')) {
             $this->setLimite($user,$request);
             $this->setCliente($user,$request);
             $this->setAdvogado($user,$request);
         } 
-        
+
         \Session::flash('flash_message',[
             'msg'=> "Dr(a) ".$user->nome." Cadastrado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
@@ -129,12 +129,12 @@ class RegisterController extends Controller
             'unidades_id' => 'required',
         ]);
     }
-    
+
     public function setAdvogado($user,$request)
     {
         $user->users()->sync($request->get('advogados'));        
     }
-    
+
     public function setCliente($user,$request)
     {
         $user->clientes()->sync($request->get('clientes'));
@@ -163,7 +163,7 @@ class RegisterController extends Controller
             $limite->unidades()->sync($request->get('unidades_limite'));
             $user->limites()->attach($limite->id);
         }
-        
+
     }
 
     /**
@@ -174,6 +174,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $dados = Dados::create([
+            'rg' => $data['rg'],
+            'data_nascimento' => $data['data_nascimento'],
+            'endereco' => $data['endereco'],
+            'cidade' => $data['cidade'],
+            'estado' => $data['cidade'],
+            'cep' => $data['cep'],
+            'telefone' => $data['telefone'],
+            'estado_civil' => $data['estado_civil'],
+            'funcao' => $data['funcao'],
+            'dados_bancarios' => $data['dados_bancarios'],
+            'viagem' => $data['viagem'],
+        ]);
+
         return User::create([
             'nome' => $data['nome'],
             'email' => $data['email'],
@@ -182,6 +196,7 @@ class RegisterController extends Controller
             'cpf' => $data['cpf'],
             'telefone' => $data['telefone'] ,
             'area_atuacoes_id' => $data['area_atuacoes_id'],
+            'dados_id' => $dados->id,
             'unidades_id' => $data['unidades_id'],
         ]);
     }

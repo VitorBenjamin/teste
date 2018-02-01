@@ -255,6 +255,7 @@ return [
         'Hospedagem' => App\Hospedagem::class,
         'Locacao' => App\Locacao::class,
         'Comprovante' => App\Comprovante::class,
+        'Dados' => App\Dados::class,
 
         //HELPERS
         'SolicitacaoHelper' => App\Http\Helpers\SolicitacaoHelper::class,
