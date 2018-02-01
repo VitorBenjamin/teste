@@ -111,7 +111,7 @@
                                     <div class="col-sm-2">
                                         <div class="form-group{{ $errors->has('rg') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="rg" type="text" class="form-control" name="rg" value="{{ old('rg') }}" required autofocus>
+                                                <input id="rg" type="text" class="form-control" name="rg" value="{{ old('rg') }}" autofocus>
                                                 <label class="form-label">RG</label>
                                                 @if ($errors->has('rg'))
                                                 <span class="help-block">
@@ -124,7 +124,7 @@
                                     <div class="col-sm-2">
                                         <div class="form-group{{ $errors->has('data_nascimento') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="data_nascimento" type="text" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" required autofocus>
+                                                <input id="data_nascimento" type="text" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" autofocus>
                                                 <label class="form-label">Data Nascimento</label>
                                                 @if ($errors->has('data_nascimento'))
                                                 <span class="help-block">
@@ -137,7 +137,7 @@
                                     <div class="col-sm-2">
                                         <div class="form-group{{ $errors->has('estado_civil') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="estado_civil" type="text" class="form-control" name="estado_civil" value="{{ old('estado_civil') }}" required autofocus>
+                                                <input id="estado_civil" type="text" class="form-control" name="estado_civil" value="{{ old('estado_civil') }}" autofocus>
                                                 <label class="form-label">Estado Civil</label>
                                                 @if ($errors->has('estado_civil'))
                                                 <span class="help-block">
@@ -150,7 +150,7 @@
                                     <div class="col-sm-2">
                                         <div class="form-group{{ $errors->has('funcao') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="funcao" type="text" class="form-control" name="funcao" value="{{ old('funcao') }}" required autofocus>
+                                                <input id="funcao" type="text" class="form-control" name="funcao" value="{{ old('funcao') }}" autofocus>
                                                 <label class="form-label">Função</label>
                                                 @if ($errors->has('funcao'))
                                                 <span class="help-block">
@@ -163,7 +163,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group{{ $errors->has('dados_bancarios') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="dados_bancarios" type="text" class="form-control" name="dados_bancarios" value="{{ old('dados_bancarios') }}" required autofocus>
+                                                <input id="dados_bancarios" type="text" class="form-control" name="dados_bancarios" value="{{ old('dados_bancarios') }}" autofocus>
                                                 <label class="form-label">Dados Bancário</label>
                                                 @if ($errors->has('dados_bancarios'))
                                                 <span class="help-block">
@@ -178,7 +178,7 @@
                                     <div class="col-sm-2">
                                         <div class="form-group{{ $errors->has('funcao') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="funcao" type="text" class="form-control" name="funcao" value="{{ old('funcao') }}" required autofocus>
+                                                <input id="funcao" type="text" class="form-control" name="funcao" value="{{ old('funcao') }}" autofocus>
                                                 <label class="form-label">Função</label>
                                                 @if ($errors->has('funcao'))
                                                 <span class="help-block">
@@ -191,7 +191,7 @@
                                     <div class="col-sm-2">
                                         <div class="form-group{{ $errors->has('cidade') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="cidade" type="text" class="form-control" name="cidade" value="{{ old('cidade') }}" required autofocus>
+                                                <input id="cidade" type="text" class="form-control" name="cidade" value="{{ old('cidade') }}" autofocus>
                                                 <label class="form-label">Cidade</label>
                                                 @if ($errors->has('cidade'))
                                                 <span class="help-block">
@@ -204,7 +204,7 @@
                                     <div class="col-sm-1">
                                         <div class="form-group{{ $errors->has('estado') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="estado" type="text" class="form-control" name="estado" value="{{ old('estado') }}" required autofocus>
+                                                <input id="estado" type="text" class="form-control" name="estado" value="{{ old('estado') }}" autofocus>
                                                 <label class="form-label">Estado</label>
                                                 @if ($errors->has('estado'))
                                                 <span class="help-block">
@@ -217,7 +217,7 @@
                                     <div class="col-sm-2">
                                         <div class="form-group{{ $errors->has('cep') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="cep" type="text" class="form-control" name="cep" value="{{ old('cep') }}" required autofocus>
+                                                <input id="cep" type="text" class="form-control" name="cep" value="{{ old('cep') }}" autofocus>
                                                 <label class="form-label">CEP</label>
                                                 @if ($errors->has('cep'))
                                                 <span class="help-block">
@@ -230,7 +230,7 @@
                                     <div class="col-sm-5">
                                         <div class="form-group{{ $errors->has('endereco') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="endereco" type="text" class="form-control" name="endereco" value="{{ old('endereco') }}" required autofocus>
+                                                <input id="endereco" type="text" class="form-control" name="endereco" value="{{ old('endereco') }}" autofocus>
                                                 <label class="form-label">Endereço</label>
                                                 @if ($errors->has('endereco'))
                                                 <span class="help-block">
@@ -245,7 +245,7 @@
                                     <div class="col-sm-5">
                                         <div class="form-group{{ $errors->has('viagem') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
-                                                <input id="viagem" type="text" class="form-control" name="viagem" value="{{ old('viagem') }}" required autofocus>
+                                                <input id="viagem" type="text" class="form-control" name="viagem" value="{{ old('viagem') }}" autofocus>
                                                 <label class="form-label">Viagem</label>
                                                 @if ($errors->has('viagem'))
                                                 <span class="help-block">

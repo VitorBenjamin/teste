@@ -115,7 +115,159 @@
                                         @endif
                                     </div>
                                 </div>
+                            </fieldset>
 
+                            <h3>INFORMAÇÔES COMPLEMENTARES</h3>
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group{{ $errors->has('rg') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="rg" type="text" class="form-control" name="rg" value="{{ old('rg') }}" autofocus>
+                                                <label class="form-label">RG</label>
+                                                @if ($errors->has('rg'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('rg') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group{{ $errors->has('data_nascimento') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="data_nascimento" type="text" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" autofocus>
+                                                <label class="form-label">Data Nascimento</label>
+                                                @if ($errors->has('data_nascimento'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('data_nascimento') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group{{ $errors->has('estado_civil') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="estado_civil" type="text" class="form-control" name="estado_civil" value="{{ old('estado_civil') }}" autofocus>
+                                                <label class="form-label">Estado Civil</label>
+                                                @if ($errors->has('estado_civil'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('estado_civil') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group{{ $errors->has('funcao') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="funcao" type="text" class="form-control" name="funcao" value="{{ old('funcao') }}" autofocus>
+                                                <label class="form-label">Função</label>
+                                                @if ($errors->has('funcao'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('funcao') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group{{ $errors->has('dados_bancarios') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="dados_bancarios" type="text" class="form-control" name="dados_bancarios" value="{{ old('dados_bancarios') }}" autofocus>
+                                                <label class="form-label">Dados Bancário</label>
+                                                @if ($errors->has('dados_bancarios'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('dados_bancarios') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group{{ $errors->has('funcao') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="funcao" type="text" class="form-control" name="funcao" value="{{ old('funcao') }}" autofocus>
+                                                <label class="form-label">Função</label>
+                                                @if ($errors->has('funcao'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('funcao') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group{{ $errors->has('cidade') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="cidade" type="text" class="form-control" name="cidade" value="{{ old('cidade') }}" autofocus>
+                                                <label class="form-label">Cidade</label>
+                                                @if ($errors->has('cidade'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('cidade') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-group{{ $errors->has('estado') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="estado" type="text" class="form-control" name="estado" value="{{ old('estado') }}" autofocus>
+                                                <label class="form-label">Estado</label>
+                                                @if ($errors->has('estado'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('estado') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group{{ $errors->has('cep') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="cep" type="text" class="form-control" name="cep" value="{{ old('cep') }}" autofocus>
+                                                <label class="form-label">CEP</label>
+                                                @if ($errors->has('cep'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('cep') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group{{ $errors->has('endereco') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="endereco" type="text" class="form-control" name="endereco" value="{{ old('endereco') }}" autofocus>
+                                                <label class="form-label">Endereço</label>
+                                                @if ($errors->has('endereco'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('endereco') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="form-group{{ $errors->has('viagem') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="viagem" type="text" class="form-control" name="viagem" value="{{ old('viagem') }}" autofocus>
+                                                <label class="form-label">Viagem</label>
+                                                @if ($errors->has('viagem'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('viagem') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </fieldset>
                         </form>
                     </div>

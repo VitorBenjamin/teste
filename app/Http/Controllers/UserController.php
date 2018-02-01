@@ -122,7 +122,22 @@ class UserController extends Controller
 				'password-confirm' => 'required_if:password,!=,',
 			],$messages)->validate();
 		}
-		
+		$user = User::where('id',$id)->first();
+		$dados_old = Dados::find($user->dados_id);
+		$dados = [
+			'rg' => $request->rg,
+			'data_nascimento' => $request->data_nascimento,
+			'endereco' => $request->endereco,
+			'cidade' => $request->cidade,
+			'estado' => $request->cidade,
+			'cep' => $request->cep,
+			'telefone' => $request->telefone,
+			'estado_civil' => $request->estado_civil,
+			'funcao' => $request->funcao,
+			'dados_bancarios' => $request->dados_bancarios,
+			'viagem' => $request->viagem,
+		];
+		$dados_old->update($dados);
 		$data = [
 			'nome' => $request->nome,
 			'email' => $request->email,
@@ -130,10 +145,11 @@ class UserController extends Controller
 			'cpf' => $request->cpf,
 			'telefone' => $request->telefone ,
 			'area_atuacoes_id' => $request->area_atuacoes_id,
+			'dados_id' => $user->dados_id,
 			'unidades_id' => $request->unidades_id,
 		];
 
-		$user = User::where('id',$id)->first();
+		
 		$user->update($data);
 		if ($request->password != "") {
 			$user->forceFill([
