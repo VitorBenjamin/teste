@@ -59,7 +59,7 @@ class SolicitacaoRepository
             'contrato' => $data->contrato,
             'area_atuacoes_id'=>$data->area_atuacoes_id,
             'clientes_id' => $data->clientes_id == null ? 1 : $data->clientes_id,
-            'solicitantes_id' => $data->solicitantes_id,
+            'solicitantes_id' => $data->solicitantes_id == null ? null : $data->solicitantes_id,
             'unidades_id' => auth()->user()->unidades_id,
             'users_id' => auth()->user()->id,
         ];

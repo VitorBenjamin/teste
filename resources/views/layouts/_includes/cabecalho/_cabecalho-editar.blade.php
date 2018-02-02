@@ -19,11 +19,14 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label for="solicitante">Solicitante</label>
+			<label id="label" for="solicitante" class="label2">Solicitante</label>
 			<select id="solicitante" name="solicitantes_id" class="form-control show-tick" data-live-search="true">
-				@foreach ($solicitantes as $solicitante)
+				@if($solicitacao->solicitantes_id != null)
+				<option value="{{ $solicitante->id }}">{{ $solicitante->nome }}</option>
+				@endif
+				{{-- @foreach ($solicitantes as $solicitante)
 				<option value="{{ $solicitante->id }}" {{$solicitacao->solicitantes_id == $solicitante->id ? 'selected' : '' }} >{{ $solicitante->nome }}</option>
-				@endforeach
+				@endforeach --}}
 			</select>
 		</div>
 		<!-- <div class="demo-masked-input">

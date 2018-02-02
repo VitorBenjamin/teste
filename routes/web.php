@@ -16,7 +16,7 @@ Route::post('/user-cadastro', ['uses' => 'UserController@createDados','as' => 'u
 Route::get('/', ['uses' => 'UserController@index','middleware' => 'auth', 'as' => 'user.index']);
 Route::post('solictacao-deletar', ['uses' => 'SolicitacaoController@deletar', 'as' => 'solicitacao.deletar']);
 Route::get('/ajax/clientes', ['uses' => 'ClienteController@getCliente', 'as' => 'cliente.getCliente']);
-Route::get('/ajax/solicitantes', ['uses' => 'SolicitanteController@getSolicitante', 'as' => 'solicitante.getSolicitante']);
+Route::post('/ajax/solicitantes', ['uses' => 'SolicitanteController@getSolicitante', 'as' => 'solicitante.getSolicitante']);
 Route::get('/ajax/processo', ['uses' => 'ProcessoController@getProcesso', 'as' => 'processo.getProcesso']);
 
 // Route::get('cadastrar', ['uses' => 'CompraController@cadastrar', 'as' => 'compra.cadastrar']);

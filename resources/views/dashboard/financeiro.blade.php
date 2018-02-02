@@ -85,7 +85,7 @@
                                         <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
-                                        <td>{{ $aberto->solicitante->nome }}</td>
+                                        <td>{{ $aberto->solicitante == null ? 'ADVOGADO' : $aberto->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($aberto->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -131,7 +131,7 @@
                                         <td>{{ date('d/m/Y',strtotime($finalizada->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $finalizada->cliente == null ? 'MOSELLO LIMA' : $finalizada->cliente->nome }}</td>
                                         <td>{{ $finalizada->tipo }}</td>
-                                        <td>{{ $finalizada->solicitante->nome }}</td>
+                                        <td>{{ $finalizada->solicitante == null ? 'ADVOGADO' : $finalizada->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($finalizada->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -171,7 +171,7 @@
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
-                                        <td>{{ $devolvida->solicitante->nome }}</td>
+                                        <td>{{ $devolvida->solicitante == null ? 'ADVOGADO' : $devolvida->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($devolvida->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -212,7 +212,7 @@
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
-                                        <td>{{ $recorrente->solicitante->nome }}</td>
+                                        <td>{{ $recorrente->solicitante == null ? 'ADVOGADO' : $recorrente->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($recorrente->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >

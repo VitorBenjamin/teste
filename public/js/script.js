@@ -258,6 +258,11 @@ $( window ).load(function() {
         $('#cliente').selectpicker('hide');
         $('#cliente').selectpicker('refresh');
 
+        $('.label2').css("color","#ded5d5");
+        $('#solicitante').selectpicker('deselectAll');
+        $('#solicitante').selectpicker('hide');
+        $('#solicitante').selectpicker('refresh');
+
     }else{
         $('#cliente').attr('required', true);
     }
@@ -323,6 +328,56 @@ $('#contrato').change(function() {
         $('#processo').removeAttr('required', false);
     }
 });
+
+$('#cliente').change(function() {
+    var value = $(this).val();
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data:  {
+            "data": value
+        },
+        url: "/ajax/solicitantes",
+        success: function (data) {
+            //console.log(data);
+            $("#solicitante").empty();
+            $.each(data, function(i, item) {
+                console.log( item.id );
+                
+
+                $("#solicitante").append(
+                    $("<option>"+item.nome+"</option>").attr("value", item.id)
+                    );
+
+                $('#solicitante').selectpicker('refresh');
+            });
+        },
+        error: function (data) {
+            console.log('Error:', data);
+        }
+    });
+    // var request = $.ajax({
+    //     type: 'GET',
+    //     data: value,
+    //     url: "/ajax/solicitantes",
+    // });
+    // request.done(function(data){
+    //     console.log(data);
+    //     var option_list = [["", "--- Select One ---"]].concat(data);
+
+    //     $("#solicitante").empty();
+    //     for (var i = 0; i < option_list.length; i++) {
+    //         $("#solicitante").append(
+    //             $("<option></option>").attr(
+    //                 "value", option_list[i][0]).text(option_list[i][1])
+    //             );
+    //     }
+    // });
+});
+$('#my-form').on('submit', function () {
+    // body...
+});
 $('#selecionar_compra').change(function() {
     var value = $(this).val();
     if ($(this).val() == "") {
@@ -339,23 +394,30 @@ $('#origem_despesa').change(function() {
     var value = $(this).val();
 
     if (value == "ESCRITÓRIO") {
-        $('#label').css("color","#ded5d5");
+        $('.label2').css("color","#ded5d5");
 
-        // $('#clientes').closest('label').addClass("red2");
-    //console.log('ghjhgjgj');
-    // $('#clientes').attr("disabled", true);
-    $('#cliente').selectpicker('deselectAll');
-    $('#cliente').removeAttr('required', false);
-    $('#cliente').selectpicker('hide');
-    $('#cliente').selectpicker('refresh');
+        $('#cliente').selectpicker('deselectAll');
+        $('#cliente').removeAttr('required', false);
+        $('#cliente').selectpicker('hide');
+        $('#cliente').selectpicker('refresh');
+        
+        $('#solicitante').selectpicker('deselectAll');
+        $('#solicitante').removeAttr('required', false);
+        $('#solicitante').selectpicker('hide');
+        $('#solicitante').selectpicker('refresh');
 
-}else{
-    $('#label').css("color","#555"); 
-    $('#cliente').removeAttr('disabled',false);
-    $('#cliente').selectpicker('show');
-    $('#cliente').attr('required', true);
-    $('#cliente').selectpicker('refresh');
-}
+    }else{
+        $('.label2').css("color","#555"); 
+        $('#cliente').removeAttr('disabled',false);
+        $('#cliente').selectpicker('show');
+        $('#cliente').attr('required', true);
+        
+        $('#cliente').selectpicker('refresh');
+        $('#solicitante').removeAttr('disabled',false);
+        $('#solicitante').selectpicker('show');
+        $('#solicitante').attr('required', true);
+        $('#solicitante').selectpicker('refresh');
+    }
 });
 
 $('#origem_despesa').change(function() {

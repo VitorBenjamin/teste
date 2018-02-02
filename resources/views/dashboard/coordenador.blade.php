@@ -107,7 +107,7 @@
                                         <td>{{ $aberto->user->nome}}</td>
                                         <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
-                                        <td>{{ $aberto->solicitante->nome }}</td>
+                                        <td>{{ $aberto->solicitante == null ? 'ADVOGADO' : $aberto->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($aberto->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -164,7 +164,7 @@
                                         <td class="quebra-texto">{{ $andamento->user->nome }}</td>
                                         <td class="quebra-texto">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
                                         <td>{{ $andamento->tipo }}</td>
-                                        <td>{{ $andamento->solicitante->nome }}</td>
+                                        <td>{{ $andamento->solicitante == null ? 'ADVOGADO' : $andamento->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($andamento->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -208,7 +208,7 @@
                                         <td class="quebra-texto">{{ $aprovado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
                                         <td>{{ $aprovado->tipo }}</td>
-                                        <td>{{ $aprovado->solicitante->nome }}</td>
+                                        <td>{{ $aprovado->solicitante == null ? 'ADVOGADO' : $aprovado->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($aprovado->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -251,7 +251,7 @@
                                         <td class="quebra-texto">{{ $reprovado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
                                         <td>{{ $reprovado->tipo }}</td>
-                                        <td>{{ $reprovado->solicitante->nome }}</td>
+                                        <td>{{ $reprovado->solicitante == null ? 'ADVOGADO' : $reprovado->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($reprovado->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -294,7 +294,7 @@
                                         <td class="quebra-texto">{{ $devolvida->user->nome }}</td>
                                         <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
-                                        <td>{{ $devolvida->solicitante->nome }}</td>
+                                        <td>{{ $devolvida->solicitante == null ? 'ADVOGADO' : $devolvida->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($devolvida->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -347,7 +347,7 @@
                                         <td class="quebra-texto">{{ $recorrente->user->nome }}</td>
                                         <td class="quebra-texto">{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
-                                        <td>{{ $recorrente->solicitante->nome }}</td>
+                                        <td>{{ $recorrente->solicitante == null ? 'ADVOGADO' : $recorrente->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($recorrente->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -403,7 +403,7 @@
                                         <td>{{ date('d/m/Y',strtotime($meu->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $meu->cliente == null ? 'MOSELLO LIMA' : $meu->cliente->nome }}</td>
                                         <td>{{ $meu->tipo }}</td>
-                                        <td>{{ $meu->solicitante->nome }}</td>
+                                        <td>{{ $meu->solicitante == null ? 'ADVOGADO' : $meu->solicitante->nome}}</td>
                                         <td>{{ 'R$ '.number_format($meu->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -457,7 +457,7 @@
                                         <td class="quebra-texto">{{ $finalizado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
                                         <td>{{ $finalizado->tipo }}</td>
-                                        <td>{{ $finalizado->solicitante->nome }}</td>
+                                        <td>{{ $finalizado->solicitante == null ? 'ADVOGADO' : $finalizado->solicitante->nome}}</td>
                                         <td>R$ {{ $finalizado->total }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >

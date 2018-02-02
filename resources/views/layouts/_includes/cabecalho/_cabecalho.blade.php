@@ -9,7 +9,7 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label id="label" for="cliente">Cliente</label>
+			<label id="label" for="cliente" class="label2">Cliente</label>
 			<select id="cliente" name="clientes_id" class="selectpicker form-control show-tick" data-size="5" data-live-search="true">
 				<option value="">SELECIONE</option>
 				@foreach ($clientes as $cliente)
@@ -18,12 +18,12 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label for="solicitante">Solicitante</label>
+			<label id="label" for="solicitante" class="label2">Solicitante</label>
 			<select id="solicitante" name="solicitantes_id" class="form-control show-tick" data-size="5" data-live-search="true" required>
 				<option value="">SELECIONE</option>
-				@foreach ($solicitantes as $solicitante)
+				{{-- @foreach ($solicitantes as $solicitante)
 				<option value="{{ $solicitante->id }}">{{ $solicitante->nome }}</option>
-				@endforeach
+				@endforeach --}}
 			</select>
 		</div>
 		<div class="col-md-3">

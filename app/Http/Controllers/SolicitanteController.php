@@ -10,16 +10,20 @@ class SolicitanteController extends Controller
 {
     //
 
-	public function getSolicitante(Request $search){
+	public function getSolicitante(Request $data){
 
-		$solicitantes = Solicitante::where('nome','like','%'.$search->q.'%')
+		//dd($query);
+		$solicitantes = Solicitante::where('clientes_id',$data->data)
 		->select('id','nome')
 		->get();
-		// $solicitantes = Solicitante::where('clientes_id', $search->q)
+		// $solicitantes = Solicitante::where('nome','like','%'.$data->data.'%')
+		// ->select('id','nome')
+		// ->get();
+		// $solicitantes = Solicitante::where('clientes_id', $query->q)
 		// ->select('id','nome')
 		// ->get();
 
-		return response()->json(array("solicitantes" => $solicitantes));
+		return response()->json($solicitantes);
 	}
 
     //Buscando todas as informações dos clientes e enviando para a view de listagem das clientes
