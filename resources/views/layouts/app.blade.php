@@ -15,7 +15,7 @@
 
     <!-- Bootstrap Core Css -->
     <!-- <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet"> -->
-    {!! Html::style('plugins/bootstrap/css/bootstrap.css') !!}
+    {!! Html::style('plugins/bootstrap/css/bootstrap.min.css') !!}
 
     <!-- Waves Effect Css -->
     <!-- <link href="plugins/node-waves/waves.css" rel="stylesheet" />-->
@@ -33,20 +33,17 @@
 
     <!-- JQuery DataTable Css -->
     <!-- <link href="../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">-->  
-    {!! Html::style('plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') !!}
+    {!! Html::style('plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css') !!}
     {!! Html::style('https://cdn.datatables.net/responsive/2.2.0/css/responsive.dataTables.min.css') !!}
 
 
     <!-- Bootstrap Material Datetime Picker Css -->
     <!-- <link href="../../plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" /> -->
-    {!! Html::style('plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') !!}
-
-    <!-- Dropzone Css -->
-    <!--     {!! Html::style('/plugins/dropzone/dropzone.css') !!} -->
+    {!! Html::style('plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.min.css') !!}
 
     <!-- Wait Me Css -->
     <!-- <link href="../../plugins/waitme/waitMe.css" rel="stylesheet" /> -->
-    {!! Html::style('plugins/waitme/waitMe.css') !!}
+    {!! Html::style('plugins/waitme/waitMe.min.css') !!}
 
     <!--     {!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.4.3/css/ajax-bootstrap-select.min.css') !!} -->
     <!-- <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" /> -->
@@ -56,12 +53,12 @@
 
     <!-- Custom Css -->
     <!-- <link href="css/style.css" rel="stylesheet">-->
-    {!! Html::style('css/style.css') !!}
+    {!! Html::style('css/style.min.css') !!}
 
     
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <!-- <link href="css/themes/all-themes.css" rel="stylesheet" />-->
-    {!! Html::style('css/themes/theme-black.css') !!}
+    {!! Html::style('css/themes/theme-black.min.css') !!}
 
 </head>
 <body id="app-layout" class="theme-black {{Auth::guest() == true ? 'login-page' : ''}}">
@@ -182,18 +179,18 @@
     {!! Html::script('/plugins/sweetalert/sweetalert.min.js') !!}
 
 
-    {!! Html::script('/js/admin.js') !!}
-    {!! Html::script('/js/pages/ui/dialogs.js') !!}
-    {!! Html::script('/js/pages/tables/jquery-datatable.js') !!}
-    {!! Html::script('/js/pages/forms/basic-form-elements.js') !!}
+    {!! Html::script('/js/admin.min.js') !!}
+    {!! Html::script('/js/pages/ui/dialogs.min.js') !!}
+    {!! Html::script('/js/pages/tables/jquery-datatable.min.js') !!}
+    {!! Html::script('/js/pages/forms/basic-form-elements.min.js') !!}
     {!! Html::script('/js/pages/forms/advanced-form-elements.js') !!}
     {!! Html::script('/js/pages/ui/tooltips-popovers.js') !!}
 
     {!! Html::script('/js/pages/ui/modals.js') !!}
     @endif
-    <!-- {!! Html::script('/js/pages/index.js') !!} -->
+    <!-- {!! Html::script('/js/pages/index.min.js') !!} -->
 
     <!-- Demo Js -->
-    <!-- {!! Html::script('/js/demo.js') !!} -->
+    <!-- {!! Html::script('/js/demo.min.js') !!} -->
 </body>
 </html>

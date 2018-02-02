@@ -51,8 +51,8 @@ class RegisterController extends Controller
      */
     public function showRegistrationFormAdvogado()
     {
-        $areas = AreaAtuacao::all(); 
-        $unidades = Unidade::all(); 
+        $areas = AreaAtuacao::all();
+        $unidades = Unidade::all();
 
         return view('auth.register', compact('areas','unidades'));
     }
