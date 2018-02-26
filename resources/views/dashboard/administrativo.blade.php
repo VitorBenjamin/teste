@@ -73,7 +73,6 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($abertas->solicitacao as $aberto)
-
                                     <tr>
                                         <td></td>
                                         <!-- <td>{{ $aberto->id }}</td> -->
@@ -81,7 +80,7 @@
                                         <!-- <td>{{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> -->
                                         <td>{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
-                                        <td>{{ $aberto->solicitante->nome }}</td>
+                                        <td>{{ $aberto->solicitante == null ? 'NÃO CONSTA' : $aberto->solicitante->nome }}</td>
                                         <td>{{ 'R$ '.number_format($aberto->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -128,7 +127,7 @@
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
                                         <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
-                                        <td>{{ $devolvida->solicitante->nome }}</td>
+                                        <td>{{ $devolvida->solicitante == null ? 'NÃO CONSTA' : $devolvida->solicitante->nome }}</td>
                                         <td>{{ 'R$ '.number_format($devolvida->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >
@@ -169,7 +168,7 @@
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
                                         <td>{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
-                                        <td>{{ $recorrente->solicitante->nome }}</td>
+                                        <td>{{ $recorrente->solicitante == null ? 'NÃO CONSTA' : $recorrente->solicitante->nome }}</td>
                                         <td>{{ 'R$ '.number_format($recorrente->total, 2, ',', '.') }}</td>
                                         <td class="acoesTD">
                                             <div class="icon-button-demo" >

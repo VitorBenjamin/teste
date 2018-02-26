@@ -152,10 +152,8 @@ class SolicitacaoController extends Controller
 			}else{
 
 				$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
-
 			}
-
-		} elseif ($status == "ABERTO-ETAPA2" || $status == config('constantes.status_devolvido_etapa2')) {
+		}elseif ($status == "ABERTO-ETAPA2" || $status == config('constantes.status_devolvido_etapa2')) {
 
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
 				if (!$repo->verificaLimite($solicitacao,$limites)) {
@@ -166,7 +164,7 @@ class SolicitacaoController extends Controller
 			} else {
 				$andamento = Status::where('descricao', config('constantes.status_andamento_etapa2'))->first();
 			}
-		} else {			
+		}else {			
 
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
 				if (!$repo->verificaLimite($solicitacao,$limites)) {
@@ -228,14 +226,12 @@ class SolicitacaoController extends Controller
 
 				$devolvido = Status::where('descricao', config('constantes.status_devolvido'))->first();
 				$data['publico'] = true;
-			}elseif($status == config('constantes.status_andamento') || $status == config('constantes.status_andamento_recorrente')){
+			} elseif($status == config('constantes.status_andamento') || $status == config('constantes.status_andamento_recorrente')){
 
 				$devolvido = Status::where('descricao', config('constantes.status_recorrente_financeiro'))->first();
 				$data['publico'] = false;
-
 			}
-
-		}elseif ($status == config('constantes.status_coordenador_aprovado')) {
+		} elseif ($status == config('constantes.status_coordenador_aprovado')) {
 
 			$devolvido = Status::where('descricao', config('constantes.status_coordenador_aberto'))->first();
 			$data['publico'] = false;
@@ -306,9 +302,7 @@ class SolicitacaoController extends Controller
 
 	public function trocarStatus($solicitacao,$proximo)
 	{
-		//$solicitacao = Solicitacao::find($id);
 		$atual = $solicitacao->status;
-		//dd($atual);
 		$solicitacao->status()->detach($atual);
 		$solicitacao->status()->attach($proximo);
 	}

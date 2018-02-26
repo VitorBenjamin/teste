@@ -332,6 +332,7 @@ $('#contrato').change(function() {
 $('#cliente').change(function() {
     var value = $(this).val();
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
     $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -341,11 +342,11 @@ $('#cliente').change(function() {
         url: "/ajax/solicitantes",
         success: function (data) {
             //console.log(data);
+            //$('#solicitante').selectpicker('destroy');
             $("#solicitante").empty();
+            $('#solicitante').selectpicker('refresh');
             $.each(data, function(i, item) {
                 console.log( item.id );
-                
-
                 $("#solicitante").append(
                     $("<option>"+item.nome+"</option>").attr("value", item.id)
                     );
@@ -354,6 +355,8 @@ $('#cliente').change(function() {
             });
         },
         error: function (data) {
+            $("#solicitante").empty();
+            $('#solicitante').selectpicker('refresh');
             console.log('Error:', data);
         }
     });

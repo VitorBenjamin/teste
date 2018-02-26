@@ -190,6 +190,10 @@ class SolicitacaoRepository
         return $solicitacao;
     }
 
+    public function notification()
+    {
+        
+    }
     public function getRange($total, $limites, $s)
     {
         $area_id = array();
@@ -335,8 +339,8 @@ class SolicitacaoRepository
     }
     public function valorTotalCoordenador($solicitacoes, $limites)
     {
-       //dd(is_array($solicitacoes));
-       // dd($solicitacoes);
+        //dd(is_array($solicitacoes));
+        //dd($solicitacoes);
         if (!empty($solicitacoes->solicitacao)) 
         {
             foreach ($solicitacoes->solicitacao  as $key => $s) 

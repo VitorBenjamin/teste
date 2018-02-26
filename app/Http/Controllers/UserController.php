@@ -21,43 +21,43 @@ use App\Cliente;
 class UserController extends Controller
 {
 
-	public function createDados(Request $request)
-	{
-		$users = User::where('created_at','>','2018-01-31')->get();
+	// public function createDados(Request $request)
+	// {
+	// 	$users = User::where('created_at','>','2018-01-31')->get();
 
-		foreach ($users as $u) {
-			$u->attachRole('ADVOGADO');
-		}
-		//dd($request->all());
-		// foreach ($request->all() as $val) {
-		// 	//dd($val);
-		// 	$dados = Dados::create([
-		// 		'rg' => $val['rg'],
-		// 		'data_nascimento' => $val['data_nascimento'],
-		// 		'endereco' => $val['endereco'],
-		// 		'cidade' => $val['cidade'],
-		// 		'estado' => $val['cidade'],
-		// 		'cep' => $val['cep'],
-		// 		'telefone' => $val['telefone'],
-		// 		'estado_civil' => $val['estado_civil'],
-		// 		'funcao' => $val['funcao'],
-		// 		'dados_bancarios' => $val['dados_bancarios'],
-		// 		'viagem' => $val['viagem'],
-		// 	]);
-		// 	$user = User::create([
-		// 		'nome' => $val['nome'],
-		// 		'email' => $val['email'],
-		// 		'password' => bcrypt('123456789'),
-		// 		'codigo' => 000,
-		// 		'cpf' => $val['cpf'],
-		// 		'telefone' => $val['telefone'] ,
-		// 		'area_atuacoes_id' => 1,
-		// 		'unidades_id' => $val['unidade'],
-		// 		'dados_id' => $dados->id,
-		// 	]);
-		// }
+	// 	foreach ($users as $u) {
+	// 		$u->attachRole('ADVOGADO');
+	// 	}
+	// 	dd($request->all());
+	// 	foreach ($request->all() as $val) {
+	// 		//dd($val);
+	// 		$dados = Dados::create([
+	// 			'rg' => $val['rg'],
+	// 			'data_nascimento' => $val['data_nascimento'],
+	// 			'endereco' => $val['endereco'],
+	// 			'cidade' => $val['cidade'],
+	// 			'estado' => $val['cidade'],
+	// 			'cep' => $val['cep'],
+	// 			'telefone' => $val['telefone'],
+	// 			'estado_civil' => $val['estado_civil'],
+	// 			'funcao' => $val['funcao'],
+	// 			'dados_bancarios' => $val['dados_bancarios'],
+	// 			'viagem' => $val['viagem'],
+	// 		]);
+	// 		$user = User::create([
+	// 			'nome' => $val['nome'],
+	// 			'email' => $val['email'],
+	// 			'password' => bcrypt('123456789'),
+	// 			'codigo' => 000,
+	// 			'cpf' => $val['cpf'],
+	// 			'telefone' => $val['telefone'] ,
+	// 			'area_atuacoes_id' => 1,
+	// 			'unidades_id' => $val['unidade'],
+	// 			'dados_id' => $dados->id,
+	// 		]);
+	// 	}
 	// 	return respose('tudo beleza');
-	}
+	// }
 	public function index()
 	{
 		
@@ -112,6 +112,7 @@ class UserController extends Controller
 
 	public function atualizar(Request $request,$id)
 	{
+		//dd($request->all());
 		$messages = [
 			'password.confirmed' => 'Confirme a senha no campo auxiliar',
 			'password.min' => 'Tamanho miníno de 6 digitos',
@@ -123,21 +124,29 @@ class UserController extends Controller
 			],$messages)->validate();
 		}
 		$user = User::where('id',$id)->first();
-		$dados_old = Dados::find($user->dados_id);
-		$dados = [
-			'rg' => $request->rg,
-			'data_nascimento' => $request->data_nascimento,
-			'endereco' => $request->endereco,
-			'cidade' => $request->cidade,
-			'estado' => $request->cidade,
-			'cep' => $request->cep,
-			'telefone' => $request->telefone,
-			'estado_civil' => $request->estado_civil,
-			'funcao' => $request->funcao,
-			'dados_bancarios' => $request->dados_bancarios,
-			'viagem' => $request->viagem,
-		];
-		$dados_old->update($dados);
+		if ($user->hasRole('ADVOGADO')) {
+			$dados_old = Dados::find($user->dados_id);
+			$dados = [
+				'rg' => $request->rg,
+				'data_nascimento' => $request->data_nascimento,
+				'endereco' => $request->endereco,
+				'cidade' => $request->cidade,
+				'estado' => $request->cidade,
+				'cep' => $request->cep,
+				'telefone' => $request->telefone,
+				'estado_civil' => $request->estado_civil,
+				'funcao' => $request->funcao,
+				'dados_bancarios' => $request->dados_bancarios,
+				'viagem' => $request->viagem,
+			];
+
+			$dados_old->update($dados);
+		} else {
+			//$user->users()->detach();
+			//$user->clientes()->detach();
+			$user->users()->sync($request->get('advogados'));
+			$user->clientes()->sync($request->get('clientes'));
+		}
 		$data = [
 			'nome' => $request->nome,
 			'email' => $request->email,
@@ -148,8 +157,6 @@ class UserController extends Controller
 			'dados_id' => $user->dados_id,
 			'unidades_id' => $request->unidades_id,
 		];
-
-		
 		$user->update($data);
 		if ($request->password != "") {
 			$user->forceFill([
@@ -157,15 +164,10 @@ class UserController extends Controller
 				'remember_token' => Str::random(60),
 			])->save();
 		}
-		//$user->users()->detach();
-		//$user->clientes()->detach();
-		$user->users()->sync($request->get('advogados'));
-		$user->clientes()->sync($request->get('clientes'));
 
 		\Session::flash('flash_message',[
 			'msg'=>"Dr(ª) ".$user->nome." Atualizado com Sucesso",
 			'class'=>"alert bg-green alert-dismissible"
-
 		]);
 
 		return redirect()->route('user.editar',$user->id);
@@ -292,6 +294,11 @@ class UserController extends Controller
 
 		if ($andamentos_etapa2 !=null) {
 			$andamentos=$this->pushSolicitacao($andamentos,$andamentos_etapa2);
+		}
+		$andamentos_adm = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_administrativo'));
+
+		if ($andamentos_adm !=null) {
+			$andamentos=$this->pushSolicitacao($andamentos,$andamentos_adm);
 		}
 		$aprovadas = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado'));
 
