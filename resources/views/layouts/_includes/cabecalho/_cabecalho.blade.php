@@ -18,7 +18,7 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label id="label" for="solicitante" class="label2">Solicitante</label>
+			<label id="label" for="solicitante" class="label3">Solicitante</label>
 			<select id="solicitante" name="solicitantes_id" class="form-control show-tick" data-size="5" data-live-search="true" required>
 				<option value="">SELECIONE</option>
 				{{-- @foreach ($solicitantes as $solicitante)
@@ -28,7 +28,7 @@
 		</div>
 		<div class="col-md-3">
 			<div class="form-line">
-				<label class="form-label">Número de Processo</label>
+				<label class="form-label label4">Número de Processo</label>
 				<input type="text" id="processo" name="processo" class="form-control" autocomplete="off" placeholder="Ex: 9999999-99.9999.9.99.9999" />
 			</div>
 		</div>
@@ -44,18 +44,18 @@
 			</select>
 		</div>
 		<div class="col-md-2">
-			<label for="contrato">Tipo de Contrato</label>
+			<label for="contrato" class="label5">Tipo de Contrato</label>
 			<select id="contrato" name="contrato" class="form-control show-tick" data-live-search="true" required>
 				<option value="">SELECIONE</option>
 				<option value="CONSULTIVO">CONSULTIVO</option>
-				<option value="CONTENSIOSO">CONTENSIOSO</option>
+				<option value="CONTENCIOSO">CONTENCIOSO</option>
 				<option value="PREVENTIVO">PREVENTIVO</option>
 			</select>
 		</div>
 		<div class="col-md-2">
 			<div class="form-group">
 				<fieldset>
-					<legend>Urgência</legend>
+					<legend style="margin: 2px 0 0 0;">Urgência</legend>
 				</fieldset>
 				<input name="urgente" value="1" type="radio" id="sim" />
 				<label style="margin: 15px 15px 0px 0px" for="sim">Sim</label>

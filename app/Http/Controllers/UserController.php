@@ -109,7 +109,43 @@ class UserController extends Controller
 		$unidades = Unidade::all(); 
 		return view('advogado.editar',compact('user','areas','limites','advogados','clientes','unidades'));
 	}
+	public function editarPerfil()
+	{
+		$user = User::where('id',auth()->user()->id)
+		->select('nome','email')
+		->first();
+		//dd($user);
+		return view('advogado.perfil',compact('user'));
+	}
+	public function atualizarPerfil(Request $request)
+	{
+		$messages = [
+			'password.confirmed' => 'Confirme a senha no campo auxiliar',
+			'password.min' => 'Tamanho miníno de 6 digitos',
+		];
+		if ($request->password != "") {
+			Validator::make($request->all(), [
+				'password' => 'confirmed|min:6',
+				'password-confirm' => 'required_if:password,!=,',
+			],$messages)->validate();
+		}
+		auth()->user()->nome = $request->nome;
+		auth()->user()->email = $request->email;
+		auth()->user()->save();
+		
+		if ($request->password != "") {
+			auth()->user()->forceFill([
+				'password' => bcrypt($request->password),
+				'remember_token' => Str::random(60),
+			])->save();
+		}
+		\Session::flash('flash_message',[
+			'msg'=>"Seus Dados foram Atualizados com Sucesso",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
 
+		return redirect()->route('user.editarPerfil');
+	}
 	public function atualizar(Request $request,$id)
 	{
 		//dd($request->all());
@@ -300,12 +336,13 @@ class UserController extends Controller
 		if ($andamentos_adm !=null) {
 			$andamentos=$this->pushSolicitacao($andamentos,$andamentos_adm);
 		}
-		$aprovadas = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado'));
-
 		$coordenador_aprovado = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado'));
 		if ($coordenador_aprovado !=null) {
-			$aprovadas = $this->pushSolicitacao($aprovadas,$coordenador_aprovado);			
+			$andamentos = $this->pushSolicitacao($andamentos,$coordenador_aprovado);			
 		}
+		$aprovadas = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado'));
+
+		
 		$coordenador_aprovado2 = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado_etapa2'));
 		if ($coordenador_aprovado2 !=null) {
 			$aprovadas = $this->pushSolicitacao($aprovadas,$coordenador_aprovado2);			
@@ -342,7 +379,7 @@ class UserController extends Controller
 		$finalizadas = $repo->getSolicitacaoCoordenador(config('constantes.status_finalizado'));
 		$finalizadas_meu =$repo->getSolicitacaoAdvogado(config('constantes.status_finalizado'));
 		if ($finalizadas_meu !=null) {
-			$finalizadas = $this->pushSolicitacao($recorrentes,$finalizadas_meu);			
+			$finalizadas = $this->pushSolicitacao($finalizadas,$finalizadas_meu);			
 		}
 		return view('dashboard.coordenador',compact('abertas','andamentos','aprovadas','reprovados','devolvidas','recorrentes','finalizadas','meus'));
 	}

@@ -1,4 +1,4 @@
-@role('FINANCEIRO')
+@role(['ADMINISTRATIVO','FINANCEIRO'])
 <div class="row clearfix">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="card">
@@ -22,8 +22,8 @@
 						<div class="col-md-5">
 							<div class="form-group">
 								<div class="form-line">
-									<label style="margin-bottom: 20px" for="anexo_comprovante">Comprovante da Antecipação (jpeg,png,pdf)</label>
-									<input type="file" name="anexo_comprovante" id="anexo_comprovante" required/>
+									<label style="margin-bottom: 20px" for="anexo">Comprovante da Antecipação (jpeg,png,pdf)</label>
+									<input type="file" name="anexo" id="anexo" required/>
 								</div>
 							</div>
 						</div>

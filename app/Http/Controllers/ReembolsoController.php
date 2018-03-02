@@ -140,9 +140,9 @@ class ReembolsoController extends Controller
         $areas = AreaAtuacao::all('id','tipo'); 
         //$solicitantes = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
         $clientes = Cliente::all('id','nome');
-        $solicitantes = Solicitante::all('id','nome');
+        //$solicitantes = Solicitante::all('id','nome');
 
-        return view('reembolso.editar', compact('solicitacao','clientes','areas','solicitantes'));
+        return view('reembolso.editar', compact('solicitacao','clientes','areas'));
     }
 
     //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao

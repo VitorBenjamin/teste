@@ -1,4 +1,4 @@
-@if($solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_etapa2') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_recorrente') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_recorrente'))
+@if(($solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_etapa2') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_recorrente') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_recorrente')) && ($solicitacao->users_id != auth()->user()->id))
 <a href="{{ route('solicitacao.aprovar',$solicitacao->id) }}" class="btn bg-green waves-effect" role="button">
 	<i class="material-icons">done_all</i>
 	<span>APROVAR</span>

@@ -27,7 +27,7 @@ class SolicitacaoRequest extends FormRequest
             // 'processo' => 'exists:mysql.processos,codigo',
             'urgente' => 'required',
             'origem_despesa' => 'required',
-            'contrato' => 'required',
+            'contrato' => 'required_unless:origem_despesa,ESCRITÓRIO',
             'area_atuacoes_id'=> 'required',
             'clientes_id' => 'required_unless:origem_despesa,ESCRITÓRIO',
             'solicitantes_id' => 'required_unless:origem_despesa,ESCRITÓRIO',

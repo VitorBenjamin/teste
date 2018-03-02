@@ -118,8 +118,8 @@ class GuiaController extends Controller
 		// $solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
 		$tipo_guia = TipoGuia::all('id','tipo','descricao')->groupBy('tipo');
 		$clientes = Cliente::all('id','nome');
-        $solicitantes = Solicitante::all('id','nome');
-		return view('guia.editar', compact('solicitacao','clientes','areas','solicitantes','tipo_guia'));
+        //$solicitantes = Solicitante::all('id','nome');
+		return view('guia.editar', compact('solicitacao','clientes','areas','tipo_guia'));
 	}
 
 

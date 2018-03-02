@@ -8,7 +8,7 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label id="label" for="cliente">Cliente</label>
+			<label id="label" for="cliente" class="label2">Cliente</label>
 			<select id="cliente" name="clientes_id" class="selectpicker form-control show-tick" data-live-search="true">
 				<!-- @if(!empty($cliente[0]))
 				<option value="{{$solicitacao->clientes_id}}">{{ $cliente[0]->nome }}</option>
@@ -19,14 +19,11 @@
 			</select>
 		</div>
 		<div class="col-md-3">
-			<label id="label" for="solicitante" class="label2">Solicitante</label>
+			<label id="label" for="solicitante" class="label3">Solicitante</label>
 			<select id="solicitante" name="solicitantes_id" class="form-control show-tick" data-live-search="true">
 				@if($solicitacao->solicitantes_id != null)
-				<option value="{{ $solicitante->id }}">{{ $solicitante->nome }}</option>
+				<option value="{{ $solicitacao->solicitante->id }}">{{ $solicitacao->solicitante->nome }}</option>
 				@endif
-				{{-- @foreach ($solicitantes as $solicitante)
-				<option value="{{ $solicitante->id }}" {{$solicitacao->solicitantes_id == $solicitante->id ? 'selected' : '' }} >{{ $solicitante->nome }}</option>
-				@endforeach --}}
 			</select>
 		</div>
 		<!-- <div class="demo-masked-input">
@@ -46,7 +43,7 @@
 		</div> -->
 		<div class="col-md-3">
 			<div class="form-line">
-				<label class="form-label">Número de Processo</label>
+				<label for="processo" class="form-label label4">Número de Processo</label>
 				<input type="text" id="processo" value="{{$solicitacao->processo == null ? '' : $solicitacao->processo->codigo}}" name="processo" class="form-control" autocomplete="off" placeholder="Ex: 9999999-99.9999.9.99.9999" />
 			</div>
 		</div>
@@ -64,10 +61,10 @@
 		</div>
 		<div class="col-md-3">
 			<div class="form-group">
-				<label for="contrato">Tipo de Contrato</label>
+				<label for="contrato" class="label5">Tipo de Contrato</label>
 				<select id="contrato" name="contrato" class="form-control show-tick" data-live-search="true">
 					<option value="CONSULTIVO" {{ $solicitacao->contrato == "CONSULTIVO" ? 'selected' : '' }}>CONSULTIVO</option>
-					<option value="CONTENSIOSO" {{ $solicitacao->contrato == "CONTENSIOSO" ? 'selected' : '' }}>CONTENSIOSO</option>
+					<option value="CONTENCIOSO" {{ $solicitacao->contrato == "CONTENCIOSO" ? 'selected' : '' }}>CONTENCIOSO</option>
 					<option value="PREVENTIVO" {{ $solicitacao->contrato == "PREVENTIVO" ? 'selected' : '' }}>PREVENTIVO</option>
 				</select>
 			</div>

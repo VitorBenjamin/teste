@@ -148,7 +148,7 @@ $(function() {
             +'<!-- Define your button -->'
             +'<button type="button" style="padding: 10px 0;width:100%;overflow:hidden;margin-top: 16px;white-space: nowrap;" id="file'+i+'"> Anexar Arquivo </button>'
             +'<!-- Your File element -->'
-            +' <input type="file" name="anexo_comprovante[]" id="anexo_comprovante'+i+'" />'
+            +' <input type="file" name="anexo_comprovante[]" id="anexo_comprovante'+i+'" required/>'
             +'</div>'
             +'</div>'
             +'<div class="col-md-1" style="margin-top: 20px; padding-left: 0px !important;">'
@@ -253,15 +253,28 @@ $( window ).load(function() {
 
     if (value == "ESCRITÓRIO") {
 
-        $('#label').css("color","#ded5d5");
+        $('.label2').css("color","#ded5d5");
+        $('.label3').css("color","#ded5d5");
+        $('.label4').css("color","#ded5d5");
+        $('.label5').css("color","#ded5d5");
+
         $('#cliente').selectpicker('deselectAll');
+        $('#cliente').removeAttr('required', false);
         $('#cliente').selectpicker('hide');
         $('#cliente').selectpicker('refresh');
-
-        $('.label2').css("color","#ded5d5");
+        
         $('#solicitante').selectpicker('deselectAll');
+        $('#solicitante').removeAttr('required', false);
         $('#solicitante').selectpicker('hide');
         $('#solicitante').selectpicker('refresh');
+
+        $('#contrato').selectpicker('deselectAll');
+        $('#contrato').removeAttr('required', false);
+        $('#contrato').selectpicker('hide');
+        $('#contrato').selectpicker('refresh');
+
+        $('#processo').val("");
+        $('#processo').hide();
 
     }else{
         $('#cliente').attr('required', true);
@@ -398,6 +411,9 @@ $('#origem_despesa').change(function() {
 
     if (value == "ESCRITÓRIO") {
         $('.label2').css("color","#ded5d5");
+        $('.label3').css("color","#ded5d5");
+        $('.label4').css("color","#ded5d5");
+        $('.label5').css("color","#ded5d5");
 
         $('#cliente').selectpicker('deselectAll');
         $('#cliente').removeAttr('required', false);
@@ -409,17 +425,37 @@ $('#origem_despesa').change(function() {
         $('#solicitante').selectpicker('hide');
         $('#solicitante').selectpicker('refresh');
 
+        $('#contrato').selectpicker('deselectAll');
+        $('#contrato').removeAttr('required', false);
+        $('#contrato').selectpicker('hide');
+        $('#contrato').selectpicker('refresh');
+
+        $('#processo').val("");
+        $('#processo').hide();
     }else{
         $('.label2').css("color","#555"); 
+        $('.label3').css("color","#555");
+        $('.label4').css("color","#555"); 
+        $('.label5').css("color","#555");
+        
         $('#cliente').removeAttr('disabled',false);
         $('#cliente').selectpicker('show');
         $('#cliente').attr('required', true);
-        
         $('#cliente').selectpicker('refresh');
+
         $('#solicitante').removeAttr('disabled',false);
         $('#solicitante').selectpicker('show');
         $('#solicitante').attr('required', true);
         $('#solicitante').selectpicker('refresh');
+
+        $('#contrato').removeAttr('disabled',false);
+        $('#contrato').selectpicker('show');
+        $('#contrato').attr('required', true);
+        $('#contrato').selectpicker('refresh');
+
+        $('#processo').show();
+        
+
     }
 });
 

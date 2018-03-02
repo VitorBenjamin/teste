@@ -18,7 +18,7 @@
 			<div class="card">
 				<div class="header">
 					<h2>
-						Listagem do Usuários do Sistema
+						Edição do Usuário - {{$user->nome}}
 						<!-- <small>Different sizes and widths</small> -->
 					</h2>
 				</div>
@@ -60,7 +60,7 @@
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} form-float">
 									<div class="form-line">
-										<label class="form-label">Senha *</label>
+										<label class="form-label">Nova Senha *</label>
 										<input id="password" type="password" class="form-control" name="password">
 									</div>
 									@if ($errors->has('password'))
@@ -73,7 +73,7 @@
 							<div class="col-md-6">
 								<div class="form-group form-float">
 									<div class="form-line">
-										<label class="form-label">Confirmação de Senha *</label>
+										<label class="form-label">Confirmar Nova Senha *</label>
 										<input id="password-confirm" type="password" class="form-control" name="password_confirmation">
 									</div>
 								</div>

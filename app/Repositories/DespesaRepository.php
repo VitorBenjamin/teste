@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\Auth;
 use App\Despesa;
+use Intervention\Image\Facades\Image;
 
 class DespesaRepository
 {

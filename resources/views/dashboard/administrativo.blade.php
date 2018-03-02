@@ -62,7 +62,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <!-- <th>ID</th> -->
+                                        <th>ID</th>
                                         <th>Data</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -75,7 +75,7 @@
                                     @foreach ($abertas->solicitacao as $aberto)
                                     <tr>
                                         <td></td>
-                                        <!-- <td>{{ $aberto->id }}</td> -->
+                                        <td>{{ $aberto->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
                                         <!-- <td>{{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> -->
                                         <td>{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
@@ -109,7 +109,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <!-- <th>ID</th> -->
+                                        <th>ID</th>
                                         <th>Data</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -123,7 +123,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <!-- <td>{{ $devolvida->id }}</td> -->
+                                        <td>{{ $devolvida->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
                                         <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
@@ -150,7 +150,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <!-- <th>ID</th> -->
+                                        <th>ID</th>
                                         <th>Data</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -164,7 +164,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <!-- <td>{{ $recorrente->id }}</td> -->
+                                        <td>{{ $recorrente->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
                                         <td>{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>

@@ -104,8 +104,14 @@ class ViagemController extends Controller
         $areas = AreaAtuacao::all('id','tipo'); 
         //$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
         $clientes = Cliente::all('id','nome');
-        $solicitantes = Solicitante::all('id','nome');
-        return view('viagem.editar', compact('solicitacao','clientes','areas','solicitantes'));
+        //$solicitantes = Solicitante::all('id','nome');
+        return view('viagem.editar', compact('solicitacao','clientes','areas'));
+    }
+    public function editarViagem($id)
+    {
+        $viagem = Viagem::find($id);
+        
+        return view('viagem.editarViagem', compact('viagem'));
     }
 
     //Atualiza uma viagem e redireciona para a tela de edição da Solicitação
@@ -115,13 +121,13 @@ class ViagemController extends Controller
         $viagem = Viagem::find($id);
         $data = null;
         if ($request->data_volta) {
-            $data = date('Y-m-d H:m:s', strtotime($request->data_volta));
+            $data = date('Y-m-d', strtotime($request->data_volta));
         }
         $viagem->update([
             'observacao' => $request->observacao,
             'origem' => $request->origem,
             'destino' => $request->destino, 
-            'data_ida' => date('Y-m-d H:m:s', strtotime($request->data_ida)),
+            'data_ida' => date('Y-m-d', strtotime($request->data_ida)),
             'data_volta' => $data, 
             'locacao' => $request->locacao,
             'hospedagem' => $request->hospedagem,
@@ -138,17 +144,17 @@ class ViagemController extends Controller
     }
     public function addViagem(Request $request,$id){
 
-        //dd(date('Y-m-d H:m:s', strtotime($request->data_volta)));
+        //dd(date('Y-m-d', strtotime($request->data_volta)));
         $data = null;
         if ($request->data_volta) {
-            $data = date('Y-m-d H:m:s', strtotime($request->data_volta)); 
+            $data = date('Y-m-d', strtotime($request->data_volta)); 
         }
         Viagem::create(
             [
                 'observacao' => $request->observacao,
                 'origem' => $request->origem,
                 'destino' => $request->destino, 
-                'data_ida' => date('Y-m-d H:m:s', strtotime($request->data_ida)),
+                'data_ida' => date('Y-m-d', strtotime($request->data_ida)),
                 'data_volta' => $data, 
                 'locacao' => $request->locacao,
                 'hospedagem' => $request->hospedagem,
@@ -165,6 +171,7 @@ class ViagemController extends Controller
         return redirect()->route('viagem.editar',$id);
     }
     
+
     public function editarDespesa($id)
     {   
         $despesa = Despesa::find($id);
@@ -313,7 +320,6 @@ class ViagemController extends Controller
     //Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
     public function deletarViagem($id)
     {        
-
         $viagem = Viagem::find($id);
         $s_id = $viagem->solicitacoes_id;
         $viagem->delete();

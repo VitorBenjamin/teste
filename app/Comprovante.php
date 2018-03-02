@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comprovante extends Model
 {
     protected $fillable = [
-        'data','anexo_pdf','anexo_comprovante', 'solicitacoes_id'
+        'data','anexo_pdf','anexo', 'solicitacoes_id'
     ];
     
     /** Consulta a Solicitacao da Compra

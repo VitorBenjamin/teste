@@ -50,9 +50,9 @@
 							<tr>
 								<td></td>
 								<td>{{$viagem->origem}}</td>
-								<td>{{date('d/m/Y H:i',strtotime($viagem->data_ida))}}</td>
+								<td>{{date('d/m/Y',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
-								<td>{{date('d/m/Y H:i',strtotime($viagem->data_volta))}}</td>
+								<td>{{date('d/m/Y',strtotime($viagem->data_volta))}}</td>
 								<td>
 									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
 									@if($viagem->hospedagens)
@@ -335,7 +335,6 @@
 	</div>
 	<!-- FIM LISTAGEM DAS DESPESAS -->
 	@endif
-	<!-- FIM MODAL GALERIA -->
 </section>
 @endsection
 <!-- @push('scripts2')

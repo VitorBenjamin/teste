@@ -49,15 +49,15 @@ class SolicitacaoController extends Controller
 			'data' => date('Y-m-d', strtotime($request->data)),
 			'solicitacoes_id' => $id,
 		];
-		$mime = $request->file('anexo_comprovante')->getClientMimeType();
+		$mime = $request->file('anexo')->getClientMimeType();
 		if ($mime == "image/jpeg" || $mime == "image/png") {
-			$file = Image::make($request->file('anexo_comprovante'));
+			$file = Image::make($request->file('anexo'));
 			$img_64 = (string) $file->encode('data-url');
-			$data['anexo_comprovante'] = $img_64;
+			$data['anexo'] = $img_64;
 		}elseif ($mime == "application/pdf") {
 			$today = (string) date("Y-m-d");
-			$fileName = $today.'_'.$id.'_'.$request->anexo_comprovante->getClientOriginalName();    
-			$request->anexo_comprovante->storeAs('public/comprovante',$fileName);
+			$fileName = $today.'_'.$id.'_'.$request->anexo->getClientOriginalName();    
+			$request->anexo->storeAs('public/comprovante',$fileName);
 			$data['anexo_pdf'] = $fileName;
 		}else{
 
@@ -85,28 +85,28 @@ class SolicitacaoController extends Controller
 			'solicitacoes_id' => $request->$id,
 		];
 		//dd($request->all());
-		if ($request->hasFile('anexo_comprovante')) {
-			$mime = $request->file('anexo_comprovante')->getClientMimeType();
+		if ($request->hasFile('anexo')) {
+			$mime = $request->file('anexo')->getClientMimeType();
 			//dd($mime);
 			if ($mime == "image/jpeg" || $mime == "image/png") {
-				$file = Image::make($request->file('anexo_comprovante'));
+				$file = Image::make($request->file('anexo'));
 				$img_64 = (string) $file->encode('data-url');
-				$data['anexo_comprovante'] = $img_64;
+				$data['anexo'] = $img_64;
 				if ($comprovante->anexo_pdf) {
 					Storage::delete('/public/comprovante/'. $comprovante->anexo_pdf);
 					$data['anexo_pdf'] = null;
 				}
 			}elseif ($mime == "application/pdf") {
 				$today = (string) date("Y-m-d");
-				$fileName = $today.'_'.$id.'_'.$request->anexo_comprovante->getClientOriginalName();    
-				$request->anexo_comprovante->storeAs('public/comprovante',$fileName);
+				$fileName = $today.'_'.$id.'_'.$request->anexo->getClientOriginalName();    
+				$request->anexo->storeAs('public/comprovante',$fileName);
 				$data['anexo_pdf'] = $fileName;
 				if ($comprovante->anexo_pdf) {
 					Storage::delete('/public/comprovante/'. $comprovante->anexo_pdf);
 					$data['anexo_pdf'] = null;
 				}
-				if ($comprovante->anexo_comprovante) {
-					$data['anexo_comprovante'] = null;
+				if ($comprovante->anexo) {
+					$data['anexo'] = null;
 				}
 			}else{
 
@@ -117,8 +117,8 @@ class SolicitacaoController extends Controller
 				return redirect()->back();
 			}
 		}else{
-			if ($comprovante->anexo_comprovante) {
-				$data['anexo_comprovante'] = $comprovante->anexo_comprovante;
+			if ($comprovante->anexo) {
+				$data['anexo'] = $comprovante->anexo;
 			} else {
 				$data['anexo_pdf'] = $comprovante->anexo_pdf;
 			}

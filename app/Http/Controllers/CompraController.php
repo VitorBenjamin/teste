@@ -38,7 +38,7 @@ class CompraController extends Controller
 		$solicitacao = $repo->create($request,config('constantes.tipo_compra'));
 
 		\Session::flash('flash_message',[
-			'msg'=>"Cadastro do ".$solicitacao->tipo." Realizado com Sucesso!!!",
+			'msg'=>"Compra Cadastrada com Sucesso. Adicione um produto!",
 			'class'=>"alert bg-green alert-dismissible"
 		]);
 
@@ -85,8 +85,8 @@ class CompraController extends Controller
 		$areas = AreaAtuacao::all('id','tipo'); 
 		//$solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
 		$clientes = Cliente::all('id','nome');
-		$solicitantes = Solicitante::all('id','nome');
-		return view('compra.editar', compact('solicitacao','clientes','areas','solicitantes'));
+		//$solicitantes = Solicitante::all('id','nome');
+		return view('compra.editar', compact('solicitacao','clientes','areas'));
 	}
 
     //Atualiza uma compra e redireciona para a tela de edição da Solicitação
@@ -124,12 +124,13 @@ class CompraController extends Controller
 			// 	'compras_id' => $request->compras_id,
 			// ]);
 			//dd( $request->file('anexo_comprovante')[$key]);
+			//dd(floatval($request->valor[$key]));
 			$data = [
 				'descricao' => $request->descricao[$key],
 				'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao[$key])),
 				'fornecedor' => $request->fornecedor[$key],
 				'quantidade' => $request->quantidade[$key],
-				'valor' => $request->valor[$key],
+				'valor' => floatval($request->valor[$key]),
 				'compras_id' => $request->compras_id,
 			];
 			$mime = $request->file('anexo_comprovante')[$key]->getClientMimeType();

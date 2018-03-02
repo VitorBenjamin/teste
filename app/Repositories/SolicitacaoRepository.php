@@ -56,9 +56,9 @@ class SolicitacaoRepository
 
             'urgente' => $data->urgente,
             'origem_despesa' => $data->origem_despesa,
-            'contrato' => $data->contrato,
+            'contrato' => $data->contrato == null ? null : $data->contrato,
             'area_atuacoes_id'=>$data->area_atuacoes_id,
-            'clientes_id' => $data->clientes_id == null ? 1 : $data->clientes_id,
+            'clientes_id' => $data->clientes_id == null ? null : $data->clientes_id,
             'solicitantes_id' => $data->solicitantes_id == null ? null : $data->solicitantes_id,
             'unidades_id' => auth()->user()->unidades_id,
             'users_id' => auth()->user()->id,
@@ -153,8 +153,8 @@ class SolicitacaoRepository
                 $q
                 ->whereIn('area_atuacoes_id', $area_id)
                 ->whereIn('users_id', $advogados)
-                ->whereIn('clientes_id', $clientes);
-
+                ->whereIn('clientes_id', $clientes)
+                ->where('users_id','<>',auth()->user()->id);
             }])->where('descricao',$status)->first();
         }else {
             $status = Status::with('solicitacao')->where('descricao',$status)->first();
@@ -192,7 +192,7 @@ class SolicitacaoRepository
 
     public function notification()
     {
-        
+
     }
     public function getRange($total, $limites, $s)
     {

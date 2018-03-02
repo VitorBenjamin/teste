@@ -10,8 +10,8 @@
 
 
 
-Route::post('/cadastro', ['uses' => 'ClienteController@index','as' => 'user.index']);
-Route::post('/user-cadastro', ['uses' => 'UserController@createDados','as' => 'user.index']);
+//Route::post('/cadastro', ['uses' => 'ClienteController@index','as' => 'user.index']);
+//Route::post('/user-cadastro', ['uses' => 'UserController@createDados','as' => 'user.index']);
 
 Route::get('/', ['uses' => 'UserController@index','middleware' => 'auth', 'as' => 'user.index']);
 Route::post('solictacao-deletar', ['uses' => 'SolicitacaoController@deletar', 'as' => 'solicitacao.deletar']);
@@ -21,11 +21,13 @@ Route::get('/ajax/processo', ['uses' => 'ProcessoController@getProcesso', 'as' =
 
 // Route::get('cadastrar', ['uses' => 'CompraController@cadastrar', 'as' => 'compra.cadastrar']);
 Auth::routes();
-Route::get('/cadastro/registrar-coordenador', 'Auth\RegisterController@showRegistrationFormCoordenador')->name('registerCoordenador');
-Route::get('/cadastro/registrar-financeiro', 'Auth\RegisterController@showRegistrationFormFinanceiro')->name('registerFinanceiro');
-Route::get('/cadastro/registrar-advogado', 'Auth\RegisterController@showRegistrationFormAdvogado')->name('registerAdvogado');
+Route::group(['middleware' => ['check.user.role:ADMINISTRATIVO|COORDENADOR|FINANCEIRO']],function()
+{
+    Route::get('/cadastro/registrar-coordenador', 'Auth\RegisterController@showRegistrationFormCoordenador')->name('registerCoordenador');
+    Route::get('/cadastro/registrar-financeiro', 'Auth\RegisterController@showRegistrationFormFinanceiro')->name('registerFinanceiro');
+    Route::get('/cadastro/registrar-advogado', 'Auth\RegisterController@showRegistrationFormAdvogado')->name('registerAdvogado');
 
-
+});
 // // Authentication Routes...
 // $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
 // $this->post('login', 'Auth\LoginController@login');
@@ -175,8 +177,10 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
         Route::put('add-viagem/{id}', ['uses' => 'ViagemController@addViagem', 'as' => 'viagem.addViagem']);
 
         Route::get('deletar-viagem/{id}', ['uses' => 'ViagemController@deletarViagem', 'as' => 'viagem.deletarViagem']);
-        Route::get('editar-viagem/{id}', ['uses' => 'ViagemController@verificarSolicitacao', 'as' => 'viagem.editar']);
+        Route::get('editar-solicitacao-viagem/{id}', ['uses' => 'ViagemController@verificarSolicitacao', 'as' => 'viagem.editar']);
+        Route::get('editar-viagem/{id}', ['uses' => 'ViagemController@editarViagem', 'as' => 'viagem.editarViagem']);
         Route::put('atualizar-viagem/{id}', ['uses' => 'ViagemController@atualizarViagem', 'as' => 'viagem.atualizarViagem']);
+
         
         Route::put('add-despesa/{id}', ['uses' => 'ViagemController@addDespesa', 'as' => 'viagem.addDespesa']);
         Route::put('atualizar-despesa/{id}', ['uses' => 'ViagemController@atualizarDespesa', 'as' => 'viagem.atualizarDespesa']);
@@ -242,12 +246,9 @@ Route::group(['prefix' => 'administrativo/relatorio','middleware' => ['check.use
 Route::group(['prefix' => 'relatorio','middleware' => ['auth.basic']],function()
 {
     //Route::get('buscar', ['uses' => 'RelatorioController@gerarRelatorio', 'as' => 'relatorio.gerar']);
-
-
-
 });
 
-Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR']],function()
+Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR|ADMINISTRATIVO']],function()
 {
     Route::get('listagem-users', ['uses' => 'UserController@getAll', 'as' => 'user.getAll']);
     Route::get('editar-user/{id}', ['uses' => 'UserController@edit', 'as' => 'user.editar']);
@@ -256,4 +257,6 @@ Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR']
     Route::get('deletar-limite/{user}/{limite}', ['uses' => 'UserController@deletarLimite', 'as' => 'user.deletarLimite']);
     Route::put('editar-limite/{id}', ['uses' => 'UserController@atualizarLimite', 'as' => 'limite.atualizar']);
 });
+Route::get('editar-perfil', ['uses' => 'UserController@editarPerfil', 'as' => 'user.editarPerfil']);
+Route::put('atualizar-perfil', ['uses' => 'UserController@atualizarPerfil', 'as' => 'user.atualizarPerfil']);
 // FIM DAS ROTAS DE SOLICITAÇÃO

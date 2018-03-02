@@ -38,13 +38,11 @@
 	<!-- FIM SESSÂO COMENTÁRIO  -->
 
 	<!-- SESSÂO COMPROVANTE -->
-	@role('FINANCEIRO')
 	@if(count($solicitacao->comprovante) == 0)
 	@include('layouts._includes.solicitacoes._addComprovante')
 	@else
 	@include('layouts._includes.solicitacoes._comprovante')
 	@endif
-	@endrole
 	<!-- FIM SESSÂO COMPROVANTE  -->
 	
 	<!-- LISTAGEM DOS PRODUTOS  -->
@@ -106,7 +104,7 @@
 											</div>
 											@elseif($cotacao->anexo_comprovante)
 											<div class="zoom-gallery">
-												<a href="{{$cotacao->anexo_comprovante}}" data-source="{{$cotacao->anexo_comprovante}}" title="COMPROVANTE - {{$cotacao->tipo_comprovante}} - {{date('d/m/Y',strtotime($cotacao->data))}}" style="width:32px;height:32px;">
+												<a href="{{$cotacao->anexo_comprovante}}" data-source="{{$cotacao->anexo_comprovante}}" title="COMPROVANTE - {{$cotacao->tipo_comprovante}} - {{date('d/m/Y',strtotime($cotacao->data_cotacao))}}" style="width:32px;height:32px;">
 													<img class="img_popup" src="{{$cotacao->anexo_comprovante}}" width="32" height="32">
 												</a>
 												<!-- <a href="{{$cotacao->anexo_comprovante}}" data-source="{{$cotacao->anexo_comprovante}}" title="{{$cotacao->descricao}} - {{date('d/m/Y',strtotime($cotacao->data_compra))}}" style="width:25px;height:25px;">
@@ -211,7 +209,7 @@
 										<!-- Define your button -->
 										<button type="button" style="padding: 10px 0;width:186px;overflow:hidden;margin-top: 16px; white-space: nowrap;" id="file0">Anexar Arquivo</button>
 										<!-- Your File element -->
-										<input type="file" name="anexo_comprovante[]" id="anexo_comprovante0" />
+										<input type="file" name="anexo_comprovante[]" id="anexo_comprovante0" required />
 									</div>
 								</div>
 								<!-- <div class="col-md-3">

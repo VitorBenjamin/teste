@@ -37,40 +37,34 @@ $(function () {
         format : 'DD-MM-YYYY',
         minDate : new Date(),
         lang: 'pt-br',
-        // clearButton: true,
-        // clearText: 'Limpar',
-        // cancelText : 'Cancelar',
         switchOnClick:true,
         autoClose: true,
         weekStart: 0,
         time: false
     });
-    $('.volta').bootstrapMaterialDatePicker({
-        format : 'DD-MM-YYYY HH:mm:00',
-        minDate : new Date(),
-        lang: 'pt-br',
-        // clearButton: true,
-        // clearText: 'Limpar',
-        switchOnClick:true,
-        // cancelText : 'Cancelar',
-        autoClose: true,
-        weekStart: 0
-    });
-    $('.ida').bootstrapMaterialDatePicker({
-        format : 'DD-MM-YYYY HH:mm:00',
-        minDate : new Date(),
-        lang: 'pt-br',
-        // clearButton: true,
-        // clearText: 'Limpar',
-        switchOnClick:true,
-        // cancelText : 'Cancelar',
-        autoClose: true,
-        weekStart: 0
-    }).on('change', function(e, date)
-    {
-        $('.volta').bootstrapMaterialDatePicker('setMinDate', date);
-    }); 
+    // $('.volta').bootstrapMaterialDatePicker({
+    //     format : 'DD-MM-YYYY',
+    //     lang: 'pt-br',
+    //     switchOnClick:true,
+    //     autoClose: true,
+    //     weekStart: 0,
+    //     time: false,
+    //     pickTime: false
 
+    // });
+    // $('.ida').bootstrapMaterialDatePicker({
+    //     lang: 'pt-br',
+    //     minDate : new Date(),
+    //     format : 'DD-MM-YYYY',
+    //     switchOnClick:true,
+    //     autoClose: true,
+    //     weekStart: 0,
+    //     time: false,
+    //     pickTime: false
+    // }).on('change', function(e, date)
+    // {
+    //     $('.volta').bootstrapMaterialDatePicker('setMinDate', date);
+    // }); 
 
     // $('.timepicker').bootstrapMaterialDatePicker({
     //     format: 'HH:mm',

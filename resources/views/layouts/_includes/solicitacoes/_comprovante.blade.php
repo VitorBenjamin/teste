@@ -22,12 +22,13 @@
 							</span>
 							@else
 							<h4>Anexo</h4>
-							<a href="{{$comprovante->anexo_comprovante}}" data-source="{{$comprovante->anexo_comprovante}}" title="COMPROVANTE - {{$solicitacao->tipo}} - {{date('d/m/Y',strtotime($comprovante->data))}}" style="width:50px;height:50px;">
-								<img class="img_popup" src="{{$comprovante->anexo_comprovante}}" width="50" height="50">
+							<a href="{{$comprovante->anexo}}" data-source="{{$comprovante->anexo}}" title="COMPROVANTE - {{$solicitacao->tipo}} - {{date('d/m/Y',strtotime($comprovante->data))}}" style="width:50px;height:50px;">
+								<img class="img_popup" src="{{$comprovante->anexo}}" width="50" height="50">
 							</a>
 							@endif
 						</div>
 					</div>
+					@role(['ADMINISTRATIVO','FINANCEIRO'])
 					<div class="col-sm-2">
 						<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group" style="margin-top: 40px">
 							<a data-toggle="modal" data-target="#modalComprovante" class="btn bg-orange waves-effect" role="button">
@@ -35,11 +36,11 @@
 							<span>EDITAR</span></a>
 						</div>
 					</div>
+					@include('layouts._includes.solicitacoes._editComprovante')
+					@endrole
 				</div>
 				@endforeach
 			</div>
 		</div>
 	</div> 												
 </div>
-
-@include('layouts._includes.solicitacoes._editComprovante')

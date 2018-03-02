@@ -29,6 +29,7 @@
 							<tr>
 								<th></th>
 								<th>Nome</th>
+								<th>Função</th>
 								<th>Area</th>
 								<th>Email</th>
 								<th>Telefone</th>
@@ -39,6 +40,7 @@
 							<tr>
 								<th></th>
 								<th>Nome</th>
+								<th>Função</th>
 								<th>Area</th>
 								<th>Email</th>
 								<th>Telefone</th>
@@ -51,6 +53,7 @@
 							<tr>
 								<td></td>
 								<td>{{$user->nome}}</td>
+								<td>{{$user->roles[0]->name}}</td>
 								<td>{{$user->area_atuacao->tipo}}</td>
 								<td>{{$user->email}}</td>
 								<td>{{$user->telefone}}</td>

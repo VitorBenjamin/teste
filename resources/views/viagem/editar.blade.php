@@ -197,7 +197,7 @@
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="largeModalLabel">Adicione um Translado</h4>
+					<h4 class="modal-title" id="largeModalLabel">Adicione uma Viagem</h4>
 				</div>
 				<!-- INCIO SESSÃO VIAGEM -->
 				<div class="modal-body">
@@ -227,7 +227,7 @@
 													<div class="form-group">
 														<div class="form-line">
 															<label for="data_ida">Data Ida</label>
-															<input type="text" value="" name="data_ida" class="ida form-control" placeholder="Data Obrigatória" required/>
+															<input type="text" value="" name="data_ida" class="datepicker form-control" placeholder="Data Obrigatória" required/>
 														</div>
 													</div>
 												</div>
@@ -243,7 +243,7 @@
 													<div class="form-group">
 														<div class="form-line">
 															<label for="data_volta">Data Volta</label>
-															<input type="text" value="" name="data_volta" class="volta form-control" placeholder="Data Opcional"/>
+															<input type="text" value="" name="data_volta" class="datepicker form-control" placeholder="Data Opcional"/>
 														</div>
 													</div>
 												</div>
@@ -290,6 +290,14 @@
 														<div class="form-line">
 															<label for="kg">Kg</label>
 															<input type="text" value="" name="kg" class="form-control" placeholder="Kilos"/>
+														</div>
+													</div>								
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<div class="form-line">
+															<label for="observacao">Observação</label>
+															<input type="text" value="" name="observacao" class="form-control" placeholder="Obs.."/>
 														</div>
 													</div>								
 												</div>
@@ -368,9 +376,9 @@
 							<tr>
 								<td></td>
 								<td>{{$viagem->origem}}</td>
-								<td>{{date('d/m/Y H:i',strtotime($viagem->data_ida))}}</td>
+								<td>{{date('d/m/Y',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
-								<td>{{date('d/m/Y H:i',strtotime($viagem->data_volta))}}</td>
+								<td>{{date('d/m/Y',strtotime($viagem->data_volta))}}</td>
 								<td>
 									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
 									@if($viagem->hospedagens)
@@ -407,6 +415,11 @@
 								</td>
 
 								<td class="acoesTD">
+									<div class="icon-button-demo" >
+										<a href="{{ route('viagem.editarViagem', $viagem->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float"><i class="material-icons">edit</i></a>
+
+										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('viagem.deletarViagem', $viagem->id)}}"><i class="material-icons">delete_sweep</i></a>
+									</div>
 									@if($viagem->anexo_pdf || $viagem->anexo_comprovante)
 									<div class="zoom-gallery">
 										@if($viagem->anexo_pdf)
