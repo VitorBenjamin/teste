@@ -24,7 +24,7 @@
 	@include('layouts._includes.solicitacoes._addComprovante')
 	@else
 	@include('layouts._includes.solicitacoes._comprovante')
-	@endif 
+	@endif
 	<!-- FIM SESSÂO COMPROVANTE  -->
 	
 	<!-- LISTAGEM DA GUIA  -->

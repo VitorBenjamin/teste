@@ -18,7 +18,7 @@
                     <ul class="dropdown-menu pull-right">
                         <li><a href="{{ route('user.editarPerfil') }}"><i class="material-icons">edit</i>Editar. Perfil</a></li>
                         @role(['ADMINISTRATIVO','FINANCEIRO','GOD','COORDENADOR'])
-                        <li><a href="{{ route('user.getAll') }}"><i class="material-icons">list</i>Listar. Advogados</a></li>
+                        <li><a href="{{ route('user.getAll') }}"><i class="material-icons">list</i>Listar. Colaboradores</a></li>
                         <li role="seperator" class="divider"></li>
                         <li><a href="{{ route('registerAdvogado') }}"><i class="material-icons">sd_storage</i>Cadastrar Advogado</a></li>
                         <li><a href="{{ route('registerCoordenador') }}"><i class="material-icons">sd_storage</i>Cadastrar Coordenador</a></li>
@@ -49,8 +49,14 @@
                 <li class="active">
                     <a href="{{url('/')}}">
                         <i class="material-icons" style="color: #607d8b">dashboard</i>
-                        <span>DashBoard</span>
+                        <span>Dashboard Advovado</span>
                     </a>
+                    @role(['COORDENADOR'])
+                    <a href="{{url('/advogado-dashboard')}}">
+                        <i class="material-icons" style="color: #017bb6">dashboard</i>
+                        <span>Meu Dashboard</span>
+                    </a>
+                    @endrole
                 </li>
                 @role(['ADVOGADO','COORDENADOR'])
                 <li>

@@ -22,7 +22,7 @@ class RelatorioController extends Controller
 	public function listagem()
 	{
 		$clientes = Cliente::all('id','nome');
-		$relatorios_abertos = Relatorio::where('finalizado',null)->orderBy('id','desc')->get();
+		$relatorios_abertos = Relatorio::where('finalizado',false)->orderBy('id','desc')->get();
 		$relatorios = Relatorio::where('finalizado',true)->orderBy('id','desc')->get();
 		if (count($relatorios) > 0) {
 			$data_inicial = $relatorios[0]->data;
@@ -107,7 +107,7 @@ class RelatorioController extends Controller
 		->select('data')
 		->first();
 
-		$data_inicial = '2018-01-01';
+		$data_inicial = date("2018-01-01");
 		$data_final = date('Y-m-d', strtotime($request->data_final));
 		if ($ultimo_relatorio==null) {
 			$solicitacoes= Solicitacao::where('clientes_id',$request->clientes_id)
@@ -119,6 +119,7 @@ class RelatorioController extends Controller
 			->whereBetween('data_finalizado', array($data_inicial,$data_final))
 			->get();
 		}
+		//dd($solicitacoes);
 		$repo = new SolicitacaoRepository();
 		$solicitacoes = $repo->valorTotal($solicitacoes);
 		

@@ -43,11 +43,11 @@
                                 <i style="color: #bb7408" class="material-icons">build</i> <span class="hidden-xs"> ABERTO </span> <span class="badge">{{count($abertas->solicitacao)}}</span>
                             </a>
                         </li>
-                        <li class="azed-tab">
+                        {{-- <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#andamento">
                                 <i style="color: #30b1b1" class="material-icons">hourglass_empty</i> <span class="hidden-xs"> ANDAMENTO </span> <span class="badge">{{count($andamentos->solicitacao)}}</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#aprovado">
                                 <i style="color: #3ecc1b" class="material-icons">done_all</i> <span class="hidden-xs"> APROVADO </span> <span class="badge">{{count($aprovadas->solicitacao)}}</span>
@@ -68,16 +68,16 @@
                                 <i style="color: #30b1b1" class="material-icons">hourglass_empty</i> <span class="hidden-xs"> RECORRENTE </span> <span class="badge">{{count($recorrentes->solicitacao)}}</span>
                             </a>
                         </li>
-                        <li class="sais-tab">
+                        {{-- <li class="sais-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#meus">
                                 <i style="color: #00c6f3" class="material-icons">person_pin</i> <span class="hidden-xs"> MINHAS </span> <span class="badge">{{count($meus->solicitacao)}}</span>
                             </a>
-                        </li>
-                        <li class="azed-tab">
+                        </li> --}}
+                        {{-- <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#finalizado">
                                 <i style="color: #0db174" class="material-icons">thumb_up</i> <span class="hidden-xs"> FINALIZADO </span> <span class="badge">{{count($finalizadas->solicitacao)}}</span>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                     <div class="tab-content">
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
@@ -138,7 +138,7 @@
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
 
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
-                        <div id="andamento" class="tab-pane fade in" role="tabpanel">
+                        {{-- <div id="andamento" class="tab-pane fade in" role="tabpanel">
                             <h1 class="visible-xs" style="text-align: center"> ANDAMENTO </h1>
                             <table id="andamento" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead>
@@ -179,7 +179,7 @@
 
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
                         
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
@@ -379,7 +379,7 @@
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM recorrente -->
 
                         <!-- LISTAGEM DAS SOLICITAÇÕES DO COORDENADOR -->
-                        <div id="meus" class="tab-pane fade in" role="tabpanel">
+                        {{-- <div id="meus" class="tab-pane fade in" role="tabpanel">
                             <h1 class="visible-xs" style="text-align: center"> MINHAS </h1>
                             <table id="meus" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead> 
@@ -427,11 +427,11 @@
                                     @endforeach                                                                                         
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM recorrente -->
 
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM FINALIZADAS -->
-                        <div id="finalizado" class="tab-pane fade in" role="tabpanel">
+                        {{-- <div id="finalizado" class="tab-pane fade in" role="tabpanel">
                             <h1 class="visible-xs" style="text-align: center"> FINALIZADAS </h1>
                             <table id="finalizado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
                                 <thead>
@@ -472,7 +472,7 @@
 
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
                     </div>
                 </div>

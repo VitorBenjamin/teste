@@ -64,6 +64,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>DRª</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -77,6 +78,7 @@
                                         <td></td>
                                         <td>{{ $aberto->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
+                                        <td>{{ $aberto->user->nome}}</td>
                                         <!-- <td>{{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> -->
                                         <td>{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
@@ -111,6 +113,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>DRª</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -125,6 +128,7 @@
                                         <td></td>
                                         <td>{{ $devolvida->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
+                                        <td>{{ $devolvida->user->nome}}</td>
                                         <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
                                         <td>{{ $devolvida->solicitante == null ? 'NÃO CONSTA' : $devolvida->solicitante->nome }}</td>
@@ -152,6 +156,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>DRª</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -166,6 +171,7 @@
                                         <td></td>
                                         <td>{{ $recorrente->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
+                                        <td>{{ $recorrente->user->nome}}</td>
                                         <td>{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
                                         <td>{{ $recorrente->solicitante == null ? 'NÃO CONSTA' : $recorrente->solicitante->nome }}</td>

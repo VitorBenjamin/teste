@@ -181,7 +181,7 @@
 
     {!! Html::script('/js/admin.min.js') !!}
     {!! Html::script('/js/pages/ui/dialogs.min.js') !!}
-    {!! Html::script('/js/pages/tables/jquery-datatable.min.js') !!}
+    {!! Html::script('/js/pages/tables/jquery-datatable.js') !!}
     {!! Html::script('/js/pages/forms/basic-form-elements.min.js') !!}
     {!! Html::script('/js/pages/forms/advanced-form-elements.js') !!}
     {!! Html::script('/js/pages/ui/tooltips-popovers.js') !!}

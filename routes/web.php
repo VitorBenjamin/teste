@@ -70,7 +70,7 @@ Route::group(['middleware' => ['check.user.role:FINANCEIRO|ADMINISTRATIVO']],fun
     Route::get('set-devolvido/{id}', ['uses' => 'SolicitacaoController@devolvido', 'as' => 'solicitacao.devolvido']);
 
 });
-Route::get('advogado-dashboard', ['uses' => 'UserController@advogadoDash','middleware' => 'check.user.role:ADVOGADO', 'as' => 'user.advogadoDash']);
+Route::get('advogado-dashboard', ['uses' => 'UserController@advogadoDash', 'as' => 'user.advogadoDash']);
 
 
 // INICIO ROTAS DE SOLICITAÇÃO

@@ -2,7 +2,7 @@
 <tr>
 	<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 	<td>{{ $solicitacao->codigo}}</td>
-	<td>{{$despesa->tipo_comprovante}} - {{$despesa->descricao}} - N° PROCE. {{$solicitacao->processo->codigo}}</td>
+	<td>{{$despesa->tipo_comprovante}} - {{$despesa->descricao}} {{$solicitacao->processo == null ? '- SEM PROCESSO' : '- N° PROCE. '.$solicitacao->processo->codigo}}</td>
 	<td>R$ {{$despesa->estornado ? -$despesa->valor : $despesa->valor}}</td>
 	@if($exibir)
 	<td>

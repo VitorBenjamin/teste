@@ -69,8 +69,8 @@ class RegisterController extends Controller
         $clientes = Cliente::all(); 
         $advogados = Role::with(['user' => function ($q)
         {
-         $q->orderBy('nome');
-     }])->where('name',config('constantes.user_advogado'))->first();
+           $q->orderBy('nome');
+       }])->where('name',config('constantes.user_advogado'))->first();
         //dd($advogados);
         return view('auth.registerCoordenador', compact('areas','unidades','clientes','advogados'));
     }
@@ -176,7 +176,8 @@ class RegisterController extends Controller
     {
         $dados = Dados::create([
             'rg' => $data['rg'],
-            'data_nascimento' => $data['data_nascimento'],
+            'data_inicial' => date('Y-m-d', strtotime($data['data_inicial'])),
+            'data_nascimento' => date('Y-m-d', strtotime($data['data_nascimento'])),
             'endereco' => $data['endereco'],
             'cidade' => $data['cidade'],
             'estado' => $data['cidade'],

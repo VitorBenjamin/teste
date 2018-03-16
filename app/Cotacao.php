@@ -14,7 +14,7 @@ class Cotacao extends Model
      protected $table = 'cotacoes';
 
      protected $fillable = [
-        'descricao', 'data_cotacao', 'fornecedor', 'quantidade', 'valor', 'anexo_pdf','anexo_comprovante', 'data_compra', 'compras_id'
+        'id','descricao', 'data_cotacao', 'fornecedor', 'quantidade', 'valor', 'anexo_pdf','anexo_comprovante', 'data_compra', 'compras_id'
     ];
     
     /** Consulta a Solicitacao da Despesa

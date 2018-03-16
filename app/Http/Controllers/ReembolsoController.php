@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Session;
 
 use App\Http\Helpers\SolicitacaoHelper;
 use App\Http\Requests\SolicitacaoRequest;
+use App\Http\Requests\DespesaRequest;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
@@ -90,10 +91,11 @@ class ReembolsoController extends Controller
     }
 
     //Adcionar uma nova despesa a solicitação
-    public function addDespesa(Request $request,$id)
+    public function addDespesa(\App\Http\Requests\DespesaRequest $request,$id)
     {
         $despesa_repo = new DespesaRepository();
         $despesa = $despesa_repo->create($request,$id);
+        
         Session::flash('flash_message',[
             'msg'=>"Cadastro da Despesa Realizado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"

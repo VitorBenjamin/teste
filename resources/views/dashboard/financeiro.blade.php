@@ -69,6 +69,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Drª</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -83,6 +84,7 @@
                                         <td></td>
                                         <td>{{ $aberto->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
+                                        <td>{{ $aberto->user->nome}}</td>
                                         <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
                                         <td>{{ $aberto->solicitante == null ? 'ADVOGADO' : $aberto->solicitante->nome}}</td>
@@ -116,6 +118,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Drª</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -129,6 +132,7 @@
                                         <td></td>
                                         <td>{{ $finalizada->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($finalizada->created_at)) }}</td>
+                                        <td>{{ $finalizada->user->nome}}</td>
                                         <td class="quebra-texto">{{ $finalizada->cliente == null ? 'MOSELLO LIMA' : $finalizada->cliente->nome }}</td>
                                         <td>{{ $finalizada->tipo }}</td>
                                         <td>{{ $finalizada->solicitante == null ? 'ADVOGADO' : $finalizada->solicitante->nome}}</td>
@@ -155,6 +159,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Drª</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -169,6 +174,7 @@
                                         <td></td>
                                         <td>{{ $devolvida->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
+                                        <td>{{ $devolvida->user->nome}}</td>
                                         <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
                                         <td>{{ $devolvida->solicitante == null ? 'ADVOGADO' : $devolvida->solicitante->nome}}</td>
@@ -196,6 +202,7 @@
                                         <th></th>
                                         <th>ID</th>
                                         <th>Data</th>
+                                        <th>Drª</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -210,6 +217,7 @@
                                         <td></td>
                                         <td>{{ $recorrente->id }}</td>
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
+                                        <td>{{ $recorrente->user->nome}}</td>
                                         <td class="quebra-texto">{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>
                                         <td>{{ $recorrente->solicitante == null ? 'ADVOGADO' : $recorrente->solicitante->nome}}</td>

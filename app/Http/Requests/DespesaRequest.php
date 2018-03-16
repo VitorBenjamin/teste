@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Despesa extends FormRequest
+class DespesaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,10 @@ class Despesa extends FormRequest
     {
         return [
             'descricao' => 'required',
-            'data_despesa' => 'required'
+            'data_despesa' => 'required',
             'tipo_comprovante' => 'required',
             'valor' => 'required',
+            'anexo_comprovante' => 'mimes:jpeg,png,pdf',
             // 'anexo_comprovante' => 'required:image',
         ];
     }

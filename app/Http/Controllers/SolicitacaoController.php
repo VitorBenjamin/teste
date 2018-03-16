@@ -10,6 +10,7 @@ use App\Repositories\SolicitacaoRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Comentario;
+use App\Cotacao;
 use App\Comprovante;
 use App\Despesa;
 use App\Processo;
@@ -68,6 +69,7 @@ class SolicitacaoController extends Controller
 			return redirect()->back();
 		}
 		Comprovante::create($data);
+		
 		\Session::flash('flash_message',[
 			'msg'=>"Comprovante Adicionado com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
@@ -145,12 +147,12 @@ class SolicitacaoController extends Controller
 		}elseif ($solicitacao->tipo == "COMPRA"){
 
 			if ($status == config('constantes.status_andamento_administrativo')) {
+				
 				$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
-			}elseif ($status == config('constantes.status_recorrente_financeiro')) {
 
+			}elseif ($status == config('constantes.status_recorrente_financeiro')) {
 				$andamento = Status::where('descricao',config('constantes.status_andamento_recorrente'))->first();
 			}else{
-
 				$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
 			}
 		}elseif ($status == "ABERTO-ETAPA2" || $status == config('constantes.status_devolvido_etapa2')) {
@@ -279,19 +281,28 @@ class SolicitacaoController extends Controller
 	{
 		$solicitacao = Solicitacao::find($id);
 		$status = $solicitacao->status[0]->descricao;
+		
 		if ($status == config('constantes.status_aprovado_etapa2') || $status == config('constantes.status_coordenador_aprovado2')) {
+			
+			if($solicitacao->tipo == "COMPRA"){
+				$this->setDataCotacao($solicitacao);
+			}
 			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();
 			$solicitacao->data_finalizado = date("Y-m-d");
 			$solicitacao->save();
+
 		}elseif ($solicitacao->tipo == "VIAGEM" || $solicitacao->tipo == "ANTECIPAÇÃO" ) {			
+			
 			if ($status == config('constantes.status_coordenador_aprovado')) {
 				$finalizar = Status::where('descricao', config('constantes.status_coordenador_aberto2'))->first();
 			} else {
 				$finalizar = Status::where('descricao', config('constantes.status_aberto_etapa2'))->first();
 			}
 
-
 		}else{
+			if($solicitacao->tipo == "COMPRA"){
+				$this->setDataCotacao($solicitacao);
+			}
 			$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();	
 			$solicitacao->data_finalizado = date("Y-m-d");
 			$solicitacao->save();			
@@ -299,7 +310,37 @@ class SolicitacaoController extends Controller
 		$this->trocarStatus($solicitacao,$finalizar);
 		return redirect()->route('user.index');
 	}
+	public function setDataCotacao($solicitacao)
+	{ 
+		//dd($solicitacao->compra[0]->cotacao);
+		if ($solicitacao->compra != null ) {
+			foreach ($solicitacao->compra as $compra) {
+				if (count($compra->cotacao) >0) {
+					$menor = $compra->cotacao[0]->valor;
 
+					foreach ($compra->cotacao as $key => $cotacao) {
+						//dd($cotacao);
+						if ($key == 0) {
+							$cota = $cotacao->id;
+						} 
+						if ($cotacao->valor < $menor) {
+							$menor = $cotacao->valor;
+							$cota = $cotacao->id;
+
+						}else{
+							$cotacao->data_compra = null;
+							$cotacao->save();
+						}
+					}
+					//dd($cota->id);
+                    //$total += $menor;
+					$contacoes = Cotacao::find($cota);
+					$contacoes->data_compra=date("Y-m-d");
+					$contacoes->save();
+				}
+			}
+		}
+	}
 	public function trocarStatus($solicitacao,$proximo)
 	{
 		$atual = $solicitacao->status;

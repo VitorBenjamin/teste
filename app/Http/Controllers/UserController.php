@@ -132,13 +132,38 @@ class UserController extends Controller
 		auth()->user()->nome = $request->nome;
 		auth()->user()->email = $request->email;
 		auth()->user()->save();
-		
+
+		if (auth()->user()->dados_id == null) {
+			$dados_old = Dados::create($dados);
+			auth()->user()->dados_id = $dados_old->id;
+			auth()->user()->save();
+		} else {
+			$dados_old = Dados::find(auth()->user()->dados_id);
+
+			$dados_old->update(
+				[
+					'rg' => $request->rg,
+					'data_inicial' => date('Y-m-d', strtotime($request->data_inicial)),
+					'data_nascimento' => date('Y-m-d', strtotime($request->data_nascimento)),
+					'endereco' => $request->endereco,
+					'cidade' => $request->cidade,
+					'estado' => $request->cidade,
+					'cep' => $request->cep,
+					'telefone' => $request->telefone,
+					'estado_civil' => $request->estado_civil,
+					'funcao' => $request->funcao,
+					'dados_bancarios' => $request->dados_bancarios,
+					'viagem' => $request->viagem,
+				]);
+			auth()->user()->save();
+		}
 		if ($request->password != "") {
 			auth()->user()->forceFill([
 				'password' => bcrypt($request->password),
 				'remember_token' => Str::random(60),
 			])->save();
 		}
+		
 		\Session::flash('flash_message',[
 			'msg'=>"Seus Dados foram Atualizados com Sucesso",
 			'class'=>"alert bg-green alert-dismissible"
@@ -160,29 +185,6 @@ class UserController extends Controller
 			],$messages)->validate();
 		}
 		$user = User::where('id',$id)->first();
-		if ($user->hasRole('ADVOGADO')) {
-			$dados_old = Dados::find($user->dados_id);
-			$dados = [
-				'rg' => $request->rg,
-				'data_nascimento' => $request->data_nascimento,
-				'endereco' => $request->endereco,
-				'cidade' => $request->cidade,
-				'estado' => $request->cidade,
-				'cep' => $request->cep,
-				'telefone' => $request->telefone,
-				'estado_civil' => $request->estado_civil,
-				'funcao' => $request->funcao,
-				'dados_bancarios' => $request->dados_bancarios,
-				'viagem' => $request->viagem,
-			];
-
-			$dados_old->update($dados);
-		} else {
-			//$user->users()->detach();
-			//$user->clientes()->detach();
-			$user->users()->sync($request->get('advogados'));
-			$user->clientes()->sync($request->get('clientes'));
-		}
 		$data = [
 			'nome' => $request->nome,
 			'email' => $request->email,
@@ -193,6 +195,39 @@ class UserController extends Controller
 			'dados_id' => $user->dados_id,
 			'unidades_id' => $request->unidades_id,
 		];
+		$dados = [
+			'rg' => $request->rg,
+			'data_inicial' => date('Y-m-d', strtotime($request->data_inicial)),
+			'data_nascimento' => date('Y-m-d', strtotime($request->data_nascimento)),
+			'endereco' => $request->endereco,
+			'cidade' => $request->cidade,
+			'estado' => $request->cidade,
+			'cep' => $request->cep,
+			'telefone' => $request->telefone,
+			'estado_civil' => $request->estado_civil,
+			'funcao' => $request->funcao,
+			'dados_bancarios' => $request->dados_bancarios,
+			'viagem' => $request->viagem,
+		];
+		if ($user->dados_id == null) {
+			$dados_old = Dados::create($dados);
+
+			$data = [
+				'dados_id' => $dados_old->id,
+			];
+		} else {
+			$dados_old = Dados::find($user->dados_id);
+
+			$dados_old->update($dados);
+		}
+		
+		if ($user->hasRole('COORDENADOR')) {
+			//$user->users()->detach();
+			//$user->clientes()->detach();
+			$user->users()->sync($request->get('advogados'));
+			$user->clientes()->sync($request->get('clientes'));
+		}
+		
 		$user->update($data);
 		if ($request->password != "") {
 			$user->forceFill([
@@ -324,29 +359,29 @@ class UserController extends Controller
 			$abertas=$this->pushSolicitacao($abertas,$andamentos_etapa2);
 		}
 
-		$andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento'));
+		// $andamentos = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento'));
 
-		$andamentos_etapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_etapa2'));
+		// $andamentos_etapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_etapa2'));
 
-		if ($andamentos_etapa2 !=null) {
-			$andamentos=$this->pushSolicitacao($andamentos,$andamentos_etapa2);
-		}
-		$andamentos_adm = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_administrativo'));
+		// if ($andamentos_etapa2 !=null) {
+		// 	$andamentos=$this->pushSolicitacao($andamentos,$andamentos_etapa2);
+		// }
+		// $andamentos_adm = $repo->getSolicitacaoAdvogado(config('constantes.status_andamento_administrativo'));
 
-		if ($andamentos_adm !=null) {
-			$andamentos=$this->pushSolicitacao($andamentos,$andamentos_adm);
-		}
-		$coordenador_aprovado = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado'));
-		if ($coordenador_aprovado !=null) {
-			$andamentos = $this->pushSolicitacao($andamentos,$coordenador_aprovado);			
-		}
+		// if ($andamentos_adm !=null) {
+		// 	$andamentos=$this->pushSolicitacao($andamentos,$andamentos_adm);
+		// }
+		// $coordenador_aprovado = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado'));
+		// if ($coordenador_aprovado !=null) {
+		// 	$andamentos = $this->pushSolicitacao($andamentos,$coordenador_aprovado);			
+		// }
 		$aprovadas = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado'));
 
 		
-		$coordenador_aprovado2 = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado_etapa2'));
-		if ($coordenador_aprovado2 !=null) {
-			$aprovadas = $this->pushSolicitacao($aprovadas,$coordenador_aprovado2);			
-		}
+		// $coordenador_aprovado2 = $repo->getSolicitacaoAdvogado(config('constantes.status_aprovado_etapa2'));
+		// if ($coordenador_aprovado2 !=null) {
+		// 	$aprovadas = $this->pushSolicitacao($aprovadas,$coordenador_aprovado2);			
+		// }
 
 		$aprovado_etapa2 = $repo->getSolicitacaoCoordenador(config('constantes.status_aprovado_etapa2'));
 		if ($aprovado_etapa2 !=null) {
@@ -358,6 +393,7 @@ class UserController extends Controller
 			$aprovadas =$this->pushSolicitacao($aprovadas,$aprovadas_recorrente);			
 		}
 		$reprovados = $repo->getSolicitacaoCoordenador(config('constantes.status_reprovado'));		
+		
 		$devolvidas = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido'));
 		$devolvida_etapa2 = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido_etapa2'));
 		if ($devolvida_etapa2 !=null) {
@@ -371,17 +407,17 @@ class UserController extends Controller
 			$recorrentes = $this->pushSolicitacao($recorrentes,$andamento_recorrente);			
 		}
 
-		$meus = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto'));
-		$meus_etapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto_etapa2'));
-		if ($meus_etapa2 !=null) {
-			$meus = $this->pushSolicitacao($meus,$meus_etapa2);			
-		}
-		$finalizadas = $repo->getSolicitacaoCoordenador(config('constantes.status_finalizado'));
-		$finalizadas_meu =$repo->getSolicitacaoAdvogado(config('constantes.status_finalizado'));
-		if ($finalizadas_meu !=null) {
-			$finalizadas = $this->pushSolicitacao($finalizadas,$finalizadas_meu);			
-		}
-		return view('dashboard.coordenador',compact('abertas','andamentos','aprovadas','reprovados','devolvidas','recorrentes','finalizadas','meus'));
+		// $meus = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto'));
+		// $meus_etapa2 = $repo->getSolicitacaoAdvogado(config('constantes.status_aberto_etapa2'));
+		// if ($meus_etapa2 !=null) {
+		// 	$meus = $this->pushSolicitacao($meus,$meus_etapa2);			
+		// }
+		// $finalizadas = $repo->getSolicitacaoCoordenador(config('constantes.status_finalizado'));
+		// $finalizadas_meu =$repo->getSolicitacaoAdvogado(config('constantes.status_finalizado'));
+		// if ($finalizadas_meu !=null) {
+		// 	$finalizadas = $this->pushSolicitacao($finalizadas,$finalizadas_meu);			
+		// }
+		return view('dashboard.coordenador',compact('abertas','aprovadas','reprovados','devolvidas','recorrentes'));
 	}
 	public function financeiroDash()
 	{

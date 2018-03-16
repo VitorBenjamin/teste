@@ -22,8 +22,8 @@
 						<div class="col-md-5">
 							<div class="form-group">
 								<div class="form-line">
-									<label style="margin-bottom: 20px" for="anexo">Comprovante da Antecipação (jpeg,png,pdf)</label>
-									<input type="file" name="anexo" id="anexo" required/>
+									<label style="margin-bottom: 20px" for="anexo">Comprovante da Pagamento (jpeg,png,pdf)</label>
+									<input type="file" name="anexo" id="anexo" accept=".pdf,.png,.jpg" required/>
 								</div>
 							</div>
 						</div>

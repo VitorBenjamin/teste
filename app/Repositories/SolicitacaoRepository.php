@@ -58,7 +58,7 @@ class SolicitacaoRepository
             'origem_despesa' => $data->origem_despesa,
             'contrato' => $data->contrato == null ? null : $data->contrato,
             'area_atuacoes_id'=>$data->area_atuacoes_id,
-            'clientes_id' => $data->clientes_id == null ? null : $data->clientes_id,
+            'clientes_id' => $data->clientes_id == null ? 243 : $data->clientes_id,
             'solicitantes_id' => $data->solicitantes_id == null ? null : $data->solicitantes_id,
             'unidades_id' => auth()->user()->unidades_id,
             'users_id' => auth()->user()->id,
@@ -143,8 +143,9 @@ class SolicitacaoRepository
         {
             array_push($advogados,$advogado->id);
         }
-        array_push($advogados, auth()->user()->id);
+        //array_push($advogados, auth()->user()->id);
         
+        //dd($limites);
         if (!empty($area_id)) 
         {
             $status = Status::with(['solicitacao' => function($q) use ($area_id,$advogados,$clientes)
@@ -159,7 +160,7 @@ class SolicitacaoRepository
         }else {
             $status = Status::with('solicitacao')->where('descricao',$status)->first();
         }
-
+        //dd($status);
         $solicitacoes = $this->valorTotalCoordenador($status,$limites);
         return $solicitacoes;
     }
@@ -491,8 +492,6 @@ class SolicitacaoRepository
                 if (count($compra->cotacao) >0) {
                     $menor = $compra->cotacao[0]->valor;
 
-                    //dd($menor);
-                    //dd($compra->cotacao[0]);
                     foreach ($compra->cotacao as $cotacao) {
 
                         if ($cotacao->valor<$menor) {

@@ -2,7 +2,7 @@
 <tr>
 	<td>{{date('d/m/Y',strtotime($viagem->data_compra))}}</td>
 	<td>{{ $solicitacao->codigo}}</td>
-	<td>VIAGEM - {{$viagem->origem}} <-> {{date('d-m-Y',strtotime($viagem->data_ida))}} - {{$viagem->destino}} <-> {{$viagem->data_volta == null ? date('d-m-Y',strtotime($viagem->data_volta)) : 'IDA' }} - {{$viagem->bagagem == 1 ? 'BAGAGEM '.$viagem->kg.'Kg' : 'BAGAGEM NÃO'}} - N° PROCE. {{$solicitacao->processo->codigo}}</td>
+	<td>VIAGEM - {{$viagem->origem}} <-> {{date('d-m-Y',strtotime($viagem->data_ida))}} - {{$viagem->destino}} <-> {{$viagem->data_volta == null ? date('d-m-Y',strtotime($viagem->data_volta)) : 'IDA' }} - {{$viagem->bagagem == 1 ? 'BAGAGEM '.$viagem->kg.'Kg' : 'BAGAGEM NÃO'}} {{$solicitacao->processo == null ? '- SEM PROCESSO' : '- N° PROCE. '.$solicitacao->processo->codigo}}</td>
 	<td>R$ {{ $viagem->estornado == 1 ? -$viagem->valor : $viagem->valor}}</td>
 	@if($exibir)
 	<td>

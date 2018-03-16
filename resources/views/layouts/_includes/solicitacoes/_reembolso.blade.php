@@ -2,7 +2,7 @@
 <tr>
 	<td>{{date('d/m/Y',strtotime($translado->data_translado))}}</td>
 	<td>{{ $solicitacao->codigo}}</td>
-	<td>TRANSLADO - {{$translado->origem}} - {{$translado->destino}} - Km {{$translado->distancia}} - N° PROCE. {{$solicitacao->processo->codigo}} </td>
+	<td>TRANSLADO - {{$translado->origem}} - {{$translado->destino}} - Km {{$translado->distancia}} {{$solicitacao->processo == null ? '- SEM PROCESSO' : '- N° PROCE. '.$solicitacao->processo->codigo}}</td>
 	<td>R$ {{$translado->estornado ? -$translado->distancia*$solicitacao->cliente->valor_km : $translado->distancia*$solicitacao->cliente->valor_km}}</td>
 	@if($exibir)
 	<td>
@@ -26,7 +26,7 @@
 <tr>
 	<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 	<td>{{ $solicitacao->codigo}}</td>
-	<td>{{$despesa->tipo_comprovante}} - {{$despesa->descricao}} - N° PROCE. {{$solicitacao->processo->codigo}}</td>
+	<td>{{$despesa->tipo_comprovante}} - {{$despesa->descricao}} {{$solicitacao->processo == null ? '- SEM PROCESSO' : '- N° PROCE. '.$solicitacao->processo->codigo}}</td>
 	<td>R$ {{$despesa->estornado ? -$despesa->valor : $despesa->valor}}</td> 
 	@if($exibir)
 	<td>
