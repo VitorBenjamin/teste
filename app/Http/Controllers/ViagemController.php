@@ -220,9 +220,59 @@ class ViagemController extends Controller
         return redirect()->route('viagem.editar',$s_id);       
     }
 
-    public function addComprovante(Request $request,$id)
+    public function addCotacao(Request $request,$id)
     {
         //dd($request->all());
+        $viagem = Viagem::find($request->viagem_id);
+        if ($request->data_cotacao_passagem) {
+            $viagem->valor = $request->custo_passagem;
+            $viagem->data_cotacao = date('Y-m-d', strtotime($request->data_cotacao_passagem));
+            $viagem->observacao_comprovante = $request->observacao_passagem;
+            $viagem->save();
+        }
+        if ($request->custo_hospedagem) {
+            $data2 = [
+                'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao_hospedagem)),
+                'observacao' => $request->observacao_hospedagem,
+                'custo_hospedagem' => $request->custo_hospedagem,
+                'viagens_id' => $request->viagem_id,
+            ];
+
+            if ($viagem->hospedagens) {
+                $hospedagem = $viagem->hospedagens;
+                $hospedagem->update($data2);
+            }else{
+                $hospedagem = Hospedagem::create($data2);
+                $viagem->update(['hospedagens_id' => $hospedagem->id]);
+            }
+            
+        }
+        if ($request->custo_locacao) {
+            $data3 = [
+                'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao_locacao)),
+                'observacao' => $request->observacao_locacao,
+                'valor' => $request->custo_locacao,
+                'viagens_id' => $request->viagem_id,
+            ];
+            if ($viagem->locacoes) {
+                $locacao = $viagem->locacoes;
+                $locacao->update($data3);
+            }else{
+                $locacao = Locacao::create($data3);
+                $viagem->update(['locacoes_id' => $locacao->id]);
+            }
+            
+        }
+        \Session::flash('flash_message',[
+            'msg'=>"Cotações Adiciondas com Sucesso!!!",
+            'class'=>"alert bg-green alert-dismissible"
+        ]);
+        $solicitacao = Solicitacao::find($id);
+        return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.analisar', $solicitacao->id);
+    }
+
+    public function addComprovante(Request $request,$id)
+    {
         $viagem = Viagem::find($request->viagem_id);
         if ($request->file('anexo_passagem')) {
             $mime = $request->file('anexo_passagem')->getClientMimeType();
@@ -252,7 +302,8 @@ class ViagemController extends Controller
         } else {
             $anexo_passagem = null;
         }
-        if ($request->file('anexo_hospedagem')) {
+        
+        if ($viagem->hospedagens && $request->file('anexo_hospedagem')) {
             $mime = $request->file('anexo_hospedagem')->getClientMimeType();
             $data2 = [
                 'data_compra' => date('Y-m-d', strtotime($request->data_hospedagem)),
@@ -313,7 +364,6 @@ class ViagemController extends Controller
         }
 
         $solicitacao = Solicitacao::find($id);
-        //$viagem->update(['viagens_comprovantes_id' => $comprovante->id]);        
         return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.analisar', $solicitacao->id);
     }
 

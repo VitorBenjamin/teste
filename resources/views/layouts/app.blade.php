@@ -53,7 +53,7 @@
 
     <!-- Custom Css -->
     <!-- <link href="css/style.css" rel="stylesheet">-->
-    {!! Html::style('css/style.min.css') !!}
+    {!! Html::style('css/style.css') !!}
 
     
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->

@@ -190,7 +190,6 @@ $(function () {
             },
             customize: function(doc) {
 
-
                 doc.defaultStyle.fontSize = 8;
                 doc.pageMargins = [20,10,10,10];
                 doc.styles.tableHeader.fontSize = 12;

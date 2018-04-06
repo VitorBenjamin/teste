@@ -51,18 +51,32 @@ class SolicitacaoRepository
 
     private function montaData($data)
     {
+        if ($data->origem_despesa == "CLIENTE") {
 
-        $dados = [   
+            $dados = [   
 
-            'urgente' => $data->urgente,
-            'origem_despesa' => $data->origem_despesa,
-            'contrato' => $data->contrato == null ? null : $data->contrato,
-            'area_atuacoes_id'=>$data->area_atuacoes_id,
-            'clientes_id' => $data->clientes_id == null ? 243 : $data->clientes_id,
-            'solicitantes_id' => $data->solicitantes_id == null ? null : $data->solicitantes_id,
-            'unidades_id' => auth()->user()->unidades_id,
-            'users_id' => auth()->user()->id,
-        ];
+                'urgente' => $data->urgente,
+                'origem_despesa' => $data->origem_despesa,
+                'contrato' => $data->contrato == null ? null : $data->contrato,
+                'area_atuacoes_id'=>$data->area_atuacoes_id,
+                'clientes_id' => $data->clientes_id == null ? 243 : $data->clientes_id,
+                'solicitantes_id' => $data->solicitantes_id == null ? null : $data->solicitantes_id,
+                'unidades_id' => auth()->user()->unidades_id,
+                'users_id' => auth()->user()->id,
+            ];
+        }else{
+            $dados = [   
+
+                'urgente' => $data->urgente,
+                'origem_despesa' => $data->origem_despesa,
+                'contrato' => null,
+                'area_atuacoes_id'=>$data->area_atuacoes_id,
+                'clientes_id' => 243,
+                'solicitantes_id' => null,
+                'unidades_id' => auth()->user()->unidades_id,
+                'users_id' => auth()->user()->id,
+            ];
+        }
         return $dados;
     }
 
@@ -191,10 +205,15 @@ class SolicitacaoRepository
         return $solicitacao;
     }
 
-    public function notification()
-    {
+    // public function notification()
+    // {
+    //     //$role = config('constantes.user_advogado');
+    //     $users = Role::with('user')
+    //     ->where('name', config('constantes.user_coordenador'))
+    //     ->get();
 
-    }
+    //     $cordenadores = User::where('');
+    // }
     public function getRange($total, $limites, $s)
     {
         $area_id = array();
@@ -515,7 +534,7 @@ class SolicitacaoRepository
             //dd(Hospedagem::find($viagem->hospedagens_id));
             $total += $viagem->valor;
             if ($viagem->locacoes) {
-                $total += $viagem->locacoes->custo_locacao;
+                $total += $viagem->locacoes->valor;
             }
             if ($viagem->hospedagens) {
                 $total += $viagem->hospedagens->custo_hospedagem;

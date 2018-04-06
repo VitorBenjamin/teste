@@ -47,16 +47,17 @@
             <ul class="list">
                 <li class="header">Menu Principal</li>
                 <li class="active">
+                    @role(['COORDENADOR'])
                     <a href="{{url('/')}}">
                         <i class="material-icons" style="color: #607d8b">dashboard</i>
                         <span>Dashboard Advovado</span>
+                        <span class="badge" style="color: #fff">{{getChamados()}}</span>
                     </a>
-                    @role(['COORDENADOR'])
+                    @endrole
                     <a href="{{url('/advogado-dashboard')}}">
                         <i class="material-icons" style="color: #017bb6">dashboard</i>
                         <span>Meu Dashboard</span>
                     </a>
-                    @endrole
                 </li>
                 @role(['ADVOGADO','COORDENADOR'])
                 <li>

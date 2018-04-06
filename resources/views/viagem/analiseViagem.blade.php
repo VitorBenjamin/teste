@@ -29,7 +29,9 @@
 						LISTAGEM DA VIAGEM
 					</h2>
 				</div>
+				
 				<div class="body">
+					@foreach ($solicitacao->viagem as $key => $viagem)
 					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
 						<thead>
 							<tr>
@@ -46,67 +48,146 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($solicitacao->viagem as $key => $viagem)
+							
 							<tr>
 								<td></td>
 								<td>{{$viagem->origem}}</td>
 								<td>{{date('d/m/Y',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
-								<td>{{date('d/m/Y',strtotime($viagem->data_volta))}}</td>
+								<td>{{$viagem->data_volta == null ? 'Só Ida' : date('d/m/Y',strtotime($viagem->data_volta)) }}</td>
 								<td>
 									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
-									@if($viagem->hospedagens)
-									<div class="zoom-gallery">
-										@if($viagem->hospedagens->anexo_pdf)
-										<span>
-											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/hospedagem/'.$viagem->hospedagens->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-										</span>
-										@else
-										<a href="{{$viagem->hospedagens->anexo_comprovante}}" data-source="{{$viagem->hospedagens->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->hospedagens->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->hospedagens->data_compra))}}" style="width:32px;height:32px;">
-											<img class="img_popup" src="{{$viagem->hospedagens->anexo_comprovante}}" width="32" height="32">
-										</a>
-										@endif
-									</div>
-									@endif
 								</td>
 								<td>{{$viagem->bagagem == 1 ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$viagem->kg}}</td>
 								<td>
 									{{$viagem->locacao == 1 ? 'SIM' : 'NÃO'}}
-									@if($viagem->locacoes)
-									<div class="zoom-gallery">
-										@if($viagem->locacoes->anexo_pdf)
-										<span>
-											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/hospedagem/'.$$viagem->locacoes->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-										</span>
-										@else
-										<a href="{{$viagem->locacoes->anexo_comprovante}}" data-source="{{$viagem->locacoes->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->locacoes->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->locacoes->data_compra))}}" style="width:32px;height:32px;">
-											<img class="img_popup" src="{{$viagem->locacoes->anexo_comprovante}}" width="32" height="32">
-										</a>
-										@endif
-									</div>
-									@endif
 								</td>
-
 								<td class="acoesTD">
 									@role('ADMINISTRATIVO')
-									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#addComprovante{{$viagem->id}}">ANEXAR</button>
+									<button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#addCotacao{{$viagem->id}}">COTAR</button>
 									@endrole
-									@if($viagem->anexo_pdf || $viagem->anexo_comprovante)
-									<div class="zoom-gallery">
-										@if($viagem->anexo_pdf)
-										<span>
-											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/viagem/'.$viagem->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-										</span>
-										@else
-										<a href="{{$viagem->anexo_comprovante}}" data-source="{{$viagem->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->data_compra))}}" style="width:32px;height:32px;">
-											<img class="img_popup" src="{{$viagem->anexo_comprovante}}" width="32" height="32">
-										</a>
-										@endif
-									</div>
-									@endif
 								</td>	
 							</tr>
+							<div class="modal fade" id="addCotacao{{$viagem->id}}" tabindex="-1" role="dialog">
+								<div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title" id="defaultModalLabel">DADOS REFERENTE À COTAÇÃO DA VIAGEM</h4>
+										</div>
+										<div class="modal-body">
+											<form action="{{ route('viagem.addCotacao',$solicitacao->id)}}" method="POST" enctype="multipart/form-data">
+												{{ csrf_field() }}
+												{{ method_field('PUT') }}
+												<input type="hidden" name="viagem_id" value="{{$viagem->id}}">
+												<div class="col-md-12">
+													<div class="row clearfix">
+														<div class="col-md-2">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="data_cotacao_passagem">Data Passagem</label>
+																	<input type="text" id="data_cotacao_passagem" value="{{$viagem->data_cotacao ? date('d-m-Y', strtotime($viagem->data_cotacao)) : ''}}" name="data_cotacao_passagem" class="datepicker form-control" placeholder="Clique"/>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for=">observacao_passagem">Observação Passagem</label>
+																	<input type="text" value="{{$viagem->data_cotacao ? $viagem->observacao_comprovante : ''}}" name="observacao_passagem" class="form-control" placeholder="Observação"/>
+																</div>
+															</div>
+														</div>											
+														<div class="col-md-2">
+															<b>Custo da Passagem</b>
+															<div class="input-group">
+																<span class="input-group-addon">
+																	R$
+																</span>
+																<div class="form-line">
+																	<input type="numeric" value="{{$viagem->data_cotacao ? $viagem->valor : ''}}" name="custo_passagem" class="form-control valor" required/>
+																</div>
+															</div>
+														</div>
+													</div>
+													@if($viagem->hospedagem == 1)
+													<div class="row clearfix">
+														<div class="col-md-2">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="data_cotacao_hospedagem">Data Hospedagem</label>
+																	<input type="text" id="data_cotacao_hospedagem" value="{{$viagem->hospedagens != null ? date('d-m-Y', strtotime($viagem->hospedagens->data_cotacao)) : ''}}" name="data_cotacao_hospedagem" class="datepicker form-control" placeholder="Clique"/>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="observacao_hospedagem">Observação Hospedagem</label>
+																	<input type="text" value="{{$viagem->hospedagens != null ? $viagem->hospedagens->observacao : ''}}" name="observacao_hospedagem" class="form-control" placeholder="Observação"/>	
+																</div>
+															</div>
+														</div>
+														<div class="col-md-2">
+															<b>Custo da Hospedagem</b>
+															<div class="input-group">
+																<span class="input-group-addon">
+																	R$
+																</span>
+																<div class="form-line">
+																	<input type="numeric" value="{{$viagem->hospedagens != null ? $viagem->hospedagens->custo_hospedagem : ''}}" name="custo_hospedagem" class="form-control valor" required />
+																</div>
+															</div>
+														</div>
+													</div>
+													@endif
+													@if($viagem->locacao == 1)
+													<div class="row clearfix">
+														<div class="col-md-2">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="data_cotacao">Data Locação</label>
+																	<input type="text" id="data_locacao" value="{{$viagem->locacoes != null ? date('d-m-Y', strtotime($viagem->locacoes->data_cotacao)) : ''}}" name="data_cotacao_locacao" class="datepicker form-control" placeholder="Clique"/>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="form-group">
+																<div class="form-line">
+																	<label for="observacao_locacao">Observação Locação</label>
+																	<input type="text" value="{{$viagem->locacoes != null ? $viagem->locacoes->observacao : ''}}" name="observacao_locacao" class="form-control" placeholder="Observação"/>										
+																</div>
+															</div>
+														</div>
+														<div class="col-md-2">
+															<b>Custo da Locação</b>
+															<div class="input-group">
+																<span class="input-group-addon">
+																	R$
+																</span>
+																<div class="form-line">
+																	<input type="numeric" value="{{$viagem->locacoes != null ? $viagem->locacoes->valor : ''}}" name="custo_locacao" class="form-control valor" required/>
+																</div>
+															</div>
+														</div>
+													</div>
+													@endif
+												</div>
+												<div class="modal-footer">
+													<div class="form-group">
+														<button class="btn btn-info">
+															<i class="material-icons">save</i>
+															<span>ANEXAR COMPROVANTES</span>
+														</button>
+													</div>
+													<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+												</div>
+											</form>
+										</div>
+
+									</div>
+								</div>
+							</div>
 							<div class="modal fade" id="addComprovante{{$viagem->id}}" tabindex="-1" role="dialog">
 								<div class="modal-dialog modal-lg" role="document">
 									<div class="modal-content">
@@ -151,7 +232,7 @@
 															<div class="form-group">
 																<div class="form-line">
 																	<label style="margin-bottom: 20px" for="anexo_passagem">Anexar Passagem</label>
-																	<input type="file" name="anexo_passagem" id="anexo_passagem" required/>											
+																	<input type="file" name="anexo_passagem" id="anexo_passagem" />											
 																</div>
 															</div>
 														</div>
@@ -181,7 +262,7 @@
 																	R$
 																</span>
 																<div class="form-line">
-																	<input type="numeric" value="{{old('custo_hospedagem')}}" name="custo_hospedagem" class="form-control valor" required/>
+																	<input type="numeric" value="{{old('custo_hospedagem')}}" name="custo_hospedagem" class="form-control valor" />
 																</div>
 															</div>
 														</div>
@@ -189,7 +270,7 @@
 															<div class="form-group">
 																<div class="form-line">
 																	<label style="margin-bottom: 20px" for="anexo_hospedagem">Anexar Hospedagem</label>
-																	<input type="file" name="anexo_hospedagem" id="anexo_hospedagem" required/>														
+																	<input type="file" name="anexo_hospedagem" id="anexo_hospedagem" />														
 																</div>
 															</div>
 														</div>
@@ -252,91 +333,229 @@
 									</div>
 								</div>
 							</div>
-							@endforeach														
 						</tbody>
 					</table>
-				</div>
-			</div>
-		</div> 												
-	</div>
-	<!-- FIM LISTAGEM DA VIAGEM  -->
-	@if(count($solicitacao->despesa) > 0)
-	
-	<!-- LISTAGEM DAS DESPESAS  -->
-	<div class="row clearfix">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<div class="card">
-				<div class="header">
-					<h2>
-						LISTAGEM DAS DESPESAS
-					</h2>
-				</div>
-				<div class="body">
-					<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Data</th>
-								<th>Descricao</th>
-								<th>Comprovante</th>
-								<th>Valor</th>
-								<th>Ação</th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<th></th>
-								<th>Data</th>
-								<th>Descricao</th>
-								<th>Comprovante</th>
-								<th>Valor</th>
-								<th>Ação</th>
-							</tr>
-						</tfoot>
-						<tbody>
-							@foreach ($solicitacao->despesa as $key2 => $despesa)
-							<tr>
-								<td></td>
-								<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
-								<td>{{$despesa->descricao}}</td>
-								<td>{{$despesa->tipo_comprovante}}</td>
-								<td>{{$despesa->valor}}</td>
-								<td class="acoesTD">
-									<div class="icon-button-demo" >
-										@if($solicitacao->status[0]->descricao == "ABERTO-ETAPA2" || $solicitacao->status[0]->descricao == "DEVOLVIDO-ETAPA2")
-										<a href="{{ route('viagem.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
-											<i class="material-icons">settings</i>
-										</a>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-2" style="margin: 30px 0 0 0;">
+								
+								<h4>Passagem <i class="material-icons">trending_flat</i></h4>
+							</div>
+							<div class="col-md-10">
+								@if($viagem->valor)
+								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Data Cotação</th>
+											<th>Observação</th>
+											<th>Data Compra</th>
+											<th>Valor</th>
+											<th>Comprovante</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td></td>
+											<td>{{date('d-m-Y', strtotime($viagem->data_cotacao))}}</td>
+											<td>{{$viagem->observacao_comprovante}}</td>
+											<td>{{$viagem->data_compra ? date('d-m-Y', strtotime($viagem->data_compra)) : 'ANDAMENTO'}}</td>
+											<td>R$ {{$viagem->valor}}</td>
+											<td>
+												@if($viagem->anexo_pdf || $viagem->anexo_comprovante)
+												<div class="zoom-gallery">
+													@if($viagem->anexo_pdf)
+													<span>
+														<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/viagem/'.$viagem->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+													</span>
+													@else
+													<a href="{{$viagem->anexo_comprovante}}" data-source="{{$viagem->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->data_compra))}}" style="width:32px;height:32px;">
+														<img class="img_popup" src="{{$viagem->anexo_comprovante}}" width="32" height="32">
+													</a>
+													@endif
+												</div>
+												@endif
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								@endif
+							</div>
+						</div>
+					</div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-2" style="margin: 30px 0 0 0;">
+								<h4>Hospedagem <i class="material-icons">trending_flat</i></h4>
+							</div>
+							<div class="col-md-10">
+								@if($viagem->hospedagens)
 
-										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('viagem.deletarDespesa',$despesa->id)}}">
-											<i class="material-icons">delete_sweep</i>
-										</a>
-										@endif
-										<div class="zoom-gallery">
-											@if($despesa->anexo_pdf)
-											<span>
-												<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-											</span>
-											@else
-											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="COMPROVANTE - {{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
-												<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Data Cotação</th>
+											<th>Observação</th>
+											<th>Data Compra</th>
+											<th>Valor</th>
+											<th>Comprovante</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td></td>
+											<td>{{date('d-m-Y', strtotime($viagem->hospedagens->data_cotacao))}}</td>
+											<td>{{$viagem->hospedagens->observacao}}</td>
+											<td>{{$viagem->hospedagens->data_compra ? date('d-m-Y', strtotime($viagem->hospedagens->data_compra)) : 'ANDAMENTO'}}</td>
+											<td>R$ {{$viagem->hospedagens->custo_hospedagem}}</td>
+											<td>
+												<div class="zoom-gallery">
+													@if($viagem->hospedagens->anexo_pdf)
+													<span>
+														<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/hospedagem/'.$viagem->hospedagens->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+													</span>
+													@elseif($viagem->hospedagens->anexo_comprovante)
+													<a href="{{$viagem->hospedagens->anexo_comprovante}}" data-source="{{$viagem->hospedagens->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->hospedagens->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->hospedagens->data_compra))}}" style="width:32px;height:32px;">
+														<img class="img_popup" src="{{$viagem->hospedagens->anexo_comprovante}}" width="32" height="32">
+													</a>
+													@endif
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								@endif
+							</div>
+						</div>
+					</div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-2" style="margin: 30px 0 0 0;">
+								<h4>Locação <i class="material-icons">trending_flat</i></h4>
+							</div>
+							<div class="col-md-10">
+								@if($viagem->locacoes)
+								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Data Cotação</th>
+											<th>Observação</th>
+											<th>Data Compra</th>
+											<th>Valor</th>
+											<th>Comprovante</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td></td>
+											<td>{{date('d-m-Y', strtotime($viagem->locacoes->data_cotacao))}}</td>
+											<td>{{$viagem->locacoes->observacao}}</td>
+											<td>{{$viagem->locacoes->data_compra ? date('d-m-Y', strtotime($viagem->locacoes->data_compra)) : 'ANDAMENTO'}}</td>
+											<td>R$ {{$viagem->locacoes->valor}}</td>
+											<td>
+												<div class="zoom-gallery">
+													@if($viagem->locacoes->anexo_pdf)
+													<span>
+														<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/locacao/'.$viagem->locacoes->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+													</span>
+													@elseif($viagem->locacoes->anexo_locacao)
+													<a href="{{$viagem->locacoes->anexo_comprovante}}" data-source="{{$viagem->locacoes->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->locacoes->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->locacoes->data_compra))}}" style="width:32px;height:32px;">
+														<img class="img_popup" src="{{$viagem->locacoes->anexo_comprovante}}" width="32" height="32">
+													</a>
+													@endif
+												</div></td>
+											</tr>
+										</tbody>
+									</table>
+									@endif
+								</div>
+							</div>
+						</div>
+						@endforeach	
+					</div>
+				</div>
+			</div> 												
+		</div>
+		<!-- FIM LISTAGEM DA VIAGEM  -->
+		@if(count($solicitacao->despesa) > 0)
+
+		<!-- LISTAGEM DAS DESPESAS  -->
+		<div class="row clearfix">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="card">
+					<div class="header">
+						<h2>
+							LISTAGEM DAS DESPESAS
+						</h2>
+					</div>
+					<div class="body">
+						<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Data</th>
+									<th>Descricao</th>
+									<th>Comprovante</th>
+									<th>Valor</th>
+									<th>Ação</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th>Data</th>
+									<th>Descricao</th>
+									<th>Comprovante</th>
+									<th>Valor</th>
+									<th>Ação</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								@foreach ($solicitacao->despesa as $key2 => $despesa)
+								<tr>
+									<td></td>
+									<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
+									<td>{{$despesa->descricao}}</td>
+									<td>{{$despesa->tipo_comprovante}}</td>
+									<td>{{$despesa->valor}}</td>
+									<td class="acoesTD">
+										<div class="icon-button-demo" >
+											@if($solicitacao->status[0]->descricao == "ABERTO-ETAPA2" || $solicitacao->status[0]->descricao == "DEVOLVIDO-ETAPA2")
+											<a href="{{ route('viagem.editarDespesa', $despesa->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float">
+												<i class="material-icons">settings</i>
+											</a>
+
+											<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('viagem.deletarDespesa',$despesa->id)}}">
+												<i class="material-icons">delete_sweep</i>
 											</a>
 											@endif
+											<div class="zoom-gallery">
+												@if($despesa->anexo_pdf)
+												<span>
+													<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
+												</span>
+												@else
+												<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="COMPROVANTE - {{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:32px;height:32px;">
+													<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="32" height="32">
+												</a>
+												@endif
+											</div>
 										</div>
-									</div>
-								</td>
-							</tr>							
-							@endforeach														
-						</tbody>
-					</table>
+									</td>
+								</tr>							
+								@endforeach														
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- FIM LISTAGEM DAS DESPESAS -->
-	@endif
-</section>
-@endsection
+		<!-- FIM LISTAGEM DAS DESPESAS -->
+		@endif
+	</section>
+	@endsection
 <!-- @push('scripts2')
 {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js') !!}
 {!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.4.3/js/ajax-bootstrap-select.min.js') !!}

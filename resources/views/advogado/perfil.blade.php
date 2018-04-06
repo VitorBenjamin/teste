@@ -45,7 +45,7 @@
 							<div class="col-md-6">
 								<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 									<div class="form-line">
-										<label for="emial">E-mail *</label>
+										<label for="email">E-mail *</label>
 										<input id="email" type="email" class="form-control" name="email" value="{{ $user->email }}" required>		
 									</div>
 									@if ($errors->has('email'))
@@ -137,7 +137,7 @@
 							<div class="col-sm-2">
 								<div class="form-group{{ $errors->has('data_nascimento') ? ' has-error' : '' }} form-float">
 									<div class="form-line">
-										<input id="data_nascimento" type="text" class="form-control" name="data_nascimento" value="{{ auth()->user()->dados == null ? '' : date('d-m-Y', strtotime(auth()->user()->dados->data_nascimento)) }}" pattern="\d{2}-\d{2}-\d{4}" title="Digite a Data no formato dd-mm-aaaa" autofocus >
+										<input id="data_nascimento" type="text" class="form-control" name="data_nascimento" value="{{ auth()->user()->dados == null ? '' : date('d-m-Y', strtotime(auth()->user()->dados->data_nascimento)) }}" pattern="\d{2}-\d{2}-\d{4}" title="Digite a Data no formato dd-mm-aaaa" autofocus>
 										<label class="form-label">Data Nascimento</label>
 										@if ($errors->has('data_nascimento'))
 										<span class="help-block">

@@ -96,6 +96,26 @@ class UserController extends Controller
 		//dd($users);
 		return view('advogado.listagem',compact('users'));
 	}
+	public function ativarOrDesativar($id)
+	{
+		$user = User::find($id);
+		if ($user->ativo) {
+			$user->ativo = false;
+			$user->save();
+			\Session::flash('flash_message',[
+				'msg'=>"Usuário Desativado com Sucesso",
+				'class'=>"alert bg-green alert-dismissible"
+			]);
+		} else {
+			$user->ativo = true;
+			$user->save();
+			\Session::flash('flash_message',[
+				'msg'=>"Usuário Ativado com Sucesso",
+				'class'=>"alert bg-green alert-dismissible"
+			]);
+		}
+		return redirect()->back();
+	}
 
 	public function edit($id)
 	{
@@ -454,10 +474,10 @@ class UserController extends Controller
 		if ($andamento !=null) {
 			$abertas= $this->pushSolicitacao($abertas,$andamento);
 		}
-		$andamento_recorrente = $repo->getSolicitacaoAdministrativo(config('constantes.status_andamento_recorrente'));
-		if ($andamento_recorrente !=null) {
-			$abertas= $this->pushSolicitacao($abertas,$andamento_recorrente);
-		}
+		// $andamento_recorrente = $repo->getSolicitacaoAdministrativo(config('constantes.status_andamento_recorrente'));
+		// if ($andamento_recorrente !=null) {
+		// 	$abertas= $this->pushSolicitacao($abertas,$andamento_recorrente);
+		// }
 		
 		$devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_devolvido_financeiro'));
 		$recorrentes_devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_recorrente'));

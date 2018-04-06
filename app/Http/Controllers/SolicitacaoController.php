@@ -142,10 +142,12 @@ class SolicitacaoController extends Controller
 		$limites = auth()->user()->limites;
 		if ($status == config('constantes.status_devolvido')) 
 		{
-			$andamento = Status::where('descricao', config('constantes.status_andamento_recorrente'))->first();
-
-		}elseif ($solicitacao->tipo == "COMPRA"){
-
+			if ($solicitacao->tipo == "COMPRA" || $solicitacao->tipo == "VIAGEM"){
+				$andamento = Status::where('descricao', config('constantes.status_recorrente_financeiro'))->first();
+			}else{
+				$andamento = Status::where('descricao', config('constantes.status_andamento_recorrente'))->first();
+			}
+		}elseif (($solicitacao->tipo == "COMPRA" || $solicitacao->tipo == "VIAGEM") && ($status != config('constantes.status_aberto_etapa2') && $status != config('constantes.status_devolvido_etapa2')) || ($status != config('constantes.status_devolvido'))){
 			if ($status == config('constantes.status_andamento_administrativo')) {
 				
 				$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
@@ -166,8 +168,7 @@ class SolicitacaoController extends Controller
 			} else {
 				$andamento = Status::where('descricao', config('constantes.status_andamento_etapa2'))->first();
 			}
-		}else {			
-
+		}else {
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
 				if (!$repo->verificaLimite($solicitacao,$limites)) {
 					$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
@@ -222,7 +223,7 @@ class SolicitacaoController extends Controller
 			'users_id' => Auth::user()->id,
 			'status' => "DEVOLVIDO",
 		];
-		if ($solicitacao->tipo == "COMPRA"){
+		if ($solicitacao->tipo == "COMPRA" || $solicitacao->tipo == "VIAGEM"){
 
 			if ($status == config('constantes.status_andamento_administrativo') || $status == config('constantes.status_recorrente_financeiro')) {
 

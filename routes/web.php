@@ -23,6 +23,7 @@ Route::get('/ajax/processo', ['uses' => 'ProcessoController@getProcesso', 'as' =
 Auth::routes();
 Route::group(['middleware' => ['check.user.role:ADMINISTRATIVO|COORDENADOR|FINANCEIRO']],function()
 {
+    Route::get('/user/ativar-desativar/{id}', ['uses' => 'UserController@ativarOrDesativar','middleware' => 'auth', 'as' => 'user.ativarOrDesativar']);
     Route::get('/cadastro/registrar-coordenador', 'Auth\RegisterController@showRegistrationFormCoordenador')->name('registerCoordenador');
     Route::get('/cadastro/registrar-financeiro', 'Auth\RegisterController@showRegistrationFormFinanceiro')->name('registerFinanceiro');
     Route::get('/cadastro/registrar-advogado', 'Auth\RegisterController@showRegistrationFormAdvogado')->name('registerAdvogado');
@@ -67,6 +68,8 @@ Route::group(['middleware' => ['check.user.role:FINANCEIRO|ADMINISTRATIVO']],fun
     Route::put('edit-comprovante/{id}', ['uses' => 'SolicitacaoController@editComprovante', 'as' => 'solicitacao.editComprovante']);
     Route::put('add-comprovante/{id}', ['uses' => 'AntecipacaoController@addComprovante', 'as' => 'antecipacao.addComprovante']);
     Route::put('add-viagem-comprovantes/{id}', ['uses' => 'ViagemController@addComprovante', 'as' => 'viagem.addComprovante']);
+        Route::put('add-viagem-cotacao/{id}', ['uses' => 'ViagemController@addCotacao', 'as' => 'viagem.addCotacao']);
+
     Route::get('set-devolvido/{id}', ['uses' => 'SolicitacaoController@devolvido', 'as' => 'solicitacao.devolvido']);
 
 });
