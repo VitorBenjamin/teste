@@ -1,4 +1,3 @@
-
 @role(['ADMINISTRATIVO','FINANCEIRO'])
 <!-- MODAL DESPESA -->
 <div class="modal fade" id="modalComprovante" tabindex="-1" role="dialog">
@@ -29,15 +28,15 @@
 											<div class="form-group">
 												<div class="form-line">
 													<label for="data">Data</label>
-													<input type="text" value="{{$solicitacao->comprovante[0]->data}}" name="data" class="datepicker form-control" placeholder="Escolha uma Data" required />
+													<input type="text" value="{{date('d/m/Y',strtotime($solicitacao->comprovante[0]->data))}}" name="data" class="datepicker form-control" placeholder="Escolha uma Data" required />
 												</div>
 											</div>
 										</div>
 										<div class="col-md-5">
 											<div class="form-group">
 												<div class="form-line">
-													<label style="margin-bottom: 20px" for="anexo">Comprovante de Pagamento(jpeg,png,pdf)</label>
-													<input type="file" name="anexo" id="anexo" required/>
+													<label style="margin-bottom: 20px" for="anexo">Comprovante de Pagamento(jpeg,png)</label>
+													<input type="file" name="anexo" id="anexo" accept="image/jpg, image/png" required/>
 												</div>
 											</div>
 										</div>
@@ -59,51 +58,5 @@
 			</div>
 		</div>
 	</div>
-</div>	
-<!-- FIM MODAL DESPESA -->
-
-	<!-- <div class="row clearfix">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<div class="card">
-				<div class="header">
-					<h2>
-						Editar Comprovante
-					</h2>
-				</div>
-				<div class="body">
-					<form action="{{ route('solicitacao.editComprovante',$solicitacao->id)}}" method="POST"">
-						{{ csrf_field() }}
-						{{ method_field('PUT') }}
-						<input type="hidden" name="comprovante_id" value="{{$solicitacao->comprovante[0]->id}}">
-						<div class="row clearfix">
-							<div class="col-md-3">
-								<div class="form-group">
-									<div class="form-line">
-										<label for="data">Data</label>
-										<input type="text" value="{{$solicitacao->comprovante[0]->data}}" name="data" class="datepicker form-control" placeholder="Escolha uma Data" required />
-									</div>
-								</div>
-							</div>
-							<div class="col-md-5">
-								<div class="form-group">
-									<div class="form-line">
-										<label style="margin-bottom: 20px" for="anexo">Comprovante da Antecipação (jpeg,png,pdf)</label>
-										<input type="file" name="anexo" id="anexo" required/>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<button class="btn btn-info" type="submit" style="margin-top: 25px;">
-										<i class="material-icons">save</i>
-										<span>ANEXAR COMPROVANTE</span>
-									</button>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div> 												
-	</div> -->
-	@endrole
+</div>
+@endrole

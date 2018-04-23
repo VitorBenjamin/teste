@@ -148,7 +148,7 @@
 													<div class="form-group">
 														<div class="form-line">
 															<label for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>
-															<input type="file" name="anexo_comprovante" id="anexo_comprovante" required/>
+															<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/jpg, image/png" required/>
 															<!-- <button type="reset" id="pseudoCancel">
 																Resetar
 															</button> -->
@@ -342,7 +342,8 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
+					@foreach ($solicitacao->viagem as $key => $viagem)
+					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
 						<thead>
 							<tr>
 								<th></th>
@@ -372,79 +373,180 @@
 							</tr>
 						</tfoot>
 						<tbody>
-							@foreach ($solicitacao->viagem as $key => $viagem)
 							<tr>
 								<td></td>
 								<td>{{$viagem->origem}}</td>
 								<td>{{date('d/m/Y',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
-								<td>{{date('d/m/Y',strtotime($viagem->data_volta))}}</td>
+								<td>{{$viagem->data_volta ? date('d/m/Y',strtotime($viagem->data_volta)) : 'SÓ IDA'}}</td>
 								<td>
 									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
-									@if($viagem->hospedagens)
-									<div class="zoom-gallery">
-										@if($viagem->hospedagens->anexo_pdf)
-										<span>
-											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/hospedagem/'.$viagem->hospedagens->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-										</span>
-										@else
-										<a href="{{$viagem->hospedagens->anexo_comprovante}}" data-source="{{$viagem->hospedagens->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->hospedagens->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->hospedagens->data_compra))}}" style="width:32px;height:32px;">
-											<img class="img_popup" src="{{$viagem->hospedagens->anexo_comprovante}}" width="32" height="32">
-										</a>
-										@endif
-									</div>
-									@endif
 								</td>
 								<td>{{$viagem->bagagem == 1 ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$viagem->kg}}</td>
 								<td>
 									{{$viagem->locacao == 1 ? 'SIM' : 'NÃO'}}
-									@if($viagem->locacoes)
-									<div class="zoom-gallery">
-										@if($viagem->locacoes->anexo_pdf)
-										<span>
-											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/hospedagem/'.$$viagem->locacoes->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-										</span>
-										@else
-										<a href="{{$viagem->locacoes->anexo_comprovante}}" data-source="{{$viagem->locacoes->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->locacoes->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->locacoes->data_compra))}}" style="width:32px;height:32px;">
-											<img class="img_popup" src="{{$viagem->locacoes->anexo_comprovante}}" width="32" height="32">
-										</a>
-										@endif
-									</div>
-									@endif
 								</td>
 
-								<td class="acoesTD">
+								<td class="acoesTD">									
 									<div class="icon-button-demo" >
+										@role('ADMINISTRATIVO')
+										@if ($solicitacao->status[0]->descricao == "ABERTO" || $solicitacao->status[0]->descricao == "DEVOLVIDO" || $solicitacao->status()->get()[0]->descricao == config('constantes.status_recorrente_financeiro'))
+										<a class="btn bg-green btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#addCotacao{{$viagem->id}}"><i class="material-icons">local_atm</i></a>
+										@elseif($solicitacao->status[0]->descricao =="APROVADO")
+										<a class="btn bg-blue btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#addComprovante{{$viagem->id}}"><i class="material-icons">link</i></a>
+										@endif
+										@endrole
 										<a href="{{ route('viagem.editarViagem', $viagem->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float"><i class="material-icons">edit</i></a>
 
 										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('viagem.deletarViagem', $viagem->id)}}"><i class="material-icons">delete_sweep</i></a>
 									</div>
-									@if($viagem->anexo_pdf || $viagem->anexo_comprovante)
+									@if($viagem->anexo_comprovante)
 									<div class="zoom-gallery">
-										@if($viagem->anexo_pdf)
-										<span>
-											<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/viagem/'.$viagem->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-										</span>
-										@else
 										<a href="{{$viagem->anexo_comprovante}}" data-source="{{$viagem->anexo_comprovante}}" title="COMPROVANTE - {{$viagem->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->data_compra))}}" style="width:32px;height:32px;">
 											<img class="img_popup" src="{{$viagem->anexo_comprovante}}" width="32" height="32">
 										</a>
-										@endif
 									</div>
 									@endif
 								</td>	
 							</tr>
-							@endforeach														
 						</tbody>
 					</table>
+					@include('viagem.cotacao')
+					@include('viagem.comprovante')
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-2" style="margin: 30px 0 0 0;">
+								<h4>Passagem <i class="material-icons">trending_flat</i></h4>
+							</div>
+							<div class="col-md-10">
+								@if($viagem->valor)
+								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Data Cotação</th>
+											<th>Observação</th>
+											<th>Data Compra</th>
+											<th>Valor</th>
+											<th>Comprovante</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td></td>
+											<td>{{$viagem->data_cotacao ? date('d-m-Y', strtotime($viagem->data_cotacao)) : ''}}</td>
+											<td>{{$viagem->observacao_comprovante ? $viagem->observacao_comprovante : 'SEM OBSERVAÇÃO'}}</td>
+											<td>{{$viagem->data_compra ? date('d-m-Y', strtotime($viagem->data_compra)) : 'ANDAMENTO'}}</td>
+											<td>R$ {{$viagem->valor}}</td>
+											<td>
+												@if($viagem->anexo_passagem)
+												<div class="zoom-gallery">
+													<a href="{{$viagem->anexo_passagem}}" data-source="{{$viagem->anexo_passagem}}" title="COMPROVANTE - {{$viagem->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->data_compra))}}" style="width:32px;height:32px;">
+														<img class="img_popup" src="{{$viagem->anexo_passagem}}" width="32" height="32">
+													</a>
+												</div>
+												@endif
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								@endif
+							</div>
+						</div>
+					</div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-2" style="margin: 30px 0 0 0;">
+								<h4>Hospedagem <i class="material-icons">trending_flat</i></h4>
+							</div>
+							<div class="col-md-10">
+								@if($viagem->hospedagens)
+
+								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Data Cotação</th>
+											<th>Observação</th>
+											<th>Data Compra</th>
+											<th>Valor</th>
+											<th>Comprovante</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td></td>
+											<td>{{$viagem->hospedagens->data_cotacao ? date('d-m-Y', strtotime($viagem->hospedagens->data_cotacao)) : ''}}</td>
+											<td>{{$viagem->hospedagens->observacao ? $viagem->hospedagens->observacao : 'SEM OBSERVAÇÃO'}}</td>
+											<td>{{$viagem->hospedagens->data_compra ? date('d-m-Y', strtotime($viagem->hospedagens->data_compra)) : 'ANDAMENTO'}}</td>
+											<td>R$ {{$viagem->hospedagens->custo_hospedagem}}</td>
+											<td>
+												<div class="zoom-gallery">
+													@if($viagem->hospedagens->anexo_hospedagem)
+													<a href="{{$viagem->hospedagens->anexo_hospedagem}}" data-source="{{$viagem->hospedagens->anexo_hospedagem}}" title="COMPROVANTE - {{$viagem->hospedagens->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->hospedagens->data_compra))}}" style="width:32px;height:32px;">
+														<img class="img_popup" src="{{$viagem->hospedagens->anexo_hospedagem}}" width="32" height="32">
+													</a>
+													@endif
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								@endif
+							</div>
+						</div>
+					</div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-2" style="margin: 30px 0 0 0;">
+								<h4>Locação <i class="material-icons">trending_flat</i></h4>
+							</div>
+							<div class="col-md-10">
+								@if($viagem->locacoes)
+								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Data Cotação</th>
+											<th>Observação</th>
+											<th>Data Compra</th>
+											<th>Valor</th>
+											<th>Comprovante</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td></td>
+											<td>{{$viagem->locacoes->data_cotacao ? date('d-m-Y', strtotime($viagem->locacoes->data_cotacao)) : ''}}</td>
+											<td>{{$viagem->locacoes->observacao ? $viagem->locacoes->observacao : 'SEM OBSERVAÇÃO'}}</td>
+											<td>{{$viagem->locacoes->data_compra ? date('d-m-Y', strtotime($viagem->locacoes->data_compra)) : 'ANDAMENTO'}}
+											</td>
+											<td>R$ {{$viagem->locacoes->valor}}</td>
+											<td>
+												<div class="zoom-gallery">
+													@if($viagem->locacoes->anexo_locacao)
+													<a href="{{$viagem->locacoes->anexo_locacao}}" data-source="{{$viagem->locacoes->anexo_locacao}}" title="COMPROVANTE - {{$viagem->locacoes->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->locacoes->data_compra))}}" style="width:32px;height:32px;">
+														<img class="img_popup" src="{{$viagem->locacoes->anexo_locacao}}" width="32" height="32">
+													</a>
+													@endif
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								@endif
+							</div>
+						</div>
+					</div>
+					@endforeach
 				</div>
 			</div>
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DA VIAGENS -->
 	@endif
-	
+
 	@if(count($solicitacao->despesa) > 0)
 	<!-- LISTAGEM DAS DESPESAS  -->
 	<div class="row clearfix">

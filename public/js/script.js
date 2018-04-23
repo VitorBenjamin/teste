@@ -103,7 +103,7 @@ $(function() {
             +'</div>'
             +'</div>'
             +'</div>'
-            +'<div class="col-md-3">'
+            +'<div class="col-md-4">'
             +'<div class="form-group">'
             +'<div class="form-line">'
             +'<label for="descricao">Descrição</label>'
@@ -111,7 +111,7 @@ $(function() {
             +'</div>'
             +'</div>'
             +'</div>'
-            +'<div class="col-md-2">'
+            +'<div class="col-md-3">'
             +'<div class="form-group">'
             +'<div class="form-line">'
             +'<label for="fornecedor">Fornecedor</label>'
@@ -139,18 +139,18 @@ $(function() {
             +'<div class="form-group">'
             +'<div class="form-line">'
             +'<label for="quantidade">Valor R$</label>'
-            +'<input type="numeric" name="valor" style="text-align:right" name="valor" class="form-control" size="11"  value="" onKeyUp="moeda(this);" required>'
+            +'<input type="numeric" name="valor[]" style="text-align:right" name="valor" class="form-control" size="11"  value="" onKeyUp="moeda(this);" required>'
             +'</div>'
             +'</div>'
             +'</div>'
-            +'<div class="col-md-2">'
-            +'<div class="form-line">'
-            +'<!-- Define your button -->'
-            +'<button type="button" style="padding: 10px 0;width:100%;overflow:hidden;margin-top: 16px;white-space: nowrap;" id="file'+i+'"> Anexar Arquivo </button>'
-            +'<!-- Your File element -->'
-            +' <input type="file" name="anexo_comprovante[]" id="anexo_comprovante'+i+'" required/>'
-            +'</div>'
-            +'</div>'
+            // +'<div class="col-md-2">'
+            // +'<div class="form-line">'
+            // +'<!-- Define your button -->'
+            // +'<button type="button" style="padding: 10px 0;width:100%;overflow:hidden;margin-top: 16px;white-space: nowrap;" id="file'+i+'"> Anexar Arquivo </button>'
+            // +'<!-- Your File element -->'
+            // +' <input type="file" name="anexo_comprovante[]" id="anexo_comprovante'+i+'"/>'
+            // +'</div>'
+            // +'</div>'
             +'<div class="col-md-1" style="margin-top: 20px; padding-left: 0px !important;">'
             +'<button type="button" name="remove" id="'+i+'" class="btn bg-red waves-effect btn_remove">'
             +'<i class="material-icons">remove_circle</i>'
@@ -158,7 +158,7 @@ $(function() {
             +'</button>'
             +'</div>'
             +'</div>'); 
-        fazBind();
+        bind();
         changeFileInput(i);
         //$('.datepicker').bootstrapMaterialDatePicker('setDate', moment());
     });  
@@ -185,7 +185,7 @@ function changeFileInput(i) {
         fileInput.click();
     }).show();
   }
-  function fazBind() {
+  function bind() {
     $('.datepicker').bootstrapMaterialDatePicker({
         // format: 'dddd DD MMMM YYYY',
         //format : 'YYYY-MM-DD',
@@ -246,9 +246,14 @@ $('.checkbox').change(function(){ //".checkbox" change
         $('.checked_all').prop('checked',false);
     }
 });
-
+$('#tableTeste_wrapper').ready(function() {
+    //alert($(this));
+    $('#tableTeste_wrapper').find('.dt-buttons').append(
+        '<button class="dt-button buttons-pdf buttons-html5" tabindex="0" aria-controls="tableTeste">'
+        +'<span><i class="material-icons">picture_as_pdf</i></span>'
+        +'</button>');
+});
 $( window ).load(function() {
-
     var value = $('#origem_despesa').val();
 
     if (value == "ESCRITÓRIO") {
@@ -286,6 +291,7 @@ $( window ).load(function() {
 
     //$('.js-basic-example').DataTable().responsive.recalc();
     //console.log($('.js-basic-example').DataTable().responsive.recalc());
+
 });
 
 function moeda(z)
@@ -390,6 +396,30 @@ $('#cliente').change(function() {
     //             );
     //     }
     // });
+});
+
+$('#clientes_id').change(function() {
+    var value = $(this).val();
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    console.log(value);
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data:  {
+            "data": value
+        },
+        url: "/ajax/relatorio-data",
+        success: function (data) {
+            console.log(data);
+            //$('#solicitante').selectpicker('destroy');
+            $("#data_inicial").val(data);
+
+        },
+        error: function (data) {
+
+            console.log('Error:', data);
+        }
+    });
 });
 $('#my-form').on('submit', function () {
     // body...

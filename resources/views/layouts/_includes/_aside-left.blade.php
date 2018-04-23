@@ -47,10 +47,10 @@
             <ul class="list">
                 <li class="header">Menu Principal</li>
                 <li class="active">
-                    @role(['COORDENADOR'])
+                    @role(['COORDENADOR','FINANCEIRO','ADMINISTRATIVO'])
                     <a href="{{url('/')}}">
                         <i class="material-icons" style="color: #607d8b">dashboard</i>
-                        <span>Dashboard Advovado</span>
+                        <span>Dashboard Advogado</span>
                         <span class="badge" style="color: #fff">{{getChamados()}}</span>
                     </a>
                     @endrole
@@ -59,7 +59,6 @@
                         <span>Meu Dashboard</span>
                     </a>
                 </li>
-                @role(['ADVOGADO','COORDENADOR'])
                 <li>
                     <a href="{{route('reembolso.cadastrar')}}">
                         <i class="material-icons" style="color: #66a216">account_balance_wallet</i>
@@ -94,7 +93,6 @@
                         <span>Solicitar Guia</span>
                     </a>
                 </li>
-                @endrole          
             </ul>
         </div>
         <!-- #Menu -->

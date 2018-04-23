@@ -38,11 +38,21 @@
 	<!-- FIM SESSÂO COMENTÁRIO  -->
 
 	<!-- SESSÂO COMPROVANTE -->
-	@if(count($solicitacao->comprovante) == 0)
+	{{-- @if(count($solicitacao->comprovante) == 0)
+	@if($solicitacao->tipo == "VIAGEM")
+	@if($solicitacao->status()->get()[0]->descricao == config('constantes.status_aprovado_etapa2'))
 	@include('layouts._includes.solicitacoes._addComprovante')
+	@endif
+	@elseif($solicitacao->tipo == "COMPRA")
+	@if($solicitacao->status()->get()[0]->descricao == config('constantes.status_aprovado'))
+	@include('layouts._includes.solicitacoes._addComprovante')
+	@endif
+	@else
+	@include('layouts._includes.solicitacoes._addComprovante')
+	@endif
 	@else
 	@include('layouts._includes.solicitacoes._comprovante')
-	@endif
+	@endif --}} 
 	<!-- FIM SESSÂO COMPROVANTE  -->
 	
 	<!-- LISTAGEM DOS PRODUTOS  -->
@@ -51,15 +61,16 @@
 			<div class="card">
 				<div class="header">
 					<h2>
-						LISTAGEM DOS PRODUTOS E SUAS RESPECTIVAS COTAÇÕES
+						LISTAGEM DAS COTAÇÕES
 					</h2>
 				</div>
 				<div class="body">
 					@foreach ($solicitacao->compra as $compra)
+					@if ($solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_administrativo') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_recorrente_financeiro'))
 					<table class="table table-bordered table-striped nowrap table-hover dataTable">
 						<thead>
 							<tr>
-								<th>Data</th>
+								<th>Data Desejada</th>
 								<th>Descrição</th>
 								<th>Quantidade</th>
 							</tr>
@@ -68,11 +79,12 @@
 							<tr>
 								<td>{{date('d/m/Y',strtotime($compra->data_compra))}}</td>
 								<td>{{$compra->descricao}}</td>
-								<td>{{$compra->quantidade}}</td>									
+								<td>{{$compra->quantidade}}</td>								
 							</tr>												
 						</tbody>
 					</table>
 					<h2><i class="material-icons">arrow_downward</i><span class="badge bg-cyan" style="padding: 8px 7px; font-size: 15px">COTAÇÕES</span><i class="material-icons">arrow_upward</i></h2>
+					@endif
 					<div class="row clearfix">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">				
 							<table class="table table-bordered table-striped nowrap table-hover dataTable">
@@ -80,44 +92,15 @@
 									<tr>
 										<th>Data</th>
 										<th>Descrição</th>
-										<th>fornecedor</th>
+										<th>Fornecedor</th>
 										<th>Quantidade</th>
 										<th>Valor</th>
 										<th>Imagem</th>
-										
+										<th>Ações</th>
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($compra->cotacao as $cotacao)
-									<tr>
-										<td>{{date('d/m/Y',strtotime($cotacao->data_cotacao))}}</td>
-										<td>{{$cotacao->descricao}}</td>
-										<td>{{$cotacao->fornecedor}}</td>
-										<td>{{$cotacao->quantidade}}</td>
-										<td>{{$cotacao->valor}}</td>
-										<td>
-											@if($cotacao->anexo_pdf)
-											<div class="zoom-gallery">
-												<span>
-													<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/cotacoes/'.$cotacao->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-												</span>
-											</div>
-											@elseif($cotacao->anexo_comprovante)
-											<div class="zoom-gallery">
-												<a href="{{$cotacao->anexo_comprovante}}" data-source="{{$cotacao->anexo_comprovante}}" title="COMPROVANTE - {{$cotacao->tipo_comprovante}} - {{date('d/m/Y',strtotime($cotacao->data_cotacao))}}" style="width:32px;height:32px;">
-													<img class="img_popup" src="{{$cotacao->anexo_comprovante}}" width="32" height="32">
-												</a>
-												<!-- <a href="{{$cotacao->anexo_comprovante}}" data-source="{{$cotacao->anexo_comprovante}}" title="{{$cotacao->descricao}} - {{date('d/m/Y',strtotime($cotacao->data_compra))}}" style="width:25px;height:25px;">
-													<img style="border: 1px solid #9c9b9b; border-radius: 30px; margin-bottom: 0px" src="{{$cotacao->anexo_comprovante}}" width="25" height="25">
-												</a> -->
-											</div>
-											@else
-											Nenhum Arquivo Anexado
-											@endif
-											
-										</td>									
-									</tr>
-									@endforeach														
+									@include('compra.cotacao')											
 								</tbody>
 							</table>
 						</div>
@@ -128,7 +111,13 @@
 		</div> 												
 	</div>
 	<!-- FIM LISTAGEM DOS PRODUTOS -->
-
+	@foreach ($solicitacao->compra as $compra)
+	@role(['ADMINISTRATIVO'])
+	@if($solicitacao->status()->get()[0]->descricao == config('constantes.status_aprovado'))
+	@include('compra.modalComprovante')
+	@endif
+	@endrole
+	@endforeach
 	<!-- CADASTRO DAS COTAÇÕES  -->
 	@role(['ADMINISTRATIVO'])
 	@if($solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_administrativo') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_recorrente_financeiro'))
@@ -172,7 +161,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<div class="form-group">
 										<div class="form-line">
 											<label for="descricao">Descrição</label>
@@ -180,7 +169,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-3">
 									<div class="form-group">
 										<div class="form-line">
 											<label for="fornecedor">Fornecedor</label>
@@ -204,14 +193,14 @@
 										</div>
 									</div>							
 								</div>
-								<div class="col-md-3">
+								{{-- <div class="col-md-3">
 									<div class="form-line">
 										<!-- Define your button -->
 										<button type="button" style="padding: 10px 0;width:186px;overflow:hidden;margin-top: 16px; white-space: nowrap;" id="file0">Anexar Arquivo</button>
 										<!-- Your File element -->
-										<input type="file" name="anexo_comprovante[]" id="anexo_comprovante0" required />
+										<input type="file" name="anexo_comprovante[]" id="anexo_comprovante0"/>
 									</div>
-								</div>
+								</div> --}}
 								<!-- <div class="col-md-3">
 									<label id="label" for="compra">Compra</label>
 									<select id="compra" name="compra_id" class="selectpicker form-control show-tick" data-size="5" data-live-search="true">

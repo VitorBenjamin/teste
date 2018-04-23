@@ -317,7 +317,6 @@
 				<div class="modal-header">
 					<h4 class="modal-title" id="largeModalLabel">Adicione uma Despesa</h4>
 				</div>
-				<!-- INCIO SESSÃO DESPESA -->
 				<div class="modal-body">
 					<form action="{{ route('reembolso.addDespesa',$solicitacao->id)}}" method="POST" enctype="multipart/form-data">
 						{{ csrf_field() }}
@@ -374,9 +373,6 @@
 														<div class="form-line">
 															<label for="anexo_comprovante">Envie um Arquivo (JPG,PNG,PDF)</label>
 															<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept=".pdf,.png,.jpg" required/>
-															<!-- <button type="reset" id="pseudoCancel">
-																Resetar
-															</button> -->
 														</div>
 													</div>
 												</div>
@@ -389,14 +385,12 @@
 													<span>ADD DESPESA</span>
 												</button>
 											</div>
-											<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
 											<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- FIM SESSÃO DESPESA -->
 					</form>
 				</div>
 			</div>

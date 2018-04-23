@@ -11,20 +11,20 @@
 					@foreach($solicitacao->comentarios as $comentario)
 					@if($comentario->publico == false)
 					@role('ADMINISTRATIVO' || 'FINANCEIRO' || 'COORDENADOR')
-					<a class="list-group-item ">							
-						<h5 class="list-group-item-heading">{{$comentario->status}} -> {{$comentario->user->nome}}</h5>
-						<h4 class="list-group-item-heading">{{date('d-m-y H:i:s',strtotime($comentario->created_at))}} </h4>
-						<br>
+					<a class="list-group-item comentario">							
+						<p class="titulo">{{$comentario->status}} -> {{$comentario->user->nome}}
+							{{date('d-m-y H:i:s',strtotime($comentario->created_at))}}
+						</p>
 						<p class="list-group-item-text">
 							{{$comentario->comentario}}
 						</p>
 					</a>
 					@endrole
 					@else
-					<a class="list-group-item ">							
-						<h5 class="list-group-item-heading">{{$comentario->status}} -> {{$comentario->user->nome}}</h5>
-						<h4 class="list-group-item-heading">{{date('d-m-y H:i:s',strtotime($comentario->created_at))}} </h4>
-						<br>
+					<a class="list-group-item comentario">							
+						<p class="titulo">{{$comentario->status}} -> {{$comentario->user->nome}}
+							{{date('d-m-y H:i:s',strtotime($comentario->created_at))}}
+						</p>
 						<p class="list-group-item-text">
 							{{$comentario->comentario}}
 						</p>
@@ -35,5 +35,5 @@
 				</div>
 			</div>
 		</div>
-	</div> 												
+	</div>
 </div>

@@ -164,7 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -256,7 +256,7 @@ return [
         'Locacao' => App\Locacao::class,
         'Comprovante' => App\Comprovante::class,
         'Dados' => App\Dados::class,
-
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         //HELPERS
         'SolicitacaoHelper' => App\Http\Helpers\SolicitacaoHelper::class,
 

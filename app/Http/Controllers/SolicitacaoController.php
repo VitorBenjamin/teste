@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers\SolicitacaoHelper;
 use App\Http\Requests\SolicitacaoRequest;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
@@ -20,13 +21,25 @@ use App\Solicitante;
 use App\Cliente;
 use App\AreaAtuacao; 
 use App\Status;
+use PDF;
 
 class SolicitacaoController extends Controller
 {
     //Buscando todas as informações das solicitacao e enviando para a view de listagem das solicitacao
-	public function index()
+	public function print($id)
 	{
-		
+		$lista = array();
+		$solicitacaoHelper = new SolicitacaoHelper();
+		$solicitacao = Solicitacao::find($id);
+		$lista = $solicitacaoHelper->impressao($solicitacao,$lista);
+		usort($lista, function($a, $b) {
+			return $a['data'] <=> $b['data'];
+		});
+        //dd($lista);
+		$nome = $solicitacao->cliente ? $solicitacao->cliente->nome : 'Mosello Lima';
+		$pdf = PDF::loadView('layouts._includes.impressao.impressao',compact('solicitacao','lista'));
+		return $pdf->download('Relátorio '.$nome.'.pdf');
+		//return view('layouts._includes.impressao.impressao', compact('solicitacao','lista'));
 	}
 
     //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
@@ -84,9 +97,9 @@ class SolicitacaoController extends Controller
 		//dd($comprovante);
 		$data = [
 			'data' => date('Y-m-d', strtotime($request->data)),
-			'solicitacoes_id' => $request->$id,
+			'solicitacoes_id' => $comprovante->solicitacoes_id,
 		];
-		//dd($request->all());
+		//dd($request->all()); 
 		if ($request->hasFile('anexo')) {
 			$mime = $request->file('anexo')->getClientMimeType();
 			//dd($mime);
@@ -94,22 +107,10 @@ class SolicitacaoController extends Controller
 				$file = Image::make($request->file('anexo'));
 				$img_64 = (string) $file->encode('data-url');
 				$data['anexo'] = $img_64;
-				if ($comprovante->anexo_pdf) {
-					Storage::delete('/public/comprovante/'. $comprovante->anexo_pdf);
-					$data['anexo_pdf'] = null;
-				}
-			}elseif ($mime == "application/pdf") {
-				$today = (string) date("Y-m-d");
-				$fileName = $today.'_'.$id.'_'.$request->anexo->getClientOriginalName();    
-				$request->anexo->storeAs('public/comprovante',$fileName);
-				$data['anexo_pdf'] = $fileName;
-				if ($comprovante->anexo_pdf) {
-					Storage::delete('/public/comprovante/'. $comprovante->anexo_pdf);
-					$data['anexo_pdf'] = null;
-				}
-				if ($comprovante->anexo) {
-					$data['anexo'] = null;
-				}
+				// if ($comprovante->anexo_pdf) {
+				// 	Storage::delete('/public/comprovante/'. $comprovante->anexo_pdf);
+				// 	$data['anexo_pdf'] = null;
+				// }
 			}else{
 
 				\Session::flash('flash_message',[
@@ -121,8 +122,6 @@ class SolicitacaoController extends Controller
 		}else{
 			if ($comprovante->anexo) {
 				$data['anexo'] = $comprovante->anexo;
-			} else {
-				$data['anexo_pdf'] = $comprovante->anexo_pdf;
 			}
 		}
 		//dd($data);
@@ -147,16 +146,6 @@ class SolicitacaoController extends Controller
 			}else{
 				$andamento = Status::where('descricao', config('constantes.status_andamento_recorrente'))->first();
 			}
-		}elseif (($solicitacao->tipo == "COMPRA" || $solicitacao->tipo == "VIAGEM") && ($status != config('constantes.status_aberto_etapa2') && $status != config('constantes.status_devolvido_etapa2')) || ($status != config('constantes.status_devolvido'))){
-			if ($status == config('constantes.status_andamento_administrativo')) {
-				
-				$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
-
-			}elseif ($status == config('constantes.status_recorrente_financeiro')) {
-				$andamento = Status::where('descricao',config('constantes.status_andamento_recorrente'))->first();
-			}else{
-				$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
-			}
 		}elseif ($status == "ABERTO-ETAPA2" || $status == config('constantes.status_devolvido_etapa2')) {
 
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
@@ -167,6 +156,16 @@ class SolicitacaoController extends Controller
 				}
 			} else {
 				$andamento = Status::where('descricao', config('constantes.status_andamento_etapa2'))->first();
+			}
+		}elseif (($solicitacao->tipo == "COMPRA" || $solicitacao->tipo == "VIAGEM") && (($status != config('constantes.status_aberto_etapa2') && $status != config('constantes.status_devolvido_etapa2')) || ($status != config('constantes.status_devolvido')))){
+			if ($status == config('constantes.status_andamento_administrativo')) {
+				
+				$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
+
+			}elseif ($status == config('constantes.status_recorrente_financeiro')) {
+				$andamento = Status::where('descricao',config('constantes.status_andamento_recorrente'))->first();
+			}else{
+				$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
 			}
 		}else {
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
@@ -233,6 +232,11 @@ class SolicitacaoController extends Controller
 
 				$devolvido = Status::where('descricao', config('constantes.status_recorrente_financeiro'))->first();
 				$data['publico'] = false;
+			}elseif ($status == "ANDAMENTO-ETAPA2") {
+
+				$devolvido = Status::where('descricao', config('constantes.status_aberto_etapa2'))->first();
+				$data['publico'] = true;
+
 			}
 		} elseif ($status == config('constantes.status_coordenador_aprovado')) {
 
@@ -282,9 +286,10 @@ class SolicitacaoController extends Controller
 	{
 		$solicitacao = Solicitacao::find($id);
 		$status = $solicitacao->status[0]->descricao;
-		
+		//dd($solicitacao->tipo);
+
 		if ($status == config('constantes.status_aprovado_etapa2') || $status == config('constantes.status_coordenador_aprovado2')) {
-			
+
 			if($solicitacao->tipo == "COMPRA"){
 				$this->setDataCotacao($solicitacao);
 			}
@@ -293,9 +298,15 @@ class SolicitacaoController extends Controller
 			$solicitacao->save();
 
 		}elseif ($solicitacao->tipo == "VIAGEM" || $solicitacao->tipo == "ANTECIPAÇÃO" ) {			
-			
+			//dd($solicitacao->tipo);
 			if ($status == config('constantes.status_coordenador_aprovado')) {
 				$finalizar = Status::where('descricao', config('constantes.status_coordenador_aberto2'))->first();
+
+			} elseif ($solicitacao->tipo == "ANTECIPAÇÃO" && $status == config('constantes.status_aberto_etapa2')) {
+				$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();
+				$this->trocarStatus($solicitacao,$finalizar);
+				return redirect()->route('user.index');
+				// return back();
 			} else {
 				$finalizar = Status::where('descricao', config('constantes.status_aberto_etapa2'))->first();
 			}
@@ -309,7 +320,8 @@ class SolicitacaoController extends Controller
 			$solicitacao->save();			
 		}
 		$this->trocarStatus($solicitacao,$finalizar);
-		return redirect()->route('user.index');
+		// return redirect()->route('user.index');
+		return back();
 	}
 	public function setDataCotacao($solicitacao)
 	{ 
@@ -356,7 +368,7 @@ class SolicitacaoController extends Controller
 		foreach ($solicitacao->status as $status) 
 		{
 
-			if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_devolvido')) {
+			if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_devolvido') || $status->descricao == config('constantes.status_andamento') || $status->descricao == config('constantes.status_andamento_administrativo')) {
 
 				$tipo = $solicitacao->tipo;
 				if ($solicitacao->delete()) {

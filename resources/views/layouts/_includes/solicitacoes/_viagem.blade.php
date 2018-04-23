@@ -2,7 +2,7 @@
 <tr>
 	<td>{{date('d/m/Y',strtotime($viagem->data_compra))}}</td>
 	<td>{{ $solicitacao->codigo}}</td>
-	<td>VIAGEM - {{$viagem->origem}} <-> {{date('d-m-Y',strtotime($viagem->data_ida))}} - {{$viagem->destino}} <-> {{$viagem->data_volta == null ? date('d-m-Y',strtotime($viagem->data_volta)) : 'IDA' }} - {{$viagem->bagagem == 1 ? 'BAGAGEM '.$viagem->kg.'Kg' : 'BAGAGEM NÃO'}} {{$solicitacao->processo == null ? '- SEM PROCESSO' : '- N° PROCE. '.$solicitacao->processo->codigo}}</td>
+	<td>VIAGEM - {{$viagem->origem}} <-> {{date('d-m-Y',strtotime($viagem->data_ida))}} - {{$viagem->destino}} <-> {{$viagem->data_volta ? date('d-m-Y',strtotime($viagem->data_volta)) : 'SÓ IDA' }} - {{$viagem->bagagem == 1 ? 'BAGAGEM '.$viagem->kg.'Kg' : 'BAGAGEM NÃO'}} {{$solicitacao->processo ? '- N° PROCE. '.$solicitacao->processo->codigo : '- SEM PROCESSO'}}</td>
 	<td>R$ {{ $viagem->estornado == 1 ? -$viagem->valor : $viagem->valor}}</td>
 	@if($exibir)
 	<td>
@@ -23,7 +23,7 @@
 <tr>
 	<td>{{date('d/m/Y',strtotime($viagem->hospedagens->data_compra))}}</td>
 	<td>{{ $solicitacao->codigo}}</td>
-	<td>HOSPEDAGEM - N° PROCE. {{$solicitacao->processo->codigo}}</td>
+	<td>HOSPEDAGEM {{$solicitacao->processo ? '- N° PROCE.'.$solicitacao->processo->codigo : ''}}</td>
 	<td>R$ {{$viagem->hospedagens->estornado ? -$viagem->hospedagens->custo_hospedagem : $viagem->hospedagens->custo_hospedagem}}</td>
 	@if($exibir)
 	<td>
@@ -41,11 +41,12 @@
 	</td> 
 	@endif      
 </tr>
+@if ($viagem->locacoes)
 <tr>
 	<td>{{date('d/m/Y',strtotime($viagem->locacoes->data_compra))}}</td>
 	<td>{{ $solicitacao->codigo}}</td>
-	<td>LOCAÇÃO - N° PROCE. {{$solicitacao->processo->codigo}}</td>
-	<td>R$ {{$viagem->locacoes->estornado ? -$viagem->locacoes->custo_locacao : $viagem->locacoes->custo_locacao}}</td>
+	<td>LOCAÇÃO {{$viagem->locacoes->observacao}}{{$solicitacao->processo ? '- N° PROCE.'.$solicitacao->processo->codigo : ''}}</td>
+	<td>R$ {{$viagem->locacoes->estornado ? -$viagem->locacoes->valor : $viagem->locacoes->valor}}</td>
 	@if($exibir)
 	<td>
 		<input type="checkbox" class="checkbox" id="locacao_{{$viagem->locacoes->id}}" name="desativar[]" value="{{$viagem->locacoes->id}}-Locacao" {{$viagem->locacoes->estornado ? 'checked' : ''}}>
@@ -62,12 +63,14 @@
 	</td>
 	@endif       
 </tr>
+@endif
 @endforeach
+@if ($solicitacao->despesa)
 @foreach($solicitacao->despesa as $despesa)
 <tr>
 	<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 	<td>{{ $solicitacao->codigo}}</td>
-	<td>{{$despesa->tipo_comprovante}} - N° PROCE. {{$solicitacao->processo->codigo}}</td>
+	<td>{{$despesa->tipo_comprovante}} {{$solicitacao->processo ? '- N° PROCE.'.$solicitacao->processo->codigo : ''}}</td>
 	<td>R$ {{$despesa->estornado ? -$despesa->valor : $despesa->valor}}</td>
 	@if($exibir)
 	<td>
@@ -86,3 +89,4 @@
 	@endif      
 </tr>
 @endforeach
+@endif

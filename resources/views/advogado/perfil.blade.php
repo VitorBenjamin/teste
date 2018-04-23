@@ -107,6 +107,7 @@
 								</div>
 							</div>
 						</div>
+						@if (auth()->user()->dados)
 						<div class="row clearfix">
 							<div class="col-sm-2">
 								<div class="form-group{{ $errors->has('rg') ? ' has-error' : '' }} form-float">
@@ -257,6 +258,7 @@
 								</div>
 							</div>
 						</div>
+						@endif
 						<div class="row">
 							<div class="col-md-4 col-md-offset-4">
 								<button class="btn btn-block btn-lg btn-primary waves-effect">

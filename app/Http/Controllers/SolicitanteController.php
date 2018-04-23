@@ -8,7 +8,6 @@ use App\Cliente;
 
 class SolicitanteController extends Controller
 {
-    //
 
 	public function getSolicitante(Request $data){
 
@@ -34,7 +33,6 @@ class SolicitanteController extends Controller
         //dd($processos);
 		return view('solicitante.listagem',compact('solicitantes','clientes'));
 	}
-
     //Cadatra um cliente e redireciona novamente para um tela de cadastro
 	public function salvar(Request $request){
 		
@@ -43,10 +41,9 @@ class SolicitanteController extends Controller
 		\Session::flash('flash_message',[
 			'msg'=>"Cadastro dos Solicitante ".$solicitante->nome." realizado com sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
-
 		]);
-
-		return redirect()->route('solicitante.getAll');
+		//return redirect()->route('solicitante.getAll');
+		return redirect()->back();
 	}
 
     //Retorna a View de edição da cliente

@@ -9,7 +9,7 @@ use App\Solicitante;
 use App\Cliente;
 use App\AreaAtuacao;
 use App\Status;
- 
+
 class SolicitacaoHelper
 {
 
@@ -23,16 +23,25 @@ class SolicitacaoHelper
 
         foreach ($solicitacao->status as $status) {
             if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_aberto_etapa2') || $status->descricao == config('constantes.status_recorrente') || $status->descricao == config('constantes.status_devolvido') || $status->descricao == config('constantes.status_devolvido_etapa2')) {
+                if ($solicitacao->users_id == auth()->user()->id) {
+                    return "ok";
+                }else{
+                    \Session::flash('flash_message',[
+                        'msg'=>"Você não tem permissão para editar essa Solicitação.",
+                        'class'=>"alert bg-orange alert-dismissible"
+
+                    ]);
+                    return redirect()->route('user.index');
+                }
                 
-                return "ok";
             }else {
-               
+
                 \Session::flash('flash_message',[
                     'msg'=>"Solicitação em Andamento. Aguarde um Parecer da Coordenação ",
-                    'class'=>"alert bg-green alert-dismissible"
+                    'class'=>"alert bg-orange alert-dismissible"
 
                 ]);
- 
+
                 return redirect()->route('user.index');
             }   
         }
@@ -40,18 +49,155 @@ class SolicitacaoHelper
 
     public  function solicitacaoExist($solicitacao, $tipo)
     {
-        
+
         if(!$solicitacao){
             \Session::flash('flash_message',[
                 'msg'=>"Não Existe essa Solicitacao Cadastrada!!! Deseja Cadastrar uma Nova Solicitação?",
                 'class'=>"alert bg-red alert-dismissible"
-
             ]);
             return redirect()->route(strtolower($tipo).'.cadastrar');            
         }else{
             return "ok";
         }
-
     }
+    public function impressao($s,$lista)
+    {
+        if ($s->tipo=="REEMBOLSO") {
 
+            return $this->reembolsoPrint($s,$lista);
+        }elseif ($s->tipo=="VIAGEM") {
+
+            return $this->viagemPrint($s,$lista);
+        }elseif($s->tipo=="GUIA") {
+
+            return $this->guiaPrint($s,$lista);
+        }elseif ($s->tipo=="COMPRA") {
+
+            return $this->compraPrint($s,$lista);
+        }elseif ($s->tipo=="ANTECIPAÇÃO") {
+
+            return $this->antecipacaoPrint($s,$lista);
+        }
+    }
+    public function reembolsoPrint($s,$lista)
+    {
+        foreach ($s->translado as $t) {
+            $lista[] = 
+            [
+                'data' => date('d-m-Y',strtotime($t->data_translado)),
+                'codigo' => $s->codigo,
+                'descricao' => $t->origem. '-' .$t->destino. '-' .$t->distancia . 'KM',
+                'valor' => $t->distancia * ($s->cliente == null ? config('constantes.km') : $s->cliente->valor_km),
+                'img' => null,
+            ];
+        }
+        foreach ($s->despesa as $d) {
+            $lista[] = 
+            [
+                'data' => date('d-m-Y',strtotime($d->data_despesa)),
+                'codigo' => $s->codigo,
+                'descricao' => $d->descricao. ' - ' .$d->tipo_comprovante,
+                'valor' => $d->valor,
+                'img' => $d->anexo_comprovante,
+            ];
+
+        }
+        return $lista;
+    }
+    public function viagemPrint($s,$lista)
+    {
+
+        foreach ($s->viagem as $viagem) {
+            $data_volta = $viagem->data_volta ? $viagem->data_volta : 'SÓ IDA';
+            $bagagem = $viagem->bagagem ? 'BAGAGEM'.$viagem->kg : '';
+            $lista[] = 
+            [
+                'data' => date('d-m-Y',strtotime($viagem->data_compra)),
+                'codigo' => $s->codigo,
+                'descricao' => 'VIAGEM '.$viagem->origem.' <-> '.$viagem->data_ida.' - '.$data_volta.$bagagem,
+                'valor' => $viagem->valor ? $viagem->valor : 'R$ 0',
+                'img' => $viagem->anexo_passagem ? $viagem->anexo_passagem : null,
+            ];
+        }
+        if ($viagem->hospedagens) {
+            $lista[] = 
+            [
+                'data' => date('d-m-Y',strtotime($viagem->hospedagens->data_compra)),
+                'codigo' => $s->codigo,
+                'descricao' => 'HOSPEDAGEM '.$viagem->hospedagens->observacao,
+                'valor' => $viagem->hospedagens->custo_hospedagem,
+                'img' => $viagem->hospedagens->anexo_hospedagem,
+            ];
+        }
+        if ($viagem->locacoes) {
+            $lista[] = 
+            [
+                'data' => date('d-m-Y',strtotime($viagem->locacoes->data_compra)),
+                'codigo' => $s->codigo,
+                'descricao' => 'LOCAÇÃO '.$viagem->locacoes->observacao,
+                'valor' => $viagem->locacoes->valor,
+                'img' => $viagem->locacoes->valor,
+            ];
+        }
+        if ($s->despesa) {
+            foreach ($s->despesa as $d) {
+                $lista[] = 
+                [
+                    'data' => date('d-m-Y',strtotime($d->data_despesa)),
+                    'codigo' => $s->codigo,
+                    'descricao' => $d->descricao. '-' .$d->tipo_comprovante,
+                    'valor' => $d->valor,
+                    'img' => $d->anexo_comprovante,
+                ];
+
+            }
+        }
+        return $lista;
+    }
+    public function guiaPrint($s,$lista)
+    {
+        foreach ($s->guia as $guia) {
+            $lista[] = 
+            [
+                'data' => date('d-m-Y',strtotime($s->comprovante->data)),
+                'codigo' => $s->codigo,
+                'descricao' => 'GUIA - '.$guia->perfil_pagamento. ' - ' .$guia->banco. ' - ' .$guia->tipoGuia()->first()->descricao,
+                'valor' => $guia->valor,
+                'img' => $s->comprovante->anexo,
+            ];
+        }
+        return $lista;
+    }
+    public function compraPrint($s,$lista)
+    {
+        foreach ($s->compra as $c) {
+            foreach ($c->cotacao as $cota) {
+                if ($cota->data_compra) {
+                    $lista[] = 
+                    [
+                        'data' => date('d-m-Y',strtotime($cota->data_compra)),
+                        'codigo' => $s->codigo,
+                        'descricao' => $cota->descricao. ' - Fornecedor '.$cota->fornecedor.' - QUANTIDADE ' .$cota->quantidade,
+                        'valor' => $cota->valor,
+                        'img' => $cota->anexo_comprovante,
+                    ];
+                }
+            }
+        }
+        return $lista;
+    }
+    public function antecipacaoPrint($s,$lista)
+    {
+        foreach ($s->despesa as $d) {
+            $lista[] = 
+            [
+                'data' => date('d-m-Y',strtotime($d->data_despesa)),
+                'codigo' => $s->codigo,
+                'descricao' => $d->descricao. '-' .$d->tipo_comprovante,
+                'valor' => $d->valor,
+                'img' => $d->anexo_comprovante,
+            ];
+        }
+        return $lista;
+    }
 }

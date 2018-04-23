@@ -13,6 +13,13 @@
 			</div>
 		</div>
 	</div>
+	<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
+		<a data-toggle="modal" data-target="#addSolicitante" class="btn bg-light-green waves-effect" role="button">
+			<i class="material-icons">exposure_plus_1</i>
+			<!-- <span class="hidden-xs">ADD</span> -->
+			<span>Solicitante</span>
+		</a>
+	</div>
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -86,5 +93,81 @@
 			</div>
 		</div>
 	</div>
+
 </section>
+<div class="modal fade" id="addSolicitante" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="defaultModalLabel">ADICIONAR NOVO SOLICITANTE</h4>
+			</div>
+			<div class="modal-body">
+				<form action="{{ route('solicitante.salvar')}}" method="POST">
+					{{ csrf_field() }}
+					<div class="row clearfix">							
+						<div class="col-md-6">
+							<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
+								<div class="form-line">
+									<label for="nome">Nome do Solicitante *</label>
+									<input id="nome" type="text" class="form-control" name="nome" value="" required>
+								</div>
+								@if ($errors->has('nome'))
+								<span class="help-block">
+									<strong>{{ $errors->first('nome') }}</strong>
+								</span>
+								@endif
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group{{ $errors->has('cpf') ? ' has-error' : '' }} form-float">
+								<div class="form-line">
+									<label for="cliente">Cliente</label>
+									<select id="cliente" name="clientes_id" class="form-control show-tick" data-live-search="true" data-size="7" disabled>
+										<option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} form-float">
+								<div class="form-line">
+									<label>E-mail do Solicitante</label>
+									<input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}" autofocus>
+									@if ($errors->has('email'))
+									<span class="help-block">
+										<strong>{{ $errors->first('email') }}</strong>
+									</span>
+									@endif
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group{{ $errors->has('telefone') ? ' has-error' : '' }} form-float">
+								<div class="form-line">
+									<label>Telefone *</label>
+									<input id="telefone" type="type" class="form-control" name="telefone" value="{{ old('telefone') }}">
+									@if ($errors->has('telefone'))
+									<span class="help-block">
+										<strong>{{ $errors->first('telefone') }}</strong>
+									</span>
+									@endif
+								</div>
+							</div>
+						</div> 
+					</div>
+					<div class="modal-footer">
+						<div class="form-group">
+							<button class="btn btn-info">
+								<i class="material-icons">send</i>
+								<span>CRIAR SOLICITANTE</span>
+							</button>
+						</div>
+						<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
+						<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection

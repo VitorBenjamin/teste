@@ -17,6 +17,7 @@ Route::get('/', ['uses' => 'UserController@index','middleware' => 'auth', 'as' =
 Route::post('solictacao-deletar', ['uses' => 'SolicitacaoController@deletar', 'as' => 'solicitacao.deletar']);
 Route::get('/ajax/clientes', ['uses' => 'ClienteController@getCliente', 'as' => 'cliente.getCliente']);
 Route::post('/ajax/solicitantes', ['uses' => 'SolicitanteController@getSolicitante', 'as' => 'solicitante.getSolicitante']);
+Route::post('/ajax/relatorio-data', ['uses' => 'RelatorioController@getData', 'as' => 'relatorio.getData']);
 Route::get('/ajax/processo', ['uses' => 'ProcessoController@getProcesso', 'as' => 'processo.getProcesso']);
 
 // Route::get('cadastrar', ['uses' => 'CompraController@cadastrar', 'as' => 'compra.cadastrar']);
@@ -29,6 +30,13 @@ Route::group(['middleware' => ['check.user.role:ADMINISTRATIVO|COORDENADOR|FINAN
     Route::get('/cadastro/registrar-advogado', 'Auth\RegisterController@showRegistrationFormAdvogado')->name('registerAdvogado');
 
 });
+Route::group(['middleware' => ['check.user.role:ADMINISTRATIVO']],function()
+{
+    Route::get('administrativo-dashboard', ['uses' => 'UserController@administrativoDash','middleware' => 'auth', 'as' => 'user.administrativoDash']);
+
+});
+
+
 // // Authentication Routes...
 // $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
 // $this->post('login', 'Auth\LoginController@login');
@@ -61,14 +69,18 @@ Route::group(['middleware' => ['check.user.role:FINANCEIRO|COORDENADOR|ADMINISTR
 
 Route::group(['middleware' => ['check.user.role:FINANCEIRO|ADMINISTRATIVO']],function()
 {
+    //IMPRESSOES
+    Route::get('impressao/{id}', ['uses' => 'RelatorioController@relatorioIndividual', 'as' => 'relatorio.relatorioIndividual']);
+    Route::get('impressao-geral/{id}', ['uses' => 'RelatorioController@relatorioGeral', 'as' => 'relatorio.relatorioGeral']);
+
+    //FIM IMPRESSOES
     Route::get('financeiro-dashboard', ['uses' => 'UserController@financeiroDash','middleware' => 'auth', 'as' => 'user.financeiroDash']);
-    Route::get('administrativo-dashboard', ['uses' => 'UserController@administrativoDash','middleware' => 'auth', 'as' => 'user.administrativoDash']);
     Route::get('set-finalizar/{id}', ['uses' => 'SolicitacaoController@finalizar', 'as' => 'solicitacao.finalizar']);
     Route::post('add-comprovante/{id}', ['uses' => 'SolicitacaoController@addComprovante', 'as' => 'solicitacao.addComprovante']);
     Route::put('edit-comprovante/{id}', ['uses' => 'SolicitacaoController@editComprovante', 'as' => 'solicitacao.editComprovante']);
     Route::put('add-comprovante/{id}', ['uses' => 'AntecipacaoController@addComprovante', 'as' => 'antecipacao.addComprovante']);
     Route::put('add-viagem-comprovantes/{id}', ['uses' => 'ViagemController@addComprovante', 'as' => 'viagem.addComprovante']);
-        Route::put('add-viagem-cotacao/{id}', ['uses' => 'ViagemController@addCotacao', 'as' => 'viagem.addCotacao']);
+    Route::put('add-viagem-cotacao/{id}', ['uses' => 'ViagemController@addCotacao', 'as' => 'viagem.addCotacao']);
 
     Route::get('set-devolvido/{id}', ['uses' => 'SolicitacaoController@devolvido', 'as' => 'solicitacao.devolvido']);
 
@@ -91,7 +103,7 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
 
 });
 
-Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGADO|GOD|COORDENADOR']],function()
+Route::group(['prefix' => 'solicitacao'],function()
 
 {
 
@@ -105,10 +117,12 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
         Route::get('cadastrar', ['uses' => 'CompraController@cadastrar', 'as' => 'compra.cadastrar']);
         Route::post('salvar', ['uses' => 'CompraController@salvar', 'as' => 'compra.salvar']);
         Route::put('add-compra/{id}', ['uses' => 'CompraController@addCompra', 'as' => 'compra.addCompra']);
+        Route::put('add-cotacao-comprovante/{id}', ['uses' => 'CompraController@addComprovante', 'as' => 'compra.addComprovante']);
         Route::get('deletar-compra/{id}', ['uses' => 'CompraController@deletarCompra', 'as' => 'compra.deletarCompra']);
+        Route::get('deletar-cotacao/{id}', ['uses' => 'CompraController@deletarCotacao', 'as' => 'compra.deletarCotacao']);
         Route::get('editar-compra/{id}', ['uses' => 'CompraController@verificarSolicitacao', 'as' => 'compra.editar']);
         Route::put('atualizar-compra/{id}', ['uses' => 'CompraController@atualizarCompra', 'as' => 'compra.atualizarCompra']);
-        
+        Route::get('aprovar-cotacao/{compraId}/{cotacaoId}', ['uses' => 'CompraController@aprovarCotacao', 'as' => 'compra.aprovarCotacao']);
 
     });
     // FIM ROTAS DE COMPRA
@@ -166,8 +180,6 @@ Route::group(['prefix' => 'solicitacao','middleware' => ['check.user.role:ADVOGA
         Route::put('add-translado/{id}', ['uses' => 'ReembolsoController@addTranslado', 'as' => 'reembolso.addTranslado']);
         Route::put('add-despesa/{id}', ['uses' => 'ReembolsoController@addDespesa', 'as' => 'reembolso.addDespesa']);
         
-
-
     });
     // FIM ROTAS DE REEMBOLSO
 

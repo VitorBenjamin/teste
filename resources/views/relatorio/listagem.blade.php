@@ -30,6 +30,7 @@
 							<div class="col-md-4">
 								<label for="clientes_id">Cliente</label>
 								<select id="clientes_id" name="clientes_id" class="form-control show-tick" data-live-search="true" required>
+									<option value="">SELECIONE</option>
 									@foreach ($clientes as $cliente)
 									<option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
 									@endforeach
@@ -38,8 +39,8 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<div class="form-line">
-										<label for="data_final">De</label>
-										<input disabled type="text" name="data_final" value="{{date('d-m-Y',strtotime($data_inicial))}}" class="datepicker form-control" placeholder="Escolha uma Data" required/>
+										<label for="data_inicial">De</label>
+										<input disabled type="text" id="data_inicial" name="data_inicial" class="datepicker form-control" placeholder="Escolha uma Data" required/>
 									</div>
 								</div>
 							</div>

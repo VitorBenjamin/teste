@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <script type="text/javascript">
     var urlDeletar = "{{route('solicitacao.deletar')}}";
 </script>
@@ -165,6 +164,9 @@
                                                 <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
                                                 <a href="{{ route(strtolower($andamento->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $andamento->tipo).'.analisar', $andamento->id)}}" class="btn bg-blue-grey btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$andamento->tipo}}">
                                                     <i class="material-icons">search</i>
+                                                </a>
+                                                <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$andamento->id}}" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$andamento->tipo}}">
+                                                    <i class="material-icons">delete_sweep</i>
                                                 </a>
                                             </div>
                                         </td>

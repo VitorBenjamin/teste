@@ -20,7 +20,7 @@ use App\Solicitante;
 use App\Cliente;
 use App\AreaAtuacao;
 use App\Status;
-
+use PDF;
 
 class ReembolsoController extends Controller
 {
@@ -33,6 +33,22 @@ class ReembolsoController extends Controller
     	return view('reembolso.index',compact('solicitacao'));
     }
 
+    public function print($id)
+    {
+        $lista = array();
+        $solicitacaoHelper = new SolicitacaoHelper();
+        $solicitacao = Solicitacao::find($id);
+        $lista = $solicitacaoHelper->reembolsoPrint($solicitacao,$lista);
+        usort($lista, function($a, $b) {
+            return $a['data'] <=> $b['data'];
+        });
+        //dd($lista);
+        //$pdf = PDF::loadView('layouts._includes.impressao._reembolso',compact('solicitacao','lista'));
+        //$pdf::render();
+        //return $pdf->download('cliente.pdf');
+        //return redirect()->back();
+        return view('layouts._includes.impressao._reembolso', compact('solicitacao','lista'));
+    }
 
 
     //Retorna a View de cadastro da unidade

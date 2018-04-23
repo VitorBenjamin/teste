@@ -53,10 +53,33 @@ class ViagemController extends Controller
     {
 
         $solicitacao = Solicitacao::with('viagem','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
-        //dd($solicitacao);
+        $finalizar = false;
+        foreach ($solicitacao->viagem as $key => $viagem) {
+            if ($viagem->anexo_passagem) {
+                $finalizar = true;
+            }else{
+                $finalizar = false;
+                break;
+            }
+            if ($viagem->hospedagens) {
+                if ($viagem->hospedagens->anexo_hospedagem) {
+                    $finalizar = true;
+                }else{
+                    $finalizar = false;
+                    break;
+                }
+            }
+            if ($viagem->locacoes->anexo_locacao) {
+                if ($viagem->locacoes->anexo_locacao) {
+                    $finalizar = true;
+                }else{
+                    $finalizar = false;
+                    break;
+                }
+            }
+        }
 
-        return view('viagem.analiseViagem', compact('solicitacao'));
-
+        return view('viagem.analiseViagem', compact('solicitacao','finalizar'));
     }
 
 
@@ -231,7 +254,7 @@ class ViagemController extends Controller
             $viagem->save();
         }
         if ($request->custo_hospedagem) {
-            $data2 = [
+            $hospedagem = [
                 'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao_hospedagem)),
                 'observacao' => $request->observacao_hospedagem,
                 'custo_hospedagem' => $request->custo_hospedagem,
@@ -241,14 +264,16 @@ class ViagemController extends Controller
             if ($viagem->hospedagens) {
                 $hospedagem = $viagem->hospedagens;
                 $hospedagem->update($data2);
+                $hospedagem->save();
             }else{
                 $hospedagem = Hospedagem::create($data2);
                 $viagem->update(['hospedagens_id' => $hospedagem->id]);
             }
             
         }
+
         if ($request->custo_locacao) {
-            $data3 = [
+            $locacao = [
                 'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao_locacao)),
                 'observacao' => $request->observacao_locacao,
                 'valor' => $request->custo_locacao,
@@ -257,16 +282,19 @@ class ViagemController extends Controller
             if ($viagem->locacoes) {
                 $locacao = $viagem->locacoes;
                 $locacao->update($data3);
+                $locacao->save();
             }else{
                 $locacao = Locacao::create($data3);
                 $viagem->update(['locacoes_id' => $locacao->id]);
             }
             
         }
+        
         \Session::flash('flash_message',[
             'msg'=>"Cotações Adiciondas com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
         ]);
+
         $solicitacao = Solicitacao::find($id);
         return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.analisar', $solicitacao->id);
     }

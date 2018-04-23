@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Despesa;
 use App\Processo;
 use App\Hospedagem;
@@ -23,7 +24,6 @@ class SolicitacaoRepository
     }
     public function create($request,$tipo)
     {
-
         $data = self::montaData($request);
         $data['codigo'] = random_int(100, 99999);
         $data['tipo'] = $tipo;
@@ -42,6 +42,7 @@ class SolicitacaoRepository
                 $data['processos_id'] = $processo->id;
             }
         }
+        
         $solicitacao = Solicitacao::create($data);
         $status = Status::where('descricao',config('constantes.status_aberto'))->first();
         $solicitacao->status()->attach($status);
@@ -51,71 +52,80 @@ class SolicitacaoRepository
 
     private function montaData($data)
     {
+        $id = DB::table('clientes')->select('id')->where('nome','Mosello Lima')->first();
         if ($data->origem_despesa == "CLIENTE") {
 
             $dados = [   
-
                 'urgente' => $data->urgente,
                 'origem_despesa' => $data->origem_despesa,
                 'contrato' => $data->contrato == null ? null : $data->contrato,
                 'area_atuacoes_id'=>$data->area_atuacoes_id,
-                'clientes_id' => $data->clientes_id == null ? 243 : $data->clientes_id,
+                'clientes_id' => $data->clientes_id == null ? $id->id : $data->clientes_id,
                 'solicitantes_id' => $data->solicitantes_id == null ? null : $data->solicitantes_id,
                 'unidades_id' => auth()->user()->unidades_id,
                 'users_id' => auth()->user()->id,
+                'role' => auth()->user()->roles()->get(),
             ];
         }else{
             $dados = [   
-
                 'urgente' => $data->urgente,
                 'origem_despesa' => $data->origem_despesa,
                 'contrato' => null,
                 'area_atuacoes_id'=>$data->area_atuacoes_id,
-                'clientes_id' => 243,
+                'clientes_id' => $id->id,
                 'solicitantes_id' => null,
                 'unidades_id' => auth()->user()->unidades_id,
                 'users_id' => auth()->user()->id,
+                'role' => auth()->user()->roles()->get(),
             ];
         }
         return $dados;
     }
 
-    public function getSolicitacaoFinanceiro($status2)
+    public function getSolicitacaoFinanceiro($statu)
     {
         //  $status = Status::with(['solicitacao' => function($q){
         //     $q->select('id','codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato')->take(10);
         //  }])->where('descricao',$status)->first();
 
-        $status = Status::with(['solicitacao' => function($q) use ($status2)
+        $status = Status::with(['solicitacao' => function($q) use ($statu)
         {
-            if ($status2 == config('constantes.status_aprovado') || $status2 == config('constantes.status_recorrente')) {
+            if ($statu == config('constantes.status_aprovado') || $statu == config('constantes.status_recorrente')) {
                 $q
                 ->where('tipo','<>','VIAGEM')
                 ->where('tipo','<>','COMPRA')
                 ->orderBy('created_at');
-            }else {
+            }elseif ($statu == "FINALIZADO") {
+                $q
+                ->take(20)
+                ->orderBy('created_at');
+            }else{
                 $q->orderBy('created_at');
             }
             
-        }])->where('descricao',$status2)->first();
+        }])->where('descricao',$statu)->first();
 
         $solicitacoes = $this->valorTotalAdvogado($status);
         return $solicitacoes;
     }
-    public function getSolicitacaoAdministrativo($status)
+    public function getSolicitacaoAdministrativo($statu)
     {
-        //  $status = Status::with(['solicitacao' => function($q){
-        //     $q->select('id','codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato')->take(10);
-        //  }])->where('descricao',$status)->first();
-
-        $status = Status::with(['solicitacao' => function($q)
+        $status = Status::with(['solicitacao' => function($q) use ($statu)
         {
-            $q
-            ->where('tipo','=','VIAGEM')
-            ->orWhere('tipo','=','COMPRA')
-            ->orderBy('created_at');
-
-        }])->where('descricao',$status)->first();
+            if ($statu == "FINALIZADO") 
+            {
+                $q
+                ->take(20)
+                ->where('tipo','=','VIAGEM')
+                ->orWhere('tipo','=','COMPRA')
+                ->orderBy('created_at');
+            }else{
+                $q
+                ->where('tipo','=','VIAGEM')
+                ->orWhere('tipo','=','COMPRA')
+                ->orderBy('created_at');
+            }
+        }])->where('descricao',$statu)->first();
 
         $solicitacoes = $this->valorTotalAdvogado($status);
         return $solicitacoes;
@@ -123,10 +133,6 @@ class SolicitacaoRepository
 
     public function getSolicitacaoAdvogado($status)
     {
-        //  $status = Status::with(['solicitacao' => function($q){
-        //     $q->select('id','codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato')->take(10);
-        //  }])->where('descricao',$status)->first();
-
         $status = Status::with(['solicitacao' => function($q)
         {
             $q->where('users_id',auth()->user()->id)->orderBy('created_at');
@@ -136,7 +142,7 @@ class SolicitacaoRepository
         return $solicitacoes;
     }
 
-    public function getSolicitacaoCoordenador($status)
+    public function getSolicitacaoCoordenador($statu)
     {
         $area_id = array();
         $advogados = array();
@@ -147,35 +153,88 @@ class SolicitacaoRepository
         {
             array_push($area_id,$limite->area_atuacoes_id);
         }
-
         foreach (auth()->user()->clientes as $cliente) 
         {
             array_push($clientes,$cliente->id);
         }
-        
         foreach (auth()->user()->users as $advogado) 
         {
             array_push($advogados,$advogado->id);
         }
-        //array_push($advogados, auth()->user()->id);
-        
-        //dd($limites);
+        if ($statu == "FINALIZADO") 
+        {
+            $take = "take(3)";
+        }else{
+            $take = "take(999)";
+        }
         if (!empty($area_id)) 
         {
-            $status = Status::with(['solicitacao' => function($q) use ($area_id,$advogados,$clientes)
-            {           
-
-                $q
-                ->whereIn('area_atuacoes_id', $area_id)
-                ->whereIn('users_id', $advogados)
-                ->whereIn('clientes_id', $clientes)
-                ->where('users_id','<>',auth()->user()->id);
-            }])->where('descricao',$status)->first();
+            $status = Status::with(['solicitacao' => function($q) use ($area_id,$advogados,$clientes,$statu)
+            {     
+                if ($statu == "FINALIZADO") 
+                {
+                    $q
+                    ->take(20)
+                    ->whereIn('area_atuacoes_id', $area_id)
+                    ->whereIn('users_id', $advogados)
+                    ->whereIn('clientes_id', $clientes)
+                    ->where('users_id','<>',auth()->user()->id)
+                    ->where('role','<>',"ADMINISTRATIVO");
+                }else{
+                    $q
+                    ->whereIn('area_atuacoes_id', $area_id)
+                    ->whereIn('users_id', $advogados)
+                    ->whereIn('clientes_id', $clientes)
+                    ->where('users_id','<>',auth()->user()->id)
+                    ->where('role','<>',"ADMINISTRATIVO");
+                }      
+            }])->where('descricao',$statu)->first();
         }else {
             $status = Status::with('solicitacao')->where('descricao',$status)->first();
         }
-        //dd($status);
         $solicitacoes = $this->valorTotalCoordenador($status,$limites);
+
+        /* INICIO ADMINISTRATIVO */
+        if (auth()->user()->diretor) {
+            $status2 = Status::with(['solicitacao' => function($q)
+            {           
+                $q->where('role',"ADMINISTRATIVO");
+
+            }])->where('descricao',$statu)->first();
+
+            $solicitacoes2 = $this->valorTotalAdvogado($status2);
+            $solicitacoes = $this->pushSolicitacao($solicitacoes,$solicitacoes2);
+        }elseif (auth()->user()->diretor_fina) {
+            $status2 = Status::with(['solicitacao' => function($q)
+            {           
+                $q->where('role',"FINANCEIRO");
+
+            }])->where('descricao',$statu)->first();
+
+            $solicitacoes2 = $this->valorTotalAdvogado($status2);
+            $solicitacoes = $this->pushSolicitacao($solicitacoes,$solicitacoes2);
+        }
+
+        /* FIM ADMINISTRATIVO */
+        return $solicitacoes;
+    }
+    public function pushSolicitacao($solicitacoes,$pushSolici)
+    {
+        foreach ($pushSolici->solicitacao as $value) {
+            $solicitacoes->solicitacao->push($value);
+        }
+        return $solicitacoes;
+    }
+    public function getSolicitacaoDiretor($status)
+    {
+
+        $status = Status::with(['solicitacao' => function($q) use ($area_id,$advogados,$clientes)
+        {           
+            $q->where('role',"ADMINISTRATIVO");
+
+        }])->where('descricao',$status)->first();
+
+        $solicitacoes = $this->valorTotalAdvogado($status);
         return $solicitacoes;
     }
 
@@ -217,7 +276,7 @@ class SolicitacaoRepository
     public function getRange($total, $limites, $s)
     {
         $area_id = array();
-        
+
         foreach ($limites as $limite) 
         {
 
@@ -267,7 +326,7 @@ class SolicitacaoRepository
     public function getUnidadeLimites($total, $limites, $s)
     {
         $area_id = array();
-        
+
         foreach ($limites as $limite) 
         {
 
@@ -574,20 +633,19 @@ class SolicitacaoRepository
         return $total;
     }
 
-    public function andamento($id)
-    {
-        $aberto = Status::where('descricao',config('constantes.status_aberto'))->first();
-        $andamento = Status::where('descricao',config('constantes.status_andamento'))->first();
-        $solicitacao = Solicitacao::find($id);      
-        $solicitacao->status()->detach($aberto);
-        $solicitacao->status()->attach($andamento);
-        return redirect()->route('solicitacao.index');
-
-    }
+    // public function andamento($id)
+    // {
+    //     $aberto = Status::where('descricao',config('constantes.status_aberto'))->first();
+    //     $andamento = Status::where('descricao',config('constantes.status_andamento'))->first();
+    //     $solicitacao = Solicitacao::find($id);      
+    //     $solicitacao->status()->detach($aberto);
+    //     $solicitacao->status()->attach($andamento);
+    //     return redirect()->route('solicitacao.index');
+    // }
 
     public function deletar(Request $request)
     {
-        //echo "asdasdasdasdasd";
+
         $solicitacao = Solicitacao::where('id',$request->id)->with('status')->first();
         foreach ($solicitacao->status as $status) {
 
@@ -614,5 +672,4 @@ class SolicitacaoRepository
         }
         return route('solicitacao.index');
     }
-
 }

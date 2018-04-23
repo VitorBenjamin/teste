@@ -18,7 +18,7 @@ class Hospedagem extends Model
     
     /** Consulta a viagem por Comprovante
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+    */
 
     public function viagem(){
 

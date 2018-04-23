@@ -102,7 +102,8 @@
 									<select id="banco" name="banco" class="form-control show-tick" required>
 										<option value="BANCO DO BRASIL">BANCO DO BRASIL</option>										
 										<option value="ITAU">ITAU</option>
-										<option value="BRADESCO">BRADESCO</option>								
+										<option value="BRADESCO">BRADESCO</option>
+										<option value="CAIXA">CAIXA</option>								
 									</select>
 								</div>
 

@@ -29,14 +29,17 @@
 						</div>
 					</div>
 					@role(['ADMINISTRATIVO','FINANCEIRO'])
+					@if($solicitacao->status()->get()[0]->descricao != config('constantes.status_finalizado'))
 					<div class="col-sm-2">
 						<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group" style="margin-top: 40px">
 							<a data-toggle="modal" data-target="#modalComprovante" class="btn bg-orange waves-effect" role="button">
-							<i class="material-icons">edit</i>
-							<span>EDITAR</span></a>
+								<i class="material-icons">edit</i>
+								<span>EDITAR</span>
+							</a>
 						</div>
 					</div>
 					@include('layouts._includes.solicitacoes._editComprovante')
+					@endif
 					@endrole
 				</div>
 				@endforeach
@@ -44,3 +47,4 @@
 		</div>
 	</div> 												
 </div>
+

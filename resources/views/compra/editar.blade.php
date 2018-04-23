@@ -67,7 +67,6 @@
 				<div class="modal-header">
 					<h4 class="modal-title" id="largeModalLabel">Adicione um Produto</h4>
 				</div>
-				<!-- INCIO SESSÃO VIAGEM -->
 				<div class="modal-body">
 					<form action="{{ route('compra.addCompra',$solicitacao->id)}}" method="POST">
 						{{ csrf_field() }}
@@ -108,12 +107,6 @@
 														</div>
 													</div>								
 												</div>
-												<!-- <div class="col-md-2" style="margin-top: 20px">
-													<button class="btn btn-primary btn-lg waves-effect">
-														<i class="material-icons">save</i>
-														<span>ADD PRODUTO</span> 
-													</button>
-												</div> -->
 											</div>
 										</div>
 									</div>
@@ -127,7 +120,6 @@
 									<span>ADD PRODUTO</span>
 								</button>
 							</div>
-							<!-- <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button> -->
 							<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCELAR</button>
 						</div>
 					</form>

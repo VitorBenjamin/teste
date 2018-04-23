@@ -108,7 +108,25 @@ class CompraController extends Controller
 		]);
 		return redirect()->route('compra.editar', $compra->solicitacoes_id);
 	}
-	
+	public function aprovarCotacao($compraId,$cotacaoId)
+	{
+		$cotacoes = Cotacao::where('compras_id',$compraId)->get();
+		foreach ($cotacoes as $cota) {
+			if ($cota->id == $cotacaoId) {
+				
+				$cota->aprovado = 1;
+				$cota->save();
+			}else{
+				$cota->aprovado = 0;
+				$cota->save();
+			}
+		}
+		\Session::flash('flash_message',[
+			'msg'=>"Compravente Cadastrado com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+		return redirect()->back();
+	}
 	public function addCotacao(Request $request,$id)
 	{
 		//dd($request->all());
@@ -130,28 +148,31 @@ class CompraController extends Controller
 				'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao[$key])),
 				'fornecedor' => $request->fornecedor[$key],
 				'quantidade' => $request->quantidade[$key],
-				'valor' => floatval($request->valor[$key]),
+				'valor' => $request->valor[$key],
 				'compras_id' => $request->compras_id,
 			];
-			$mime = $request->file('anexo_comprovante')[$key]->getClientMimeType();
-			$data['solicitacoes_id'] = $id;
-			if ($mime == "image/jpeg" || $mime == "image/png") {
-				$file = Image::make($request->file('anexo_comprovante')[$key]);
-				$img_64 = (string) $file->encode('data-url');
-				$data['anexo_comprovante'] = $img_64;
-			}elseif ($mime == "application/pdf") {
-				$today = (string) date("Y-m-d");
-				$fileName = $today.'_'.$id.'_'.$request->file('anexo_comprovante')[$key]->getClientOriginalName();    
-				$request->anexo_comprovante[$key]->storeAs('public/cotacoes',$fileName);
-				$data['anexo_pdf'] = $fileName;
-			}else{
+			// if ($request->file('anexo_comprovante')[$key]) {
 
-				Session::flash('flash_message',[
-					'msg'=>"Arquivo não suportado!!!",
-					'class'=>"alert bg-orange alert-dismissible"
-				]);
-				return redirect()->back();
-			}
+			// 	$mime = $request->file('anexo_comprovante')[$key]->getClientMimeType();
+			// 	$data['solicitacoes_id'] = $id;
+			// 	if ($mime == "image/jpeg" || $mime == "image/png") {
+			// 		$file = Image::make($request->file('anexo_comprovante')[$key]);
+			// 		$img_64 = (string) $file->encode('data-url');
+			// 		$data['anexo_comprovante'] = $img_64;
+			// 	}elseif ($mime == "application/pdf") {
+			// 		$today = (string) date("Y-m-d");
+			// 		$fileName = $today.'_'.$id.'_'.$request->file('anexo_comprovante')[$key]->getClientOriginalName();    
+			// 		$request->anexo_comprovante[$key]->storeAs('public/cotacoes',$fileName);
+			// 		$data['anexo_pdf'] = $fileName;
+			// 	}else{
+
+			// 		Session::flash('flash_message',[
+			// 			'msg'=>"Arquivo não suportado!!!",
+			// 			'class'=>"alert bg-orange alert-dismissible"
+			// 		]);
+			// 		return redirect()->back();
+			// 	}
+			// }
 			
 			$cotacao = Cotacao::create($data);
 			//dd($cotacao);
@@ -163,6 +184,34 @@ class CompraController extends Controller
 		
 		return redirect()->back();
 	}
+	public function addComprovante(Request $request,$id){
+		$cotacoes = Cotacao::where('compras_id',$id)->get();
+		
+		foreach ($cotacoes as $cota) {
+			if ($cota->aprovado) {
+				if ($request->file('anexo_comprovante')) {
+					$mime = $request->file('anexo_comprovante')->getClientMimeType();
+					if ($mime == "image/jpeg" || $mime == "image/png") {
+						$file = Image::make($request->file('anexo_comprovante'));
+						$img_64 = (string) $file->encode('data-url');
+						$cota->anexo_comprovante = $img_64;
+					}
+				}
+				$cota->data_compra = $request->data_compra;
+				$cota->save();
+			}else{
+				$cota->data_compra = null;
+				$cota->anexo_comprovante = null;
+				$cota->save();
+			}
+		}
+		\Session::flash('flash_message',[
+			'msg'=>"Comprovante Cadastrado com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+		return redirect()->back();
+	}
+
 	public function addCompra(Request $request,$id){
 		Compra::create([
 			'data_compra' => date('Y-m-d', strtotime($request->data_compra)),
@@ -176,13 +225,23 @@ class CompraController extends Controller
 		]);
 		return redirect()->route('compra.editar',$id);
 	}
+	public function deletarCotacao($id)
+	{
+		$cotacao = Cotacao::find($id);
+		$cotacao->delete();
+		\Session::flash('flash_message',[
+			'msg'=>"Cotação Removida com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+		return redirect()->back();
+	}
 	//Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
 	public function deletarCompra($id)
 	{        
 
-		$translado = Compra::find($id);
-		$s_id = $translado->solicitacoes_id;
-		$translado->delete();
+		$Compra = Compra::find($id);
+		$s_id = $Compra->solicitacoes_id;
+		$Compra->delete();
 		\Session::flash('flash_message',[
 			'msg'=>"Compra Removida com Sucesso!!!",
 			'class'=>"alert bg-red alert-dismissible"

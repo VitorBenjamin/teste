@@ -45,11 +45,6 @@
                             </a>
                         </li>
                         <li class="azed-tab">
-                            <a href="" data-toggle="tab" role="tab" data-target="#finalizada">
-                                <i style="color: #3ecc1b" class="material-icons">done_all</i> FINALIZADO <span class="badge">{{count($finalizadas->solicitacao)}}</span>
-                            </a>
-                        </li>
-                        <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#devolvido">
                                 <i style="color: #deb422" class="material-icons">restore_page</i> DEVOLVIDO <span class="badge">{{count($devolvidas->solicitacao)}}</span>
                             </a>
@@ -57,6 +52,11 @@
                         <li class="azed-tab">
                             <a href="" data-toggle="tab" role="tab" data-target="#recorrente">
                                 <i style="color: #30b1b1" class="material-icons">hourglass_empty</i> RECORRENTE <span class="badge">{{count($recorrentes->solicitacao)}}</span>
+                            </a>
+                        </li>
+                        <li class="azed-tab">
+                            <a href="" data-toggle="tab" role="tab" data-target="#finalizada">
+                                <i style="color: #3ecc1b" class="material-icons">done_all</i> FINALIZADO <span class="badge">{{count($finalizadas->solicitacao)}}</span>
                             </a>
                         </li>
                     </ul>
@@ -110,47 +110,6 @@
                         </div>
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
                         
-                        <!-- LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
-                        <div id="finalizada" class="tab-pane fade in" role="tabpanel">
-                            <table id="finalizada" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>ID</th>
-                                        <th>Data</th>
-                                        <th>Drª</th>
-                                        <th>Cliente</th>
-                                        <th>Tipo</th>
-                                        <th>Solicitante</th>
-                                        <th>Valor</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($finalizadas->solicitacao as $finalizada)
-                                    <tr>
-                                        <td></td>
-                                        <td>{{ $finalizada->id }}</td>
-                                        <td>{{ date('d/m/Y',strtotime($finalizada->created_at)) }}</td>
-                                        <td>{{ $finalizada->user->nome}}</td>
-                                        <td class="quebra-texto">{{ $finalizada->cliente == null ? 'MOSELLO LIMA' : $finalizada->cliente->nome }}</td>
-                                        <td>{{ $finalizada->tipo }}</td>
-                                        <td>{{ $finalizada->solicitante == null ? 'ADVOGADO' : $finalizada->solicitante->nome}}</td>
-                                        <td>{{ 'R$ '.number_format($finalizada->total, 2, ',', '.') }}</td>
-                                        <td class="acoesTD">
-                                            <div class="icon-button-demo" >
-                                                <a href="{{ route(strtolower($finalizada->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizada->tipo).'.analisar', $finalizada->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$finalizada->tipo}}">
-                                                    <i class="material-icons">search</i>
-                                                </a>                                            
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
-
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
                         <div id="devolvido" class="tab-pane fade in" role="tabpanel">
                             <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
@@ -242,6 +201,48 @@
                             </table>
                         </div>
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM recorrente -->
+
+                        <!-- LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
+                        <div id="finalizada" class="tab-pane fade in" role="tabpanel">
+                            <table id="finalizada" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>ID</th>
+                                        <th>Data</th>
+                                        <th>Drª</th>
+                                        <th>Cliente</th>
+                                        <th>Tipo</th>
+                                        <th>Solicitante</th>
+                                        <th>Valor</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($finalizadas->solicitacao as $finalizada)
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ $finalizada->id }}</td>
+                                        <td>{{ date('d/m/Y',strtotime($finalizada->created_at)) }}</td>
+                                        <td>{{ $finalizada->user->nome}}</td>
+                                        <td class="quebra-texto">{{ $finalizada->cliente == null ? 'MOSELLO LIMA' : $finalizada->cliente->nome }}</td>
+                                        <td>{{ $finalizada->tipo }}</td>
+                                        <td>{{ $finalizada->solicitante == null ? 'ADVOGADO' : $finalizada->solicitante->nome}}</td>
+                                        <td>{{ 'R$ '.number_format($finalizada->total, 2, ',', '.') }}</td>
+                                        <td class="acoesTD">
+                                            <div class="icon-button-demo" >
+                                                <a href="{{ route(strtolower($finalizada->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizada->tipo).'.analisar', $finalizada->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$finalizada->tipo}}">
+                                                    <i class="material-icons">search</i>
+                                                </a>                                            
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
+
                     </div>
                 </div>
             </div>

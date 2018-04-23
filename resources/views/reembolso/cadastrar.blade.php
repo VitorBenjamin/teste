@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <script type="text/javascript">
 	var urlClientes = "{{route('cliente.getCliente')}}";

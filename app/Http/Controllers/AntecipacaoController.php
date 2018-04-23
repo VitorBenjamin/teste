@@ -145,8 +145,8 @@ class AntecipacaoController extends Controller
 		$solicitacao = $soli;
 		$areas = AreaAtuacao::all('id','tipo'); 
 		$clientes = Cliente::all('id','nome');
-		//$solicitantes = Solicitante::all('id','nome');
-
+		// $solicitantes = Solicitante::all('id','nome');
+		
 		return view('antecipacao.editar', compact('solicitacao','clientes','areas'));
 	}
 
