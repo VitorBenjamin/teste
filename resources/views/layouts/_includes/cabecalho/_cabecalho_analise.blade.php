@@ -13,7 +13,16 @@
 					@endrole
 				</div>
 			</div>
-			
+			@if ($solicitacao->aprovador)
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-6 col-sm-3">
+						<h5>APROVADA POR -> {{$solicitacao->aprovador->nome}}</h5>
+					</div>
+
+				</div>
+			</div>
+			@endif
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-6 col-sm-1">

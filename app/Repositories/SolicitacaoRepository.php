@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Junity\Hashids\Facades\Hashids;
 use App\Despesa;
 use App\Processo;
 use App\Hospedagem;
@@ -25,7 +26,7 @@ class SolicitacaoRepository
     public function create($request,$tipo)
     {
         $data = self::montaData($request);
-        $data['codigo'] = random_int(100, 99999);
+        //$data['codigo'] = random_int(100, 99999);
         $data['tipo'] = $tipo;
         if ($request->processo != "") 
         {
@@ -42,8 +43,10 @@ class SolicitacaoRepository
                 $data['processos_id'] = $processo->id;
             }
         }
-        
+
         $solicitacao = Solicitacao::create($data);
+        $solicitacao->codigo = Hashids::encode($solicitacao->id);
+        $solicitacao->save();
         $status = Status::where('descricao',config('constantes.status_aberto'))->first();
         $solicitacao->status()->attach($status);
 
@@ -52,7 +55,7 @@ class SolicitacaoRepository
 
     private function montaData($data)
     {
-        $id = DB::table('clientes')->select('id')->where('nome','Mosello Lima')->first();
+        $id = DB::table('clientes')->select('id')->where('nome','MOSELLO LIMA')->first();
         if ($data->origem_despesa == "CLIENTE") {
 
             $dados = [   
@@ -64,7 +67,7 @@ class SolicitacaoRepository
                 'solicitantes_id' => $data->solicitantes_id == null ? null : $data->solicitantes_id,
                 'unidades_id' => auth()->user()->unidades_id,
                 'users_id' => auth()->user()->id,
-                'role' => auth()->user()->roles()->get(),
+                'role' => auth()->user()->roles()->first()->name,
             ];
         }else{
             $dados = [   
@@ -76,7 +79,7 @@ class SolicitacaoRepository
                 'solicitantes_id' => null,
                 'unidades_id' => auth()->user()->unidades_id,
                 'users_id' => auth()->user()->id,
-                'role' => auth()->user()->roles()->get(),
+                'role' => auth()->user()->roles()->first()->name,
             ];
         }
         return $dados;
@@ -102,7 +105,7 @@ class SolicitacaoRepository
             }else{
                 $q->orderBy('created_at');
             }
-            
+
         }])->where('descricao',$statu)->first();
 
         $solicitacoes = $this->valorTotalAdvogado($status);
@@ -163,7 +166,7 @@ class SolicitacaoRepository
         }
         if ($statu == "FINALIZADO") 
         {
-            $take = "take(3)";
+            $take = "take(30)";
         }else{
             $take = "take(999)";
         }
@@ -210,11 +213,10 @@ class SolicitacaoRepository
                 $q->where('role',"FINANCEIRO");
 
             }])->where('descricao',$statu)->first();
-
+            //dd($status2);
             $solicitacoes2 = $this->valorTotalAdvogado($status2);
             $solicitacoes = $this->pushSolicitacao($solicitacoes,$solicitacoes2);
         }
-
         /* FIM ADMINISTRATIVO */
         return $solicitacoes;
     }
@@ -625,10 +627,14 @@ class SolicitacaoRepository
     public function totalAntecipacao($antecipacoes)
     {
         $total = 0;
+        //$solicitadd($antecipacoes);
         if ($antecipacoes->antecipacao != null ) {
             foreach ($antecipacoes->antecipacao as $antecipacao) {
                 $total += $antecipacao->valor;
             }
+        }
+        foreach ($antecipacoes->despesa as $despesa) {
+            $total += $despesa->valor;
         }
         return $total;
     }

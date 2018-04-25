@@ -19,6 +19,11 @@
 	<i class="material-icons">done_all</i>
 	<span>FINALIZAR</span>
 </a>
+@elseif($solicitacao->tipo == "ANTECIPAÇÃO" && $solicitacao->status()->get()[0]->descricao == config('constantes.status_aprovado'))
+<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-light-green waves-effect {{count($solicitacao->antecipacao[0]->anexo_comprovante) ? '' : 'not-active'}}" role="button" {{count($solicitacao->antecipacao[0]->anexo_comprovante) ? '' : 'disabled'}}>
+	<i class="material-icons">done_all</i>
+	<span>FINALIZAR</span>
+</a>
 @else
 <a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-light-green waves-effect " role="button">
 	<i class="material-icons">done_all</i>
@@ -26,8 +31,8 @@
 </a>
 @endif
 @if($solicitacao->tipo == "COMPRA" && $solicitacao->status()->get()[0]->descricao != config('constantes.status_aprovado')) 
-<a  data-toggle="modal" data-target="#modalDevolver" class="btn bg-lime waves-effect {{$finalizar ? '' : 'not-active'}}" role="button" {{$finalizar ? '' : 'disabled'}}>
-<i class="material-icons">report_problem</i>
+<a data-toggle="modal" data-target="#modalDevolver" class="btn bg-lime waves-effect {{$finalizar ? '' : 'not-active'}}" role="button" {{$finalizar ? '' : 'disabled'}}>
+	<i class="material-icons">report_problem</i>
 	<span>DEVOLVER</span>
 </a>
 @endif										

@@ -86,7 +86,7 @@ class SolicitacaoHelper
             [
                 'data' => date('d-m-Y',strtotime($t->data_translado)),
                 'codigo' => $s->codigo,
-                'descricao' => $t->origem. '-' .$t->destino. '-' .$t->distancia . 'KM',
+                'descricao' => 'TRANSLADO - ' .$t->origem. '-' .$t->destino. '-' .$t->distancia . 'KM',
                 'valor' => $t->distancia * ($s->cliente == null ? config('constantes.km') : $s->cliente->valor_km),
                 'img' => null,
             ];
@@ -159,11 +159,11 @@ class SolicitacaoHelper
         foreach ($s->guia as $guia) {
             $lista[] = 
             [
-                'data' => date('d-m-Y',strtotime($s->comprovante->data)),
+                'data' => date('d-m-Y',strtotime($s->comprovante[0]->data)),
                 'codigo' => $s->codigo,
                 'descricao' => 'GUIA - '.$guia->perfil_pagamento. ' - ' .$guia->banco. ' - ' .$guia->tipoGuia()->first()->descricao,
                 'valor' => $guia->valor,
-                'img' => $s->comprovante->anexo,
+                'img' => $s->comprovante[0]->anexo,
             ];
         }
         return $lista;

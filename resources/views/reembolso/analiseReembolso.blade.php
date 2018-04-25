@@ -45,6 +45,7 @@
 
 
 	<!-- LISTAGEM DOS TRANSLADOS  -->
+	@if (count($solicitacao->translado) > 0)
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -54,10 +55,9 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+					<table class="table table-bordered table-striped nowrap table-hover dataTable">
 						<thead>
 							<tr>
-								<th></th>
 								<th>Data</th>
 								<th>Origem</th>
 								<th>Destino</th>
@@ -69,7 +69,6 @@
 							@foreach ($solicitacao->translado as $translado)
 
 							<tr>
-								<td></td>
 								<td>{{date('d/m/Y',strtotime($translado->data_translado))}}</td>
 								<td>{{$translado->origem}}</td>
 								<td>{{$translado->destino}}</td>
@@ -83,9 +82,11 @@
 			</div>
 		</div>
 	</div>
+	@endif
 	<!-- FIM LISTAGEM DOS TRANSLADOS -->
 	
 	<!-- LISTAGEM DAS DESPESAS  -->
+	@if (count($solicitacao->despesa) > 0)
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -95,10 +96,9 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
+					<table class="table table-bordered table-striped table-hover dataTable">
 						<thead>
 							<tr>
-								<th></th>
 								<th>Data</th>
 								<th>Descricao</th>
 								<th>Comprovante</th>
@@ -108,7 +108,6 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th></th>
 								<th>Data</th>
 								<th>Descricao</th>
 								<th>Comprovante</th>
@@ -119,7 +118,6 @@
 						<tbody>
 							@foreach ($solicitacao->despesa as $key => $despesa)
 							<tr>
-								<td></td>
 								<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 								<td>{{$despesa->descricao}}</td>
 								<td>{{$despesa->tipo_comprovante}}</td>
@@ -162,16 +160,8 @@
 			</div>
 		</div>
 	</div>
+	@endif
 	<!-- FIM LISTAGEM DOS DESPESAS -->
+
 </section>
 @endsection
-<!-- @push('scripts2')
-{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js') !!}
-{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.4.3/js/ajax-bootstrap-select.min.js') !!}
-@endpush
-@push('scripts')
-{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.5/waves.min.js') !!}
-{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js') !!}
-{!! Html::script('https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/dataTables.bootstrap.min.js') !!}
-{!! Html::script('https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js')!!}
-@endpush -->

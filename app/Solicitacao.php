@@ -13,7 +13,7 @@ class Solicitacao extends Model
      */ 
     protected $table = 'solicitacoes';
     protected $fillable = [
-        'codigo', 'data_finalizado' ,'urgente', 'tipo', 'origem_despesa', 'contrato', 'area_atuacoes_id', 'clientes_id', 'solicitantes_id', 'processos_id', 'unidades_id', 'users_id', 'relatorios_id'
+        'codigo', 'data_finalizado' ,'urgente', 'tipo', 'origem_despesa', 'contrato','role', 'aprovador_id','area_atuacoes_id', 'clientes_id', 'solicitantes_id', 'processos_id', 'unidades_id', 'users_id', 'relatorios_id'
     ];
     
     /** Consulta os status de  solicitação
@@ -134,6 +134,13 @@ class Solicitacao extends Model
     public function user()
     {
         return $this->belongsTo('App\User','users_id');
-    }    
+    }  
+    /** Consulta o usuário da solicitação
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function aprovador()
+    {
+        return $this->belongsTo('App\User','aprovador_id');
+    }   
 
 }

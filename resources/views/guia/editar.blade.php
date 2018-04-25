@@ -29,6 +29,8 @@
 				<div class="header">
 					<!-- <h2>Cabecalho da Viagem</h2> -->
 					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
+						@if (count($solicitacao->guia) == 0)
+						
 						<a data-toggle="modal" data-target="#modalGuia" class="btn bg-light-green waves-effect" role="button">
 							<i class="material-icons">exposure_plus_1</i>
 							<!-- <span class="hidden-xs">ADD</span> -->
@@ -42,6 +44,7 @@
 							<i class="material-icons">send</i>
 							<span>ENVIAR</span>
 						</a> -->
+						@endif
 					</div>
 				</div>
 				<form action="{{ route('solicitacao.atualizarCabecalho',$solicitacao->id)}}" method="POST">
@@ -146,8 +149,8 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<div class="form-line">
-											<label for="anexo_pdf">Anexar PDF</label>
-											<input style="margin-top: 10px " type="file" name="anexo_pdf" id="anexo_pdf" required/>
+											<label for="anexo_guia">Anexar Guia</label>
+											<input style="margin-top: 10px " type="file" name="anexo_guia" id="anexo_guia" accept=".jpg,.png" required/>
 										</div>
 									</div>								
 								</div>
@@ -171,10 +174,13 @@
 	<!-- FIM MODAL CADASTRO DA PRODUTO -->
 
 	<!-- LISTAGEM DA VIAGEM  -->
+	@if(count($solicitacao->comentarios)>0)
 	@include('layouts._includes._comentario')
+	@endif
 	<!-- FIM LISTAGEM DA VIAGEM  -->
 
 	<!-- LISTAGEM DA GUIA  -->
+	@if (count($solicitacao->guia)>0)
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -196,7 +202,7 @@
 								<th>Area</th>
 								<th>Tipo</th>
 								<th>Valor</th>
-								<th>PDF</th>
+								<th>Guia</th>
 								<th>Ações</th>																	
 							</tr>
 						</thead>
@@ -211,7 +217,7 @@
 								<th>Area</th>
 								<th>Tipo</th>
 								<th>Valor</th>
-								<th>PDF</th>
+								<th>Guia</th>
 								<th>Ações</th>
 							</tr>
 						</tfoot>
@@ -227,8 +233,12 @@
 								<td>{{$guia->tipoGuia()->first()->tipo}}</td>
 								<td>{{$guia->tipoGuia()->first()->descricao}}</td>
 								<td>{{  'R$ '.number_format($guia->valor, 2, ',', '.') }} </td>
-								<td><a target="_blank" href="{{URL::to('storage/guias/'.$guia->anexo_pdf)}}" class="btn btn-primary waves-effect">
-									<i class="material-icons">file_download</i>EXIBIR PDF</a>
+								<td>
+									<div class="zoom-gallery">
+										<a href="{{$guia->anexo_guia}}" data-source="{{$guia->anexo_guia}}" title="GUIA - {{date('d/m/Y',strtotime($guia->data_limite))}}" style="width:32px;height:32px;">
+											<img class="img_popup" src="{{$guia->anexo_guia}}" width="32" height="32">
+										</a>
+									</div>
 								</td>
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
@@ -246,6 +256,7 @@
 			</div>
 		</div> 												
 	</div>
+	@endif
 	<!-- FIM LISTAGEM DA ANTECIPAÇÃO -->
 </section>
 @endsection

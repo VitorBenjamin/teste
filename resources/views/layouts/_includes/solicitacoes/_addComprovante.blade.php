@@ -22,7 +22,7 @@
 						<div class="col-md-5">
 							<div class="form-group">
 								<div class="form-line">
-									<label style="margin-bottom: 20px" for="anexo">Comprovante da Pagamento (jpeg,png)</label>
+									<label style="margin-bottom: 20px" for="anexo">Comprovante do Pagamento (jpeg,png)</label>
 									<input type="file" name="anexo" id="anexo" accept="image/*" required/>
 								</div>
 							</div>

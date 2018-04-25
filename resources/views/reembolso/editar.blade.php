@@ -64,8 +64,9 @@
 	@include('layouts._includes._comentario')
 	@endif
 	<!-- FIM LISTAGEM DA VIAGEM  -->
-
+	
 	<!-- LISTAGEM DOS TRANSLADOS  -->
+	@if (count($solicitacao->translado) > 0)
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -131,9 +132,11 @@
 			</div>
 		</div>
 	</div>
+	@endif
 	<!-- FIM LISTAGEM DOS TRANSLADOS -->
 	
 	<!-- LISTAGEM DAS DESPESAS  -->
+	@if (count($solicitacao->despesa) > 0)
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -171,7 +174,7 @@
 								<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 								<td>{{$despesa->descricao}}</td>
 								<td>{{$despesa->tipo_comprovante}}</td>
-								<td>{{$despesa->valor}}</td>
+								<td>R$ {{$despesa->valor}}</td>
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
 										<a href="{{ route('reembolso.editarDespesa', $despesa->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float">
@@ -182,11 +185,7 @@
 											<i class="material-icons">delete_sweep</i>
 										</a>
 										<div class="zoom-gallery" style="display: inline;">
-											@if($despesa->anexo_pdf)
-											<span>
-												<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-											</span>
-											@elseif($despesa->anexo_comprovante)
+											@if($despesa->anexo_comprovante)
 											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="COMPROVANTE - {{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:35px;height:35px;">
 												<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="35" height="35">
 											</a>
@@ -202,6 +201,7 @@
 			</div>
 		</div>
 	</div>
+	@endif
 	<!-- FIM LISTAGEM DAS DESPESAS -->
 	
 	<!-- MODAL TRANSLADO -->
@@ -371,8 +371,8 @@
 												<div class="col-md-12">
 													<div class="form-group">
 														<div class="form-line">
-															<label for="anexo_comprovante">Envie um Arquivo (JPG,PNG,PDF)</label>
-															<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept=".pdf,.png,.jpg" required/>
+															<label for="anexo_comprovante">Envie um Arquivo (JPG,PNG)</label>
+															<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/png,image/jpg" required/>
 														</div>
 													</div>
 												</div>

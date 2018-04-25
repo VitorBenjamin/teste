@@ -58,6 +58,32 @@
 								</div>
 							</div>
 							<div class="col-md-2">
+								<div class="form-group{{ $errors->has('logradouro') ? ' has-error' : '' }}">
+									<div class="form-line">
+										<label for="logradouro">Logradrouro</label>
+										<input id="logradouro" type="text" class="form-control" name="logradouro" value="{{$cliente->logradouro}}">
+									</div>
+									@if ($errors->has('logradouro'))
+									<span class="help-block">
+										<strong>{{ $errors->first('logradouro') }}</strong>
+									</span>
+									@endif
+								</div>
+							</div>
+							<div class="col-md-1">
+								<div class="form-group{{ $errors->has('cep') ? ' has-error' : '' }}">
+									<div class="form-line">
+										<label for="cep">CEP</label>
+										<input id="cep" type="text" class="form-control" name="cep" value="{{$cliente->cep}}">
+									</div>
+									@if ($errors->has('cep'))
+									<span class="help-block">
+										<strong>{{ $errors->first('cep') }}</strong>
+									</span>
+									@endif
+								</div>
+							</div>
+							<div class="col-md-2">
 								<b>Valor do KM</b>
 								<div class="input-group">
 									<span class="input-group-addon">
@@ -93,7 +119,44 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="row clearfix">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="card">
+				<div class="header">
+					<h2>
+						LISTAGEM DOS SOLICITANTES
+					</h2>
+				</div>
+				<div class="body">
+					<table class="table table-bordered table-striped table-hover dataTable">
+						<thead>
+							<tr>
+								<th>Nome</th>
+								<th>E-mail</th>
+								<th>Telefone</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Nome</th>
+								<th>E-mail</th>
+								<th>Telefone</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							@foreach ($cliente->solicitante as $key => $soli)
+							<tr>
+								<td>{{$soli->nome}}</td>
+								<td>{{$soli->email}}</td>
+								<td>{{$soli->telefone}}</td>
+							</tr>							
+							@endforeach														
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 <div class="modal fade" id="addSolicitante" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
@@ -122,8 +185,8 @@
 							<div class="form-group{{ $errors->has('cpf') ? ' has-error' : '' }} form-float">
 								<div class="form-line">
 									<label for="cliente">Cliente</label>
-									<select id="cliente" name="clientes_id" class="form-control show-tick" data-live-search="true" data-size="7" disabled>
-										<option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
+									<select id="cliente" name="clientes_id" class="form-control show-tick not-active" data-live-search="true" data-size="7">
+										<option value="{{ $cliente->id }}" selected>{{ $cliente->nome }}</option>
 									</select>
 								</div>
 							</div>
@@ -144,7 +207,7 @@
 						<div class="col-md-6">
 							<div class="form-group{{ $errors->has('telefone') ? ' has-error' : '' }} form-float">
 								<div class="form-line">
-									<label>Telefone *</label>
+									<label>Telefone(s)</label>
 									<input id="telefone" type="type" class="form-control" name="telefone" value="{{ old('telefone') }}">
 									@if ($errors->has('telefone'))
 									<span class="help-block">
@@ -170,4 +233,6 @@
 		</div>
 	</div>
 </div>
+
+
 @endsection

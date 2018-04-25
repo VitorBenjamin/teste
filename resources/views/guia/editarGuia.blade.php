@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <section class="content">
 	<div class="block-header">
 		<h2>Atualização da Guia</h2>
@@ -98,14 +97,21 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<div class="form-line">
-											<label for="anexo_pdf">Alterar PDF</label>
-											<input style="margin-top: 10px" type="file" name="anexo_pdf" id="anexo_pdf"/>
+											<label for="anexo_guia">Alterar Guia</label>
+											<input style="margin-top: 10px" type="file" name="anexo_guia" id="anexo_guia" accept=".jpg,.png" />
 										</div>
 									</div>								
 								</div>
-								<div class="form-group">
-									<a style="margin-top: 20px" target="_blank" href="{{URL::to('storage/guias/'.$guia->anexo_pdf)}}" class="btn btn-primary waves-effect"><i class="material-icons">file_download</i>EXIBIR PDF</a>
+								<div class="col-md-2">
+									<div class="zoom-gallery">
+										<a href="{{$guia->anexo_guia}}" data-source="{{$guia->anexo_guia}}" title="GUIA - {{date('d/m/Y',strtotime($guia->data_limite))}}" style="width:32px;height:32px;">
+											<img class="img_popup" src="{{$guia->anexo_guia}}" width="32" height="32">
+										</a>
+									</div>								
 								</div>
+								{{-- <div class="form-group">
+									<a style="margin-top: 20px" target="_blank" href="{{URL::to('storage/guias/'.$guia->anexo_pdf)}}" class="btn btn-primary waves-effect"><i class="material-icons">file_download</i>EXIBIR PDF</a>
+								</div> --}}
 								<button class="btn bg-light-green waves-effect" >
 									<i class="material-icons">update</i>
 									<span>ATUALIZAR GUIA</span> 

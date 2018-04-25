@@ -12,7 +12,7 @@ class Solicitante extends Model
      * @var array
      */
     protected $fillable = [
-        'nome', 'email', 'clientes_id'
+        'nome', 'email', 'telefone','clientes_id'
     ];
     
     /** Consulta a Empresa-Cliente do solicitante

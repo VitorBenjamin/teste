@@ -10,7 +10,7 @@
 
 
 
-//Route::post('/cadastro', ['uses' => 'ClienteController@index','as' => 'user.index']);
+Route::post('cadastro', ['uses' => 'ClienteController@index','as' => 'user.index']);
 //Route::post('/user-cadastro', ['uses' => 'UserController@createDados','as' => 'user.index']);
 
 Route::get('/', ['uses' => 'UserController@index','middleware' => 'auth', 'as' => 'user.index']);
@@ -22,6 +22,7 @@ Route::get('/ajax/processo', ['uses' => 'ProcessoController@getProcesso', 'as' =
 
 // Route::get('cadastrar', ['uses' => 'CompraController@cadastrar', 'as' => 'compra.cadastrar']);
 Auth::routes();
+
 Route::group(['middleware' => ['check.user.role:ADMINISTRATIVO|COORDENADOR|FINANCEIRO']],function()
 {
     Route::get('/user/ativar-desativar/{id}', ['uses' => 'UserController@ativarOrDesativar','middleware' => 'auth', 'as' => 'user.ativarOrDesativar']);
@@ -207,15 +208,17 @@ Route::group(['prefix' => 'solicitacao'],function()
     });
     // FIM ROTAS DE VIAGEM
 });
-Route::group(['prefix' => 'admin','middleware' => ['check.user.role:COORDENADOR']],function()
+Route::group(['prefix' => 'admin'],function()
 {
-    Route::get('cadastrar' , ['uses' => 'ClienteController@cadastrar', 'as' => 'cliente.cadastrar']);
-    Route::post('salvar', ['uses' => 'ClienteController@salvar', 'as' => 'cliente.salvar']);
-    Route::get('listagem-cliente', ['uses' => 'ClienteController@getAll', 'as' => 'cliente.getAll']);
-    Route::get('editar-cliente/{id}', ['uses' => 'ClienteController@editar', 'as' => 'cliente.editar']);
-    Route::put('atualizar-cliente/{id}', ['uses' => 'ClienteController@atualizar', 'as' => 'cliente.atualizar']);
-    Route::get('deletar-cliente/{id}', ['uses' => 'ClienteController@deletarLimite', 'as' => 'cliente.deletarLimite']);
-
+    Route::group(['prefix' => 'clientes','middleware' => ['check.user.role:COORDENADOR|ADMINISTRATIVO|FINANCEIRO']],function()
+    {
+        Route::get('cadastrar' , ['uses' => 'ClienteController@cadastrar', 'as' => 'cliente.cadastrar']);
+        Route::post('salvar', ['uses' => 'ClienteController@salvar', 'as' => 'cliente.salvar']);
+        Route::get('listagem-cliente', ['uses' => 'ClienteController@getAll', 'as' => 'cliente.getAll']);
+        Route::get('editar-cliente/{id}', ['uses' => 'ClienteController@editar', 'as' => 'cliente.editar']);
+        Route::put('atualizar-cliente/{id}', ['uses' => 'ClienteController@atualizar', 'as' => 'cliente.atualizar']);
+        Route::get('deletar-cliente/{id}', ['uses' => 'ClienteController@deletarLimite', 'as' => 'cliente.deletarLimite']);
+    });
     Route::group(['prefix' => 'unidade','middleware' => ['check.user.role:COORDENADOR']],function()
     {
         Route::post('salvar', ['uses' => 'UnidadeController@salvar', 'as' => 'unidade.salvar']);
@@ -232,16 +235,13 @@ Route::group(['prefix' => 'admin','middleware' => ['check.user.role:COORDENADOR'
         Route::put('atualizar-processo/{id}', ['uses' => 'ProcessoController@atualizar', 'as' => 'processo.atualizar']);
         Route::get('deletar-processo/{id}', ['uses' => 'ProcessoController@deletarLimite', 'as' => 'processo.deletarLimite']);
     });
-    Route::group(['prefix' => 'solicitante','middleware' => ['check.user.role:COORDENADOR']],function()
-    {
-        Route::get('cadastrar' , ['uses' => 'SolicitanteController@cadastrar', 'as' => 'solicitante.cadastrar']);
-        Route::post('salvar', ['uses' => 'SolicitanteController@salvar', 'as' => 'solicitante.salvar']);
-        Route::get('listagem-solicitante', ['uses' => 'SolicitanteController@getAll', 'as' => 'solicitante.getAll']);
-        Route::get('editar-solicitante/{id}', ['uses' => 'SolicitanteController@editar', 'as' => 'solicitante.editar']);
-        Route::put('atualizar-solicitante/{id}', ['uses' => 'SolicitanteController@atualizar', 'as' => 'solicitante.atualizar']);
-        Route::get('deletar-solicitante/{id}', ['uses' => 'SolicitanteController@deletarLimite', 'as' => 'solicitante.deletarLimite']);
-    });
-
+    
+    Route::get('cadastrar' , ['uses' => 'SolicitanteController@cadastrar', 'as' => 'solicitante.cadastrar']);
+    Route::post('salvar', ['uses' => 'SolicitanteController@salvar', 'as' => 'solicitante.salvar']);
+    Route::get('listagem-solicitante', ['uses' => 'SolicitanteController@getAll', 'as' => 'solicitante.getAll']);
+    Route::get('editar-solicitante/{id}', ['uses' => 'SolicitanteController@editar', 'as' => 'solicitante.editar']);
+    Route::put('atualizar-solicitante/{id}', ['uses' => 'SolicitanteController@atualizar', 'as' => 'solicitante.atualizar']);
+    Route::get('deletar-solicitante/{id}', ['uses' => 'SolicitanteController@deletarLimite', 'as' => 'solicitante.deletarLimite']);
 });
 Route::group(['prefix' => 'administrativo/relatorio','middleware' => ['check.user.role:FINANCEIRO']],function()
 {
@@ -254,16 +254,14 @@ Route::group(['prefix' => 'administrativo/relatorio','middleware' => ['check.use
     Route::get('editar/{id}', ['uses' => 'RelatorioController@editar', 'as' => 'relatorio.editar']);
     Route::get('deletar/{id}', ['uses' => 'RelatorioController@deletar', 'as' => 'relatorio.deletar']);
     Route::get('listagem', ['uses' => 'RelatorioController@listagem', 'as' => 'relatorio.listar']);
-
-
-
+    
 });
 Route::group(['prefix' => 'relatorio','middleware' => ['auth.basic']],function()
 {
     //Route::get('buscar', ['uses' => 'RelatorioController@gerarRelatorio', 'as' => 'relatorio.gerar']);
 });
 
-Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR|ADMINISTRATIVO']],function()
+Route::group(['prefix' => 'user','middleware' => ['check.user.role:COORDENADOR|ADMINISTRATIVO|FINANCEIRO']],function()
 {
     Route::get('listagem-users', ['uses' => 'UserController@getAll', 'as' => 'user.getAll']);
     Route::get('editar-user/{id}', ['uses' => 'UserController@edit', 'as' => 'user.editar']);

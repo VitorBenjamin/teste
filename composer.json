@@ -9,6 +9,7 @@
         "barryvdh/laravel-dompdf": "^0.8.2",
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.4",
+        "junityco/laravel-hashids": "^1.5",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",

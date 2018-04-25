@@ -23,15 +23,15 @@
 						<!-- <small>Different sizes and widths</small> -->
 					</h2>
 					<br>
-					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
+					{{-- <div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
 						<a data-toggle="modal" data-target="#addSolicitante" class="btn bg-light-green waves-effect" role="button">
 							<i class="material-icons">exposure_plus_1</i>
 							<!-- <span class="hidden-xs">ADD</span> -->
 							<span>Solicitante</span>
 						</a>
-					</div>
+					</div> --}}
 				</div>
-				<div class="modal fade" id="addSolicitante" tabindex="-1" role="dialog">
+				{{-- <div class="modal fade" id="addSolicitante" tabindex="-1" role="dialog">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -107,7 +107,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 				<div class="body">
 					<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
 						<thead>
@@ -178,7 +178,7 @@
 															@endforeach
 														</select>
 													</div>
-												</div>
+												</div> 
 												<div class="row clearfix">
 													<div class="col-md-6">
 														<div class="form-group{{ $errors->has('cpf') ? ' has-error' : '' }} form-float">

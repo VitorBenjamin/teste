@@ -13,7 +13,7 @@ class Cliente extends Model
      */
     protected $table = 'clientes';
     protected $fillable = [
-        'nome', 'cnpj', 'logradouro', 'email', 'valor_km', 'saldo', 'unidades_id', 'cidades_id', 'estados_id'
+        'nome', 'cnpj', 'cep','logradouro', 'email', 'valor_km', 'saldo', 'unidades_id', 'cidades_id', 'estados_id'
     ];
     
     /** Consulta a Solicitacao da Despesa
@@ -35,6 +35,10 @@ class Cliente extends Model
     public function solicitacao()
     {
         return $this->hasMany('App\Solicitacao', 'clientes_id');
+    }
+    public function solicitante()
+    {
+        return $this->hasMany('App\Solicitante', 'clientes_id');
     }
     public function telefones()
     {

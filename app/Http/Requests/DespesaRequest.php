@@ -28,7 +28,7 @@ class DespesaRequest extends FormRequest
             'data_despesa' => 'required',
             'tipo_comprovante' => 'required',
             'valor' => 'required',
-            'anexo_comprovante' => 'mimes:jpeg,png,pdf',
+            'anexo_comprovante' => 'mimes:jpeg,png',
             // 'anexo_comprovante' => 'required:image',
         ];
     }

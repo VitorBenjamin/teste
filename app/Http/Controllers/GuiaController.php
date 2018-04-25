@@ -27,7 +27,7 @@ class GuiaController extends Controller
 		$areas = AreaAtuacao::all('id','tipo');
 		$processos = Processo::all();
 		$clientes = Cliente::all('id','nome');
-        $solicitantes = Solicitante::all('id','nome');
+		$solicitantes = Solicitante::all('id','nome');
 		return view('guia.cadastrar', compact('areas','processos','solicitantes','clientes'));
 	}
 
@@ -40,16 +40,16 @@ class GuiaController extends Controller
 		\Session::flash('flash_message',[
 			'msg'=>"Cadastro do ".$solicitacao->tipo." Realizado com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
-			]);
+		]);
 
 		return redirect()->route('guia.editar', $solicitacao->id);
 	}
 	public function addGuia(GuiaRequest $request,$id){
 		
-		$today = (string) date("Y-m-d");
-		$fileName = $today.'_'.$id.'_'.$request->anexo_pdf->getClientOriginalName();	
-		$request->anexo_pdf->storeAs('public/guias',$fileName);
-		$guia = Guia::create([
+		// $today = (string) date("Y-m-d");
+		// $fileName = $today.'_'.$id.'_'.$request->anexo_pdf->getClientOriginalName();	
+		// $request->anexo_pdf->storeAs('public/guias',$fileName);
+		$data = [
 			'data_limite' => date('Y-m-d', strtotime($request->data_limite)),
 			'prioridade' => $request->prioridade,
 			'observacao' => $request->observacao,
@@ -57,16 +57,22 @@ class GuiaController extends Controller
 			'perfil_pagamento' => $request->perfil_pagamento,
 			'banco' => $request->banco,
 			'valor' => $request->valor,
-			'anexo_pdf' => $fileName,
 			'solicitacoes_id' => $id,
 			'tipo_guias_id' => $request->tipo_guias_id,
-
-			]);
+		];
+		$mime = $request->file('anexo_guia')->getClientMimeType();
+		if ($mime == "image/jpeg" || $mime == "image/png") {
+            //dd($request->file('anexo_comprovante'));
+			$file = Image::make($request->file('anexo_guia'));
+			$img_64 = (string) $file->encode('data-url');
+			$data['anexo_guia'] = $img_64;
+		}
+		$guia = Guia::create($data);
 
 		\Session::flash('flash_message',[
 			'msg'=>"Guia Cadastrada com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
-			]);
+		]);
 		return redirect()->route('guia.editar',$id);
 	}
 	public function verificarSolicitacao($id)
@@ -86,7 +92,6 @@ class GuiaController extends Controller
 			}else{
 				return $solicitacaoHelper->verificarStatus($solicitacao);
 			}
-
 		}else{
 			return $exist;
 		}
@@ -94,8 +99,13 @@ class GuiaController extends Controller
 
 	public function analisar($id)
 	{
-
-		$solicitacao = Solicitacao::with('guia','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
+		$solicitacao = Solicitacao::with('guia')
+		->where('tipo',config('constantes.tipo_guia'))
+		->where('id',$id)
+		->first();
+		//dd($solicitacao->aprovador);
+		//dd($solicitacao);
+		//$solicitacao = Solicitacao::with('guia','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
 
 		return view('guia.analiseGuia', compact('solicitacao'));
 
@@ -104,24 +114,12 @@ class GuiaController extends Controller
     //Retorna a View de edição da unidade
 	public function editar($soli)
 	{
-		$solicitacao = $soli;		
-		// $solicitacao = DB::table('solicitacoes')
-		// ->join('guias','solicitacoes.id','guias.solicitacoes_id')
-		// ->join('tipo_guias','guia.tipo_guias_id','tipo_guias.id')
-		// ->get();
-		// dd($solicitacao);
-		// foreach ($solicitacao->guia as $guia ) {
-		// 	dd($guia->tipoGuia()->first()->id);
-		// }
-		// $cliente = Cliente::where('id',$solicitacao->clientes_id)->select('id','nome')->get();
+		$solicitacao = $soli;	
 		$areas = AreaAtuacao::all('id','tipo'); 
-		// $solicitante = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
 		$tipo_guia = TipoGuia::all('id','tipo','descricao')->groupBy('tipo');
 		$clientes = Cliente::all('id','nome');
-        //$solicitantes = Solicitante::all('id','nome');
 		return view('guia.editar', compact('solicitacao','clientes','areas','tipo_guia'));
 	}
-
 
 	public function editarGuia($id)
 	{
@@ -130,37 +128,38 @@ class GuiaController extends Controller
 		
 		return view('guia.editarGuia', compact('guia','tipo_guia'));
 	}
+
     //Atualiza uma guia e redireciona para a tela de edição da Solicitação
 	public function atualizarGuia(Request $request,$id)
 	{   
 		$guia = Guia::find($id);
-
-		if ($request->hasFile('anexo_pdf')) {
-			$today = (string) date("Y-m-d H-i");
-			$fileName = $today.'_'.$id.'_'.$request->anexo_pdf->getClientOriginalName();	
-			$request->anexo_pdf->storeAs('public/guias',$fileName);
-		}else{
-			$fileName = $guia->anexo_pdf;
+		
+		$guia->data_limite = date('Y-m-d', strtotime($request->data_limite));
+		$guia->prioridade = $request->prioridade;
+		$guia->observacao = $request->observacao;
+		$guia->reclamante = $request->reclamante;
+		$guia->perfil_pagamento > $request->perfil_pagamento;
+		$guia->banco = $request->banco;
+		$guia->valor = $request->valor;
+		$guia->tipo_guias_id = $request->tipo_guias_id;
+		
+		if ($request->file('anexo_guia')) {
+			$mime = $request->file('anexo_guia')->getClientMimeType();
+			if ($mime == "image/jpeg" || $mime == "image/png") {
+				$file = Image::make($request->file('anexo_guia'));
+				$img_64 = (string) $file->encode('data-url');
+				$guia->anexo_guia = $img_64;
+			}
 		}
-		$guia->update(
-			[   
-			'data_limite' => date('Y-m-d', strtotime($request->data_limite)),
-			'prioridade' => $request->prioridade,
-			'observacao' => $request->observacao,
-			'reclamante' => $request->reclamante,
-			'perfil_pagamento' => $request->perfil_pagamento,
-			'banco' => $request->banco,
-			'anexo_pdf' => $fileName,
-			'valor' => $request->valor 
-			]
-			);
+		$guia->save();
 
 		\Session::flash('flash_message',[
 			'msg'=>"Guia Atualizada com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
-			]);
+		]);
 		return redirect()->route('guia.editar', $guia->solicitacoes_id);
 	}
+
 	//Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao
 	public function deletarGuia($id)
 	{        
@@ -171,9 +170,10 @@ class GuiaController extends Controller
 		\Session::flash('flash_message',[
 			'msg'=>"Guia Removida com Sucesso!!!",
 			'class'=>"alert bg-red alert-dismissible"
-			]);
+		]);
 		return redirect()->route('guia.editar',$s_id);       
 	}
+
     //Atualiza uma unidade e redireciona para a tela de listagem de solicitacao
 	public function atualizarCabecalho(Request $request,$id)
 	{   
@@ -183,7 +183,7 @@ class GuiaController extends Controller
 		\Session::flash('flash_message',[
 			'msg'=>"Solicitação Atualizada com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
-			]);
+		]);
 		return redirect()->route('guia.editar',$id);
 	}
 }

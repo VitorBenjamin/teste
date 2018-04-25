@@ -18,14 +18,6 @@
 										<input type="text" id="data_compra" value="{{old('data_compra')}}" name="data_compra" class="datepicker form-control" placeholder="Clique" required/>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<div class="form-line">
-										<label for="observacao_comprovante">Observação</label>
-										<input type="text" value="{{old('observacao_comprovante')}}" name="observacao_comprovante" class="form-control" placeholder="Observação"/>										
-									</div>
-								</div>
 							</div>											
 							<div class="col-md-2">
 								<b>Custo da Passagem</b>
@@ -57,14 +49,6 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<div class="form-line">
-										<label for="observacao_hospedagem">Observação Hospedagem</label>
-										<input type="text" value="{{old('observacao_hospedagem')}}" name="observacao_hospedagem" class="form-control" placeholder="Observação"/>										
-									</div>
-								</div>
-							</div>
 							<div class="col-md-2">
 								<b>Custo da Hospedagem</b>
 								<div class="input-group">
@@ -93,14 +77,6 @@
 									<div class="form-line">
 										<label for="data_locacao">Data Locação</label>
 										<input type="text" id="data_locacao" value="{{old('data_locacao')}}"name="data_locacao" class="datepicker form-control" placeholder="Clique" required />
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<div class="form-line">
-										<label for="observacao_locacao">Observação Locação</label>
-										<input type="text" value="{{old('observacao_locacao')}}" name="observacao_locacao" class="form-control" placeholder="Observação"/>										
 									</div>
 								</div>
 							</div>

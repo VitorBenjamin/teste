@@ -16,7 +16,7 @@
 	<script src="{{ asset('js/jquery.tablesorter.min.js') }}"></script>
 </head>
 <body>
-	@foreach ($lista as $li)
+	@foreach ($lista as $k => $li)
 	<table class="table2">
 		<caption>
 			Relátorio Geral - {{$solicitacoes[0]->cliente->nome}}
@@ -47,7 +47,9 @@
 		<img src="{{$li['img']}}" alt="" class="img">
 		@endif
 	</div>
+	@if(!$loop->last)
 	<div class="page-break"></div>
+	@endif
 	@endforeach
 </body>
 </html>

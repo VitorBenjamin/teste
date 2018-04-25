@@ -51,6 +51,34 @@
 								</div>
 							</div>
 							<div class="col-md-2">
+								<div class="form-group{{ $errors->has('logradouro') ? ' has-error' : '' }}">
+									<div class="form-line">
+										<label for="logradouro">Logradrouro</label>
+										<input id="logradouro" type="text" class="form-control" name="logradouro" value="" required>
+									</div>
+									@if ($errors->has('logradouro'))
+									<span class="help-block">
+										<strong>{{ $errors->first('logradouro') }}</strong>
+									</span>
+									@endif
+								</div>
+							</div>
+							<div class="col-md-1">
+								<div class="form-group{{ $errors->has('cep') ? ' has-error' : '' }}">
+									<div class="form-line">
+										<label for="cep">CEP</label>
+										<input id="cep" type="text" class="form-control" name="cep" value="" required>
+									</div>
+									@if ($errors->has('cep'))
+									<span class="help-block">
+										<strong>{{ $errors->first('cep') }}</strong>
+									</span>
+									@endif
+								</div>
+							</div>
+						{{-- </div>
+							<div class="row clearfix"> --}}
+							<div class="col-md-2">
 								<b>Valor do KM</b>
 								<div class="input-group">
 									<span class="input-group-addon">
@@ -62,7 +90,7 @@
 								</div>							
 							</div>
 							<div class="col-md-2">
-								<b>Saldo</b>
+								<b>Saldo Inicial</b>
 								<div class="input-group">
 									<span class="input-group-addon">
 										R$

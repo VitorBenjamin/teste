@@ -22,7 +22,6 @@ use App\Cliente;
 use App\AreaAtuacao; 
 use App\Status;
 use PDF;
-
 class SolicitacaoController extends Controller
 {
     //Buscando todas as informações das solicitacao e enviando para a view de listagem das solicitacao
@@ -68,11 +67,6 @@ class SolicitacaoController extends Controller
 			$file = Image::make($request->file('anexo'));
 			$img_64 = (string) $file->encode('data-url');
 			$data['anexo'] = $img_64;
-		}elseif ($mime == "application/pdf") {
-			$today = (string) date("Y-m-d");
-			$fileName = $today.'_'.$id.'_'.$request->anexo->getClientOriginalName();    
-			$request->anexo->storeAs('public/comprovante',$fileName);
-			$data['anexo_pdf'] = $fileName;
 		}else{
 
 			\Session::flash('flash_message',[
@@ -91,26 +85,18 @@ class SolicitacaoController extends Controller
 	}
 	public function editComprovante(Request $request,$id)
 	{
-		//dd($request->all());
 		$solicitacao = Solicitacao::where('id',$id)->first();
 		$comprovante = Comprovante::find($request->comprovante_id);
-		//dd($comprovante);
 		$data = [
 			'data' => date('Y-m-d', strtotime($request->data)),
 			'solicitacoes_id' => $comprovante->solicitacoes_id,
 		];
-		//dd($request->all()); 
 		if ($request->hasFile('anexo')) {
 			$mime = $request->file('anexo')->getClientMimeType();
-			//dd($mime);
 			if ($mime == "image/jpeg" || $mime == "image/png") {
 				$file = Image::make($request->file('anexo'));
 				$img_64 = (string) $file->encode('data-url');
 				$data['anexo'] = $img_64;
-				// if ($comprovante->anexo_pdf) {
-				// 	Storage::delete('/public/comprovante/'. $comprovante->anexo_pdf);
-				// 	$data['anexo_pdf'] = null;
-				// }
 			}else{
 
 				\Session::flash('flash_message',[
@@ -124,7 +110,6 @@ class SolicitacaoController extends Controller
 				$data['anexo'] = $comprovante->anexo;
 			}
 		}
-		//dd($data);
 		$comprovante->update($data);
 		\Session::flash('flash_message',[
 			'msg'=>"Comprovante Adicionado com Sucesso!!!",
@@ -205,7 +190,8 @@ class SolicitacaoController extends Controller
 			$aprovado = Status::where('descricao', config('constantes.status_aprovado'))->first();
 		}
 		$this->trocarStatus($solicitacao,$aprovado);
-
+		$solicitacao->aprovador_id = auth()->user()->id;
+		$solicitacao->save();
 		return redirect()->route('user.index');
 
 	}
@@ -345,8 +331,6 @@ class SolicitacaoController extends Controller
 							$cotacao->save();
 						}
 					}
-					//dd($cota->id);
-                    //$total += $menor;
 					$contacoes = Cotacao::find($cota);
 					$contacoes->data_compra=date("Y-m-d");
 					$contacoes->save();

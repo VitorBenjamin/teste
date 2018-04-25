@@ -29,7 +29,7 @@ class GuiaRequest extends FormRequest
             'reclamante' => 'required',
             'perfil_pagamento' => 'required',
             'banco' => 'required',
-            // 'anexo_pdf' => 'mimes:application/pdf,pdf',
+            'anexo_guia' => 'mimes:jpeg,png',
         ];
     }
 }

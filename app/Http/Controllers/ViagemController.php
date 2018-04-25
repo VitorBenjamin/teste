@@ -254,7 +254,7 @@ class ViagemController extends Controller
             $viagem->save();
         }
         if ($request->custo_hospedagem) {
-            $hospedagem = [
+            $hospeda = [
                 'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao_hospedagem)),
                 'observacao' => $request->observacao_hospedagem,
                 'custo_hospedagem' => $request->custo_hospedagem,
@@ -263,17 +263,17 @@ class ViagemController extends Controller
 
             if ($viagem->hospedagens) {
                 $hospedagem = $viagem->hospedagens;
-                $hospedagem->update($data2);
+                $hospedagem->update($hospeda);
                 $hospedagem->save();
             }else{
-                $hospedagem = Hospedagem::create($data2);
+                $hospedagem = Hospedagem::create($hospeda);
                 $viagem->update(['hospedagens_id' => $hospedagem->id]);
             }
             
         }
 
         if ($request->custo_locacao) {
-            $locacao = [
+            $loca = [
                 'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao_locacao)),
                 'observacao' => $request->observacao_locacao,
                 'valor' => $request->custo_locacao,
@@ -281,10 +281,10 @@ class ViagemController extends Controller
             ];
             if ($viagem->locacoes) {
                 $locacao = $viagem->locacoes;
-                $locacao->update($data3);
+                $locacao->update($loca);
                 $locacao->save();
             }else{
-                $locacao = Locacao::create($data3);
+                $locacao = Locacao::create($loca);
                 $viagem->update(['locacoes_id' => $locacao->id]);
             }
             
@@ -314,13 +314,14 @@ class ViagemController extends Controller
                 $anexo_passagem = (string) $file->encode('data-url');
                 $data['anexo_passagem'] = $anexo_passagem;
                 $viagem->update($data);
-            }elseif ($mime == "application/pdf") {
-                $today = (string) date("Y-m-d");
-                $fileName = $today.'_'.$id.'_'.$request->anexo_passagem->getClientOriginalName();    
-                $request->anexo_passagem->storeAs('public/viagem',$fileName);
-                $data['anexo_pdf'] = $fileName;
-                $viagem->update($data);
-            }else{
+                //}elseif ($mime == "application/pdf") {
+                //     $today = (string) date("Y-m-d");
+                //     $fileName = $today.'_'.$id.'_'.$request->anexo_passagem->getClientOriginalName();    
+                //     $request->anexo_passagem->storeAs('public/viagem',$fileName);
+                //     $data['anexo_pdf'] = $fileName;
+                //     $viagem->update($data);
+                // 
+            } else {
                 Session::flash('flash_message',[
                     'msg'=>"Arquivo não suportado!!!",
                     'class'=>"alert bg-orange alert-dismissible"
@@ -333,62 +334,48 @@ class ViagemController extends Controller
         
         if ($viagem->hospedagens && $request->file('anexo_hospedagem')) {
             $mime = $request->file('anexo_hospedagem')->getClientMimeType();
-            $data2 = [
-                'data_compra' => date('Y-m-d', strtotime($request->data_hospedagem)),
-                'observacao' => $request->observacao_hospedagem,
-                'custo_hospedagem' => $request->custo_hospedagem,
-                'viagens_id' => $request->viagem_id,
-            ];
+            
+                $viagem->hospedagens->data_compra = date('Y-m-d', strtotime($request->data_hospedagem));
+                $viagem->hospedagens->custo_hospedagem = $request->custo_hospedagem;
+
             if ($mime == "image/jpeg" || $mime == "image/png") {
                 $file = Image::make($request->file('anexo_hospedagem'));
                 $anexo_hospedagem = (string) $file->encode('data-url');
-                $data2['anexo_hospedagem']=$anexo_hospedagem;
-                $hospedagem = Hospedagem::create($data2);
-                $viagem->update(['hospedagens_id' => $hospedagem->id]);
-            } elseif ($mime == "application/pdf") {
-                $today = (string) date("Y-m-d");
-                $fileName = $today.'_'.$id.'_'.$request->anexo_hospedagem->getClientOriginalName();    
-                $request->anexo_hospedagem->storeAs('public/hospedagem',$fileName);
-                $data2['anexo_pdf'] = $fileName;
-                $hospedagem = Hospedagem::create($data2);
-                $viagem->update(['hospedagens_id' => $hospedagem->id]);
-            }else{
+                //$data2['anexo_hospedagem'] = $anexo_hospedagem;
+                //$hospedagem = Hospedagem::create($data2);
+                $viagem->hospedagens->anexo_hospedagem = $anexo_hospedagem;
+                //$viagem->update(['hospedagens_id' => $hospedagem->id]);
+            } else{
                 Session::flash('flash_message',[
                     'msg'=>"Arquivo não suportado!!!",
                     'class'=>"alert bg-orange alert-dismissible"
                 ]);
                 return redirect()->back();
             }
+            $viagem->hospedagens->save();
         }
 
-        if ($request->file('anexo_locacao')) {
+        if ($viagem->locacoes && $request->file('anexo_locacao')) {
             $mime = $request->file('anexo_locacao')->getClientMimeType();
-            $data3 = [
-                'data_compra' => date('Y-m-d', strtotime($request->data_hospedagem)),
-                'observacao' => $request->observacao_hospedagem,
-                'custo_hospedagem' => $request->custo_hospedagem,
-                'viagens_id' => $request->viagem_id,
-            ];
+    
+                $viagem->locacoes->data_compra = date('Y-m-d', strtotime($request->data_hospedagem));
+                $viagem->locacoes->valor = $request->custo_locacao;
+
             if ($mime == "image/jpeg" || $mime == "image/png") {
                 $file = Image::make($request->file('anexo_locacao'));
                 $anexo_locacao = (string) $file->encode('data-url');
-                $data3['anexo_locacao']=$anexo_locacao;
-                $locacao = Locacao::create($data3);
-                $viagem->update(['locacoes_id' => $locacao->id]);
-            } elseif ($mime == "application/pdf") {
-                $today = (string) date("Y-m-d");
-                $fileName = $today.'_'.$id.'_'.$request->anexo_locacao->getClientOriginalName();    
-                $request->anexo_locacao->storeAs('public/locacao',$fileName);
-                $data3['anexo_pdf'] = $fileName;
-                $locacao = Locacao::create($data3);
-                $viagem->update(['locacoes_id' => $locacao->id]);
-            }else{
+                //$data3['anexo_locacao']=$anexo_locacao;
+                //$locacao = Locacao::create($data3);
+                //$viagem->update(['locacoes_id' => $locacao->id]);
+                $viagem->locacoes->anexo_locacao = $anexo_locacao;
+            } else{
                 Session::flash('flash_message',[
                     'msg'=>"Arquivo não suportado!!!",
                     'class'=>"alert bg-orange alert-dismissible"
                 ]);
                 return redirect()->back();
             }
+            $viagem->locacoes->save();
         }
 
         $solicitacao = Solicitacao::find($id);

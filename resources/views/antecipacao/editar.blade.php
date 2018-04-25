@@ -53,17 +53,10 @@
 							<i class="material-icons">exposure_plus_1</i>
 							<span>ADICIONAR DESPESA</span>
 						</a>
-						@if($solicitacao->despesa->count() == 0)
-						<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
-							<i class="material-icons">done_all</i>
-							<span>FINALIZAR</span>
-						</a>
-						@else
-						<a href="{{ route('solicitacao.andamento', $solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+						<a href="{{ route('solicitacao.andamento', $solicitacao->id) }}" class="btn bg-teal waves-effect {{count($solicitacao->despesa) > 0 ? '' : 'not-active'}}" role="button" {{count($solicitacao->despesa) > 0 ? '' : 'disabled'}}>
 							<i class="material-icons">send</i>
 							<span>ENVIAR</span>
 						</a>
-						@endif
 					</div>
 				</div>
 			</div>
@@ -181,7 +174,7 @@
 							@foreach ($solicitacao->antecipacao as $key => $antecipacao)
 							<tr>
 								<td></td>
-								<td>{{date('d/m/y',strtotime($antecipacao->data_recebimento))}}</td>
+								<td>{{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}</td>
 								<td>{{$antecipacao->descricao}}</td>
 								<td>R$ {{$antecipacao->valor}}</td>									
 								<td class="acoesTD">
