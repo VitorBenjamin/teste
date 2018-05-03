@@ -112,7 +112,7 @@ class ReembolsoController extends Controller
         $despesa_repo = new DespesaRepository();
         $despesa = $despesa_repo->create($request,$id);
         
-        Session::flash('flash_message',[
+        Session::flash('flash_m-essage',[
             'msg'=>"Cadastro da Despesa Realizado com Sucesso!!!",
             'class'=>"alert bg-green alert-dismissible"
         ]);

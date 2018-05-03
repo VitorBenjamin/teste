@@ -92,6 +92,8 @@ class UserController extends Controller
 		$users = Role::with('user')
 		->orWhere('name', config('constantes.user_advogado'))
 		->orWhere('name', config('constantes.user_coordenador'))
+		->orWhere('name', config('constantes.user_financeiro'))
+		->orWhere('name', config('constantes.user_administrativo'))
 		->get();
 		//dd($users);
 		return view('advogado.listagem',compact('users'));

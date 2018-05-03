@@ -45,7 +45,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable">
+					<table class="table table-bordered table-striped table-hover dataTable">
 						<thead>
 							<tr>
 								<th>Data</th>

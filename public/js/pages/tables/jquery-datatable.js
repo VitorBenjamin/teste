@@ -296,10 +296,10 @@ $('.relatorio-final').DataTable({
         {
             text: '<i class="material-icons">insert_photo</i>',
             action: function ( e, dt, node, config ) {
-               window.open(rota);
-           }
-       },
-       {
+             window.open(rota);
+         }
+     },
+     {
         extend: 'pdfHtml5',
         footer: true,
         text: '<i class="material-icons">picture_as_pdf</i>',
@@ -363,6 +363,22 @@ $('.relatorio-final').DataTable({
                 doc.styles.title.fontSize = 11;
                 // Remove spaces around page title
                 doc.content[0].text = doc.content[0].text.trim();
+                doc['footer']=(function(page, pages) {
+                    return {
+                        columns: [
+                        'Left part of footer',
+                        {
+                            alignment: 'right',
+                            text: [
+                            { text: page.toString(), italics: true },
+                            ' of ',
+                            { text: pages.toString(), italics: true }
+                            ]
+                        }
+                        ],
+                        margin: [10, 0]
+                    }
+                });
             } 
         }
         // {

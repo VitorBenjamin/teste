@@ -16,7 +16,7 @@ class DespesaRepository
     public function create($request,$id)
     {
         $mime = $request->file('anexo_comprovante')->getClientMimeType();
-        dd($mime);
+        //dd($mime);
         $data = self::montaData($request);
         $data['solicitacoes_id'] = $id;
         if ($mime == "image/jpeg" || $mime == "image/png") {

@@ -134,6 +134,19 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
+                                        <div class="form-group{{ $errors->has('data_inicial') ? ' has-error' : '' }} form-float">
+                                            <div class="form-line">
+                                                <input id="data_inicial" type="text" class="form-control" name="data_inicial" value="{{ old('data_inicial') }}" autofocus>
+                                                <label class="form-label">Data Incial</label>
+                                                @if ($errors->has('data_inicial'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('data_inicial') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
                                         <div class="form-group{{ $errors->has('data_nascimento') ? ' has-error' : '' }} form-float">
                                             <div class="form-line">
                                                 <input id="data_nascimento" type="text" class="form-control" name="data_nascimento" value="{{ old('data_nascimento') }}" autofocus>

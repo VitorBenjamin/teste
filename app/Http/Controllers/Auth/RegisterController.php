@@ -98,7 +98,7 @@ class RegisterController extends Controller
     {
         //dd($request->all());
         $this->validator($request->all())->validate();
-
+        //dd($request->all());
         $user = $this->create($request->all());
         //$this->attachRole($user,$request);
         $role = Role::where('name',$request->role)->first();
@@ -163,9 +163,7 @@ class RegisterController extends Controller
             $limite->unidades()->sync($request->get('unidades_limite'));
             $user->limites()->attach($limite->id);
         }
-
     }
-
     /**
      * Create a new user instance after a valid registration.
      *
@@ -174,6 +172,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //dd($data);
         $dados = Dados::create([
             'rg' => $data['rg'],
             'data_inicial' => date('Y-m-d', strtotime($data['data_inicial'])),

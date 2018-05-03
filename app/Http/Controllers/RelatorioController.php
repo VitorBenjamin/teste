@@ -47,12 +47,25 @@ class RelatorioController extends Controller
 		usort($lista, function($a, $b) {
 			return strtotime($a['data']) - strtotime($b['data']);
 		});
+		$total = 0;
+		$geral=0;
+		$estornos=0;
+		foreach ($lista as $key => $l) {
+			if (!$l['estornado']) {
+				$total+=$l['valor'];
+			}else{
+				$estornos+=$l['valor'];
+			}
+			$geral+=$l['valor'];
+		}
+		//dd($total);
 		//dd($lista);
 		//dd($solicitacoes[0]->cliente->nome);
         //$nome = $solicitacao->cliente ? $solicitacao->cliente->nome : 'Mosello Lima';
-		$pdf = PDF::loadView('layouts._includes.impressao.impressao_cliente',compact('solicitacoes','lista'));
+        //dd(count($lista));
+		$pdf = PDF::loadView('layouts._includes.impressao.relatorio_geral',compact('solicitacoes','lista','total','geral','estornos'));
 		return $pdf->stream('Relátorio Geral.pdf');
-		//return view('layouts._includes.impressao.impressao', compact('solicitacao','lista'));
+		//return view('layouts._includes.impressao.relatorio_geral', compact('solicitacoes','lista'));
 	}
 	public function listagem()
 	{

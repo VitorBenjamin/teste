@@ -88,6 +88,7 @@ class SolicitacaoHelper
                 'codigo' => $s->codigo,
                 'descricao' => 'TRANSLADO - ' .$t->origem. '-' .$t->destino. '-' .$t->distancia . 'KM',
                 'valor' => $t->distancia * ($s->cliente == null ? config('constantes.km') : $s->cliente->valor_km),
+                'estornado' => $t->estornado,
                 'img' => null,
             ];
         }
@@ -98,6 +99,7 @@ class SolicitacaoHelper
                 'codigo' => $s->codigo,
                 'descricao' => $d->descricao. ' - ' .$d->tipo_comprovante,
                 'valor' => $d->valor,
+                'estornado' => $d->estornado,
                 'img' => $d->anexo_comprovante,
             ];
 
@@ -116,6 +118,7 @@ class SolicitacaoHelper
                 'codigo' => $s->codigo,
                 'descricao' => 'VIAGEM '.$viagem->origem.' <-> '.$viagem->data_ida.' - '.$data_volta.$bagagem,
                 'valor' => $viagem->valor ? $viagem->valor : 'R$ 0',
+                'estornado' => $viagem->estornado,
                 'img' => $viagem->anexo_passagem ? $viagem->anexo_passagem : null,
             ];
         }
@@ -126,6 +129,7 @@ class SolicitacaoHelper
                 'codigo' => $s->codigo,
                 'descricao' => 'HOSPEDAGEM '.$viagem->hospedagens->observacao,
                 'valor' => $viagem->hospedagens->custo_hospedagem,
+                'estornado' => $viagem->hospedagens->estornado,
                 'img' => $viagem->hospedagens->anexo_hospedagem,
             ];
         }
@@ -136,6 +140,7 @@ class SolicitacaoHelper
                 'codigo' => $s->codigo,
                 'descricao' => 'LOCAÇÃO '.$viagem->locacoes->observacao,
                 'valor' => $viagem->locacoes->valor,
+                'estornado' => $viagem->locacoes->estornado,
                 'img' => $viagem->locacoes->valor,
             ];
         }
@@ -147,6 +152,7 @@ class SolicitacaoHelper
                     'codigo' => $s->codigo,
                     'descricao' => $d->descricao. '-' .$d->tipo_comprovante,
                     'valor' => $d->valor,
+                    'estornado' => $d->estornado,
                     'img' => $d->anexo_comprovante,
                 ];
 
@@ -163,6 +169,7 @@ class SolicitacaoHelper
                 'codigo' => $s->codigo,
                 'descricao' => 'GUIA - '.$guia->perfil_pagamento. ' - ' .$guia->banco. ' - ' .$guia->tipoGuia()->first()->descricao,
                 'valor' => $guia->valor,
+                'estornado' => $guia->estornado,
                 'img' => $s->comprovante[0]->anexo,
             ];
         }
@@ -179,6 +186,7 @@ class SolicitacaoHelper
                         'codigo' => $s->codigo,
                         'descricao' => $cota->descricao. ' - Fornecedor '.$cota->fornecedor.' - QUANTIDADE ' .$cota->quantidade,
                         'valor' => $cota->valor,
+                        'estornado' => $cota->estornado,
                         'img' => $cota->anexo_comprovante,
                     ];
                 }
@@ -195,6 +203,7 @@ class SolicitacaoHelper
                 'codigo' => $s->codigo,
                 'descricao' => $d->descricao. '-' .$d->tipo_comprovante,
                 'valor' => $d->valor,
+                'estornado' => $d->estornado,
                 'img' => $d->anexo_comprovante,
             ];
         }

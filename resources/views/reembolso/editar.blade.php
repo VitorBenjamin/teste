@@ -4,6 +4,22 @@
 	var urlClientes = "{{route('cliente.getCliente')}}";
 
 	var urlSoli = "{{route('solicitante.getSolicitante')}}";
+	var valor_km = "{{$solicitacao->cliente->valor_km}}";
+	
+	function myFunction(){
+		var km = document.getElementById("distancia");
+		var total_km = km.value*valor_km;
+		$(".total").val("R$ " + total_km);
+	}
+	// function formatReal( int )
+	// {
+	// 	var tmp = int+'';
+	// 	tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+	// 	if( tmp.length > 6 )
+	// 		tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+	// 	console.log(tmp);
+	// 	return tmp;
+	// }
 </script>
 <section class="content">
 	<div class="block-header">
@@ -101,7 +117,6 @@
 						</tfoot>
 						<tbody>
 							@foreach ($solicitacao->translado as $translado)
-
 							<tr>
 								<td></td>
 								<td>{{date('d/m/y',strtotime($translado->data_translado))}}</td>
@@ -276,7 +291,15 @@
 													<div class="form-group">
 														<div class="form-line">
 															<label for="distancia">Distância</label>
-															<input type="text" name="distancia" class="form-control" placeholder="KM"/>
+															<input type="numeric" id="distancia" name="distancia" onkeyup="myFunction()" class="form-control" placeholder="KM"/>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-1">
+													<div class="form-group">
+														<div class="form-line">
+															<label for="distancia">Total</label>
+															<input type="text" name="" class="total form-control" value="" placeholder="" disabled>
 														</div>
 													</div>
 												</div>
