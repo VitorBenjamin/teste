@@ -149,78 +149,24 @@ $(function () {
         dom: 'lBfrtip',
         // responsive: true,
         buttons:[
-        // {
-        //     extend: 'copy',
-        //     footer: true,
-        // },
-        // {
-        //     extend: 'csv',
-        // },
-        // {
-        //     extend: 'excel',
-        //     footer: true,
-        // },
+        
         {
-            extend: 'pdfHtml5',
-            footer: true,
             text: '<i class="material-icons">picture_as_pdf</i>',
-            header: true,
-            title: t,
-            orientation: 'portrait',
-            exportOptions: {
-                columns: [ 0, 1, 2, 3 ],
-                // format: {
-                //     body: function ( data, row, column ) {
-                //         console.log(row);
-                //         // return column === 3 ?
-                //         //     data.replace( /[$,]/g, '' ) :
-                //         //     data;
-                //         return data;
-                //     }
-                // },
-                rows: function ( idx, data, node ) {
-                    //$(nRow).css('background-color', '#e96464');
-                    //console.log(idx);
-                    //node.attributes.style = {background-color: "#000";};
-                    //console.log(this.api().row(row).nodes().to$());
-                    return true;
-                    // return data[2] === 'London' ?
-                    // true : false;
-                }
-            },
-            customize: function(doc) {
-
-                doc.defaultStyle.fontSize = 8;
-                doc.pageMargins = [20,10,10,10];
-                doc.styles.tableHeader.fontSize = 12;
-                doc.styles.title.fontSize = 11;
-                // Remove spaces around page title
-                doc.content[0].text = doc.content[0].text.trim();
-                doc.content.splice( 1, 0, {
-                    margin: [ 100, 50, 0, 50 ],
-                    alignment: 'center',
-                    image: imgTopo
-                } );
-            } 
-
+            action: function ( e, dt, node, config ) {
+                window.open(rota);
+            }
         }
-        // {
-        //     extend: 'print',
-        //     footer: true,
-        // }
 
         ],
         footerCallback: function ( row, data, start, end, display ) {
             var api = this.api(), data;
 
-            // Remove the formatting to get integer data for summation
             var intVal = function ( i ) {
                 return typeof i === 'string' ?
                 i.replace(/[\R$,]/g, '')*1 :
                 typeof i === 'number' ?
                 i : 0;
             };
-            // Total over all pages
             total = api
             .column( 3 )
             .data()
@@ -231,7 +177,6 @@ $(function () {
                 return intVal(a) + intVal(b);
             }, 0 );
 
-            // Total over this page
             pageTotal = api
             .column( 3, { page: 'current'} )
             .data()
@@ -239,11 +184,9 @@ $(function () {
                 if (intVal(b) < 0) {
                     b= 0;
                 }
-                //console.log(parseFloat(b));
                 return intVal(a) + intVal(b);
             }, 0 );
 
-            // Update footer
             var numFormat = $.fn.dataTable.render.number( '\.', ',', 2, 'R$ ' ).display;
             $( api.column( 2 ).footer() ).html(
                 '<span style="margin: 0 90px 0 0;text-align:right;">'+'TOTAL DA PAGINA '+numFormat(pageTotal)+'</span>'
@@ -253,33 +196,33 @@ $(function () {
                 );
         }
     });
-$('.relatorio-final').DataTable({
-    autoWidth: false,
-    aLengthMenu: [[30, 50, 100, -1], [30, 50, 100, "Todos"]],
-    paging: true,
-    language: {
-        url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json" 
-    },
-    aoColumnDefs: [
-    {
-        bSortable: false,
-        aTargets: [ 0,1,2,3,4 ]
-    }
-    ],   
-    responsive: {
-        details: {
-            type: 'column',
-            target: 'tr'
+    $('.relatorio-final').DataTable({
+        autoWidth: false,
+        aLengthMenu: [[30, 50, 100, -1], [30, 50, 100, "Todos"]],
+        paging: true,
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json" 
+        },
+        aoColumnDefs: [
+        {
+            bSortable: false,
+            aTargets: [ 0,1,2,3,4 ]
         }
-    },
-    aaSorting: [[ 0, 'asc' ]], 
-    aoColumns: [ 
-    { sType: "date-uk" }, null, null, null, null ],
-    columnDefs: [ {
-        className: 'control',
-        orderable: false
-    } ],
-    dom: 'lBfrtip',
+        ],   
+        responsive: {
+            details: {
+                type: 'column',
+                target: 'tr'
+            }
+        },
+        aaSorting: [[ 0, 'asc' ]], 
+        aoColumns: [ 
+        { sType: "date-uk" }, null, null, null, null ],
+        columnDefs: [ {
+            className: 'control',
+            orderable: false
+        } ],
+        dom: 'lBfrtip',
         // responsive: true,
         buttons:[
         // {
@@ -294,93 +237,56 @@ $('.relatorio-final').DataTable({
         //     footer: true,
         // },
         {
-            text: '<i class="material-icons">insert_photo</i>',
+            text: '<i class="material-icons">picture_as_pdf</i>',
             action: function ( e, dt, node, config ) {
-             window.open(rota);
-         }
-     },
-     {
-        extend: 'pdfHtml5',
-        footer: true,
-        text: '<i class="material-icons">picture_as_pdf</i>',
-        header: true,
-        title: t,
-        orientation: 'A4',
-        exportOptions: {
-            stripHtml:true,
-            columns: [ 0, 1, 2, 3 ],
-                // format: {
-                //     body: function ( data, row, column ) {
-                //         console.log(row);
-                //         // return column === 3 ?
-                //         //     data.replace( /[$,]/g, '' ) :
-                //         //     data;
-                //         return data;
-                //     }
-                // },
-                rows: function ( idx, data, node ) {
-                    //$(nRow).css('background-color', '#e96464');
-                    //console.log(idx);
-                    //node.attributes.style = {background-color: "#000";};
-                    //console.log(this.api().row(row).nodes().to$());
-                    return true;
-                    // return data[2] === 'London' ?
-                    // true : false;
-                }
-            },
-            customize: function(doc) {
-
-                //console.log(doc.styles.tableBodyOdd.fillColor="#000");
-                //console.log(doc.content[1].table.body[0]);
-                // console.log(doc.content[1]);
-                // for (var r=1;r<doc.content[1].table.body.length;r++) {
-                //     var row = doc.content[1].table.body[r];
-                //     //console.log(row);
-                //     for (c=0;c<row.length;c++) {
-                //         var exportColor = table
-                //         .cell( {row: r-1, column: c} )
-                //         .nodes()
-                //         .to$()
-                //         .attr('export-color');
-                //         //console.log(row[c].fillColor);
-                //         if (exportColor) {
-
-                //             row[c].fillColor = exportColor;
-                //         }
-                //     }
-                // }
-                
-                doc.content.splice( 1, 0, {
-                    margin: [ 0, 20, 0, 50 ],
-                    watermark: {text: 'test watermark', color: 'blue', opacity: 0.3, bold: true, italics: false},
-                    content: ['Test page of watermark.\n\n',],
-                    alignment: 'center',
-                    image: imgTopo
-                });
-                doc.defaultStyle.fontSize = 10;
-                doc.pageMargins = [20,10,20,10];
-                doc.styles.tableHeader.fontSize = 12;
-                doc.styles.title.fontSize = 11;
-                // Remove spaces around page title
-                doc.content[0].text = doc.content[0].text.trim();
-                doc['footer']=(function(page, pages) {
-                    return {
-                        columns: [
-                        'Left part of footer',
-                        {
-                            alignment: 'right',
-                            text: [
-                            { text: page.toString(), italics: true },
-                            ' of ',
-                            { text: pages.toString(), italics: true }
-                            ]
-                        }
-                        ],
-                        margin: [10, 0]
-                    }
-                });
-            } 
-        }
+               window.open(rota);
+           }
+       }
+     // {
+     //    extend: 'pdfHtml5',
+     //    footer: true,
+     //    text: '<i class="material-icons">picture_as_pdf</i>',
+     //    header: true,
+     //    title: t,
+     //    orientation: 'A4',
+     //    exportOptions: {
+     //        stripHtml:true,
+     //        columns: [ 0, 1, 2, 3 ],
+     //            rows: function ( idx, data, node ) {
+     //                return true;
+     //            }
+     //        },
+     //        customize: function(doc) {
+     //            doc.content.splice( 1, 0, {
+     //                margin: [ 0, 20, 0, 50 ],
+     //                watermark: {text: 'test watermark', color: 'blue', opacity: 0.3, bold: true, italics: false},
+     //                content: ['Test page of watermark.\n\n',],
+     //                alignment: 'center',
+     //                image: imgTopo
+     //            });
+     //            doc.defaultStyle.fontSize = 10;
+     //            doc.pageMargins = [20,10,20,10];
+     //            doc.styles.tableHeader.fontSize = 12;
+     //            doc.styles.title.fontSize = 11;
+     //            doc.content[0].text = doc.content[0].text.trim();
+     //            doc['footer']=(function(page, pages) {
+     //                return {
+     //                    columns: [
+     //                    'Left part of footer',
+     //                    {
+     //                        alignment: 'right',
+     //                        text: [
+     //                        { text: page.toString(), italics: true },
+     //                        ' of ',
+     //                        { text: pages.toString(), italics: true }
+     //                        ]
+     //                    }
+     //                    ],
+     //                    margin: [10, 0]
+     //                }
+     //            });
+     //        } 
+     //    }
         // {
         //     extend: 'print',
         //     text:'<i class="material-icons">print</i>',

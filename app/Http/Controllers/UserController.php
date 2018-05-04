@@ -103,6 +103,7 @@ class UserController extends Controller
 		$user = User::find($id);
 		if ($user->ativo) {
 			$user->ativo = false;
+			$user->password = bcrypt("aksdjklasjdasjdasjd");
 			$user->save();
 			\Session::flash('flash_message',[
 				'msg'=>"Usuário Desativado com Sucesso",
@@ -110,6 +111,7 @@ class UserController extends Controller
 			]);
 		} else {
 			$user->ativo = true;
+			$user->password = bcrypt("123456");
 			$user->save();
 			\Session::flash('flash_message',[
 				'msg'=>"Usuário Ativado com Sucesso",

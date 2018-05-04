@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+<script type="text/javascript">
+	var rota = "{{route('relatorio.relatorioGeral',$relatorio->id)}}";
+</script>
 <section class="content">
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

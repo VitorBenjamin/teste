@@ -86,7 +86,7 @@ class SolicitacaoHelper
             [
                 'data' => date('d-m-Y',strtotime($t->data_translado)),
                 'codigo' => $s->codigo,
-                'descricao' => 'TRANSLADO - ' .$t->origem. '-' .$t->destino. '-' .$t->distancia . 'KM',
+                'descricao' => 'TRANSLADO - ' .$t->origem. '-' .$t->destino. '-' .$t->distancia . 'KM - OBSERVAÇÂO - ' .$t->observacao,
                 'valor' => $t->distancia * ($s->cliente == null ? config('constantes.km') : $s->cliente->valor_km),
                 'estornado' => $t->estornado,
                 'img' => null,

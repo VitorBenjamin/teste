@@ -28,24 +28,7 @@
 		<div class="divTableBody">
 			<div class="divTableRow">
 				<div class="divTableCell2">
-					Despesa: {{ $solicitacoes[0]->origem_despesa }} 
-				</div>
-				<div class="divTableCell2">
 					Cliente: {{$solicitacoes[0]->cliente == null ? 'Mosello Lima' : $solicitacoes[0]->cliente->nome }}
-				</div>
-				<div class="divTableCell2">
-					Solicitante: {{$solicitacoes[0]->solicitante == null ? 'Desconhecido' : $solicitacoes[0]->solicitante->nome }}
-				</div>
-			</div>
-			<div class="divTableRow">
-				<div class="divTableCell2">
-					N° de Processo: {{$solicitacoes[0]->processo == null ? 'Sem Processo' : $solicitacoes[0]->processo->codigo }}
-				</div>
-				<div class="divTableCell2">
-					Área de Atendi..: {{$solicitacoes[0]->area_atuacao->tipo}}
-				</div>
-				<div class="divTableCell2">
-					Contrato: {{ $solicitacoes[0]->contrato ? $solicitacoes[0]->contrato : 'Desconhecido'}}
 				</div>
 			</div>
 		</div>

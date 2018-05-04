@@ -101,6 +101,9 @@
 								<th>Destino</th>
 								<th>Ida/Volta</th>
 								<th>Distância</th>
+								<th>Valor Km</th>
+								<th>Total R$</th>
+								<th>Motivo</th>
 								<th>Ações</th>
 							</tr>
 						</thead>
@@ -112,6 +115,9 @@
 								<th>Destino</th>
 								<th>Ida/Volta</th>
 								<th>Distância</th>
+								<th>Valor Km</th>
+								<th>Total KmR$</th>
+								<th>Motivo</th>
 								<th>Ações</th>
 							</tr>
 						</tfoot>
@@ -130,7 +136,10 @@
 								<td>NÂO</td>
 								@endif
 
-								<td>{{$translado->distancia}}</td>
+								<td>{{$translado->distancia}} KM</td>
+								<td>R$ {{$solicitacao->cliente->valor_km}}</td>
+								<td>R$ {{$solicitacao->cliente->valor_km * $translado->distancia}}</td>
+								<td>{{$translado->observacao}}</td>
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
 										<a href="{{ route('reembolso.editarTranslado', $translado->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float"><i class="material-icons">edit</i></a>
@@ -306,7 +315,7 @@
 												<div class="col-md-12">
 													<div class="form-group">
 														<div class="form-line">
-															<textarea rows="3" name="observacao" class="form-control no-resize" placeholder="Campo para deixar uma Observação"></textarea>
+															<textarea rows="3" name="observacao" class="form-control no-resize" placeholder="Insira um Motivo para o Translado" required></textarea>
 														</div>
 													</div>
 												</div>

@@ -87,8 +87,8 @@
 								<div class="col-md-4">
 									<div class="form-group">
 										<div class="form-line">
-											<label for="observacao">Obeservação</label>
-											<textarea rows="1" name="observacao" class="form-control no-resize" placeholder="Deixa uma Breve Observação">{{$translado->observacao}}</textarea>
+											<label for="observacao">Motivo</label>
+											<textarea rows="1" name="observacao" class="form-control no-resize" placeholder="Insira um Motivo para o Translado" required>{{$translado->observacao}}</textarea>
 										</div>
 									</div>
 								</div>	

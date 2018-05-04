@@ -246,13 +246,12 @@ $('.checkbox').change(function(){ //".checkbox" change
         $('.checked_all').prop('checked',false);
     }
 });
-$('#tableTeste_wrapper').ready(function() {
-    //alert($(this));
-    $('#tableTeste_wrapper').find('.dt-buttons').append(
-        '<button class="dt-button buttons-pdf buttons-html5" tabindex="0" aria-controls="tableTeste">'
-        +'<span><i class="material-icons">picture_as_pdf</i></span>'
-        +'</button>');
-});
+// $('#tableTeste_wrapper').ready(function() {
+//     $('#tableTeste_wrapper').find('.dt-buttons').append(
+//         '<button class="dt-button buttons-pdf buttons-html5" tabindex="0" aria-controls="tableTeste">'
+//         +'<span><i class="material-icons">picture_as_pdf</i></span>'
+//         +'</button>');
+// });
 $( window ).load(function() {
     var value = $('#origem_despesa').val();
 

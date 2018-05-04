@@ -63,16 +63,15 @@
 										<a href="{{ route('user.editar', $user->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$user->nome}}">
 											<i class="material-icons">edit</i>
 										</a>
-										{{-- @if ($user->ativo)
+										@if ($user->ativo)
 										<a href="{{ route('user.ativarOrDesativar', $user->id)}}" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="DESATIVAR {{$user->nome}}">
 											<i class="material-icons">not_interested</i>
 										</a>
 										@else
 										<a href="{{ route('user.ativarOrDesativar', $user->id)}}" class="btn bg-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="ATIVAR {{$user->nome}}">
 											<i class="material-icons">check_circle</i>
-
 										</a>
-										@endif --}}
+										@endif
 									</div>
 								</td>
 							</tr>		

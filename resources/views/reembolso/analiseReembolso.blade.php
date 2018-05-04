@@ -63,6 +63,9 @@
 								<th>Destino</th>
 								<th>Ida/Volta</th>
 								<th>Distância</th>
+								<th>Valor Km</th>
+								<th>Total Km</th>
+								<th>Motivo</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -73,7 +76,10 @@
 								<td>{{$translado->origem}}</td>
 								<td>{{$translado->destino}}</td>
 								<td>{{$translado->ida_volta == 1 ? 'SIM' : 'NÃO'}}</td>
-								<td>{{$translado->distancia}}</td>
+								<td>{{$translado->distancia}} Km</td>
+								<td>R$ {{$solicitacao->cliente->valor_km}}</td>
+								<td>{{$solicitacao->cliente->valor_km * $translado->distancia}}</td>
+								<td>{{$translado->observacao}}</td>
 							</tr>
 							@endforeach														
 						</tbody>

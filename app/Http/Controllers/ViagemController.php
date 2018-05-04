@@ -69,7 +69,7 @@ class ViagemController extends Controller
                     break;
                 }
             }
-            if ($viagem->locacoes->anexo_locacao) {
+            if ($viagem->locacoes) {
                 if ($viagem->locacoes->anexo_locacao) {
                     $finalizar = true;
                 }else{
