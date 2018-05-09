@@ -16,7 +16,8 @@
 	<script src="{{ asset('js/jquery.tablesorter.min.js') }}"></script>
 </head>
 <body>
-	@foreach ($lista as $k => $li)
+	@foreach ($lista as $li)
+	@if ($li['exibir'] && !$li['estornado'] && $li['img'])
 	<table class="table2">
 		<caption>
 			Relátorio Geral - {{$solicitacoes[0]->cliente->nome}}
@@ -49,6 +50,7 @@
 	</div>
 	@if(!$loop->last)
 	<div class="page-break"></div>
+	@endif
 	@endif
 	@endforeach
 </body>

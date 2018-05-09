@@ -22,12 +22,14 @@ class Viagens extends Migration
             $table->string('anexo_pdf')->nullable();
             $table->datetime('data_ida');
             $table->datetime('data_volta')->nullable();
+            $table->boolean('translado')->nullable();
             $table->boolean('hospedagem')->nullable();
             $table->boolean('bagagem')->nullable();
             $table->boolean('locacao')->nullable();
             $table->integer('kg')->nullable();
             $table->string('observacao_comprovante')->nullable();
-            $table->datetime('data_compra')->nullable();
+            $table->date('data_cotacao')->nullable();
+            $table->date('data_compra')->nullable();
             $table->decimal('valor', 10, 2)->nullable();
             $table->integer('solicitacoes_id')->unsigned();
             $table->integer('hospedagens_id')->unsigned()->nullable();

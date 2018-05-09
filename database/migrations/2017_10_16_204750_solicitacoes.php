@@ -28,6 +28,7 @@ class Solicitacoes extends Migration
             $table->integer('unidades_id')->unsigned();
             $table->integer('users_id')->unsigned();
             $table->integer('relatorios_id')->unsigned()->nullable();
+            $table->integer('aprovador_id')->unsigned()->nullable();
             $table->enum('role',['ADVOGADO','ADMINISTRATIVO','COORDENADOR','FINANCEIRO']);
             $table->timestamps();
             $table->softDeletes();

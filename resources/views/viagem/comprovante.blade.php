@@ -10,6 +10,7 @@
 					{{ method_field('PUT') }}
 					<input type="hidden" name="viagem_id" value="{{$viagem->id}}">
 					<div class="col-md-12">
+						@if (!$viagem->translado)
 						<div class="row clearfix">
 							<div class="col-md-2">
 								<div class="form-group">
@@ -18,7 +19,7 @@
 										<input type="text" id="data_compra" value="{{old('data_compra')}}" name="data_compra" class="datepicker form-control" placeholder="Clique" required/>
 									</div>
 								</div>
-							</div>											
+							</div>
 							<div class="col-md-2">
 								<b>Custo da Passagem</b>
 								<div class="input-group">
@@ -39,6 +40,7 @@
 								</div>
 							</div>
 						</div>
+						@endif
 						@if($viagem->hospedagens)
 						<div class="row clearfix">
 							<div class="col-md-2">
@@ -95,7 +97,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label style="margin-bottom: 20px" for="anexo_locacao">Anexar Locação</label>
-										<input type="file" name="anexo_locacao" id="anexo_locacao" accept="image/jpeg, image/png" required/>														
+										<input type="file" name="anexo_locacao" id="anexo_locacao" accept="image/jpeg, image/png" required/>											
 									</div>
 								</div>
 							</div>

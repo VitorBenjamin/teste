@@ -95,6 +95,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -107,6 +108,7 @@
                                     @foreach ($abertas->solicitacao as $aberto)
                                     <tr>
                                         <td></td>
+                                        <td>{{ $aberto->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
                                         <!-- <td> {{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }} </td> -->
                                         <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
@@ -139,7 +141,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <!-- <th>ID</th> -->
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -153,7 +155,7 @@
                                     
                                     <tr>
                                         <td></td>
-                                        <!-- <td>{{ $andamento->id }}</td> -->
+                                        <td>{{ $andamento->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($andamento->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
                                         <td>{{ $andamento->tipo }}</td>
@@ -184,7 +186,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <!-- <th>ID</th> -->
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -197,7 +199,7 @@
                                     @foreach ($aprovadas->solicitacao as $aprovado)
                                     <tr>
                                         <td></td>
-                                        <!-- <td>{{ $aprovado->id }}</td> -->
+                                        <td>{{ $aprovado->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aprovado->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
                                         <td>{{ $aprovado->tipo }}</td>
@@ -226,7 +228,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <!-- <th>ID</th> -->
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -240,7 +242,7 @@
                                     
                                     <tr>
                                         <td></td>
-                                        <!-- <td>{{ $reprovado->id }}</td> -->
+                                        <td>{{ $reprovado->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($reprovado->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
                                         <td>{{ $reprovado->tipo }}</td>
@@ -268,7 +270,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <!-- <th>ID</th> -->
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -282,7 +284,7 @@
                                     
                                     <tr>
                                         <td></td>
-                                        <!-- <td>{{ $devolvida->id }}</td> -->
+                                        <td>{{ $devolvida->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
@@ -313,7 +315,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <!-- <th>ID</th> -->
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -326,7 +328,7 @@
                                     @foreach ($finalizadas->solicitacao as $finalizado)                                    
                                     <tr>
                                         <td></td>
-                                        <!-- <td>{{ $finalizado->id }}</td> -->
+                                        <td>{{ $finalizado->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($finalizado->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
                                         <td>{{ $finalizado->tipo }}</td>

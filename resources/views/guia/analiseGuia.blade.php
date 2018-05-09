@@ -37,7 +37,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples-guia">
 						<thead>
 							<tr>
 								<th></th>
@@ -52,7 +52,20 @@
 								<th>Guia</th>
 							</tr>
 						</thead>
-						
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Prioridade</th>
+								<th>Reclamante</th>
+								<th>Perfil Pagamento</th>
+								<th>Banco</th>
+								<th>Area</th>
+								<th>Tipo</th>
+								<th>Valor</th>
+								<th>Guia</th>
+							</tr>
+						</tfoot>
 						<tbody> 
 							@foreach ($solicitacao->guia as $guia)
 							<tr>
@@ -64,7 +77,8 @@
 								<td>{{$guia->banco}}</td>
 								<td>{{$guia->tipoGuia()->first()->tipo}}</td>
 								<td>{{$guia->tipoGuia()->first()->descricao}}</td>
-								<td>{{ 'R$ '.number_format($guia->valor, 2, ',', '.') }}</td>
+								{{-- <td>{{ 'R$ '.number_format($guia->valor, 2, ',', '.') }}</td> --}}
+								<td>R$ {{ $guia->valor }}</td>
 								<td>
 									<div class="zoom-gallery">
 										

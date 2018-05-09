@@ -14,7 +14,7 @@ class Hospedagem extends Model
     protected $table = 'hospedagens';
 
     protected $fillable = [
-        'data_cotacao','data_compra', 'observacao','estornado', 'custo_hospedagem', 'anexo_pdf','anexo_hospedagem', 'viagens_id'];
+        'data_cotacao','data_compra', 'observacao','estornado', 'custo_hospedagem', 'anexo_hospedagem', 'viagens_id'];
     
     /** Consulta a viagem por Comprovante
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

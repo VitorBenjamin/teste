@@ -15,12 +15,12 @@ class CreateHospedagemsTable extends Migration
     {
         Schema::create('hospedagens', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('data_cotacao');
+            $table->date('data_compra');
             $table->string('observacao')->nullable();
             $table->boolean('estornado')->default(false);
-            $table->datetime('data_compra');
             $table->decimal('custo_hospedagem', 10, 2)->nullable();
             $table->integer('viagens_id')->unsigned();
-            $table->string('anexo_pdf')->nullable();
             $table->timestamps();
         });
         

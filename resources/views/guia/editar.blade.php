@@ -190,7 +190,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
+					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples-guia">
 						<thead>
 							<tr>
 								<th></th>
@@ -232,7 +232,8 @@
 								<td>{{$guia->banco}}</td>
 								<td>{{$guia->tipoGuia()->first()->tipo}}</td>
 								<td>{{$guia->tipoGuia()->first()->descricao}}</td>
-								<td>{{  'R$ '.number_format($guia->valor, 2, ',', '.') }} </td>
+								{{-- <td>{{ 'R$ '.number_format($guia->valor, 2, ',', '.') }}</td> --}}
+								<td>R$ {{ $guia->valor }}</td>
 								<td>
 									<div class="zoom-gallery">
 										<a href="{{$guia->anexo_guia}}" data-source="{{$guia->anexo_guia}}" title="GUIA - {{date('d/m/Y',strtotime($guia->data_limite))}}" style="width:32px;height:32px;">

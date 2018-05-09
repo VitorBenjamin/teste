@@ -106,7 +106,13 @@ class GuiaController extends Controller
 		//dd($solicitacao->aprovador);
 		//dd($solicitacao);
 		//$solicitacao = Solicitacao::with('guia','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
-
+		if (!$solicitacao) {
+			\Session::flash('flash_message',[
+				'msg'=>"Solicitação não cadastrada!",
+				'class'=>"alert bg-yellow alert-dismissible"
+			]);
+			return redirect()->route('user.index'); 
+		}
 		return view('guia.analiseGuia', compact('solicitacao'));
 
 	}

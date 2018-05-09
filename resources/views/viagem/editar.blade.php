@@ -68,11 +68,11 @@
 							<span>ADICIONAR DESPESA</span>
 						</a>
 						@if($solicitacao->despesa->count() == 0)
-						<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
+						{{-- <a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
 							<i class="material-icons">done_all</i>
 							<!-- <span class="hidden-xs">ADD</span> -->
 							<span>FINALIZAR</span>
-						</a>
+						</a> --}}
 						@else
 						<a href="{{ route('solicitacao.andamento', $solicitacao->id) }}" class="btn bg-teal waves-effect" role="button">
 							<i class="material-icons">send</i>
@@ -199,7 +199,6 @@
 				<div class="modal-header">
 					<h4 class="modal-title" id="largeModalLabel">Adicione uma Viagem</h4>
 				</div>
-				<!-- INCIO SESSÃO VIAGEM -->
 				<div class="modal-body">
 					<form action="{{ route('viagem.addViagem',$solicitacao->id)}}" method="POST">
 						{{ csrf_field() }}
@@ -247,18 +246,17 @@
 														</div>
 													</div>
 												</div>
-
 												<div class="col-md-2">
 													<div class="form-group">
 														<fieldset>
-															<legend style="margin: 0">Locação de Carro</legend>
+															<legend>Translado</legend>
 														</fieldset>
-														<input name="locacao" value="1" type="radio" id="simL" />
-														<label style="margin: 15px 15px 0px 0px" for="simL">Sim</label>
-														<input name="locacao" value="0" type="radio" id="naoL" checked />
-														<label style="margin: 15px 15px 0px 0px" for="naoL">Não</label>
+														<input name="translado" value="1" type="radio" id="simT" />
+														<label style="margin: 15px 15px 0px 0px" for="simT">Sim</label>
+														<input name="translado" value="0" type="radio" id="naoT" checked/>
+														<label style="margin: 15px 15px 0px 0px" for="naoT">Não</label>
 													</div>
-												</div>
+												</div>												
 												<div class="col-md-2">
 													<div class="form-group">
 														<fieldset>
@@ -270,9 +268,19 @@
 														<label style="margin: 15px 15px 0px 0px" for="naoH">Não</label>
 													</div>
 												</div>
-
 											</div>
 											<div class="row clearfix">
+												<div class="col-md-2">
+													<div class="form-group">
+														<fieldset>
+															<legend style="margin: 0">Locação de Carro</legend>
+														</fieldset>
+														<input name="locacao" value="1" type="radio" id="simL" />
+														<label style="margin: 15px 15px 0px 0px" for="simL">Sim</label>
+														<input name="locacao" value="0" type="radio" id="naoL" checked />
+														<label style="margin: 15px 15px 0px 0px" for="naoL">Não</label>
+													</div>
+												</div>
 												<div class="col-md-2">
 													<div class="form-group">
 														<fieldset>
@@ -329,6 +337,7 @@
 		</div>
 	</div>
 	<!-- FIM MODAL VIAGEM -->
+
 	@endif
 	
 	@if(count($solicitacao->viagem) > 0)
@@ -350,7 +359,8 @@
 								<th>Origem</th>
 								<th>Data Ida</th>
 								<th>Destino</th>
-								<th>Data Volta</th>	
+								<th>Data Volta</th>
+								<th>Translado</th>	
 								<th>Hospedagem</th>
 								<th>Bagagem</th>
 								<th>Kg</th>
@@ -365,6 +375,7 @@
 								<th>Data Ida</th>
 								<th>Destino</th>
 								<th>Data Volta</th>	
+								<th>Translado</th>
 								<th>Hospedagem</th>
 								<th>Bagagem</th>
 								<th>Kg</th>
@@ -379,6 +390,7 @@
 								<td>{{date('d/m/Y',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
 								<td>{{$viagem->data_volta ? date('d/m/Y',strtotime($viagem->data_volta)) : 'SÓ IDA'}}</td>
+								<td>{{$viagem->translado ? 'SIM' : 'NÃO'}}</td>
 								<td>
 									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
 								</td>
@@ -586,22 +598,18 @@
 								<td>{{date('d/m/y',strtotime($despesa->data_despesa))}}</td>
 								<td>{{$despesa->descricao}}</td>
 								<td>{{$despesa->tipo_comprovante}}</td>
-								<td>{{$despesa->valor}}</td>
+								<td>R$ {{$despesa->valor}}</td>
 								<td class="acoesTD">
 									<div class="icon-button-demo" >
-										<a href="{{ route('reembolso.editarDespesa', $despesa->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float">
+										<a href="{{ route('viagem.editarDespesa', $despesa->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float">
 											<i class="material-icons">edit</i>
 										</a>
 
-										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('reembolso.deletarDespesa',$despesa->id)}}">
+										<a style="margin: 0px 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{route('viagem.deletarDespesa',$despesa->id)}}">
 											<i class="material-icons">delete_sweep</i>
 										</a>
 										<div class="zoom-gallery" style="display: inline;">
-											@if($despesa->anexo_pdf)
-											<span>
-												<a id="broken-image" class="mfp-image" target="_blank" href="{{URL::to('storage/despesas/'.$despesa->anexo_pdf)}}"><i class="material-icons">picture_as_pdf</i></a>
-											</span>
-											@elseif($despesa->anexo_comprovante)
+											@if($despesa->anexo_comprovante)
 											<a href="{{$despesa->anexo_comprovante}}" data-source="{{$despesa->anexo_comprovante}}" title="COMPROVANTE - {{$despesa->tipo_comprovante}} - {{date('d/m/Y',strtotime($despesa->data_despesa))}}" style="width:35px;height:35px;">
 												<img class="img_popup" src="{{$despesa->anexo_comprovante}}" width="35" height="35">
 											</a>

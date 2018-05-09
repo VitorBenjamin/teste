@@ -19,6 +19,7 @@
                         <li><a href="{{ route('user.editarPerfil') }}"><i class="material-icons">edit</i>Editar. Perfil</a></li>
                         @role(['ADMINISTRATIVO','FINANCEIRO','GOD','COORDENADOR'])
                         <li><a href="{{ route('user.getAll') }}"><i class="material-icons">list</i>Listar. Colaboradores</a></li>
+                        <li><a href="{{ route('solicitacao.getSolicitacaoView') }}"><i class="material-icons">search</i>Buscar. Solicitação</a></li>
                         <li role="seperator" class="divider"></li>
                         <li><a href="{{ route('registerAdvogado') }}"><i class="material-icons">sd_storage</i>Cadastrar Advogado</a></li>
                         <li><a href="{{ route('registerCoordenador') }}"><i class="material-icons">sd_storage</i>Cadastrar Coordenador</a></li>

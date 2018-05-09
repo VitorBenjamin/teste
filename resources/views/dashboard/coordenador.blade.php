@@ -5,7 +5,6 @@
 <script type="text/javascript">
     var urlDeletar = "{{route('solicitacao.deletar')}}";
 </script>
-
 <section class="content">
     <div class="block-header">
         <h2>DASHBOARD</h2>
@@ -24,7 +23,6 @@
                     
                 </div>                              
                 @endif
-                
             </div>
         </div>
     </div>
@@ -68,16 +66,6 @@
                                 <i style="color: #30b1b1" class="material-icons">hourglass_empty</i> <span class="hidden-xs"> RECORRENTE </span> <span class="badge">{{count($recorrentes->solicitacao)}}</span>
                             </a>
                         </li>
-                        {{-- <li class="sais-tab">
-                            <a href="" data-toggle="tab" role="tab" data-target="#meus">
-                                <i style="color: #00c6f3" class="material-icons">person_pin</i> <span class="hidden-xs"> MINHAS </span> <span class="badge">{{count($meus->solicitacao)}}</span>
-                            </a>
-                        </li> --}}
-                        {{-- <li class="azed-tab">
-                            <a href="" data-toggle="tab" role="tab" data-target="#finalizado">
-                                <i style="color: #0db174" class="material-icons">thumb_up</i> <span class="hidden-xs"> FINALIZADO </span> <span class="badge">{{count($finalizadas->solicitacao)}}</span>
-                            </a>
-                        </li> --}}
                     </ul>
                     <div class="tab-content">
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
@@ -87,7 +75,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -102,7 +90,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $aberto->id }}</td>
+                                        <td>{{ $aberto->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
                                         <td>{{ $aberto->user->nome}}</td>
                                         <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
@@ -136,51 +124,6 @@
                             </table>
                         </div>
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
-
-                        <!-- LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
-                        {{-- <div id="andamento" class="tab-pane fade in" role="tabpanel">
-                            <h1 class="visible-xs" style="text-align: center"> ANDAMENTO </h1>
-                            <table id="andamento" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>ID</th>
-                                        <th>Data</th>
-                                        <th>Dr(ª)</th>
-                                        <th>Cliente</th>
-                                        <th>Tipo</th>
-                                        <th>Solicitante</th>
-                                        <th>Valor</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($andamentos->solicitacao as $andamento)
-
-                                    <tr>
-                                        <td></td>
-                                        <td>{{ $andamento->id }}</td>
-                                        <td>{{ date('d/m/Y',strtotime($andamento->created_at)) }}</td>
-                                        <td class="quebra-texto">{{ $andamento->user->nome }}</td>
-                                        <td class="quebra-texto">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
-                                        <td>{{ $andamento->tipo }}</td>
-                                        <td>{{ $andamento->solicitante == null ? 'ADVOGADO' : $andamento->solicitante->nome}}</td>
-                                        <td>{{ 'R$ '.number_format($andamento->total, 2, ',', '.') }}</td>
-                                        <td class="acoesTD">
-                                            <div class="icon-button-demo" >
-                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($andamento->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $andamento->tipo).'.analisar', $andamento->id)}}" class="btn bg-blue-grey btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$andamento->tipo}}">
-                                                    <i class="material-icons">search</i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach                                                     
-
-                                </tbody>
-                            </table>
-                        </div> --}}
-                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
                         
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
                         <div id="aprovado" class="tab-pane fade in" role="tabpanel">
@@ -189,7 +132,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -203,7 +146,7 @@
                                     @foreach ($aprovadas->solicitacao as $aprovado)
                                     <tr>
                                         <td></td>
-                                        <td>{{ $aprovado->id }}</td>
+                                        <td>{{ $aprovado->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aprovado->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $aprovado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
@@ -231,7 +174,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -246,7 +189,7 @@
                                     
                                     <tr>
                                         <td></td>
-                                        <td>{{ $reprovado->id }}</td>
+                                        <td>{{ $reprovado->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($reprovado->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $reprovado->user->nome }}</td>
                                         <td class="quebra-texto">{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
@@ -274,7 +217,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -289,7 +232,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $devolvida->id }}</td>
+                                        <td>{{ $devolvida->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $devolvida->user->nome }}</td>
                                         <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
@@ -327,7 +270,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Dr(ª)</th>
                                         <th>Cliente</th>
@@ -342,7 +285,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $recorrente->id }}</td>
+                                        <td>{{ $recorrente->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
                                         <td class="quebra-texto">{{ $recorrente->user->nome }}</td>
                                         <td class="quebra-texto">{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
@@ -377,108 +320,10 @@
                             </table>
                         </div>
                         <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM recorrente -->
-
-                        <!-- LISTAGEM DAS SOLICITAÇÕES DO COORDENADOR -->
-                        {{-- <div id="meus" class="tab-pane fade in" role="tabpanel">
-                            <h1 class="visible-xs" style="text-align: center"> MINHAS </h1>
-                            <table id="meus" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
-                                <thead> 
-                                    <tr>
-                                        <th></th>
-                                        <th>ID</th>
-                                        <th>Data</th>
-                                        <th>Cliente</th>
-                                        <th>Tipo</th>
-                                        <th>Solicitante</th>
-                                        <th>Valor</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($meus->solicitacao as $meu)
-
-                                    <tr>
-                                        <td></td>
-                                        <td>{{ $meu->id }}</td>
-                                        <td>{{ date('d/m/Y',strtotime($meu->created_at)) }}</td>
-                                        <td class="quebra-texto">{{ $meu->cliente == null ? 'MOSELLO LIMA' : $meu->cliente->nome }}</td>
-                                        <td>{{ $meu->tipo }}</td>
-                                        <td>{{ $meu->solicitante == null ? 'ADVOGADO' : $meu->solicitante->nome}}</td>
-                                        <td>{{ 'R$ '.number_format($meu->total, 2, ',', '.') }}</td>
-                                        <td class="acoesTD">
-                                            <div class="icon-button-demo" >
-                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($meu->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $meu->tipo).'.editar', $meu->id)}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="EDITAR {{$meu->tipo}}">
-                                                    <i class="material-icons">mode_edit</i>
-                                                </a>
-                                                <a style="margin-left: 10px" href="{{ route('solicitacao.aprovar',$meu->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="ENVIAR {{$meu->tipo}}">
-                                                    <i class="material-icons">done_all</i>
-                                                    <!-- <span class="hidden-xs">ADD</span> -->
-                                                </a>
-                                                @if($meu->status[0]->descricao == "COORDENADOR-ABERTO" || $meu->status[0]->descricao == "ABERTO")
-                                                <a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert" data-id="{{$meu->id}}" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$meu->tipo}}">
-                                                    <i class="material-icons">delete_sweep</i>
-                                                </a>
-                                                @endif
-
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach                                                                                         
-                                </tbody>
-                            </table>
-                        </div> --}}
-                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM recorrente -->
-
-                        <!-- LISTAGEM DAS SOLICITAÇÕES EM FINALIZADAS -->
-                        {{-- <div id="finalizado" class="tab-pane fade in" role="tabpanel">
-                            <h1 class="visible-xs" style="text-align: center"> FINALIZADAS </h1>
-                            <table id="finalizado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>ID</th>
-                                        <th>Data</th>
-                                        <th>Dr(ª)</th>
-                                        <th>Cliente</th>
-                                        <th>Tipo</th>
-                                        <th>Solicitante</th>
-                                        <th>Valor</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($finalizadas->solicitacao as $finalizado)
-
-                                    <tr>
-                                        <td></td>
-                                        <td>{{ $finalizado->id }}</td>                    
-                                        <td>{{ date('d/m/y',strtotime($finalizado->created_at)) }}</td>
-                                        <td class="quebra-texto">{{ $finalizado->user->nome }}</td>
-                                        <td class="quebra-texto">{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
-                                        <td>{{ $finalizado->tipo }}</td>
-                                        <td>{{ $finalizado->solicitante == null ? 'ADVOGADO' : $finalizado->solicitante->nome}}</td>
-                                        <td>R$ {{ $finalizado->total }}</td>
-                                        <td class="acoesTD">
-                                            <div class="icon-button-demo" >
-                                                <!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
-                                                <a href="{{ route(strtolower($finalizado->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $finalizado->tipo).'.analisar', $finalizado->id)}}" class="btn bg-blue-grey btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$finalizado->tipo}}">
-                                                    <i class="material-icons">search</i>
-                                                </a>                                           
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach                                                     
-
-                                </tbody>
-                            </table>
-                        </div> --}}
-                        <!-- FIM DA LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- #END# Tabs With Icon Title -->
 </section>
 @endsection

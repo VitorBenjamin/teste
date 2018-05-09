@@ -23,7 +23,7 @@
                     </button>
                     {{ Session::get('flash_message')['msg'] }}
                     
-                </div>                   <!--             -->
+                </div>
                 @endif
                 
             </div>
@@ -67,7 +67,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Drª</th>
                                         <th>Cliente</th>
@@ -82,7 +82,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $aberto->id }}</td>
+                                        <td>{{ $aberto->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
                                         <td>{{ $aberto->user->nome}}</td>
                                         <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
@@ -116,7 +116,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Drª</th>
                                         <th>Cliente</th>
@@ -131,7 +131,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $devolvida->id }}</td>
+                                        <td>{{ $devolvida->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
                                         <td>{{ $devolvida->user->nome}}</td>
                                         <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
@@ -159,7 +159,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Drª</th>
                                         <th>Cliente</th>
@@ -174,7 +174,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $recorrente->id }}</td>
+                                        <td>{{ $recorrente->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
                                         <td>{{ $recorrente->user->nome}}</td>
                                         <td class="quebra-texto">{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
@@ -208,7 +208,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>Drª</th>
                                         <th>Cliente</th>
@@ -222,7 +222,7 @@
                                     @foreach ($finalizadas->solicitacao as $finalizada)
                                     <tr>
                                         <td></td>
-                                        <td>{{ $finalizada->id }}</td>
+                                        <td>{{ $finalizada->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($finalizada->created_at)) }}</td>
                                         <td>{{ $finalizada->user->nome}}</td>
                                         <td class="quebra-texto">{{ $finalizada->cliente == null ? 'MOSELLO LIMA' : $finalizada->cliente->nome }}</td>

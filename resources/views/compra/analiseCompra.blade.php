@@ -36,26 +36,8 @@
 	@include('layouts._includes._comentario')
 	@endif
 	<!-- FIM SESSÂO COMENTÁRIO  -->
-
-	<!-- SESSÂO COMPROVANTE -->
-	{{-- @if(count($solicitacao->comprovante) == 0)
-	@if($solicitacao->tipo == "VIAGEM")
-	@if($solicitacao->status()->get()[0]->descricao == config('constantes.status_aprovado_etapa2'))
-	@include('layouts._includes.solicitacoes._addComprovante')
-	@endif
-	@elseif($solicitacao->tipo == "COMPRA")
-	@if($solicitacao->status()->get()[0]->descricao == config('constantes.status_aprovado'))
-	@include('layouts._includes.solicitacoes._addComprovante')
-	@endif
-	@else
-	@include('layouts._includes.solicitacoes._addComprovante')
-	@endif
-	@else
-	@include('layouts._includes.solicitacoes._comprovante')
-	@endif --}} 
-	<!-- FIM SESSÂO COMPROVANTE  -->
 	
-	<!-- LISTAGEM DOS PRODUTOS  -->
+	<!-- LISTAGEM DAS COTAÇÕES  -->
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
@@ -110,7 +92,7 @@
 			</div>
 		</div> 												
 	</div>
-	<!-- FIM LISTAGEM DOS PRODUTOS -->
+	<!-- FIM LISTAGEM DAS COTAÇÕES -->
 	@foreach ($solicitacao->compra as $compra)
 	@role(['ADMINISTRATIVO'])
 	@if($solicitacao->status()->get()[0]->descricao == config('constantes.status_aprovado'))
@@ -193,23 +175,6 @@
 										</div>
 									</div>							
 								</div>
-								{{-- <div class="col-md-3">
-									<div class="form-line">
-										<!-- Define your button -->
-										<button type="button" style="padding: 10px 0;width:186px;overflow:hidden;margin-top: 16px; white-space: nowrap;" id="file0">Anexar Arquivo</button>
-										<!-- Your File element -->
-										<input type="file" name="anexo_comprovante[]" id="anexo_comprovante0"/>
-									</div>
-								</div> --}}
-								<!-- <div class="col-md-3">
-									<label id="label" for="compra">Compra</label>
-									<select id="compra" name="compra_id" class="selectpicker form-control show-tick" data-size="5" data-live-search="true">
-										<option value="">SELECIONE</option>
-										@foreach ($solicitacao->compra as $compra)
-										<option value="{{ $compra->id }}">{{ $compra->descricao }}</option>
-										@endforeach
-									</select>
-								</div> -->
 							</div> 
 						</div>
 						<div class="row clearfix">

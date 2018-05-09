@@ -238,6 +238,15 @@ $('.checkbox').change(function(){ //".checkbox" change
     }
     
 });
+$( ".codigo" ).on('input',function(e){
+    if ($( this ).val()) {
+        $('#cliente').removeAttr('required', false);
+        $('#advogado').removeAttr('required', false);
+    }else{
+        $('#cliente').attr('required', true);
+        $('#advogado').attr('required', true);
+    }
+});
 
 $('.checkbox').change(function(){ //".checkbox" change 
     if($('.checkbox:checked').length == $('.checkbox').length){
@@ -246,12 +255,7 @@ $('.checkbox').change(function(){ //".checkbox" change
         $('.checked_all').prop('checked',false);
     }
 });
-// $('#tableTeste_wrapper').ready(function() {
-//     $('#tableTeste_wrapper').find('.dt-buttons').append(
-//         '<button class="dt-button buttons-pdf buttons-html5" tabindex="0" aria-controls="tableTeste">'
-//         +'<span><i class="material-icons">picture_as_pdf</i></span>'
-//         +'</button>');
-// });
+
 $( window ).load(function() {
     var value = $('#origem_despesa').val();
 
@@ -495,28 +499,19 @@ $('#origem_despesa').change(function() {
     if (value == "ESCRITÓRIO") {
         $('#label').css("color","#ded5d5");
 
-        // $('#clientes').closest('label').addClass("red2");
-    //console.log('ghjhgjgj');
-    // $('#clientes').attr("disabled", true);
-    $('#cliente').selectpicker('deselectAll');
-    $('#cliente').removeAttr('required', false);
-    $('#cliente').selectpicker('hide');
-    $('#cliente').selectpicker('refresh');
+        $('#cliente').selectpicker('deselectAll');
+        $('#cliente').removeAttr('required', false);
+        $('#cliente').selectpicker('hide');
+        $('#cliente').selectpicker('refresh');
 
-}else{
-    $('#label').css("color","#555"); 
-    $('#cliente').removeAttr('disabled',false);
-    $('#cliente').selectpicker('show');
-    $('#cliente').attr('required', true);
-    $('#cliente').selectpicker('refresh');
-}
+    }else{
+        $('#label').css("color","#555"); 
+        $('#cliente').removeAttr('disabled',false);
+        $('#cliente').selectpicker('show');
+        $('#cliente').attr('required', true);
+        $('#cliente').selectpicker('refresh');
+    }
 });
-// $( "#cliente" ).change(function () {
-//     var str = "";
-//     alert($(this).val());
-
-// });
-
 
 //Ajax para trazer os clientes
 $('#solicitantes')
@@ -550,13 +545,9 @@ preprocessData: function(data){
         {
           'value': curr.id,
           'text': curr.nome,
-                            // 'data': {
-                            //     'icon': 'icon-person'
-                            //     // 'subtext': 'Internal'
-                            // },
-                            'disabled': false
-                        }
-                        );
+          'disabled': false
+      }
+      );
     }
 }
 return solicitantes;
@@ -597,13 +588,10 @@ preprocessData: function(data){
         {
           'value': curr.id,
           'text': curr.nome,
-                            // 'data': {
-                            //     'icon': 'icon-person'
-                            //     // 'subtext': 'Internal'
-                            // },
-                            'disabled': false
-                        }
-                        );
+
+          'disabled': false
+      }
+      );
     }
 }
 return clientes;

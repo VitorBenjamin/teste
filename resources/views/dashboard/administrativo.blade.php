@@ -62,7 +62,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>DRª</th>
                                         <th>Cliente</th>
@@ -76,7 +76,7 @@
                                     @foreach ($abertas->solicitacao as $aberto)
                                     <tr>
                                         <td></td>
-                                        <td>{{ $aberto->id }}</td>
+                                        <td>{{ $aberto->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
                                         <td>{{ $aberto->user->nome}}</td>
                                         <!-- <td>{{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> -->
@@ -111,7 +111,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>DRª</th>
                                         <th>Cliente</th>
@@ -126,7 +126,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $devolvida->id }}</td>
+                                        <td>{{ $devolvida->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
                                         <td>{{ $devolvida->user->nome}}</td>
                                         <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
@@ -154,7 +154,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>ID</th>
+                                        <th>Codigo</th>
                                         <th>Data</th>
                                         <th>DRª</th>
                                         <th>Cliente</th>
@@ -169,7 +169,7 @@
 
                                     <tr>
                                         <td></td>
-                                        <td>{{ $recorrente->id }}</td>
+                                        <td>{{ $recorrente->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
                                         <td>{{ $recorrente->user->nome}}</td>
                                         <td>{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>

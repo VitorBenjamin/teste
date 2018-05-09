@@ -44,6 +44,7 @@ class CreateFks extends Migration
             $table->foreign('clientes_id')->references('id')->on('clientes');
             $table->foreign('processos_id')->references('id')->on('processos');
             $table->foreign('users_id')->references('id')->on('users');
+            $table->foreign('aprovador_id')->references('id')->on('users');
             $table->foreign('relatorios_id')->references('id')->on('relatorios');
         }); 
 
@@ -74,7 +75,7 @@ class CreateFks extends Migration
 
         });
 
-    //Foreign Keys Tabela viagens_comprovantes
+        //Foreign Keys Tabela viagens_comprovantes
         // Schema::table('viagens_comprovantes', function (Blueprint $table) {
         //     DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_passagem LONGBLOB NULL");
         //     DB::statement("ALTER TABLE viagens_comprovantes ADD anexo_hospedagem LONGBLOB NULL");

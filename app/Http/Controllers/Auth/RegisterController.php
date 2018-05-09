@@ -104,6 +104,8 @@ class RegisterController extends Controller
         $role = Role::where('name',$request->role)->first();
         $user->attachRole($role);
 
+        $user->administrativo = $request->funcao ? 1 : 0;
+        $user->save();
         if ($request->role == config('constantes.user_coordenador')) {
             $this->setLimite($user,$request);
             $this->setCliente($user,$request);

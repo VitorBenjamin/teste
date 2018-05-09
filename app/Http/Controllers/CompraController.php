@@ -71,8 +71,13 @@ class CompraController extends Controller
 	{
 
 		$solicitacao = Solicitacao::with('compra','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
-        //dd($solicitacao);
-
+		if ($solicitacao == null) {
+			\Session::flash('flash_message',[
+				'msg'=>"Solicitação não cadastrada!",
+				'class'=>"alert bg-yellow alert-dismissible"
+			]);
+			return redirect()->route('user.index'); 
+		}
 		return view('compra.analiseCompra', compact('solicitacao'));
 
 	}

@@ -1,20 +1,10 @@
 <?php
-
-
-
-
-
-
-
-
-
-
-
 Route::post('cadastro', ['uses' => 'ClienteController@index','as' => 'user.index']);
 //Route::post('/user-cadastro', ['uses' => 'UserController@createDados','as' => 'user.index']);
 
 Route::get('/', ['uses' => 'UserController@index','middleware' => 'auth', 'as' => 'user.index']);
 Route::post('solictacao-deletar', ['uses' => 'SolicitacaoController@deletar', 'as' => 'solicitacao.deletar']);
+Route::post('solictacao-deletar-admin', ['uses' => 'SolicitacaoController@deletarAdmin', 'as' => 'solicitacao.deletarAdmin']);
 Route::get('/ajax/clientes', ['uses' => 'ClienteController@getCliente', 'as' => 'cliente.getCliente']);
 Route::post('/ajax/solicitantes', ['uses' => 'SolicitanteController@getSolicitante', 'as' => 'solicitante.getSolicitante']);
 Route::post('/ajax/relatorio-data', ['uses' => 'RelatorioController@getData', 'as' => 'relatorio.getData']);
@@ -29,6 +19,8 @@ Route::group(['middleware' => ['check.user.role:ADMINISTRATIVO|COORDENADOR|FINAN
     Route::get('/cadastro/registrar-coordenador', 'Auth\RegisterController@showRegistrationFormCoordenador')->name('registerCoordenador');
     Route::get('/cadastro/registrar-financeiro', 'Auth\RegisterController@showRegistrationFormFinanceiro')->name('registerFinanceiro');
     Route::get('/cadastro/registrar-advogado', 'Auth\RegisterController@showRegistrationFormAdvogado')->name('registerAdvogado');
+    Route::get('/busca-solicitacao', ['uses' => 'SolicitacaoController@getSolicitacaoView', 'as' => 'solicitacao.getSolicitacaoView']);
+    Route::post('resultados', ['uses' => 'SolicitacaoController@getSolicitacao', 'as' => 'solicitacao.getSolicitacao']);
 
 });
 Route::group(['middleware' => ['check.user.role:ADMINISTRATIVO']],function()
@@ -36,7 +28,6 @@ Route::group(['middleware' => ['check.user.role:ADMINISTRATIVO']],function()
     Route::get('administrativo-dashboard', ['uses' => 'UserController@administrativoDash','middleware' => 'auth', 'as' => 'user.administrativoDash']);
 
 });
-
 
 // // Authentication Routes...
 // $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -202,8 +193,6 @@ Route::group(['prefix' => 'solicitacao'],function()
         Route::put('atualizar-despesa/{id}', ['uses' => 'ViagemController@atualizarDespesa', 'as' => 'viagem.atualizarDespesa']);
         Route::get('deletar-despesa/{id}', ['uses' => 'ViagemController@deletarDespesa', 'as' => 'viagem.deletarDespesa']);
         Route::get('editar-despesa/{id}', ['uses' => 'ViagemController@editarDespesa', 'as' => 'viagem.editarDespesa']);
-
-
 
     });
     // FIM ROTAS DE VIAGEM

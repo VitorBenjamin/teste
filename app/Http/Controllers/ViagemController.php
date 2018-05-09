@@ -78,6 +78,13 @@ class ViagemController extends Controller
                 }
             }
         }
+        if ($solicitacao == null) {
+            \Session::flash('flash_message',[
+                'msg'=>"Solicitação não cadastrada!",
+                'class'=>"alert bg-yellow alert-dismissible"
+            ]);
+            return redirect()->route('user.index'); 
+        }
 
         return view('viagem.analiseViagem', compact('solicitacao','finalizar'));
     }
@@ -154,7 +161,8 @@ class ViagemController extends Controller
             'data_volta' => $data, 
             'locacao' => $request->locacao,
             'hospedagem' => $request->hospedagem,
-            'bagagem' => $request->bagagem, 
+            'bagagem' => $request->bagagem,
+            'translado' => $request->translado,
             'kg' => $request->kg,
         ]);
 
@@ -183,6 +191,7 @@ class ViagemController extends Controller
                 'hospedagem' => $request->hospedagem,
                 'bagagem' => $request->bagagem, 
                 'kg' => $request->kg,
+                'translado' => $request->translado,
                 'solicitacoes_id' => $id,                
 
             ]
@@ -335,8 +344,8 @@ class ViagemController extends Controller
         if ($viagem->hospedagens && $request->file('anexo_hospedagem')) {
             $mime = $request->file('anexo_hospedagem')->getClientMimeType();
             
-                $viagem->hospedagens->data_compra = date('Y-m-d', strtotime($request->data_hospedagem));
-                $viagem->hospedagens->custo_hospedagem = $request->custo_hospedagem;
+            $viagem->hospedagens->data_compra = date('Y-m-d', strtotime($request->data_hospedagem));
+            $viagem->hospedagens->custo_hospedagem = $request->custo_hospedagem;
 
             if ($mime == "image/jpeg" || $mime == "image/png") {
                 $file = Image::make($request->file('anexo_hospedagem'));
@@ -357,9 +366,9 @@ class ViagemController extends Controller
 
         if ($viagem->locacoes && $request->file('anexo_locacao')) {
             $mime = $request->file('anexo_locacao')->getClientMimeType();
-    
-                $viagem->locacoes->data_compra = date('Y-m-d', strtotime($request->data_hospedagem));
-                $viagem->locacoes->valor = $request->custo_locacao;
+
+            $viagem->locacoes->data_compra = date('Y-m-d', strtotime($request->data_hospedagem));
+            $viagem->locacoes->valor = $request->custo_locacao;
 
             if ($mime == "image/jpeg" || $mime == "image/png") {
                 $file = Image::make($request->file('anexo_locacao'));

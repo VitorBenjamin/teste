@@ -12,7 +12,7 @@ class Translado extends Model
      * @var array
      */
     protected $fillable = [
-        'data_translado', 'estornado', 'turno', 'observacao', 'origem', 'destino', 'ida_volta', 'distancia', 'solicitacoes_id','anexo_pdf'
+        'data_translado', 'estornado', 'turno', 'observacao', 'origem', 'destino', 'ida_volta', 'distancia', 'solicitacoes_id'
     ];
     
     /** Consulta a solicitacao

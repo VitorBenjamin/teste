@@ -242,7 +242,13 @@ class ReembolsoController extends Controller
 
         $solicitacao = Solicitacao::with('despesa','translado','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
         //dd($solicitacao);
-
+        if ($solicitacao == null) {
+            \Session::flash('flash_message',[
+                'msg'=>"Solicitação não cadastrada!",
+                'class'=>"alert bg-yellow alert-dismissible"
+            ]);
+            return redirect()->route('user.index'); 
+        }
         return view('reembolso.analiseReembolso', compact('solicitacao'));
 
     }

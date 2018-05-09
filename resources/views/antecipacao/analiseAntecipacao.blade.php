@@ -132,10 +132,10 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped table-hover js-basic-example">
+					<table class="table table-bordered table-striped table-hover table-simples">
 						<thead>
 							<tr>
-								
+								<th></th>
 								<th>Data</th>
 								<th>Descricao</th>
 								<th>Comprovante</th>
@@ -145,6 +145,7 @@
 						</thead>
 						<tfoot>
 							<tr>
+								<th></th>
 								<th>Data</th>
 								<th>Descricao</th>
 								<th>Comprovante</th>
@@ -155,7 +156,7 @@
 						<tbody>
 							@foreach ($solicitacao->despesa as $key2 => $despesa)
 							<tr>
-								
+								<td></td>
 								<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 								<td>{{$despesa->descricao}}</td>
 								<td>{{$despesa->tipo_comprovante}}</td>

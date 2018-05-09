@@ -21,7 +21,6 @@ class Despesas extends Migration
             $table->date('data_despesa');
             $table->string('tipo_comprovante');
             $table->decimal('valor', 10,2);
-            $table->string('anexo_pdf')->nullable();
             $table->integer('solicitacoes_id')->unsigned();      
             $table->timestamps();
             $table->softDeletes();

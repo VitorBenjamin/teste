@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-<script type="text/javascript">
-	var rota = "{{route('relatorio.relatorioGeral',$relatorio->id)}}";
-</script>
+{{-- <script type="text/javascript">
+	var rota = "{{route('relatorio.relatorioGeral', $relatorio->id)}}";
+</script> --}}
 <section class="content">
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -61,51 +61,47 @@
 									<th>CÓDIGO</th>
 									<th>DADOS GERAIS</th>
 									<th style="width: 50px">VALORES</th>
-									<th style="width: 80px, padding-right: 0px;">
-										ESTORNADAS
-										<!-- <input id="product_all" name="product_all" class="checked_all" type="checkbox">
-											<label for="product_all"></label> -->
-										</th>
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th></th>
-										<th></th>
-										<th style="white-space: nowrap;"></th>
-										<th colspan="2" style="text-align:right;white-space: nowrap;"></th>
-									</tr>
-								</tfoot>
-								<tbody style="font-size: 13px;">
-									@foreach ($solicitacoes as $solicitacao)
-									@if($solicitacao->tipo == "REEMBOLSO")
+									<th style="width: 80px, padding-right: 0px;">ESTORNADAS</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th></th>
+									<th style="white-space: nowrap;"></th>
+									<th colspan="2" style="text-align:right;white-space: nowrap;"></th>
+								</tr>
+							</tfoot>
+							<tbody style="font-size: 13px;">
+								@foreach ($solicitacoes as $solicitacao)
+								@if($solicitacao->tipo == "REEMBOLSO")
 
-									@include('layouts._includes.solicitacoes._reembolso')
+								@include('layouts._includes.solicitacoes._reembolso')
 
-									@elseif($solicitacao->tipo == "GUIA")
+								@elseif($solicitacao->tipo == "GUIA")
 
-									@include('layouts._includes.solicitacoes._guia')
+								@include('layouts._includes.solicitacoes._guia')
 
-									@elseif($solicitacao->tipo == "VIAGEM")
+								@elseif($solicitacao->tipo == "VIAGEM")
 
-									@include('layouts._includes.solicitacoes._viagem')
+								@include('layouts._includes.solicitacoes._viagem')
 
-									@elseif($solicitacao->tipo == "COMPRA")
+								@elseif($solicitacao->tipo == "COMPRA")
 
-									@include('layouts._includes.solicitacoes._compra')
+								@include('layouts._includes.solicitacoes._compra')
 
-									@elseif($solicitacao->tipo == "ANTECIPAÇÃO")
+								@elseif($solicitacao->tipo == "ANTECIPAÇÃO")
 
-									@include('layouts._includes.solicitacoes._antecipacao')
+								@include('layouts._includes.solicitacoes._antecipacao')
 
-									@endif
-									@endforeach                                
-								</tbody>
-							</table>		
-						</form>
-					</div>
+								@endif
+								@endforeach                                
+							</tbody>
+						</table>		
+					</form>
 				</div>
 			</div>
 		</div>
-	</section>
-	@endsection
+	</div>
+</section>
+@endsection

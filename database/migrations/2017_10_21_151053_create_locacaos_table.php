@@ -15,12 +15,12 @@ class CreateLocacaosTable extends Migration
     {
         Schema::create('locacoes', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('data_cotacao');
+            $table->date('data_compra');
             $table->string('observacao')->nullable();
             $table->boolean('estornado')->default(false);
-            $table->datetime('data_compra');
             $table->decimal('valor', 10, 2)->nullable();
             $table->integer('viagens_id')->unsigned();
-            $table->string('anexo_pdf')->nullable();
             $table->timestamps();
             
         });

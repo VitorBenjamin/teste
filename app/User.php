@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nome', 'email', 'password', 'codigo','cpf', 'telefone', 'area_atuacoes_id', 'unidades_id', 'dados_id' , 'ativo'
+        'nome', 'email', 'password', 'codigo', 'cpf', 'telefone', 'diretor', 'direto_fina', 'administrativo', 'area_atuacoes_id', 'unidades_id', 'dados_id' , 'ativo'
     ];
     
     /** Consulta a area de atuação do usuário

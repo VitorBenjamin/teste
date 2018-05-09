@@ -29,9 +29,19 @@ class RelatorioController extends Controller
 		usort($lista, function($a, $b) {
 			return $a['data'] <=> $b['data'];
 		});
-        //dd($lista);
+		$total = 0;
+		$geral=0;
+		$estornos=0;
+		foreach ($lista as $key => $l) {
+			if (!$l['estornado']) {
+				$total+=$l['valor'];
+			}else{
+				$estornos+=$l['valor'];
+			}
+			$geral+=$l['valor'];
+		}
 		$nome = $solicitacao->cliente ? $solicitacao->cliente->nome : 'Mosello Lima';
-		$pdf = PDF::loadView('layouts._includes.impressao.impressao',compact('solicitacao','lista'));
+		$pdf = PDF::loadView('layouts._includes.impressao.impressao',compact('solicitacao','lista','total','geral','estornos'));
 		return $pdf->stream('Relátorio '.$nome.'.pdf');
 		//return view('layouts._includes.impressao.impressao', compact('solicitacao','lista'));
 	}
@@ -58,11 +68,6 @@ class RelatorioController extends Controller
 			}
 			$geral+=$l['valor'];
 		}
-		//dd($total);
-		//dd($lista);
-		//dd($solicitacoes[0]->cliente->nome);
-        //$nome = $solicitacao->cliente ? $solicitacao->cliente->nome : 'Mosello Lima';
-        //dd(count($lista));
 		$pdf = PDF::loadView('layouts._includes.impressao.relatorio_geral',compact('solicitacoes','lista','total','geral','estornos'));
 		return $pdf->stream('Relátorio Geral.pdf');
 		//return view('layouts._includes.impressao.relatorio_geral', compact('solicitacoes','lista'));
@@ -96,7 +101,7 @@ class RelatorioController extends Controller
 		//dd($relatorios);
 		return response()->json($data_inicial);
 	}
-	public function extornar(Request $id)
+	public function extornar(Request $request)
 	{
 		if ($request->desativar) {
 			foreach ($request->desativar as $i) {

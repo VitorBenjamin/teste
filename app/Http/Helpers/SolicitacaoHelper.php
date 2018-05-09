@@ -90,6 +90,7 @@ class SolicitacaoHelper
                 'valor' => $t->distancia * ($s->cliente == null ? config('constantes.km') : $s->cliente->valor_km),
                 'estornado' => $t->estornado,
                 'img' => null,
+                'exibir' => false,
             ];
         }
         foreach ($s->despesa as $d) {
@@ -101,6 +102,7 @@ class SolicitacaoHelper
                 'valor' => $d->valor,
                 'estornado' => $d->estornado,
                 'img' => $d->anexo_comprovante,
+                'exibir' => true,
             ];
 
         }
@@ -114,12 +116,13 @@ class SolicitacaoHelper
             $bagagem = $viagem->bagagem ? 'BAGAGEM'.$viagem->kg : '';
             $lista[] = 
             [
-                'data' => date('d-m-Y',strtotime($viagem->data_compra)),
+                'data' => $viagem->translado ? date('d-m-Y',strtotime($viagem->data_ida)) : date('d-m-Y',strtotime($viagem->data_compra)),
                 'codigo' => $s->codigo,
-                'descricao' => 'VIAGEM '.$viagem->origem.' <-> '.$viagem->data_ida.' - '.$data_volta.$bagagem,
-                'valor' => $viagem->valor ? $viagem->valor : 'R$ 0',
+                'descricao' => $viagem->origem.' <ida> '.date('d-m-Y',strtotime($viagem->data_ida)).' / '.$viagem->destino.' <volta> '.date('d-m-Y',strtotime($data_volta)).' - '.$bagagem,
+                'valor' => $viagem->valor ? $viagem->valor : '0',
                 'estornado' => $viagem->estornado,
                 'img' => $viagem->anexo_passagem ? $viagem->anexo_passagem : null,
+                'exibir' => true,
             ];
         }
         if ($viagem->hospedagens) {
@@ -131,6 +134,7 @@ class SolicitacaoHelper
                 'valor' => $viagem->hospedagens->custo_hospedagem,
                 'estornado' => $viagem->hospedagens->estornado,
                 'img' => $viagem->hospedagens->anexo_hospedagem,
+                'exibir' => true,
             ];
         }
         if ($viagem->locacoes) {
@@ -141,7 +145,8 @@ class SolicitacaoHelper
                 'descricao' => 'LOCAÇÃO '.$viagem->locacoes->observacao,
                 'valor' => $viagem->locacoes->valor,
                 'estornado' => $viagem->locacoes->estornado,
-                'img' => $viagem->locacoes->valor,
+                'img' => $viagem->locacoes->anexo_locacao,
+                'exibir' => true,
             ];
         }
         if ($s->despesa) {
@@ -154,10 +159,12 @@ class SolicitacaoHelper
                     'valor' => $d->valor,
                     'estornado' => $d->estornado,
                     'img' => $d->anexo_comprovante,
+                    'exibir' => true,
                 ];
 
             }
         }
+        //dd($lista);
         return $lista;
     }
     public function guiaPrint($s,$lista)
@@ -171,6 +178,7 @@ class SolicitacaoHelper
                 'valor' => $guia->valor,
                 'estornado' => $guia->estornado,
                 'img' => $s->comprovante[0]->anexo,
+                'exibir' => true,
             ];
         }
         return $lista;
@@ -188,6 +196,7 @@ class SolicitacaoHelper
                         'valor' => $cota->valor,
                         'estornado' => $cota->estornado,
                         'img' => $cota->anexo_comprovante,
+                        'exibir' => true,
                     ];
                 }
             }
@@ -205,6 +214,7 @@ class SolicitacaoHelper
                 'valor' => $d->valor,
                 'estornado' => $d->estornado,
                 'img' => $d->anexo_comprovante,
+                'exibir' => true,
             ];
         }
         return $lista;

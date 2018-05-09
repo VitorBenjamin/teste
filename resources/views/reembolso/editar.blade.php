@@ -75,11 +75,11 @@
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
 	
-	<!-- LISTAGEM DA VIAGEM  -->
+	<!-- LISTAGEM DOS COMENTÁRIOS  -->
 	@if(count($solicitacao->comentarios)>0)
 	@include('layouts._includes._comentario')
 	@endif
-	<!-- FIM LISTAGEM DA VIAGEM  -->
+	<!-- FIM LISTAGEM DOS COMENTÁRIOS  -->
 	
 	<!-- LISTAGEM DOS TRANSLADOS  -->
 	@if (count($solicitacao->translado) > 0)
@@ -92,7 +92,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example">
+					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples-translado">
 						<thead>
 							<tr>
 								<th></th>
@@ -170,7 +170,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
+					<table class="table table-bordered table-striped table-hover dataTable table-simples">
 						<thead>
 							<tr>
 								<th></th>

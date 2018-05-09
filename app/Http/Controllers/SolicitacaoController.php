@@ -11,6 +11,7 @@ use App\Repositories\SolicitacaoRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Comentario;
+use App\User;
 use App\Cotacao;
 use App\Comprovante;
 use App\Despesa;
@@ -53,6 +54,49 @@ class SolicitacaoController extends Controller
 			'class'=>"alert bg-green alert-dismissible"
 		]);
 		return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.editar', $id);
+	}
+	public function getSolicitacao(Request $request)
+	{
+		//dd($request->all());
+		$solicitacoes = null;
+		$solicitacao = null;
+		if ($request->codigo) {
+			$solicitacao = Solicitacao::where('codigo',$request->codigo)->first();
+			if (!$solicitacao) {
+				\Session::flash('flash_message',[
+					'msg'=>"Solicitação não encotrada",
+					'class'=>"alert bg-orange alert-dismissible"
+				]);
+				return redirect()->back();
+			}
+			return view('layouts._includes.solicitacoes.resultado',compact('solicitacoes','solicitacao'));
+		}
+		if ($request->area_atuacoes_id) {
+			$solicitacoes = Solicitacao::where('clientes_id',$request->clientes_id)
+			->where('users_id',$request->advogados_id)
+			->where('area_atuacoes_id',$request->area_atuacoes_id)->get();
+			if (!$solicitacoes) {
+				\Session::flash('flash_message',[
+					'msg'=>"Solicitação não encotrada",
+					'class'=>"alert bg-orange alert-dismissible"
+				]);
+				return redirect()->back();
+			}
+			return view('layouts._includes.solicitacoes.resultado',compact('solicitacoes','solicitacao'));
+		}
+
+		$solicitacoes = Solicitacao::where('clientes_id',$request->clientes_id)
+		->where('users_id',$request->advogados_id)->get();
+		//dd($solicitacoes);
+		return view('layouts._includes.solicitacoes.resultado',compact('solicitacoes','solicitacao'));
+	}
+	public function getSolicitacaoView()
+	{
+		$areas = AreaAtuacao::all('id','tipo'); 
+		$advogados = User::all('id','nome');
+		$clientes = Cliente::all('id','nome');
+		$solicitantes = Solicitante::all('id','nome');
+		return view('layouts._includes.solicitacoes.get_solitacoes', compact('areas','advogados','solicitantes','clientes'));
 	}
 	public function addComprovante(Request $request,$id)
 	{
@@ -150,7 +194,11 @@ class SolicitacaoController extends Controller
 			}elseif ($status == config('constantes.status_recorrente_financeiro')) {
 				$andamento = Status::where('descricao',config('constantes.status_andamento_recorrente'))->first();
 			}else{
-				$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
+				if (auth()->user()->administrativo) {
+					$andamento = Status::where('descricao', config('constantes.status_andamento'))->first();
+				}else{
+					$andamento = Status::where('descricao', config('constantes.status_andamento_administrativo'))->first();
+				}
 			}
 		}else {
 			if (Auth::user()->hasRole(config('constantes.user_coordenador'))) {
@@ -284,11 +332,12 @@ class SolicitacaoController extends Controller
 			$solicitacao->save();
 
 		}elseif ($solicitacao->tipo == "VIAGEM" || $solicitacao->tipo == "ANTECIPAÇÃO" ) {			
-			//dd($solicitacao->tipo);
+			
 			if ($status == config('constantes.status_coordenador_aprovado')) {
 				$finalizar = Status::where('descricao', config('constantes.status_coordenador_aberto2'))->first();
 
 			} elseif ($solicitacao->tipo == "ANTECIPAÇÃO" && $status == config('constantes.status_aberto_etapa2')) {
+				dd($solicitacao->tipo);
 				$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();
 				$this->trocarStatus($solicitacao,$finalizar);
 				return redirect()->route('user.index');
@@ -345,14 +394,36 @@ class SolicitacaoController extends Controller
 		$solicitacao->status()->attach($proximo);
 	}
 
+	public function deletarAdmin(Request $request)
+	{
+		$solicitacao = Solicitacao::where('id',$request->id)->first();
+		$tipo = $solicitacao->tipo;
+		if ($solicitacao->delete()) {
+			\Session::flash('flash_message',[
+				'msg'=> $tipo. " Removido com Sucesso!!!",
+				'class'=>"alert bg-red alert-dismicssible"
+			]);
+			return route('solicitacao.getSolicitacaoView');
+		}else{
+			\Session::flash('flash_message',[
+				'msg'=>"Solicitação não pode ser removida.",
+				'class'=>"alert bg-red alert-dismissible"
+
+			]);
+			return response()->json([
+				'success' => false,
+				'message' => $errors
+			], 422);
+		}
+		return route('user.index');
+	}
 	public function deletar(Request $request)
 	{
-        //echo "asdasdasdasdasd";
 		$solicitacao = Solicitacao::where('id',$request->id)->with('status')->first();
 		foreach ($solicitacao->status as $status) 
 		{
 
-			if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_devolvido') || $status->descricao == config('constantes.status_andamento') || $status->descricao == config('constantes.status_andamento_administrativo')) {
+			if ($status->descricao == config('constantes.status_aberto') || $status->descricao == config('constantes.status_devolvido') || $status->descricao == config('constantes.status_andamento') || $status->descricao == config('constantes.status_andamento_administrativo') || $status->descricao == config('constantes.status_andamento_recorrente')) {
 
 				$tipo = $solicitacao->tipo;
 				if ($solicitacao->delete()) {

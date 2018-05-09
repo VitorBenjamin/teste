@@ -1,5 +1,5 @@
 @foreach ($compra->cotacao as $cotacao)
-@if ($solicitacao->status()->get()[0]->descricao == config('constantes.status_aprovado') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_finalizado') && $cotacao->aprovado == 0)
+@if (($solicitacao->status()->get()[0]->descricao == config('constantes.status_aprovado') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_finalizado')) && ($cotacao->aprovado == 0))
 
 @else
 <tr>
@@ -22,7 +22,7 @@
 	<td>
 		@if($solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_administrativo') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_recorrente_financeiro'))
 		<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('compra.deletarCotacao', $cotacao->id)}}"><i class="material-icons">delete_sweep</i></a>
-		@elseif($solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_recorrente') && Auth::user()->hasRole('COORDENADOR'))
+		@elseif(($solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_recorrente')) && (Auth::user()->hasRole('COORDENADOR')))
 
 		@if ($cotacao->aprovado)
 		<i class="material-icons" style="font-size: 34px;color: green;">done_all</i>

@@ -5,66 +5,81 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Relátorio  - {{$solicitacao->tipo}}</title>
+	<title>Relátorio Geral - {{$solicitacao->cliente->nome}}</title>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-
-	
 	<link rel="stylesheet" href="{{ asset('css/impressao.css') }}">
 	<script src="{{ asset('js/jquery-latest.js') }}"></script>
 	<script src="{{ asset('js/jquery.tablesorter.min.js') }}"></script>
+	<script src="{{ asset('js/impresao.js') }}"></script>
 </head>
-<body>
-	<div style="text-align:center" class="">
-		<img src="{{ asset('images/logo.svg') }}" alt="" class="img-topo" style="margin: 10px; 0 50px 0">
+<body>	
+	<div style="text-align:center" class="head">
+		<img src="{{ asset('images/LOGO-01.png') }}" alt="" class="img-topo" style="margin: 10px; 0 50px 0">
+	</div>
+	<div id="footer">
+		<img src="{{ asset('images/rodape.jpg') }}" alt="" class="img-rodape">
 	</div>
 	<div class="container">
 		<div class="top-left">Solicitante : {{ $solicitacao->user->nome }}</div>
 	</div>
-	<div style="text-align:justify">
-		<p class="cabecalho">
-			Despesa: {{ $solicitacao->origem_despesa }} 
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			Cliente: {{$solicitacao->cliente == null ? 'Mosello Lima' : $solicitacao->cliente->nome }}
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			Solicitante: {{$solicitacao->solicitante == null ? 'Desconhecido' : $solicitacao->solicitante->nome }}
-			<br>
-			N° de Processo: {{$solicitacao->processo == null ? 'Sem Processo' : $solicitacao->processo->codigo }}
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			Área de Atendi..: {{$solicitacao->area_atuacao->tipo}}
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			Contrato: {{ $solicitacao->contrato ? $solicitacao->contrato : 'Desconhecido'}}
-		</p>
+	<div class="divTable" style="width: 100%; margin-bottom: 50px;">
+		<div class="divTableBody">
+			<div class="divTableRow" style="background-color: #fff !important">
+				<div class="divTableCell2">{{ $solicitacao->origem_despesa }}</div>
+				<div class="divTableCell2">Cliente: {{$solicitacao->cliente == null ? 'Mosello Lima' : $solicitacao->cliente->nome }} - Km - R$ {{ $solicitacao->cliente->valor_km }}</div>
+				<div class="divTableCell2">Solicitante: {{$solicitacao->solicitante == null ? 'Desconhecido' : $solicitacao->solicitante->nome }}</div>
+			</div>
+			<div class="divTableRow" style="background-color: #fff !important">
+				<div class="divTableCell2">{{$solicitacao->processo == null ? 'Sem Processo' : 'N° de Processo: '.$solicitacao->processo->codigo }}</div>
+				<div class="divTableCell2">Área : {{$solicitacao->area_atuacao->tipo}}</div>
+				<div class="divTableCell2">Contrato: {{ $solicitacao->contrato ? $solicitacao->contrato : 'Desconhecido'}}</div>
+
+			</div>
+		</div>
 	</div>
-	<table  class="table">
-		<caption>
-			Relátorio Geral - {{$solicitacao->tipo}}
-		</caption>
-		<thead>
-			<tr>
-				<th scope="col">DATA</th>
-				<th scope="col">CÓDIGO</th>
-				<th scope="col">DESCRIÇÃO</th>
-				<th scope="col">VALORES</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach($lista as $l)
-			<tr>
-				<td>
-					{{$l['data']}}
-				</td>
-				<td>
-					{{$solicitacao->codigo}}
-				</td>
-				<td>{{$l['descricao']}}</td>
-				<td>R$ {{$l['valor']}}</td>
-			</tr>
+	<h3>Listagem - {{$solicitacao->tipo}} - {{$solicitacao->codigo}}</h3>
+	<div class="divTable" style="width: 100%;">
+		<div class="divTableHeading">
+			<div class="divTableRow">
+				<div class="divTableHead">DATA</div>
+				<div class="divTableHead">CÓDIGO</div>
+				<div class="divTableHead">DESCRIÇÃO</div>
+				<div class="divTableHead">VALORES</div>
+			</div>
+		</div>
+		<div class="divTableBody">
+			@foreach($lista as $i => $l)
+			@if ($l['estornado'])
+			<div class="divTableRow" style="background-color: #fff !important">
+				<div class="divTableCell-red" style="width: 50px;">&nbsp;{{$l['data']}}</div>
+				<div class="divTableCell-red" style="width: 30px;">&nbsp;{{$l['codigo']}}</div>
+				<div class="divTableCell-red">&nbsp;{{$l['descricao']}}</div>
+				<div class="divTableCell-red" style="width: 55px;">&nbsp;R$ -{{$l['valor']}}</div>
+			</div>
+			@else
+			<div class="divTableRow" style="background-color: #fff !important">
+				<div class="divTableCell" style="width: 50px;">&nbsp;{{$l['data']}}</div>
+				<div class="divTableCell" style="width: 30px;">&nbsp;{{$l['codigo']}}</div>
+				<div class="divTableCell">&nbsp;{{$l['descricao']}}</div>
+				<div class="divTableCell" style="width: 55px;">&nbsp;R$ {{$l['valor']}}</div>
+			</div>
+			@endif
 			@endforeach
-		</tbody>
-	</table>
-	@foreach ($lista as $li)
+		</div>
+	</div>
+	<div style="float:right;">
+		<p style="font-size:10px; margin: 2;" >
+			Total Estornos R$ {{number_format($estornos, 2, ',', '.')}} <br>
+			Total Geral R$ {{number_format($geral, 2, ',', '.')}} <br>
+		</p>
+		<h4 style="margin: 2;">
+			Total Final R$ {{number_format($total, 2, ',', '.')}}
+		</h4>
+	</div>
+	@foreach ($lista as $key => $li)
+	@if ($li['exibir'] && !$li['estornado'] && $li['img'])
 	<div class="page-break"></div>
 	<table class="table2">
 		<caption>
@@ -73,7 +88,7 @@
 		<thead>
 			<tr>
 				<th scope="col">DATA</th>
-				<th scope="col">CÓDIGO</th>
+				{{-- <th scope="col">CÓDIGO</th> --}}
 				<th scope="col">DESCRIÇÃO</th>
 				<th scope="col">VALORES</th>
 			</tr>
@@ -81,13 +96,13 @@
 		<tbody>
 			<tr>
 				<td>
-					{{$l['data']}}
+					{{$li['data']}}
 				</td>
-				<td>
+				{{-- <td>
 					{{$solicitacao->codigo}}
-				</td>
-				<td>{{$l['descricao']}}</td>
-				<td>R$ {{$l['valor']}}</td>
+				</td> --}}
+				<td>{{$li['descricao']}}</td>
+				<td>R$ {{$li['valor']}}</td>
 			</tr>
 		</tbody>
 	</table>
@@ -96,6 +111,7 @@
 		<img src="{{$li['img']}}" alt="" class="img">
 		@endif
 	</div>
+	@endif
 	@endforeach
 </body>
 </html>

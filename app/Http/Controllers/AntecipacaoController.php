@@ -134,7 +134,13 @@ class AntecipacaoController extends Controller
 
 		$solicitacao = Solicitacao::with('antecipacao','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
         //dd($solicitacao);
-
+		if ($solicitacao == null) {
+			\Session::flash('flash_message',[
+				'msg'=>"Solicitação não cadastrada!",
+				'class'=>"alert bg-yellow alert-dismissible"
+			]);
+			return redirect()->route('user.index'); 
+		}
 		return view('antecipacao.analiseAntecipacao', compact('solicitacao'));
 
 	}

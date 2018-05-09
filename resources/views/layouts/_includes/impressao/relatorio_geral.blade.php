@@ -28,7 +28,10 @@
 		<div class="divTableBody">
 			<div class="divTableRow">
 				<div class="divTableCell2">
-					Cliente: {{$solicitacoes[0]->cliente == null ? 'Mosello Lima' : $solicitacoes[0]->cliente->nome }}
+					Cliente: {{$solicitacoes[0]->cliente ? $solicitacoes[0]->cliente->nome : 'Mosello Lima' }}
+				</div>
+				<div class="divTableCell2">
+					Valor Km: {{$solicitacoes[0]->cliente ? 'R$ '.$solicitacoes[0]->cliente->valor_km : 'R$ 1.00' }}
 				</div>
 			</div>
 		</div>
@@ -74,71 +77,40 @@
 			Total Final R$ {{number_format($total, 2, ',', '.')}}
 		</h4>
 	</div>
-	<!-- DivTable.com -->
-		{{-- <table  class="table">
-			<caption>
-				Relátorio Geral - {{$solicitacoes[0]->tipo}}
-			</caption>
-			<thead>
-				<tr>
-					<th scope="col">DATA</th>
-					<th scope="col">CÓDIGO</th>
-					<th scope="col">DESCRIÇÃO</th>
-					<th scope="col">VALORES</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach($lista as $i => $l)
-				<tr>
-					<td>
-						{{$l['data']}}
-					</td>
-					<td>
-						{{$solicitacoes[0]->codigo}}
-					</td>
-					<td>{{$l['descricao']}}</td>
-					<td>R$ {{$l['valor']}}</td>
-				</tr>
-				@if ($i== 5 )
-				@endif
-				@endforeach
-			</tbody>
-		</table> --}}
-		<div class="page-break"></div>
-		@foreach ($lista as $k => $li)
-		<table class="table2">
-			<caption>
-				Relátorio Geral - {{$solicitacoes[0]->cliente->nome}}
-			</caption>
-			<thead>
-				<tr>
-					<th scope="col">DATA</th>
-					<th scope="col">CÓDIGO</th>
-					<th scope="col">DESCRIÇÃO</th>
-					<th scope="col">VALORES</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						{{$li['data']}}
-					</td>
-					<td>
-						{{$li['codigo']}}
-					</td>
-					<td>{{$li['descricao']}}</td>
-					<td>R$ {{$li['valor']}}</td>
-				</tr>
-			</tbody>
-		</table>
-		<div style="text-align:center">
-			@if ($li['img'])
-			<img src="{{$li['img']}}" alt="" class="img">
-			@endif
-		</div>
-		@if(!$loop->last)
-		<div class="page-break"></div>
+	@foreach ($lista as $k => $li)
+	@if ($li['exibir'] && !$li['estornado'] && $li['img'])
+	<div class="page-break"></div>
+	<table class="table2">
+		<caption>
+			Relátorio Geral - {{$solicitacoes[0]->cliente->nome}}
+		</caption>
+		<thead>
+			<tr>
+				<th scope="col">DATA</th>
+				<th scope="col">CÓDIGO</th>
+				<th scope="col">DESCRIÇÃO</th>
+				<th scope="col">VALORES</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					{{$li['data']}}
+				</td>
+				<td>
+					{{$li['codigo']}}
+				</td>
+				<td>{{$li['descricao']}}</td>
+				<td>R$ {{$li['valor']}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div style="text-align:center">
+		@if ($li['img'])
+		<img src="{{$li['img']}}" alt="" class="img">
 		@endif
-		@endforeach
-	</body>
-	</html>
+	</div>
+	@endif
+	@endforeach
+</body>
+</html>

@@ -43,7 +43,6 @@
 	@endif 
 	<!-- FIM SESSÂO COMPROVANTE  -->
 
-
 	<!-- LISTAGEM DOS TRANSLADOS  -->
 	@if (count($solicitacao->translado) > 0)
 	<div class="row clearfix">
@@ -55,9 +54,10 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable">
+					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples-translado">
 						<thead>
 							<tr>
+								<th></th>
 								<th>Data</th>
 								<th>Origem</th>
 								<th>Destino</th>
@@ -70,15 +70,15 @@
 						</thead>
 						<tbody>
 							@foreach ($solicitacao->translado as $translado)
-
 							<tr>
+								<td></td>
 								<td>{{date('d/m/Y',strtotime($translado->data_translado))}}</td>
 								<td>{{$translado->origem}}</td>
 								<td>{{$translado->destino}}</td>
 								<td>{{$translado->ida_volta == 1 ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$translado->distancia}} Km</td>
 								<td>R$ {{$solicitacao->cliente->valor_km}}</td>
-								<td>{{$solicitacao->cliente->valor_km * $translado->distancia}}</td>
+								<td>R$ {{$solicitacao->cliente->valor_km * $translado->distancia}}</td>
 								<td>{{$translado->observacao}}</td>
 							</tr>
 							@endforeach														
@@ -102,9 +102,10 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped table-hover dataTable">
+					<table class="table table-bordered table-striped table-hover dataTable table-simples">
 						<thead>
 							<tr>
+								<th></th>
 								<th>Data</th>
 								<th>Descricao</th>
 								<th>Comprovante</th>
@@ -114,6 +115,7 @@
 						</thead>
 						<tfoot>
 							<tr>
+								<th></th>
 								<th>Data</th>
 								<th>Descricao</th>
 								<th>Comprovante</th>
@@ -124,10 +126,11 @@
 						<tbody>
 							@foreach ($solicitacao->despesa as $key => $despesa)
 							<tr>
+								<td></td>
 								<td>{{date('d/m/Y',strtotime($despesa->data_despesa))}}</td>
 								<td>{{$despesa->descricao}}</td>
 								<td>{{$despesa->tipo_comprovante}}</td>
-								<td>{{$despesa->valor}}</td>
+								<td>R$ {{$despesa->valor}}</td>
 								<td class="acoesTD">
 									<div class="zoom-gallery">
 										@if($despesa->anexo_pdf)

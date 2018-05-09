@@ -46,7 +46,7 @@
 				
 				<div class="body">
 					@foreach ($solicitacao->viagem as $key => $viagem)
-					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example">
 						<thead>
 							<tr>
 								<th></th>
@@ -54,6 +54,7 @@
 								<th>Data Ida</th>
 								<th>Destino</th>
 								<th>Data Volta</th>	
+								<th>Translado</th>
 								<th>Hospedagem</th>
 								<th>Bagagem</th>
 								<th>Kg</th>
@@ -68,6 +69,7 @@
 								<td>{{date('d/m/Y',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
 								<td>{{$viagem->data_volta == null ? 'Só Ida' : date('d/m/Y',strtotime($viagem->data_volta)) }}</td>
+								<td>{{$viagem->translado ? 'SIM' : 'NÃO'}}</td>
 								<td>
 									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
 								</td>
@@ -80,8 +82,10 @@
 									@role('ADMINISTRATIVO')
 									@if ($solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_administrativo') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_recorrente_financeiro'))
 									<button type="button" class="btn btn-default waves-effect" data-toggle="modal" data-target="#addCotacao{{$viagem->id}}">COTAR</button>
-									@else
+									@elseif ($solicitacao->status()->get()[0]->descricao == config('constantes.status_aprovado'))
 									<button type="button" class="btn btn-default waves-effect" data-toggle="modal" data-target="#addComprovante{{$viagem->id}}">COMPROVANTES</button>
+									@else
+									NENHUMA
 									@endif
 									@endrole
 								</td>	
@@ -233,7 +237,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
+					<table class="table table-bordered table-striped table-hover dataTable table-simples">
 						<thead>
 							<tr>
 								<th></th>
