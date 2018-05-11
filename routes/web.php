@@ -230,7 +230,7 @@ Route::group(['prefix' => 'admin'],function()
     Route::get('listagem-solicitante', ['uses' => 'SolicitanteController@getAll', 'as' => 'solicitante.getAll']);
     Route::get('editar-solicitante/{id}', ['uses' => 'SolicitanteController@editar', 'as' => 'solicitante.editar']);
     Route::put('atualizar-solicitante/{id}', ['uses' => 'SolicitanteController@atualizar', 'as' => 'solicitante.atualizar']);
-    Route::get('deletar-solicitante/{id}', ['uses' => 'SolicitanteController@deletarLimite', 'as' => 'solicitante.deletarLimite']);
+    Route::get('deletar-solicitante/{id}', ['uses' => 'SolicitanteController@deletar', 'as' => 'solicitante.deletar']);
 });
 Route::group(['prefix' => 'administrativo/relatorio','middleware' => ['check.user.role:FINANCEIRO']],function()
 {

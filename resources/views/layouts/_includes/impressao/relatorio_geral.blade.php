@@ -34,10 +34,15 @@
 					Valor Km: {{$solicitacoes[0]->cliente ? 'R$ '.$solicitacoes[0]->cliente->valor_km : 'R$ 1.00' }}
 				</div>
 			</div>
+			<div class="divTableRow">
+				<div class="divTableCell2">
+					Período: {{ $data_inicial }} - {{ $solicitacoes[0]->relatorio->data }}
+				</div>
+			</div>
 		</div>
 	</div>
 	<div>
-		<h3>RELÁTORIO GERAL {{$solicitacoes[0]->cliente->nome}}</h3>
+		<h3>RELÁTORIO GERAL</h3>
 	</div>
 	<div class="divTable" style="width: 100%;">
 		<div class="divTableHeading">
@@ -55,14 +60,14 @@
 				<div class="divTableCell-red" style="width: 50px;">&nbsp;{{$l['data']}}</div>
 				<div class="divTableCell-red" style="width: 30px;">&nbsp;{{$l['codigo']}}</div>
 				<div class="divTableCell-red">&nbsp;{{$l['descricao']}}</div>
-				<div class="divTableCell-red" style="width: 55px;">&nbsp;R$ -{{$l['valor']}}</div>
+				<div class="divTableCell-red" style="width: 55px;">&nbsp;R$ -{{number_format($l['valor'], 2, ',', '.')}}</div>
 			</div>
 			@else
 			<div class="divTableRow" style="background-color: #fff !important">
 				<div class="divTableCell" style="width: 50px;">&nbsp;{{$l['data']}}</div>
 				<div class="divTableCell" style="width: 30px;">&nbsp;{{$l['codigo']}}</div>
 				<div class="divTableCell">&nbsp;{{$l['descricao']}}</div>
-				<div class="divTableCell" style="width: 55px;">&nbsp;R$ {{$l['valor']}}</div>
+				<div class="divTableCell" style="width: 55px;">&nbsp;R$ {{number_format($l['valor'], 2, ',', '.')}}</div>
 			</div>
 			@endif
 			@endforeach

@@ -91,8 +91,8 @@
 													<div class="col-md-8">
 														<div class="form-group">
 															<div class="form-line">
-																<label style="margin-bottom: 20px" for="anexo_comprovante">Comprovante da Antecipação (jpeg,bmp,png)</label>
-																<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept=".jpg,.png" required/>
+																<label style="margin-bottom: 20px" for="anexo_comprovante">Comprovante da Antecipação (JPG)</label>
+																<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept=".jpg" required/>
 															</div>
 														</div>
 													</div>

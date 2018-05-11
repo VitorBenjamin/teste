@@ -134,6 +134,7 @@
 								<th>Nome</th>
 								<th>E-mail</th>
 								<th>Telefone</th>
+								<th>Ações</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -141,6 +142,7 @@
 								<th>Nome</th>
 								<th>E-mail</th>
 								<th>Telefone</th>
+								<th>Ações</th>
 							</tr>
 						</tfoot>
 						<tbody>
@@ -149,6 +151,9 @@
 								<td>{{$soli->nome}}</td>
 								<td>{{$soli->email}}</td>
 								<td>{{$soli->telefone}}</td>
+								<td>
+									<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('solicitante.deletar', $soli->id)}}"><i class="material-icons">delete_sweep</i></a>
+								</td>
 							</tr>							
 							@endforeach														
 						</tbody>

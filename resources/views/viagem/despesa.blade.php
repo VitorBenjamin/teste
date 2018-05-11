@@ -63,8 +63,8 @@
 								<div class="col-md-12">
 									<div class="form-group">
 										<div class="form-line">
-											<label for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>
-											<input type="file" name="anexo_comprovante" id="anexo_comprovante"/>
+											<label for="anexo_comprovante">Envie um Arquivo (JPG)</label>
+											<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/jpeg" />
 											<button type="reset" id="pseudoCancel">
 												Cancel
 											</button>

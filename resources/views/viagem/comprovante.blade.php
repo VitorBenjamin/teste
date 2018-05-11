@@ -66,7 +66,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label style="margin-bottom: 20px" for="anexo_hospedagem">Anexar Hospedagem</label>
-										<input type="file" name="anexo_hospedagem" id="anexo_hospedagem" accept="image/jpeg, image/png" required />
+										<input type="file" name="anexo_hospedagem" id="anexo_hospedagem" accept="image/jpeg" required />
 									</div>
 								</div>
 							</div>
@@ -97,7 +97,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label style="margin-bottom: 20px" for="anexo_locacao">Anexar Locação</label>
-										<input type="file" name="anexo_locacao" id="anexo_locacao" accept="image/jpeg, image/png" required/>											
+										<input type="file" name="anexo_locacao" id="anexo_locacao" accept="image/jpeg" required/>											
 									</div>
 								</div>
 							</div>

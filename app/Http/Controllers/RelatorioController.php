@@ -68,7 +68,15 @@ class RelatorioController extends Controller
 			}
 			$geral+=$l['valor'];
 		}
-		$pdf = PDF::loadView('layouts._includes.impressao.relatorio_geral',compact('solicitacoes','lista','total','geral','estornos'));
+		$ultimo_relatorio = Relatorio::where('id',$solicitacoes[0]->clientes_id)
+		->where('id', '<' , $id)
+		->select('data')
+		->first();
+		$data_inicial = '2018-01-01';
+		if ($ultimo_relatorio!=null) {
+			$data_inicial = $ultimo_relatorio->data;
+		}
+		$pdf = PDF::loadView('layouts._includes.impressao.relatorio_geral',compact('solicitacoes','lista','total','geral','estornos','data_inicial'));
 		return $pdf->stream('Relátorio Geral.pdf');
 		//return view('layouts._includes.impressao.relatorio_geral', compact('solicitacoes','lista'));
 	}

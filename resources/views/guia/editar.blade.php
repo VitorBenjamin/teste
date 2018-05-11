@@ -150,7 +150,7 @@
 									<div class="form-group">
 										<div class="form-line">
 											<label for="anexo_guia">Anexar Guia</label>
-											<input style="margin-top: 10px " type="file" name="anexo_guia" id="anexo_guia" accept=".jpg,.png" required/>
+											<input style="margin-top: 10px " type="file" name="anexo_guia" id="anexo_guia" accept="image/jpeg" required/>
 										</div>
 									</div>								
 								</div>

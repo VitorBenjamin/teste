@@ -86,11 +86,7 @@ class SolicitacaoRepository
     }
 
     public function getSolicitacaoFinanceiro($statu)
-    {
-        //  $status = Status::with(['solicitacao' => function($q){
-        //     $q->select('id','codigo', 'urgente', 'tipo', 'origem_despesa', 'contrato')->take(10);
-        //  }])->where('descricao',$status)->first();
-
+    { 
         $status = Status::with(['solicitacao' => function($q) use ($statu)
         {
             if ($statu == config('constantes.status_aprovado') || $statu == config('constantes.status_recorrente')) {
@@ -151,6 +147,7 @@ class SolicitacaoRepository
         $advogados = array();
         $clientes = array();
         $limites = auth()->user()->limites;
+        $status = new Status();
 
         foreach ($limites as $limite) 
         {
@@ -192,8 +189,8 @@ class SolicitacaoRepository
                     ->where('role','<>',"ADMINISTRATIVO");
                 }      
             }])->where('descricao',$statu)->first();
-        }else {
-            $status = Status::with('solicitacao')->where('descricao',$status)->first();
+        }else{
+            return new Status();
         }
         $solicitacoes = $this->valorTotalCoordenador($status,$limites);
 
@@ -243,7 +240,6 @@ class SolicitacaoRepository
     public function update($request,$id)
     {
         $data = self::montaData($request);
-
         if ($request->processo != "") {
             $processo = Processo::where('codigo',$request->processo)->first();
 
@@ -261,95 +257,64 @@ class SolicitacaoRepository
         }else{
             $data['processos_id'] = null;  
         }
-
         $solicitacao = Solicitacao::where('id',$id)->update($data);
         return $solicitacao;
     }
 
-    // public function notification()
-    // {
-    //     //$role = config('constantes.user_advogado');
-    //     $users = Role::with('user')
-    //     ->where('name', config('constantes.user_coordenador'))
-    //     ->get();
+    public function notification()
+    {
+        //$role = config('constantes.user_advogado');
+        $users = Role::with('user')
+        ->where('name', config('constantes.user_coordenador'))
+        ->get();
 
-    //     $cordenadores = User::where('');
-    // }
+        $cordenadores = User::where('');
+    }
     public function getRange($total, $limites, $s)
     {
         $area_id = array();
-
+        $aux = false;
         foreach ($limites as $limite) 
         {
-
-            array_push($area_id,$limite->area_atuacoes_id);
-
-        }
-
-        foreach ($limites as $limite) 
-        {
-            if (empty($area_id)) 
+            if ($s->area_atuacoes_id == $limite->area_atuacoes_id) 
             {
-            //dd($limite);
-                if ($total >= $limite->de && $total <= $limite->ate) 
+                $unidades = $limite->unidades;
+
+                if ($unidades !=null)
                 {
-
-                    return true;
-
-                }else {
-                    return false;
-                }
-            }else{
-
-                if ($s->area_atuacoes_id == $limite->area_atuacoes_id) 
-                {
-                    $unidades = $limite->unidades;
-
-                    if ($unidades !=null)
-                    {
-                        if (!$unidades->contains('id',$s->unidades_id)) {
-                            return false;
-                        }
-
+                    if (!$unidades->contains('id',$s->unidades_id)) {
+                        $aux = false;
+                    }else{
                         if ($total >= $limite->de && $total <= $limite->ate) 
                         {
-
                             return true;
-
-                        }else {
-                            return false;
+                        } else {
+                            $aux = false;
                         }
                     }
                 }
             }
         }
-
+        return $aux; 
     }
     public function getUnidadeLimites($total, $limites, $s)
     {
         $area_id = array();
-
         foreach ($limites as $limite) 
         {
-
             array_push($area_id,$limite->area_atuacoes_id);
-
         }
-
         foreach ($limites as $limite) 
         {
             if (empty($area_id)) 
             {
                 if ($total <= $limite->ate) 
                 {
-
                     return true;
-
                 }else {
                     return false;
                 }
             }else{
-
                 if ($s->area_atuacoes_id == $limite->area_atuacoes_id) 
                 {
                     $unidades = $limite->unidades;
@@ -359,12 +324,9 @@ class SolicitacaoRepository
                         if (!$unidades->contains('id',$s->unidades_id)) {
                             return false;
                         }
-
                         if ($total <= $limite->ate) 
                         {
-
                             return true;
-
                         }else {
                             return false;
                         }
@@ -372,7 +334,6 @@ class SolicitacaoRepository
                 }
             }
         }
-
     }
     public function verificaLimite($s, $limites)
     {
@@ -416,12 +377,9 @@ class SolicitacaoRepository
         }else {
             return false;
         }
-
     }
     public function valorTotalCoordenador($solicitacoes, $limites)
     {
-        //dd(is_array($solicitacoes));
-        //dd($solicitacoes);
         if (!empty($solicitacoes->solicitacao)) 
         {
             foreach ($solicitacoes->solicitacao  as $key => $s) 
@@ -446,7 +404,6 @@ class SolicitacaoRepository
                     }else {
                         unset($solicitacoes->solicitacao[$key]);
                     } 
-
                 }
                 if ($s->tipo=="GUIA") 
                 {
@@ -481,13 +438,10 @@ class SolicitacaoRepository
             }
         }
         return $solicitacoes;
-
     }
 
     public function valorTotalAdvogado($solicitacoes)
     {
-        //dd($solicitacoes->solicitacao);
-
         foreach ($solicitacoes->solicitacao as $s) {
             if ($s->tipo=="REEMBOLSO") {
                 $s['total']=$this->totalReembolso($s);
@@ -509,8 +463,6 @@ class SolicitacaoRepository
     }
     public function valorTotal($solicitacoes)
     {
-        //dd($solicitacoes);
-
         foreach ($solicitacoes as $s) {
             if ($s->tipo=="REEMBOLSO") {
                 $s['total']=$this->totalReembolso($s);
@@ -533,7 +485,6 @@ class SolicitacaoRepository
 
     public function totalReembolso($reembolso)
     {
-        //dd($reembolso);
         $total = 0;
         $km = $reembolso->cliente == null ? config('constantes.km') : $reembolso->cliente->valor_km;
         if ($reembolso->despesa != null ) {
@@ -547,7 +498,6 @@ class SolicitacaoRepository
                 $translado['valor'] = $translado->distancia*$km;
                 $total += $translado->distancia*$km;
             }
-
         }
         return $total;
     }
@@ -582,7 +532,6 @@ class SolicitacaoRepository
                 }
             }
         }
-
         return $total;
     }
 
@@ -591,8 +540,6 @@ class SolicitacaoRepository
         $total = 0;
         foreach ($viagens->viagem as $viagem) 
         {   
-            //dd($viagem->locacoes);
-            //dd(Hospedagem::find($viagem->hospedagens_id));
             $total += $viagem->valor;
             if ($viagem->locacoes) {
                 $total += $viagem->locacoes->valor;
@@ -627,7 +574,6 @@ class SolicitacaoRepository
     public function totalAntecipacao($antecipacoes)
     {
         $total = 0;
-        //$solicitadd($antecipacoes);
         if ($antecipacoes->antecipacao != null ) {
             foreach ($antecipacoes->antecipacao as $antecipacao) {
                 $total += $antecipacao->valor;
@@ -638,16 +584,6 @@ class SolicitacaoRepository
         }
         return $total;
     }
-
-    // public function andamento($id)
-    // {
-    //     $aberto = Status::where('descricao',config('constantes.status_aberto'))->first();
-    //     $andamento = Status::where('descricao',config('constantes.status_andamento'))->first();
-    //     $solicitacao = Solicitacao::find($id);      
-    //     $solicitacao->status()->detach($aberto);
-    //     $solicitacao->status()->attach($andamento);
-    //     return redirect()->route('solicitacao.index');
-    // }
 
     public function deletar(Request $request)
     {

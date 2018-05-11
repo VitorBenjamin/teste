@@ -23,6 +23,7 @@ use App\Cliente;
 use App\AreaAtuacao; 
 use App\Status;
 use PDF;
+
 class SolicitacaoController extends Controller
 {
     //Buscando todas as informações das solicitacao e enviando para a view de listagem das solicitacao
@@ -108,7 +109,7 @@ class SolicitacaoController extends Controller
 		];
 		$mime = $request->file('anexo')->getClientMimeType();
 		if ($mime == "image/jpeg" || $mime == "image/png") {
-			$file = Image::make($request->file('anexo'));
+			$file = Image::make($request->file('anexo'))->encode('jpg');
 			$img_64 = (string) $file->encode('data-url');
 			$data['anexo'] = $img_64;
 		}else{

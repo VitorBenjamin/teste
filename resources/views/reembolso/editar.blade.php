@@ -403,8 +403,8 @@
 												<div class="col-md-12">
 													<div class="form-group">
 														<div class="form-line">
-															<label for="anexo_comprovante">Envie um Arquivo (JPG,PNG)</label>
-															<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/png,image/jpg" required/>
+															<label for="anexo_comprovante">Envie um Arquivo (JPG)</label>
+															<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/jpg" required/>
 														</div>
 													</div>
 												</div>

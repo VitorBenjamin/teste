@@ -68,6 +68,19 @@
 								<th>Motivo</th>
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Data</th>
+								<th>Origem</th>
+								<th>Destino</th>
+								<th>Ida/Volta</th>
+								<th>Distância</th>
+								<th>Valor Km</th>
+								<th>Total Km</th>
+								<th>Motivo</th>
+							</tr>
+						</tfoot>
 						<tbody>
 							@foreach ($solicitacao->translado as $translado)
 							<tr>

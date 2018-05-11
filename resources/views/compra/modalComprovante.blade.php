@@ -44,8 +44,8 @@
 											<div class="col-md-4">
 												<div class="form-group">
 													<div class="form-line">
-														<label style="margin-bottom: 20px" for="anexo_comprovante">Comprovante de Compra (jpeg,png)</label>
-														<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept=".png,.jpg" required/>
+														<label style="margin-bottom: 20px" for="anexo_comprovante">Comprovante de Compra (JPG)</label>
+														<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept=".png" required/>
 													</div>
 												</div>
 											</div>

@@ -29,7 +29,7 @@
 						<div class="row clearfix">
 							<h3 style="text-align:center"><i class="material-icons">arrow_downward</i>Segurança</h3>
 							<br>
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
 									<div class="form-line">
 										<label for="nome">Nome do Advogado *</label>
@@ -42,7 +42,7 @@
 									@endif
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 									<div class="form-line">
 										<label for="emial">E-mail *</label>
@@ -53,6 +53,25 @@
 										<strong>{{ $errors->first('email') }}</strong>
 									</span>
 									@endif
+								</div>
+							</div>
+							<div class="col-md-3">
+								<label for="role">Função</label>
+								<select id="role" name="role" class="form-control show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" required>
+									@foreach ($roles as $role)
+									<option value="{{ $role->id }}" {{$user->roles[0]->id == $role->id ? 'selected' : ''}}>{{ $role->display_name }}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<fieldset>
+										<legend style="margin:0">Assistente</legend>
+									</fieldset>
+									<input name="assistente" value="1" type="radio" id="simT" {{$user->administrativo ? 'checked' : ''}}/>
+									<label style="margin: 15px 15px 0px 0px" for="simT">Sim</label>
+									<input name="assistente" value="0" type="radio" id="naoT" {{$user->administrativo ? '' : 'checked'}}/>
+									<label style="margin: 15px 15px 0px 0px" for="naoT">Não</label>
 								</div>
 							</div>
 						</div>
@@ -79,7 +98,6 @@
 								</div>
 							</div>
 						</div>
-						
 						<div class="row clearfix">
 							<h3 style="text-align:center"><i class="material-icons">arrow_downward</i>INFORMAÇÔES</h3>
 							<br>
@@ -105,7 +123,7 @@
 							<div class="col-md-6">
 								<div class="form-group form-float">
 									<label for="clientes">Clientes</label>
-									<select id="clientes" name="clientes[]" class="form-control show-tick" data-container="body" data-dropup-auto="false" data-size="5" data-actions-box="true" data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado" data-none-results-text="Nenhum Resultado Encontrado" data-deselect-all-text="DESELECIONAR TODOS" data-select-all-text="SELECIONAR TODOS" multiple required>
+									<select id="clientes" name="clientes[]" class="form-control show-tick" data-container="body" data-dropup-auto="false" data-size="5" data-actions-box="true" data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado" data-none-results-text="Nenhum Resultado Encontrado" data-deselect-all-text="DESELECIONAR TODOS" data-select-all-text="SELECIONAR TODOS" multiple>
 										@foreach ($clientes as $cliente)
 										<option value="{{ $cliente->id }}" {{$user->clientes->contains($cliente->id) == true ? 'selected' : ''}}>{{ $cliente->nome }}</option>
 										@endforeach
@@ -115,7 +133,7 @@
 							<div class="col-md-6">
 								<div class="form-group form-float">
 									<label for="advogados">Advogados</label>
-									<select id="advogados" name="advogados[]" class="form-control show-tick"data-container="body" data-dropup-auto="false" data-size="5" data-actions-box="true" data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado" data-none-results-text="Nenhum Resultado Encontrado" data-deselect-all-text="DESELECIONAR TODOS" data-select-all-text="SELECIONAR TODOS" multiple required>
+									<select id="advogados" name="advogados[]" class="form-control show-tick"data-container="body" data-dropup-auto="false" data-size="5" data-actions-box="true" data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado" data-none-results-text="Nenhum Resultado Encontrado" data-deselect-all-text="DESELECIONAR TODOS" data-select-all-text="SELECIONAR TODOS" multiple>
 										@foreach ($advogados->user as $advogado)
 										<option value="{{ $advogado->id }}" {{$user->users->contains($advogado->id) == true ? 'selected' : ''}}>{{ $advogado->nome }}</option>
 										@endforeach
@@ -432,17 +450,11 @@
 						</tbody>
 					</table>
 					<!-- FIM TABELA COM AS RESTRIÇÔES POR VALOR -->
-					
-					<!-- INICIO SESSÂO COM AS RESTRIÇÔES POR CLIENTE E ADVOGADOS-->
-					
-					<!-- FIM SESSÂO COM AS RESTRIÇÔES POR CLIENTE E ADVOGADOS-->
-
 					@endif
 				</div>				
 			</div>
 		</div>
 	</div>
-
 
 	<!-- MODAL EDIÇÂO DO LIMITE -->
 	@foreach ($user->limites as $limite) 
@@ -524,6 +536,5 @@
 	</div>
 	@endforeach 
 	<!-- FIM MODAL DE EDIÇÂO DO LIMITE -->
-
 </section>
 @endsection

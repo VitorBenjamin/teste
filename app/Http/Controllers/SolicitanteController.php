@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Solicitante;
 use App\Cliente;
+use Illuminate\Support\Facades\DB;
 
 class SolicitanteController extends Controller
 {
@@ -74,12 +75,15 @@ class SolicitanteController extends Controller
 	public function deletar($id){
 
 		$solicitante = Solicitante::find($id);
+		DB::table('solicitacoes')
+            ->where('solicitantes_id', $id)
+            ->update(['solicitantes_id' => null]);
 		$solicitante->delete();
 
 		\Session::flash('flash_message',[
 			'msg'=>"Solicitante ".$solicitante->nome." removido com sucesso!!!",
-			'class'=>"alert bg-red alert-dismissible"
+			'class'=>"alert bg-green alert-dismissible"
 		]);
-		return redirect()->route('solicitante.getAll');    	
+		return redirect()->back();    	
 	}
 }

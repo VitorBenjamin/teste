@@ -78,6 +78,7 @@
 			Total Final R$ {{number_format($total, 2, ',', '.')}}
 		</h4>
 	</div>
+	{{dd($lista)}}
 	@foreach ($lista as $key => $li)
 	@if ($li['exibir'] && !$li['estornado'] && $li['img'])
 	<div class="page-break"></div>

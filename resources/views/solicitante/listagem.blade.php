@@ -142,8 +142,10 @@
 									<div class="icon-button-demo" >
 										<a data-toggle="modal" data-target="#atualizar{{$solicitante->id}}" class="btn bg-grey btn-circle waves-effect waves-circle waves-float">
 											<i class="material-icons">edit</i>
-										</a>									
+										</a>
+										<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float" href="{{ route('solicitante.deletar', $solicitante->id)}}"><i class="material-icons">delete_sweep</i></a>									
 									</div>
+
 								</td>
 							</tr>
 							<div class="modal fade" id="atualizar{{$solicitante->id}}" tabindex="-1" role="dialog">

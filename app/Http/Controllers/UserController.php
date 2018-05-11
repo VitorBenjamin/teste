@@ -16,6 +16,8 @@ use App\AreaAtuacao;
 use App\Unidade; 
 use App\Limite;
 use App\Cliente;
+use App\Status;
+
 
 
 class UserController extends Controller
@@ -88,15 +90,22 @@ class UserController extends Controller
 
 	public function getAll()
 	{
-		$role = config('constantes.user_advogado');
-		$users = Role::with('user')
-		->orWhere('name', config('constantes.user_advogado'))
+		$ativos = Role::with(['user' => function($q) {
+			$q->where("ativo",true);
+		}])->orWhere('name', config('constantes.user_advogado'))
+		->orWhere('name', config('constantes.user_coordenador'))
+		->orWhere('name', config('constantes.user_financeiro'))
+		->orWhere('name', config('constantes.user_administrativo'))
+		->get();
+		$inativos = Role::with(['user' => function($q) {
+			$q->where("ativo",false);
+		}])->orWhere('name', config('constantes.user_advogado'))
 		->orWhere('name', config('constantes.user_coordenador'))
 		->orWhere('name', config('constantes.user_financeiro'))
 		->orWhere('name', config('constantes.user_administrativo'))
 		->get();
 		//dd($users);
-		return view('advogado.listagem',compact('users'));
+		return view('advogado.listagem',compact('ativos','inativos'));
 	}
 	public function ativarOrDesativar($id)
 	{
@@ -130,9 +139,11 @@ class UserController extends Controller
 			$q->orderBy('nome');
 			
 		}])->where('name',config('constantes.user_advogado'))->first();
-		$areas = AreaAtuacao::all(); 
+		$areas = AreaAtuacao::all();
+		$roles = Role::all(); 
 		$unidades = Unidade::all(); 
-		return view('advogado.editar',compact('user','areas','limites','advogados','clientes','unidades'));
+		//dd($roles);
+		return view('advogado.editar',compact('user','areas','limites','advogados','clientes','unidades','roles'));
 	}
 	public function editarPerfil()
 	{
@@ -196,6 +207,7 @@ class UserController extends Controller
 	}
 	public function atualizar(Request $request,$id)
 	{
+
 		$messages = [
 			'password.confirmed' => 'Confirme a senha no campo auxiliar',
 			'password.min' => 'Tamanho miníno de 6 digitos',
@@ -207,8 +219,41 @@ class UserController extends Controller
 			],$messages)->validate();
 		}
 		$user = User::where('id',$id)->first();
+		if ($request->role != $user->roles[0]->id) {
+			$status = Status::with(['solicitacao' => function($q) use ($id)
+			{
+				$q->where('users_id',$id)->orderBy('created_at');
+			}])->where('descricao','<>',"FINALIZADO")->get();
+			//dd($status);
+			foreach ($status as $soli) {
+				
+				foreach ($soli->solicitacao as $s) {
+					\Session::flash('flash_message',[
+						'msg'=>"Ação Negada! Ainda Existem Solicitações em Aberto do Usuário: ".$user->nome,
+						'class'=>"alert bg-red alert-dismissible"
+					]);
+
+					return redirect()->back();
+				}
+			}
+			//dd($user->roles);
+			if ($user->roles[0]->name == "COORDENADOR") {
+				foreach ($user->limites as $l) {
+					$l->unidades()->detach();
+					$user->limites()->detach($l->id);
+					$l->delete();
+				}
+				$user->users()->detach();
+				$user->clientes()->detach();
+			}
+			$user->detachRoles($user->roles);
+			$role = Role::where('id',$request->role)->first();
+			$user->attachRole($role);
+			$user->save();
+		}
 		$data = [
 			'nome' => $request->nome,
+			'administrativo' => $request->assistente,
 			'email' => $request->email,
 			'codigo' => 000,
 			'cpf' => $request->cpf,
@@ -244,12 +289,15 @@ class UserController extends Controller
 		}
 		
 		if ($user->hasRole('COORDENADOR')) {
-			//$user->users()->detach();
-			//$user->clientes()->detach();
-			$user->users()->sync($request->get('advogados'));
-			$user->clientes()->sync($request->get('clientes'));
+			if ($request->get('advogados')) {
+				$user->users()->sync($request->get('advogados'));
+			}
+			
+			if ($request->get('clientes')) {
+				$user->clientes()->sync($request->get('clientes'));
+			}
 		}
-		
+
 		$user->update($data);
 		if ($request->password != "") {
 			$user->forceFill([
@@ -306,7 +354,7 @@ class UserController extends Controller
 		$limite = Limite::find($id);
 		$limite->unidades()->detach();
 		$limite->update($request->all());
-		
+
 		$limite->unidades()->sync($request->get('unidades_limite'));
 
 		\Session::flash('flash_message',[
@@ -348,7 +396,7 @@ class UserController extends Controller
 		if ($andamento_recorrente !=null) {
 			$andamentos=$this->pushSolicitacao($andamentos,$andamento_recorrente);
 		}
-		
+
 		$recorrente_financeiro = $repo->getSolicitacaoAdvogado(config('constantes.status_recorrente_financeiro'));
 		if ($recorrente_financeiro !=null) {
 			$andamentos=$this->pushSolicitacao($andamentos,$recorrente_financeiro);
@@ -398,7 +446,7 @@ class UserController extends Controller
 			$aprovadas =$this->pushSolicitacao($aprovadas,$aprovadas_recorrente);			
 		}
 		$reprovados = $repo->getSolicitacaoCoordenador(config('constantes.status_reprovado'));		
-		
+
 		$devolvidas = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido'));
 		$devolvida_etapa2 = $repo->getSolicitacaoCoordenador(config('constantes.status_devolvido_etapa2'));
 		if ($devolvida_etapa2 !=null) {
@@ -454,7 +502,7 @@ class UserController extends Controller
 		// if ($andamento_recorrente !=null) {
 		// 	$abertas= $this->pushSolicitacao($abertas,$andamento_recorrente);
 		// }
-		
+
 		$devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_devolvido_financeiro'));
 		$recorrentes_devolvidas = $repo->getSolicitacaoAdministrativo(config('constantes.status_recorrente'));
 		if ($devolvidas !=null) {

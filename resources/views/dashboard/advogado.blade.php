@@ -97,6 +97,7 @@
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
+                                        <th>Area</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -111,6 +112,7 @@
                                         <td>{{ $aberto->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
                                         <!-- <td> {{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }} </td> -->
+                                        <td>{{ $aberto->area_atuacao->tipo}}</td>
                                         <td class="quebra-texto">{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
                                         <td>{{ $aberto->solicitante == null ? 'ADVOGADO' : $aberto->solicitante->nome}}</td>
@@ -143,6 +145,7 @@
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
+                                        <th>Area</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -157,6 +160,7 @@
                                         <td></td>
                                         <td>{{ $andamento->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($andamento->created_at)) }}</td>
+                                        <td>{{ $andamento->area_atuacao->tipo}}</td>
                                         <td class="quebra-texto">{{ $andamento->cliente == null ? 'MOSELLO LIMA' : $andamento->cliente->nome }}</td>
                                         <td>{{ $andamento->tipo }}</td>
                                         <td>{{ $andamento->solicitante == null ? 'ADVOGADO' : $andamento->solicitante->nome}}</td>
@@ -188,6 +192,7 @@
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
+                                        <th>Area</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -201,6 +206,7 @@
                                         <td></td>
                                         <td>{{ $aprovado->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aprovado->created_at)) }}</td>
+                                        <td>{{ $aprovado->area_atuacao->tipo}}</td>
                                         <td class="quebra-texto">{{ $aprovado->cliente == null ? 'MOSELLO LIMA' : $aprovado->cliente->nome }}</td>
                                         <td>{{ $aprovado->tipo }}</td>
                                         <td>{{ $aprovado->solicitante == null ? 'ADVOGADO' : $aprovado->solicitante->nome}}</td>
@@ -230,6 +236,7 @@
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
+                                        <th>Area</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -244,6 +251,7 @@
                                         <td></td>
                                         <td>{{ $reprovado->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($reprovado->created_at)) }}</td>
+                                        <td>{{ $reprovado->area_atuacao->tipo}}</td>
                                         <td class="quebra-texto">{{ $reprovado->cliente == null ? 'MOSELLO LIMA' : $reprovado->cliente->nome }}</td>
                                         <td>{{ $reprovado->tipo }}</td>
                                         <td>{{ $reprovado->solicitante == null ? 'ADVOGADO' : $reprovado->solicitante->nome}}</td>
@@ -272,6 +280,7 @@
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
+                                        <th>Area</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -286,6 +295,7 @@
                                         <td></td>
                                         <td>{{ $devolvida->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
+                                        <td>{{ $devolvida->area_atuacao->tipo}}</td>
                                         <td class="quebra-texto">{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
                                         <td>{{ $devolvida->solicitante == null ? 'ADVOGADO' : $devolvida->solicitante->nome}}</td>
@@ -317,6 +327,7 @@
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
+                                        <th>Area</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -330,6 +341,7 @@
                                         <td></td>
                                         <td>{{ $finalizado->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($finalizado->created_at)) }}</td>
+                                        <td>{{ $finalizado->area_atuacao->tipo}}</td>
                                         <td class="quebra-texto">{{ $finalizado->cliente == null ? 'MOSELLO LIMA' : $finalizado->cliente->nome }}</td>
                                         <td>{{ $finalizado->tipo }}</td>
                                         <td>{{ $finalizado->solicitante == null ? 'ADVOGADO' : $finalizado->solicitante->nome}}</td>

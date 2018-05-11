@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Junity\Hashids\Facades\Hashids;
 use App\User;
 use App\Dados;
 use App\AreaAtuacao; 
@@ -71,7 +72,6 @@ class RegisterController extends Controller
         {
            $q->orderBy('nome');
        }])->where('name',config('constantes.user_advogado'))->first();
-        //dd($advogados);
         return view('auth.registerCoordenador', compact('areas','unidades','clientes','advogados'));
     }
 
@@ -96,11 +96,8 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-        //dd($request->all());
         $this->validator($request->all())->validate();
-        //dd($request->all());
         $user = $this->create($request->all());
-        //$this->attachRole($user,$request);
         $role = Role::where('name',$request->role)->first();
         $user->attachRole($role);
 
@@ -144,7 +141,6 @@ class RegisterController extends Controller
 
     public function setLimite($user,$request)
     {
-        //dd(count($request->get('area_atuacoes_limite')));
         if (count($request->get('area_atuacoes_limite')) >= 1) {
 
             foreach ($request->get('area_atuacoes_limite') as $area) {
@@ -174,7 +170,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //dd($data);
         $dados = Dados::create([
             'rg' => $data['rg'],
             'data_inicial' => date('Y-m-d', strtotime($data['data_inicial'])),
@@ -190,16 +185,19 @@ class RegisterController extends Controller
             'viagem' => $data['viagem'],
         ]);
 
-        return User::create([
+        $user = User::create([
             'nome' => $data['nome'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'codigo' => 000,
             'cpf' => $data['cpf'],
-            'telefone' => $data['telefone'] ,
+            'telefone' => $data['telefone'],
             'area_atuacoes_id' => $data['area_atuacoes_id'],
             'dados_id' => $dados->id,
             'unidades_id' => $data['unidades_id'],
         ]);
+        $user->codigo = Hashids::encode($user->id);
+        $user->save();
+        return $user;
     }
 }
