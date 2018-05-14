@@ -148,7 +148,7 @@
 													<div class="form-group">
 														<div class="form-line">
 															<label for="anexo_comprovante">Envie um Arquivo (JPG)</label>
-															<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/jpg" required/>
+															<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/jpeg" required/>
 															<!-- <button type="reset" id="pseudoCancel">
 																Resetar
 															</button> -->

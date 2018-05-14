@@ -19,7 +19,7 @@ class DespesaRepository
         //dd($mime);
         $data = self::montaData($request);
         $data['solicitacoes_id'] = $id;
-        if ($mime == "image/jpeg" || $mime == "image/png") {
+        if ($mime == "image/jpeg") {
             //dd($request->file('anexo_comprovante'));
             $file = Image::make($request->file('anexo_comprovante'));
             $img_64 = (string) $file->encode('data-url');
@@ -58,7 +58,7 @@ class DespesaRepository
         $data = self::montaData($request);
         $data['solicitacoes_id'] = $id;
         if ($request->hasFile('anexo_comprovante')) {
-            if ($mime == "image/jpeg" || $mime == "image/png" ) {
+            if ($mime == "image/jpeg") {
                 $data['anexo_pdf'] = null;
                 $file = Image::make($request->file('anexo_comprovante'))->encode('jpg');
                 $anexo = (string) $file->encode('data-url');
