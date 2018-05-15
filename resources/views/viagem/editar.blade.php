@@ -148,7 +148,7 @@
 													<div class="form-group">
 														<div class="form-line">
 															<label for="anexo_comprovante">Envie um Arquivo (JPG)</label>
-															<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/jpeg" required/>
+															<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/jpeg,image/jpg" required/>
 															<!-- <button type="reset" id="pseudoCancel">
 																Resetar
 															</button> -->
@@ -249,12 +249,13 @@
 												<div class="col-md-2">
 													<div class="form-group">
 														<fieldset>
-															<legend>Translado</legend>
+															<legend>Passagem</legend>
 														</fieldset>
-														<input name="translado" value="1" type="radio" id="simT" />
-														<label style="margin: 15px 15px 0px 0px" for="simT">Sim</label>
-														<input name="translado" value="0" type="radio" id="naoT" checked/>
+														<input name="passagem" value="0" type="radio" id="naoT" checked/>
 														<label style="margin: 15px 15px 0px 0px" for="naoT">Não</label>
+														<input name="passagem" value="1" type="radio" id="simT" />
+														<label style="margin: 15px 15px 0px 0px" for="simT">Sim</label>
+														
 													</div>
 												</div>												
 												<div class="col-md-2">
@@ -360,7 +361,7 @@
 								<th>Data Ida</th>
 								<th>Destino</th>
 								<th>Data Volta</th>
-								<th>Translado</th>	
+								<th>Passagem</th>	
 								<th>Hospedagem</th>
 								<th>Bagagem</th>
 								<th>Kg</th>
@@ -375,7 +376,7 @@
 								<th>Data Ida</th>
 								<th>Destino</th>
 								<th>Data Volta</th>	
-								<th>Translado</th>
+								<th>Passagem</th>
 								<th>Hospedagem</th>
 								<th>Bagagem</th>
 								<th>Kg</th>
@@ -390,7 +391,7 @@
 								<td>{{date('d/m/Y',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
 								<td>{{$viagem->data_volta ? date('d/m/Y',strtotime($viagem->data_volta)) : 'SÓ IDA'}}</td>
-								<td>{{$viagem->translado ? 'SIM' : 'NÃO'}}</td>
+								<td>{{$viagem->passagem ? 'SIM' : 'NÃO'}}</td>
 								<td>
 									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
 								</td>

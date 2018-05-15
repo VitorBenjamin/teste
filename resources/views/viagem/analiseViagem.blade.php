@@ -54,7 +54,7 @@
 								<th>Data Ida</th>
 								<th>Destino</th>
 								<th>Data Volta</th>	
-								<th>Translado</th>
+								<th>Passagem</th>
 								<th>Hospedagem</th>
 								<th>Bagagem</th>
 								<th>Kg</th>
@@ -69,7 +69,7 @@
 								<td>{{date('d/m/Y',strtotime($viagem->data_ida))}}</td>
 								<td>{{$viagem->destino}}</td>
 								<td>{{$viagem->data_volta == null ? 'Só Ida' : date('d/m/Y',strtotime($viagem->data_volta)) }}</td>
-								<td>{{$viagem->translado ? 'SIM' : 'NÃO'}}</td>
+								<td>{{$viagem->passagem ? 'SIM' : 'NÃO'}}</td>
 								<td>
 									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
 								</td>

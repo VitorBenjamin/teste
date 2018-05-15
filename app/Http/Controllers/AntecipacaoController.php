@@ -70,7 +70,7 @@ class AntecipacaoController extends Controller
 
 	public function addComprovante(Request $request,$id)
 	{
-		$file = Image::make($request->file('anexo_comprovante'));
+		$file = Image::make($request->file('anexo_comprovante'))->encode('jpg');
 		$img_64 = (string) $file->encode('data-url');
 		$antecipacao = Antecipacao::find($request->antecipacao_id);
 

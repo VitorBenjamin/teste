@@ -151,7 +151,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example">
+					<table class="table table-bordered table-striped table-hover js-basic-example" width="100%">
 						<thead>
 							<tr>
 								<th></th>
@@ -175,7 +175,7 @@
 							<tr>
 								<td></td>
 								<td>{{date('d/m/Y',strtotime($antecipacao->data_recebimento))}}</td>
-								<td>{{$antecipacao->descricao}}</td>
+								<td class="quebra-texto">{{$antecipacao->descricao}}</td>
 								<td>R$ {{$antecipacao->valor}}</td>									
 								<td class="acoesTD">
 									<div class="icon-button-demo" >

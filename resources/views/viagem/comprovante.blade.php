@@ -10,7 +10,7 @@
 					{{ method_field('PUT') }}
 					<input type="hidden" name="viagem_id" value="{{$viagem->id}}">
 					<div class="col-md-12">
-						@if (!$viagem->translado)
+						@if ($viagem->passagem)
 						<div class="row clearfix">
 							<div class="col-md-2">
 								<div class="form-group">
@@ -35,7 +35,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label style="margin-bottom: 20px" for="anexo_passagem">Anexar Passagem</label>
-										<input type="file" name="anexo_passagem" id="anexo_passagem" accept="image/jpeg, image/png" required />
+										<input type="file" name="anexo_passagem" id="anexo_passagem" accept="image/jpeg, image/jpg" required />
 									</div>
 								</div>
 							</div>

@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <section class="content">
 	<div class="block-header">
 		<h2>Atualização da Despesa</h2>
@@ -64,7 +63,7 @@
 									<div class="form-group">
 										<div class="form-line">
 											<label for="anexo_comprovante">Envie um Arquivo (JPG)</label>
-											<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/jpeg" />
+											<input type="file" name="anexo_comprovante" id="anexo_comprovante" accept="image/jpeg,image/jpg" />
 										</div>
 									</div>								
 								</div>											

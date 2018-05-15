@@ -162,7 +162,7 @@ class ViagemController extends Controller
             'locacao' => $request->locacao,
             'hospedagem' => $request->hospedagem,
             'bagagem' => $request->bagagem,
-            'translado' => $request->translado,
+            'passagem' => $request->passagem,
             'kg' => $request->kg,
         ]);
 
