@@ -18,17 +18,10 @@
 	<div style="text-align:center" class="head">
 		<img src="{{ asset('images/LOGO-01.png') }}" alt="" class="img-topo" style="margin: 10px; 0 50px 0">
 	</div>
-	<div id="footer">
-		<img src="{{ asset('images/rodape.jpg') }}" alt="" class="img-rodape">
-	</div>
-	{{-- <div class="container">
-		<div class="top-left">Solicitante : {{ $solicitacoes[0]->solicitante->nome }}</div>
-	</div> --}}
 	<div class="divTable" style="width: 100%; margin:15px 0">
 		<div class="divTableBody">
 			<div class="divTableRow">
 				<div class="divTableCell2">
-					Cliente: {{$solicitacoes[0]->cliente ? $solicitacoes[0]->cliente->nome : 'Mosello Lima' }}
 				</div>
 				<div class="divTableCell2" style="text-align:right">
 					Valor Km: {{$solicitacoes[0]->cliente ? 'R$ '.$solicitacoes[0]->cliente->valor_km : 'R$ 1.00' }}
@@ -36,9 +29,21 @@
 			</div>
 		</div>
 	</div>
-	<div>
-		<h3>RELÁTORIO GERAL Período: {{ date('d-m-Y',strtotime($data_inicial)) }} - {{ $solicitacoes[0]->relatorio->data }}</h3>
+	<div class="divTable" style="width: 100%; margin:15px 0">
+		<div class="divTableBody">
+			<div class="divTableRow">
+				<div class="divTableCell2">
+					<h3>RELÁTORIO GERAL {{$solicitacoes[0]->cliente ? $solicitacoes[0]->cliente->nome : 'Mosello Lima' }}</h3>
+				</div>
+				<div class="divTableCell2" style="text-align:right">
+					Período: {{ date('d-m-Y',strtotime($data_inicial)) }} - {{ date('d-m-Y',strtotime($solicitacoes[0]->relatorio->data)) }}
+				</div>
+			</div>
+		</div>
 	</div>
+	<!-- <div>
+		<h3>RELÁTORIO GERAL sPeríodo: {{ date('d-m-Y',strtotime($data_inicial)) }} - {{ $solicitacoes[0]->relatorio->data }}</h3>
+	</div> -->
 	<div class="divTable" style="width: 100%;">
 		<div class="divTableHeading">
 			<div class="divTableRow">
@@ -52,21 +57,18 @@
 			@foreach($lista as $i => $l)
 			@if ($l['estornado'])
 			<div class="divTableRow" style="background-color: #fff !important">
-				<div class="divTableCell-red">{{$l['data']}}</div>
-				<div class="divTableCell-red">{{$l['codigo']}}</div>
+				<div class="divTableCell-red" style="width: 50px;">{{$l['data']}}</div>
+				<div class="divTableCell-red" style="width: 50px;">{{$l['codigo']}}</div>
 				<div class="divTableCell-red">{{$l['descricao']}}</div>
-				<div class="divTableCell-red">R$ -{{number_format($l['valor'], 2, ',', '.')}}</div>
+				<div class="divTableCell-red" style="width: 50px;">R$ -{{number_format($l['valor'], 2, ',', '.')}}</div>
 			</div>
 			@else
 			<div class="divTableRow" style="background-color: #fff !important">
-				<div class="divTableCell">{{$l['data']}}</div>
-				<div class="divTableCell">{{$l['codigo']}}</div>
-				<div class="divTableCell" style="width: 450px;">{{$l['descricao']}}</div>
-				<div class="divTableCell">R$ {{number_format($l['valor'], 2, ',', '.')}}</div>
+				<div class="divTableCell"style="width: 50px;">{{$l['data']}}</div>
+				<div class="divTableCell"style="width: 30px;">{{$l['codigo']}}</div>
+				<div class="divTableCell">{{$l['descricao']}}</div>
+				<div class="divTableCell" style="width: 55px;">R$ {{number_format($l['valor'], 2, ',', '.')}}</div>
 			</div>
-			@endif
-			@if($i == 20 || $i == 40)
-			<div class="page-break"></div>
 			@endif
 			@endforeach
 		</div>
@@ -113,6 +115,7 @@
 		<img src="{{$li['img']}}" alt="" class="img">
 		@endif
 	</div>
+	
 	@endif
 	@endforeach
 </body>

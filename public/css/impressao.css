@@ -11,7 +11,6 @@ body{
 .divTable{
 	display: table;
 	width: 100%;
-	max-height: 500px;
 }
 .divTableRow {
 	display: table-row;

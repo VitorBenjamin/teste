@@ -42,7 +42,7 @@ class RelatorioController extends Controller
 		}
 		$nome = $solicitacao->cliente ? $solicitacao->cliente->nome : 'Mosello Lima';
 		$pdf = PDF::loadView('layouts._includes.impressao.impressao',compact('solicitacao','lista','total','geral','estornos'));
-		return $pdf->download('Relátorio.pdf');
+		return $pdf->stream('Relátorio '. $nome.'.pdf');
 		//return view('layouts._includes.impressao.impressao', compact('solicitacao','lista'));
 	}
 	//Buscando todas as informações das solicitacao e enviando para a view de listagem das solicitacao
@@ -76,7 +76,8 @@ class RelatorioController extends Controller
 		if ($ultimo_relatorio!=null) {
 			$data_inicial = $ultimo_relatorio->data;
 		}
-		$pdf = PDF::loadView('layouts._includes.impressao.relatorio_geral',compact('solicitacoes','lista','total','geral','estornos','data_inicial'));
+		$loop = count($lista)/20;
+		$pdf = PDF::loadView('layouts._includes.impressao.relatorio_geral',compact('solicitacoes','lista','total','geral','estornos','data_inicial','loop'));
 		return $pdf->stream('Relátorio Geral.pdf');
 		//return view('layouts._includes.impressao.relatorio_geral', compact('solicitacoes','lista'));
 	}
