@@ -2,7 +2,7 @@ body{
 	font-family: "Montserrat", sans-serif;
 }
 @page {
-	margin: 20px 50px 40px 50px;
+	margin: 20px 50px 50px 50px;
 }
 .page-break {
 	page-break-after: always;
@@ -11,6 +11,7 @@ body{
 .divTable{
 	display: table;
 	width: 100%;
+	max-height: 500px;
 }
 .divTableRow {
 	display: table-row;
@@ -22,6 +23,7 @@ body{
 .divTableCell, .divTableCell2, .divTableCell-red, .divTableHead {
 	display: table-cell;
 	padding: 3px 10px;
+	vertical-align: middle;
 }
 .divTableHead {
 	border: 1px solid #999999;
@@ -55,6 +57,7 @@ body{
 }
 .divTableBody {
 	display: table-row-group;
+	max-width: 550px;
 }
 #head{
 	background-image: url("images/logo.svg");
@@ -73,6 +76,7 @@ body{
 	width: 725px;
 	position: relative;
 	margin: auto;
+
 }
 #footer {
 	position: fixed;

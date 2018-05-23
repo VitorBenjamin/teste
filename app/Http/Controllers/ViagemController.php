@@ -189,6 +189,7 @@ class ViagemController extends Controller
                 'data_volta' => $data, 
                 'locacao' => $request->locacao,
                 'hospedagem' => $request->hospedagem,
+                'passagem' => $request->passagem,
                 'bagagem' => $request->bagagem, 
                 'kg' => $request->kg,
                 'translado' => $request->translado,
@@ -318,7 +319,7 @@ class ViagemController extends Controller
                 'data_compra' => date('Y-m-d', strtotime($request->data_compra)),
                 'observacao_comprovante' => $request->oberservacao,
             ];
-            if ($mime == "image/jpeg" || $mime == "image/png") {
+            if ($mime == "image/jpeg" || $mime == "image/jpg") {
                 $file = Image::make($request->file('anexo_passagem'));
                 $anexo_passagem = (string) $file->encode('data-url');
                 $data['anexo_passagem'] = $anexo_passagem;
@@ -347,7 +348,7 @@ class ViagemController extends Controller
             $viagem->hospedagens->data_compra = date('Y-m-d', strtotime($request->data_hospedagem));
             $viagem->hospedagens->custo_hospedagem = $request->custo_hospedagem;
 
-            if ($mime == "image/jpeg" || $mime == "image/png") {
+            if ($mime == "image/jpeg" || $mime == "image/jpg") {
                 $file = Image::make($request->file('anexo_hospedagem'));
                 $anexo_hospedagem = (string) $file->encode('data-url');
                 //$data2['anexo_hospedagem'] = $anexo_hospedagem;
@@ -370,7 +371,7 @@ class ViagemController extends Controller
             $viagem->locacoes->data_compra = date('Y-m-d', strtotime($request->data_hospedagem));
             $viagem->locacoes->valor = $request->custo_locacao;
 
-            if ($mime == "image/jpeg" || $mime == "image/png") {
+            if ($mime == "image/jpeg" || $mime == "image/jpg") {
                 $file = Image::make($request->file('anexo_locacao'));
                 $anexo_locacao = (string) $file->encode('data-url');
                 //$data3['anexo_locacao']=$anexo_locacao;

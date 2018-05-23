@@ -32,7 +32,6 @@
 						</h2>
 					</div>
 					@include('layouts._includes.cabecalho._cabecalho')
-
 				</div>
 			</div>
 		</div>

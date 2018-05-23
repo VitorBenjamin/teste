@@ -198,9 +198,19 @@ class ReembolsoController extends Controller
     {   
         $despesa = Despesa::find($id);
         $mime = $request->file('anexo_comprovante')->getClientMimeType();
-        if ($request->hasFile('anexo_comprovante') && $mime == "image/jpeg")  {
-            $file = Image::make($request->file('anexo_comprovante'));            
-            $img_64 = (string) $file->encode('data-url');
+        if ($request->hasFile('anexo_comprovante'))  {
+            if ($mime == "image/jpeg" || $mime == "image/jpg") {
+                $file = Image::make($request->file('anexo_comprovante'));            
+                $img_64 = (string) $file->encode('data-url');
+            }else{
+
+                \Session::flash('flash_message',[
+                    'msg'=>"Arquivo não suportado!!!",
+                    'class'=>"alert bg-orange alert-dismissible"
+                ]);
+                return redirect()->back();
+            }
+            
         }else{
             $img_64 = $despesa->anexo_comprovante;
         }

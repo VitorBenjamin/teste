@@ -30,19 +30,14 @@
 				<div class="divTableCell2">
 					Cliente: {{$solicitacoes[0]->cliente ? $solicitacoes[0]->cliente->nome : 'Mosello Lima' }}
 				</div>
-				<div class="divTableCell2">
+				<div class="divTableCell2" style="text-align:right">
 					Valor Km: {{$solicitacoes[0]->cliente ? 'R$ '.$solicitacoes[0]->cliente->valor_km : 'R$ 1.00' }}
-				</div>
-			</div>
-			<div class="divTableRow">
-				<div class="divTableCell2">
-					Período: {{ $data_inicial }} - {{ $solicitacoes[0]->relatorio->data }}
 				</div>
 			</div>
 		</div>
 	</div>
 	<div>
-		<h3>RELÁTORIO GERAL</h3>
+		<h3>RELÁTORIO GERAL Período: {{ date('d-m-Y',strtotime($data_inicial)) }} - {{ $solicitacoes[0]->relatorio->data }}</h3>
 	</div>
 	<div class="divTable" style="width: 100%;">
 		<div class="divTableHeading">
@@ -57,28 +52,31 @@
 			@foreach($lista as $i => $l)
 			@if ($l['estornado'])
 			<div class="divTableRow" style="background-color: #fff !important">
-				<div class="divTableCell-red" style="width: 50px;">&nbsp;{{$l['data']}}</div>
-				<div class="divTableCell-red" style="width: 30px;">&nbsp;{{$l['codigo']}}</div>
-				<div class="divTableCell-red">&nbsp;{{$l['descricao']}}</div>
-				<div class="divTableCell-red" style="width: 55px;">&nbsp;R$ -{{number_format($l['valor'], 2, ',', '.')}}</div>
+				<div class="divTableCell-red">{{$l['data']}}</div>
+				<div class="divTableCell-red">{{$l['codigo']}}</div>
+				<div class="divTableCell-red">{{$l['descricao']}}</div>
+				<div class="divTableCell-red">R$ -{{number_format($l['valor'], 2, ',', '.')}}</div>
 			</div>
 			@else
 			<div class="divTableRow" style="background-color: #fff !important">
-				<div class="divTableCell" style="width: 50px;">&nbsp;{{$l['data']}}</div>
-				<div class="divTableCell" style="width: 30px;">&nbsp;{{$l['codigo']}}</div>
-				<div class="divTableCell">&nbsp;{{$l['descricao']}}</div>
-				<div class="divTableCell" style="width: 55px;">&nbsp;R$ {{number_format($l['valor'], 2, ',', '.')}}</div>
+				<div class="divTableCell">{{$l['data']}}</div>
+				<div class="divTableCell">{{$l['codigo']}}</div>
+				<div class="divTableCell" style="width: 450px;">{{$l['descricao']}}</div>
+				<div class="divTableCell">R$ {{number_format($l['valor'], 2, ',', '.')}}</div>
 			</div>
+			@endif
+			@if($i == 20 || $i == 40)
+			<div class="page-break"></div>
 			@endif
 			@endforeach
 		</div>
 	</div>
 	<div style="float:right;">
-		<p style="font-size:10px; margin: 2;" >
+		<p style="font-size:10px; margin: 2px;" >
 			Total Estornos R$ {{number_format($estornos, 2, ',', '.')}} <br>
 			Total Geral R$ {{number_format($geral, 2, ',', '.')}} <br>
 		</p>
-		<h4 style="margin: 2;">
+		<h4 style="margin: 2px;">
 			Total Final R$ {{number_format($total, 2, ',', '.')}}
 		</h4>
 	</div>

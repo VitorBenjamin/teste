@@ -58,12 +58,13 @@
                     <div class="tab-content">
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
                         <div id="aberto" class="tab-pane fade in active" role="tabpanel">
-                            <table id="aberto" class="table table-bordered table-striped table-hover dataTable js-basic-example">
+                            <table id="aberto" class="table table-bordered table-striped table-hover dataTable dashboard">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
+                                        <th>Área</th>
                                         <th>DRª</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -78,8 +79,8 @@
                                         <td></td>
                                         <td>{{ $aberto->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($aberto->created_at)) }}</td>
+                                        <td>{{ $aberto->area_atuacao->tipo}}</td>
                                         <td>{{ $aberto->user->nome}}</td>
-                                        <!-- <td>{{ $aberto->urgencia == 1 ? 'SIM' : 'NÃO' }}</td> -->
                                         <td>{{ $aberto->cliente == null ? 'MOSELLO LIMA' : $aberto->cliente->nome }}</td>
                                         <td>{{ $aberto->tipo }}</td>
                                         <td>{{ $aberto->solicitante == null ? 'NÃO CONSTA' : $aberto->solicitante->nome }}</td>
@@ -107,12 +108,13 @@
                         
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
                         <div id="devolvido" class="tab-pane fade in" role="tabpanel">
-                            <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                            <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable dashboard" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
+                                        <th>Área</th>
                                         <th>DRª</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -128,6 +130,7 @@
                                         <td></td>
                                         <td>{{ $devolvida->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($devolvida->created_at)) }}</td>
+                                        <td>{{ $devolvida->area_atuacao->tipo}}</td>
                                         <td>{{ $devolvida->user->nome}}</td>
                                         <td>{{ $devolvida->cliente == null ? 'MOSELLO LIMA' : $devolvida->cliente->nome }}</td>
                                         <td>{{ $devolvida->tipo }}</td>
@@ -150,12 +153,13 @@
 
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
                         <div id="recorrente" class="tab-pane fade in" role="tabpanel">
-                            <table id="recorrente" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                            <table id="recorrente" class="table dt-responsive table-bordered table-striped table-hover dataTable dashboard" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
+                                        <th>Área</th>
                                         <th>DRª</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
@@ -171,6 +175,7 @@
                                         <td></td>
                                         <td>{{ $recorrente->codigo }}</td>
                                         <td>{{ date('d/m/Y',strtotime($recorrente->created_at)) }}</td>
+                                        <td>{{ $recorrente->area_atuacao->tipo}}</td>
                                         <td>{{ $recorrente->user->nome}}</td>
                                         <td>{{ $recorrente->cliente == null ? 'MOSELLO LIMA' : $recorrente->cliente->nome }}</td>
                                         <td>{{ $recorrente->tipo }}</td>

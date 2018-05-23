@@ -40,7 +40,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label for="data_inicial">De</label>
-										<input disabled type="text" id="data_inicial" name="data_inicial" class="datepicker form-control" placeholder="Escolha uma Data" required/>
+										<input type="text" id="data_inicial" name="data_inicial" class="datepicker form-control not-active" placeholder="Escolha uma Data" required/>
 									</div>
 								</div>
 							</div>

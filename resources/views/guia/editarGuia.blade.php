@@ -41,7 +41,8 @@
 								<div class="col-md-2">
 									<label for="perfil_pagamento">Perfil Pagamento</label>
 									<select id="perfil_pagamento" name="perfil_pagamento" class="form-control show-tick" required>
-										<option value="BOLETO">BOLETO</option>										
+										<option value="BOLETO">BOLETO</option>
+										<option value="DEPOSITO">DEPÓSITO</option>									
 										<option value="DAF">DAF</option>
 										<option value="DMA">DAM</option>
 										<option value="GRU">GRU</option>

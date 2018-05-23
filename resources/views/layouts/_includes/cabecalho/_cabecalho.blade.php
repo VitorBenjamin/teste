@@ -64,7 +64,7 @@
 			</div>
 		</div>
 		<div class="col-md-2" style="margin-top: 20px">
-			<button class="btn bg-green waves-effect">
+			<button onclick="desabilitarClick()" class="btn bg-green waves-effect">
 				<i class="material-icons">send</i>
 				<span>CADASTRAR SOLICITAÇÃO</span> 
 			</button>

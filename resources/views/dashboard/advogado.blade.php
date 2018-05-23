@@ -91,13 +91,13 @@
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ABERTO -->
                         <div id="aberto" class="tab-pane fade in active" role="tabpanel">
                             <h1 class="visible-xs" style="text-align: center"> ABERTO </h1>
-                            <table id="aberto" class="table table-bordered table-striped table-hover dataTable js-basic-example">
+                            <table id="aberto" class="table table-bordered table-striped table-hover dataTable dashboard-adv">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
-                                        <th>Area</th>
+                                        <th>Área</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -139,13 +139,13 @@
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM ANDAMENTO -->
                         <div id="andamento" class="tab-pane fade in" role="tabpanel">
                             <h1 class="visible-xs" style="text-align: center"> ANDAMENTO </h1>
-                            <table id="andamento" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                            <table id="andamento" class="table dt-responsive table-bordered table-striped table-hover dataTable dashboard-adv" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
-                                        <th>Area</th>
+                                        <th>Área</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -186,13 +186,13 @@
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM APROVADAS -->
                         <div id="aprovado" class="tab-pane fade in" role="tabpanel">
                             <h1 class="visible-xs" style="text-align: center"> APROVADO </h1>
-                            <table id="aprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                            <table id="aprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable dashboard-adv" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
-                                        <th>Area</th>
+                                        <th>Área</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -230,13 +230,13 @@
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM REPROVADO -->
                         <div id="reprovado" class="tab-pane fade in" role="tabpanel">
                             <h1 class="visible-xs" style="text-align: center"> REPROVADO </h1>
-                            <table id="reprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                            <table id="reprovado" class="table dt-responsive table-bordered table-striped table-hover dataTable dashboard-adv" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
-                                        <th>Area</th>
+                                        <th>Área</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -274,13 +274,13 @@
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM DEVOLVIDO -->
                         <div id="devolvido" class="tab-pane fade in" role="tabpanel">
                             <h1 class="visible-xs" style="text-align: center"> DEVOLVIDO </h1>
-                            <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example">
+                            <table id="devolvido" class="table dt-responsive table-bordered table-striped table-hover dataTable dashboard-adv">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
-                                        <th>Area</th>
+                                        <th>Área</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
@@ -321,13 +321,13 @@
                         <!-- LISTAGEM DAS SOLICITAÇÕES EM FINALIZADOS -->
                         <div id="finalizado" class="tab-pane fade in" role="tabpanel">
                             <h1 class="visible-xs" style="text-align: center"> FINALIZADAS </h1>
-                            <table id="finalizado" class="table dt-responsive table-bordered table-striped table-hover dataTable js-basic-example" cellspacing="0" width="100%">
+                            <table id="finalizado" class="table dt-responsive table-bordered table-striped table-hover dataTable dashboard-adv" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th>Codigo</th>
                                         <th>Data</th>
-                                        <th>Area</th>
+                                        <th>Área</th>
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>

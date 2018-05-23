@@ -38,10 +38,25 @@ $(document).ready(function() {
                 return element.find('img');
             }
         }
-        
     });
 });
+ativo = false;
+function desabilitar(e){
+    e.stopPropagation();
+    e.preventDefault();
 
+}
+
+function desabilitarClick (e) {
+
+    if(ativo === false) {
+        document.addEventListener("click",desabilitar,true);
+    }
+
+    ativo = true;
+
+    setTimeout(function(){ document.removeEventListener("click",desabilitar,true); }, 5000);
+}
 $(document).ready(function() {
     $('.zoom-gallery2').magnificPopup({
         delegate: 'a',
@@ -85,85 +100,84 @@ $(function() {
         if($this.val().length != 0) {
             $('#file0').text($this.val());
         }
-    })
-      // When your fake button is clicked, simulate a click of the file button
-      $('#file0').click(function(){
-        fileInput.click();
-    }).show();
+    });
+        // When your fake button is clicked, simulate a click of the file button
+        $('#file0').click(function(){
+            fileInput.click();
+        }).show();
 
-      $('#add').click(function(){  
-        i++;  
-        $('#dynamic_field').append(
-            '<div class="row clearfix" id="row'+i+'">'
-            +'<div class="col-md-2">'
-            +'<div class="form-group">'
-            +'<div class="form-line">'
-            +'<label for="data_cotacao">Data</label>'
-            +'<input id="data_cotacao" type="text" value="" name="data_cotacao[]" class="datepicker form-control" placeholder="Escolha uma Data" required/>'
-            +'</div>'
-            +'</div>'
-            +'</div>'
-            +'<div class="col-md-4">'
-            +'<div class="form-group">'
-            +'<div class="form-line">'
-            +'<label for="descricao">Descrição</label>'
-            +'<input id="descricao" type="text" value="" name="descricao[]" class="form-control" placeholder="Descrição do produto" required/>'
-            +'</div>'
-            +'</div>'
-            +'</div>'
-            +'<div class="col-md-3">'
-            +'<div class="form-group">'
-            +'<div class="form-line">'
-            +'<label for="fornecedor">Fornecedor</label>'
-            +'<input id="fornecedor" type="text" value="" name="fornecedor[]" class="form-control" placeholder="Descrição do produto" required />                                     '
-            +'</div>'
-            +'</div>'
-            +'</div>'
-            +'<div class="col-md-1">'
-            +'<div class="form-group">'
-            +'<div class="form-line">'
-            +'<label for="quantidade">Qtd.</label>'
-            +'<input type="text" value="" name="quantidade[]" class="form-control" placeholder="Qtd." required/>'
-            +'</div>'
-            +'</div>                              '
-            +'</div>'
-            // +'<div class="col-md-3">'
-            // +'<div class="form-group">'
-            // +'<div class="form-line">'
-            // +'<label style="margin-bottom: 17px;" for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>'
-            // +'<input type="file" name="anexo_comprovante[]" id="anexo_comprovante" required/>'
-            // +'</div>'
-            // +'</div>'
-            // +'</div>'
-            +'<div class="col-md-1">'
-            +'<div class="form-group">'
-            +'<div class="form-line">'
-            +'<label for="quantidade">Valor R$</label>'
-            +'<input type="numeric" name="valor[]" style="text-align:right" name="valor" class="form-control" size="11"  value="" onKeyUp="moeda(this);" required>'
-            +'</div>'
-            +'</div>'
-            +'</div>'
-            // +'<div class="col-md-2">'
-            // +'<div class="form-line">'
-            // +'<!-- Define your button -->'
-            // +'<button type="button" style="padding: 10px 0;width:100%;overflow:hidden;margin-top: 16px;white-space: nowrap;" id="file'+i+'"> Anexar Arquivo </button>'
-            // +'<!-- Your File element -->'
-            // +' <input type="file" name="anexo_comprovante[]" id="anexo_comprovante'+i+'"/>'
-            // +'</div>'
-            // +'</div>'
-            +'<div class="col-md-1" style="margin-top: 20px; padding-left: 0px !important;">'
-            +'<button type="button" name="remove" id="'+i+'" class="btn bg-red waves-effect btn_remove">'
-            +'<i class="material-icons">remove_circle</i>'
-            +'<span>DEL.</span>'
-            +'</button>'
-            +'</div>'
-            +'</div>'); 
-        bind();
-        changeFileInput(i);
-        //$('.datepicker').bootstrapMaterialDatePicker('setDate', moment());
-    });  
-
-  });
+        $('#add').click(function(){  
+            i++;  
+            $('#dynamic_field').append(
+                '<div class="row clearfix" id="row'+i+'">'
+                +'<div class="col-md-2">'
+                +'<div class="form-group">'
+                +'<div class="form-line">'
+                +'<label for="data_cotacao">Data</label>'
+                +'<input id="data_cotacao" type="text" value="" name="data_cotacao[]" class="datepicker form-control" placeholder="Escolha uma Data" required/>'
+                +'</div>'
+                +'</div>'
+                +'</div>'
+                +'<div class="col-md-4">'
+                +'<div class="form-group">'
+                +'<div class="form-line">'
+                +'<label for="descricao">Descrição</label>'
+                +'<input id="descricao" type="text" value="" name="descricao[]" class="form-control" placeholder="Descrição do produto" required/>'
+                +'</div>'
+                +'</div>'
+                +'</div>'
+                +'<div class="col-md-3">'
+                +'<div class="form-group">'
+                +'<div class="form-line">'
+                +'<label for="fornecedor">Fornecedor</label>'
+                +'<input id="fornecedor" type="text" value="" name="fornecedor[]" class="form-control" placeholder="Descrição do produto" required />                                     '
+                +'</div>'
+                +'</div>'
+                +'</div>'
+                +'<div class="col-md-1">'
+                +'<div class="form-group">'
+                +'<div class="form-line">'
+                +'<label for="quantidade">Qtd.</label>'
+                +'<input type="text" value="" name="quantidade[]" class="form-control" placeholder="Qtd." required/>'
+                +'</div>'
+                +'</div>                              '
+                +'</div>'
+                // +'<div class="col-md-3">'
+                // +'<div class="form-group">'
+                // +'<div class="form-line">'
+                // +'<label style="margin-bottom: 17px;" for="anexo_comprovante">Envie um Arquivo (jpeg,bmp,png)</label>'
+                // +'<input type="file" name="anexo_comprovante[]" id="anexo_comprovante" required/>'
+                // +'</div>'
+                // +'</div>'
+                // +'</div>'
+                +'<div class="col-md-1">'
+                +'<div class="form-group">'
+                +'<div class="form-line">'
+                +'<label for="quantidade">Valor R$</label>'
+                +'<input type="numeric" name="valor[]" style="text-align:right" name="valor" class="form-control" size="11"  value="" onKeyUp="moeda(this);" required>'
+                +'</div>'
+                +'</div>'
+                +'</div>'
+                // +'<div class="col-md-2">'
+                // +'<div class="form-line">'
+                // +'<!-- Define your button -->'
+                // +'<button type="button" style="padding: 10px 0;width:100%;overflow:hidden;margin-top: 16px;white-space: nowrap;" id="file'+i+'"> Anexar Arquivo </button>'
+                // +'<!-- Your File element -->'
+                // +' <input type="file" name="anexo_comprovante[]" id="anexo_comprovante'+i+'"/>'
+                // +'</div>'
+                // +'</div>'
+                +'<div class="col-md-1" style="margin-top: 20px; padding-left: 0px !important;">'
+                +'<button type="button" name="remove" id="'+i+'" class="btn bg-red waves-effect btn_remove">'
+                +'<i class="material-icons">remove_circle</i>'
+                +'<span>DEL.</span>'
+                +'</button>'
+                +'</div>'
+                +'</div>'); 
+            bind();
+            changeFileInput(i);
+            //$('.datepicker').bootstrapMaterialDatePicker('setDate', moment());
+        });  
+    });
 
 function changeFileInput(i) {
     // Wrap your File input in a wrapper <div>
@@ -247,7 +261,17 @@ $( ".codigo" ).on('input',function(e){
         $('#advogado').attr('required', true);
     }
 });
+$(".finalizado").change(function(){ //".checkbox" change 
+    //console.log($( this ).prop("checked"));
+    if ($( this ).prop("checked")) {
 
+        $('#cliente').removeAttr('required', false);
+        $('#advogado').removeAttr('required', false);
+    }else{
+        $('#cliente').attr('required', true);
+        $('#advogado').attr('required', true);
+    }
+});
 $('.checkbox').change(function(){ //".checkbox" change 
     if($('.checkbox:checked').length == $('.checkbox').length){
         $('.checked_all').prop('checked',true);

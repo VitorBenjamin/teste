@@ -30,11 +30,12 @@
 				</div>
 				<div class="body">
 					<div class="row clearfix">
-						<table id="aberto" class="table table-bordered table-striped table-hover dataTable table-simples">
+						<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
 							<thead>
-								<tr>
+								<tr> 
 									<th></th>
 									<th>Codigo</th>
+									<th>Data</th>
 									<th>Dr°</th>
 									<th>Cliente</th>
 									<th>Tipo</th>
@@ -48,22 +49,26 @@
 								<tr>
 									<td></td>
 									<td>{{ $solicitacao->codigo }}</td>
+									<td>{{ date('d/m/Y',strtotime($solicitacao->created_at)) }}</td>
 									<td>{{ $solicitacao->user->nome }}</td>
 									<td>{{ $solicitacao->cliente == null ? 'MOSELLO LIMA' : $solicitacao->cliente->nome }}</td>
 									<td>{{ $solicitacao->tipo }}</td>
 									<td>{{ $solicitacao->solicitacaocitante == null ? 'ADVOGADO' : $solicitacao->solicitacaocitante->nome }}</td>
 									<td class="acoesTD">
 										<div class="icon-button-demo" >
+											
 											<!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
 											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert deleteAdmin" data-id="{{$solicitacao->id}}" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$solicitacao->tipo}}">
 												<i class="material-icons">delete_sweep</i>
+											</a>
+											<a href="{{ route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.analisar', $solicitacao->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$solicitacao->tipo}}">
+												<i class="material-icons">search</i>
 											</a>
 										</div>
 									</td>
 								</tr>
 								@endforeach 
-								@endif   
-								@if ($solicitacao)
+								@elseif ($solicitacao)
 								<tr>
 									<td></td>
 									<td>{{ $solicitacao->codigo }}</td>
@@ -76,6 +81,9 @@
 											<!-- REDIRECIONAMENTO DINAMICO POR PARAMETRO -->
 											<a style="margin-left: 10px" class="btn bg-red btn-circle waves-effect waves-circle waves-float js-sweetalert deleteAdmin" data-id="{{$solicitacao->id}}" data-toggle="tooltip" data-placement="top" title="EXCLUIR {{$solicitacao->tipo}}">
 												<i class="material-icons">delete_sweep</i>
+											</a>
+											<a href="{{ route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.analisar', $solicitacao->id)}}" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$solicitacao->tipo}}">
+												<i class="material-icons">search</i>
 											</a>
 										</div>
 									</td>

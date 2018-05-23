@@ -36,7 +36,6 @@ class SolicitacaoController extends Controller
 		usort($lista, function($a, $b) {
 			return $a['data'] <=> $b['data'];
 		});
-        //dd($lista);
 		$nome = $solicitacao->cliente ? $solicitacao->cliente->nome : 'Mosello Lima';
 		$pdf = PDF::loadView('layouts._includes.impressao.impressao',compact('solicitacao','lista'));
 		return $pdf->download('Relátorio '.$nome.'.pdf');
@@ -56,11 +55,35 @@ class SolicitacaoController extends Controller
 		]);
 		return redirect()->route(strtolower($solicitacao->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $solicitacao->tipo).'.editar', $id);
 	}
-	public function getSolicitacao(Request $request)
+	public function getFinalizadas()
 	{
-		//dd($request->all());
 		$solicitacoes = null;
 		$solicitacao = null;
+		$solicitacoes = Solicitacao::where('data_finalizado','<>',null)->get();
+		if (!$solicitacoes) {
+			\Session::flash('flash_message',[
+				'msg'=>"Solicitação não encotrada",
+				'class'=>"alert bg-orange alert-dismissible"
+			]);
+			return redirect()->back();
+		}
+		return view('layouts._includes.solicitacoes.resultado',compact('solicitacoes','solicitacao'));
+	}
+	public function getSolicitacao(Request $request)
+	{
+		$solicitacoes = null;
+		$solicitacao = null;
+		// if ($request->finalizado) {
+		// 	$solicitacoes = Solicitacao::where('data_finalizado','<>',null)->get();
+		// 	if (!$solicitacoes) {
+		// 		\Session::flash('flash_message',[
+		// 			'msg'=>"Solicitação não encotrada",
+		// 			'class'=>"alert bg-orange alert-dismissible"
+		// 		]);
+		// 		return redirect()->back();
+		// 	}
+		// 	return view('layouts._includes.solicitacoes.resultado',compact('solicitacoes','solicitacao'));
+		// }
 		if ($request->codigo) {
 			$solicitacao = Solicitacao::where('codigo',$request->codigo)->first();
 			if (!$solicitacao) {
@@ -108,7 +131,7 @@ class SolicitacaoController extends Controller
 			'solicitacoes_id' => $id,
 		];
 		$mime = $request->file('anexo')->getClientMimeType();
-		if ($mime == "image/jpeg" || $mime == "image/png") {
+		if ($mime == "image/jpeg" || $mime == "image/jpg") {
 			$file = Image::make($request->file('anexo'))->encode('jpg');
 			$img_64 = (string) $file->encode('data-url');
 			$data['anexo'] = $img_64;
@@ -138,7 +161,7 @@ class SolicitacaoController extends Controller
 		];
 		if ($request->hasFile('anexo')) {
 			$mime = $request->file('anexo')->getClientMimeType();
-			if ($mime == "image/jpeg" || $mime == "image/png") {
+			if ($mime == "image/jpeg" || $mime == "image/jpg") {
 				$file = Image::make($request->file('anexo'));
 				$img_64 = (string) $file->encode('data-url');
 				$data['anexo'] = $img_64;
@@ -338,7 +361,7 @@ class SolicitacaoController extends Controller
 				$finalizar = Status::where('descricao', config('constantes.status_coordenador_aberto2'))->first();
 
 			} elseif ($solicitacao->tipo == "ANTECIPAÇÃO" && $status == config('constantes.status_aberto_etapa2')) {
-				dd($solicitacao->tipo);
+				//dd($solicitacao->tipo);
 				$finalizar = Status::where('descricao', config('constantes.status_finalizado'))->first();
 				$this->trocarStatus($solicitacao,$finalizar);
 				return redirect()->route('user.index');

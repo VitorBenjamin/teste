@@ -172,8 +172,8 @@ class RegisterController extends Controller
     {
         $dados = Dados::create([
             'rg' => $data['rg'],
-            'data_inicial' => date('Y-m-d', strtotime($data['data_inicial'])),
-            'data_nascimento' => date('Y-m-d', strtotime($data['data_nascimento'])),
+            'data_inicial' => $data['data_inicial'] ? date('Y-m-d', strtotime($data['data_inicial'])): null,
+            'data_nascimento' => $data['data_nascimento'] ? date('Y-m-d', strtotime($data['data_nascimento'])) : null,
             'endereco' => $data['endereco'],
             'cidade' => $data['cidade'],
             'estado' => $data['cidade'],

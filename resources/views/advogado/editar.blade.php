@@ -132,9 +132,9 @@
 							</div>
 							<div class="col-md-6">
 								<div class="form-group form-float">
-									<label for="advogados">Advogados</label>
+									<label for="advogados">Usuários</label>
 									<select id="advogados" name="advogados[]" class="form-control show-tick"data-container="body" data-dropup-auto="false" data-size="5" data-actions-box="true" data-live-search="true" data-none-selected-text="Nenhum Registro Selecionado" data-none-results-text="Nenhum Resultado Encontrado" data-deselect-all-text="DESELECIONAR TODOS" data-select-all-text="SELECIONAR TODOS" multiple>
-										@foreach ($advogados->user as $advogado)
+										@foreach ($advogados as $advogado)
 										<option value="{{ $advogado->id }}" {{$user->users->contains($advogado->id) == true ? 'selected' : ''}}>{{ $advogado->nome }}</option>
 										@endforeach
 									</select>

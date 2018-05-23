@@ -20,6 +20,7 @@
                         @role(['ADMINISTRATIVO','FINANCEIRO','GOD','COORDENADOR'])
                         <li><a href="{{ route('user.getAll') }}"><i class="material-icons">list</i>Listar. Usuários</a></li>
                         <li><a href="{{ route('solicitacao.getSolicitacaoView') }}"><i class="material-icons">search</i>Buscar. Solicitação</a></li>
+                        <li><a href="{{ route('solicitacao.getFinalizadas') }}"><i class="material-icons">search</i>Solicitações Finalizadas</a></li>
                         <li role="seperator" class="divider"></li>
                         <li><a href="{{ route('registerAdvogado') }}"><i class="material-icons">sd_storage</i>Cadastrar Usuário</a></li>
                         <li><a href="{{ route('registerCoordenador') }}"><i class="material-icons">sd_storage</i>Cadastrar Coordenador</a></li>
@@ -63,35 +64,31 @@
                 <li>
                     <a href="{{route('reembolso.cadastrar')}}">
                         <i class="material-icons" style="color: #66a216">account_balance_wallet</i>
-                        <span>Solicitar Reembolso</span>
+                        <span>REEMBOLSO</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="{{route('compra.cadastrar')}}">
                         <i class="material-icons" style="color: #009688">add_shopping_cart</i>
-                        <span>Solicitar Compra</span>
+                        <span>COMPRA</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="{{route('viagem.cadastrar')}}">
                         <i class="material-icons" style="color: #ffc107">flight_takeoff</i>
-                        <span>Solicitar Viagem</span>
+                        <span>VIAGEM</span>
                     </a>
-                </li>  
-
+                </li>
                 <li>
                     <a href="{{route('antecipacao.cadastrar')}}">
                         <i class="material-icons" style="color: #03a9f4">chat_bubble_outline</i>
-                        <span>Solicitar Antecipação</span>
+                        <span>ANTECIPAÇÃO</span>
                     </a>
-                </li>  
-
+                </li>
                 <li>
                     <a href="{{route('guia.cadastrar')}}">
                         <i class="material-icons" style="color: #795548">content_paste</i>
-                        <span>Solicitar Guia</span>
+                        <span>GUIA / DILIGÊNCIA</span>
                     </a>
                 </li>
             </ul>

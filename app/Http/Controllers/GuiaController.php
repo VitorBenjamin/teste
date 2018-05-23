@@ -45,10 +45,7 @@ class GuiaController extends Controller
 		return redirect()->route('guia.editar', $solicitacao->id);
 	}
 	public function addGuia(GuiaRequest $request,$id){
-		
-		// $today = (string) date("Y-m-d");
-		// $fileName = $today.'_'.$id.'_'.$request->anexo_pdf->getClientOriginalName();	
-		// $request->anexo_pdf->storeAs('public/guias',$fileName);
+
 		$data = [
 			'data_limite' => date('Y-m-d', strtotime($request->data_limite)),
 			'prioridade' => $request->prioridade,
@@ -61,11 +58,16 @@ class GuiaController extends Controller
 			'tipo_guias_id' => $request->tipo_guias_id,
 		];
 		$mime = $request->file('anexo_guia')->getClientMimeType();
-		if ($mime == "image/jpeg" || $mime == "image/png") {
-            //dd($request->file('anexo_comprovante'));
+		if ($mime == "image/jpeg" || $mime == "image/jpg") {
 			$file = Image::make($request->file('anexo_guia'));
 			$img_64 = (string) $file->encode('data-url');
 			$data['anexo_guia'] = $img_64;
+		}else{
+			\Session::flash('flash_message',[
+				'msg'=>"Arquivo não suportado!!!",
+				'class'=>"alert bg-orange alert-dismissible"
+			]);
+			return redirect()->route('guia.editar',$id);
 		}
 		$guia = Guia::create($data);
 
@@ -151,10 +153,17 @@ class GuiaController extends Controller
 		
 		if ($request->file('anexo_guia')) {
 			$mime = $request->file('anexo_guia')->getClientMimeType();
-			if ($mime == "image/jpeg" || $mime == "image/png") {
+			if ($mime == "image/jpeg" || $mime == "image/jpg") {
 				$file = Image::make($request->file('anexo_guia'));
 				$img_64 = (string) $file->encode('data-url');
 				$guia->anexo_guia = $img_64;
+			}else{
+
+				\Session::flash('flash_message',[
+					'msg'=>"Arquivo não suportado!!!",
+					'class'=>"alert bg-orange alert-dismissible"
+				]);
+				return redirect()->back();
 			}
 		}
 		$guia->save();

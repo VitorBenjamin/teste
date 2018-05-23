@@ -46,7 +46,7 @@
 				
 				<div class="body">
 					@foreach ($solicitacao->viagem as $key => $viagem)
-					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example">
+					<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
 						<thead>
 							<tr>
 								<th></th>
@@ -101,7 +101,7 @@
 							</div>
 							<div class="col-md-10">
 								@if($viagem->valor)
-								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+								<table class="table table-bordered table-striped table-hover dataTable table-simples">
 									<thead>
 										<tr>
 											<th></th>
@@ -143,7 +143,7 @@
 							<div class="col-md-10">
 								@if($viagem->hospedagens)
 
-								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+								<table class="table table-bordered table-striped table-hover dataTable table-simples">
 									<thead>
 										<tr>
 											<th></th>
@@ -184,7 +184,7 @@
 							</div>
 							<div class="col-md-10">
 								@if($viagem->locacoes)
-								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+								<table class="table table-bordered table-striped table-hover dataTable table-simples">
 									<thead>
 										<tr>
 											<th></th>

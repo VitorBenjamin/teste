@@ -30,7 +30,6 @@
 					<!-- <h2>Cabecalho da Viagem</h2> -->
 					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
 						@if (count($solicitacao->guia) == 0)
-						
 						<a data-toggle="modal" data-target="#modalGuia" class="btn bg-light-green waves-effect" role="button">
 							<i class="material-icons">exposure_plus_1</i>
 							<!-- <span class="hidden-xs">ADD</span> -->
@@ -57,7 +56,7 @@
 	</div>
 	<!-- FIM CABEÇALHO PADRAO -->
 
-	<!-- MODAL CADASTRO DA ANTECIPAÇÂO -->
+	<!-- MODAL CADASTRO DA GUIA -->
 	<div class="modal fade" id="modalGuia" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
@@ -92,7 +91,8 @@
 								<div class="col-md-2">
 									<label for="perfil_pagamento">Perfil Pagamento</label>
 									<select id="perfil_pagamento" name="perfil_pagamento" class="form-control show-tick" required>
-										<option value="BOLETO">BOLETO</option>										
+										<option value="BOLETO">BOLETO</option>
+										<option value="DEPOSITO">DEPÓSITO</option>										
 										<option value="DAF">DAF</option>
 										<option value="DMA">DAM</option>
 										<option value="GRU">GRU</option>
@@ -100,7 +100,7 @@
 									</select>
 								</div>
 
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<label for="banco">Banco</label>
 									<select id="banco" name="banco" class="form-control show-tick" required>
 										<option value="BANCO DO BRASIL">BANCO DO BRASIL</option>										
@@ -109,20 +109,7 @@
 										<option value="CAIXA">CAIXA</option>								
 									</select>
 								</div>
-
 								<div class="col-md-2">
-									<div class="form-group">
-										<fieldset>
-											<legend style="margin: 0">Prioridade</legend>
-										</fieldset>
-										<input name="prioridade" value="1" type="radio" id="simP" />
-										<label style="margin: 15px 15px 0px 0px" for="simP">Sim</label>
-										<input name="prioridade" value="0" type="radio" id="naoP" checked />
-										<label style="margin: 15px 15px 0px 0px" for="naoP">Não</label>
-									</div>
-								</div>
-
-								<div class="col-md-3">
 									<label for="tipo_guias_id">Tipo</label>
 									<select id="tipo_guias_id" name="tipo_guias_id" class="form-control show-tick" data-live-search="true" data-size="5" required>
 										@foreach($tipo_guia as $grupo => $tipo)
@@ -145,12 +132,31 @@
 										</div>
 									</div>
 								</div>
-
-								<div class="col-md-4">
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-2">
+									<div class="form-group">
+										<fieldset>
+											<legend style="margin: 0">Prioridade</legend>
+										</fieldset>
+										<input name="prioridade" value="1" type="radio" id="simP" />
+										<label style="margin: 15px 15px 0px 0px" for="simP">Sim</label>
+										<input name="prioridade" value="0" type="radio" id="naoP" checked />
+										<label style="margin: 15px 15px 0px 0px" for="naoP">Não</label>
+									</div>
+								</div>
+								<div class="col-md-6">
 									<div class="form-group">
 										<div class="form-line">
-											<label for="anexo_guia">Anexar Guia</label>
-											<input style="margin-top: 10px " type="file" name="anexo_guia" id="anexo_guia" accept="image/jpeg" required/>
+											<textarea rows="2" name="observacao" class="form-control no-resize" placeholder="Insira uma Observação" required></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<div class="form-line">
+											<label for="anexo_guia">Anexar Guia (JPG)</label>
+											<input style="margin-top: 10px " type="file" name="anexo_guia" id="anexo_guia" accept="image/jpeg,image/jpg" required/>
 										</div>
 									</div>								
 								</div>
@@ -190,18 +196,18 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples-guia">
+					<table class="table table-bordered table-striped table-hover dataTable table-simples-guia">
 						<thead>
 							<tr>
 								<th></th>
 								<th>Data</th>
 								<th>Prioridade</th>
 								<th>Reclamante</th>
-								<th>Perfil Pagamento</th>
+								<th>Perfil</th>
 								<th>Banco</th>
-								<th>Area</th>
 								<th>Tipo</th>
 								<th>Valor</th>
+								<th>Observacao</th>
 								<th>Guia</th>
 								<th>Ações</th>																	
 							</tr>
@@ -212,11 +218,11 @@
 								<th>Data</th>
 								<th>Prioridade</th>
 								<th>Reclamante</th>
-								<th>Perfil Pagamento</th>
+								<th>Perfil</th>
 								<th>Banco</th>
-								<th>Area</th>
 								<th>Tipo</th>
 								<th>Valor</th>
+								<th>Observacao</th>
 								<th>Guia</th>
 								<th>Ações</th>
 							</tr>
@@ -230,10 +236,10 @@
 								<td>{{$guia->reclamante}}</td>									
 								<td>{{$guia->perfil_pagamento}}</td>
 								<td>{{$guia->banco}}</td>
-								<td>{{$guia->tipoGuia()->first()->tipo}}</td>
 								<td>{{$guia->tipoGuia()->first()->descricao}}</td>
 								{{-- <td>{{ 'R$ '.number_format($guia->valor, 2, ',', '.') }}</td> --}}
 								<td>R$ {{ $guia->valor }}</td>
+								<td>{{$guia->observacao }} </td>
 								<td>
 									<div class="zoom-gallery">
 										<a href="{{$guia->anexo_guia}}" data-source="{{$guia->anexo_guia}}" title="GUIA - {{date('d/m/Y',strtotime($guia->data_limite))}}" style="width:32px;height:32px;">

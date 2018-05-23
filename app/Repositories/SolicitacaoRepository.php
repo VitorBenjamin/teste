@@ -96,7 +96,7 @@ class SolicitacaoRepository
                 ->orderBy('created_at');
             }elseif ($statu == "FINALIZADO") {
                 $q
-                ->take(20)
+                ->take(200)
                 ->orderBy('created_at');
             }else{
                 $q->orderBy('created_at');
@@ -114,7 +114,7 @@ class SolicitacaoRepository
             if ($statu == "FINALIZADO") 
             {
                 $q
-                ->take(20)
+                ->take(200)
                 ->where('tipo','=','VIAGEM')
                 ->orWhere('tipo','=','COMPRA')
                 ->orderBy('created_at');
@@ -579,9 +579,9 @@ class SolicitacaoRepository
                 $total += $antecipacao->valor;
             }
         }
-        foreach ($antecipacoes->despesa as $despesa) {
-            $total += $despesa->valor;
-        }
+        // foreach ($antecipacoes->despesa as $despesa) {
+        //     $total += $despesa->valor;
+        // }
         return $total;
     }
 

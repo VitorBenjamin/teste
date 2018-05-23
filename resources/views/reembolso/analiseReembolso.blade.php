@@ -54,7 +54,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples-translado">
+					<table class="table table-bordered table-striped table-hover dataTable table-simples-translado">
 						<thead>
 							<tr>
 								<th></th>
@@ -92,7 +92,7 @@
 								<td>{{$translado->distancia}} Km</td>
 								<td>R$ {{$solicitacao->cliente->valor_km}}</td>
 								<td>R$ {{$solicitacao->cliente->valor_km * $translado->distancia}}</td>
-								<td>{{$translado->observacao}}</td>
+								<td style="max-width:300px">{{$translado->observacao}}</td>
 							</tr>
 							@endforeach														
 						</tbody>

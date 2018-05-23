@@ -70,10 +70,18 @@ class AntecipacaoController extends Controller
 
 	public function addComprovante(Request $request,$id)
 	{
-		$file = Image::make($request->file('anexo_comprovante'))->encode('jpg');
-		$img_64 = (string) $file->encode('data-url');
-		$antecipacao = Antecipacao::find($request->antecipacao_id);
-
+		$mime = $request->file('anexo_comprovante')->getClientMimeType();
+		if ($mime == "image/jpeg" || $mime == "image/jpg") {
+			$file = Image::make($request->file('anexo_comprovante'));
+			$img_64 = (string) $file->encode('data-url');
+			$antecipacao = Antecipacao::find($request->antecipacao_id);
+		}else{
+			Session::flash('flash_message',[
+				'msg'=>"Arquivo não suportado!!!",
+				'class'=>"alert bg-orange alert-dismissible"
+			]);
+			return redirect()->back();
+		}
 		$antecipacao->update(['anexo_comprovante' => $img_64]);
 
 		\Session::flash('flash_message',[
@@ -83,7 +91,6 @@ class AntecipacaoController extends Controller
 		return redirect()->route('antecipacao.analisar',$id);
 
 	}
-
 	//Adcionar uma nova despesa a solicitação
 	public function addDespesa(Request $request,$id)
 	{

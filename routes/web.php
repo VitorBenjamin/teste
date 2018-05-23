@@ -20,6 +20,7 @@ Route::group(['middleware' => ['check.user.role:ADMINISTRATIVO|COORDENADOR|FINAN
     Route::get('/cadastro/registrar-financeiro', 'Auth\RegisterController@showRegistrationFormFinanceiro')->name('registerFinanceiro');
     Route::get('/cadastro/registrar-advogado', 'Auth\RegisterController@showRegistrationFormAdvogado')->name('registerAdvogado');
     Route::get('/busca-solicitacao', ['uses' => 'SolicitacaoController@getSolicitacaoView', 'as' => 'solicitacao.getSolicitacaoView']);
+    Route::get('/busca-finalizadas', ['uses' => 'SolicitacaoController@getFinalizadas', 'as' => 'solicitacao.getFinalizadas']);
     Route::post('resultados', ['uses' => 'SolicitacaoController@getSolicitacao', 'as' => 'solicitacao.getSolicitacao']);
 
 });

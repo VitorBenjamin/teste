@@ -37,18 +37,18 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples-guia">
+					<table class="table table-bordered table-striped table-hover dataTable table-simples-guia">
 						<thead>
 							<tr>
 								<th></th>
 								<th>Data</th>
 								<th>Prioridade</th>
 								<th>Reclamante</th>
-								<th>Perfil Pagamento</th>
+								<th>Perfil</th>
 								<th>Banco</th>
-								<th>Area</th>
 								<th>Tipo</th>
 								<th>Valor</th>
+								<th>Observação</th>
 								<th>Guia</th>
 							</tr>
 						</thead>
@@ -58,11 +58,11 @@
 								<th>Data</th>
 								<th>Prioridade</th>
 								<th>Reclamante</th>
-								<th>Perfil Pagamento</th>
+								<th>Perfil</th>
 								<th>Banco</th>
-								<th>Area</th>
 								<th>Tipo</th>
 								<th>Valor</th>
+								<th>Observação</th>
 								<th>Guia</th>
 							</tr>
 						</tfoot>
@@ -75,17 +75,15 @@
 								<td>{{$guia->reclamante}}</td>									
 								<td>{{$guia->perfil_pagamento}}</td>
 								<td>{{$guia->banco}}</td>
-								<td>{{$guia->tipoGuia()->first()->tipo}}</td>
 								<td>{{$guia->tipoGuia()->first()->descricao}}</td>
 								{{-- <td>{{ 'R$ '.number_format($guia->valor, 2, ',', '.') }}</td> --}}
 								<td>R$ {{ $guia->valor }}</td>
+								<td>{{$guia->observacao }} </td>
 								<td>
 									<div class="zoom-gallery">
-										
 										<a href="{{$guia->anexo_guia}}" data-source="{{$guia->anexo_guia}}" title="GUIA - {{date('d/m/Y',strtotime($guia->data_limite))}}" style="width:32px;height:32px;">
 											<img class="img_popup" src="{{$guia->anexo_guia}}" width="32" height="32">
 										</a>
-										
 									</div>
 								</td>
 							</tr>

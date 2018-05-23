@@ -42,7 +42,7 @@ class RelatorioController extends Controller
 		}
 		$nome = $solicitacao->cliente ? $solicitacao->cliente->nome : 'Mosello Lima';
 		$pdf = PDF::loadView('layouts._includes.impressao.impressao',compact('solicitacao','lista','total','geral','estornos'));
-		return $pdf->stream('Relátorio '.$nome.'.pdf');
+		return $pdf->download('Relátorio.pdf');
 		//return view('layouts._includes.impressao.impressao', compact('solicitacao','lista'));
 	}
 	//Buscando todas as informações das solicitacao e enviando para a view de listagem das solicitacao
@@ -96,18 +96,16 @@ class RelatorioController extends Controller
 	}
 	public function getData(Request $data)
 	{
-		$relatorio = Relatorio::where('finalizado',true)
-		->where('clientes_id',$data->data)
+		$relatorio = Relatorio::where('clientes_id',$data->data)
 		->orderBy('id','desc')->first();
 		
 		if ($relatorio) {
-			
 			$data_inicial = $relatorio->data;
 		}else{
-			$data_inicial = $data_inicial = '2018-01-01';
+			$data_inicial = $data_inicial = '01-01-2018';
 		}
 		//dd($relatorios);
-		return response()->json($data_inicial);
+		return response()->json(date('d-m-Y', strtotime($data_inicial. ' + 1 day')));
 	}
 	public function extornar(Request $request)
 	{
@@ -127,7 +125,6 @@ class RelatorioController extends Controller
 				$gasto->save();
 			}
 		}
-
 		\Session::flash('flash_message',[
 			'msg'=>"Relátorio Alterado com Sucesso!!!",
 			'class'=>"alert bg-green alert-dismissible"
@@ -188,24 +185,12 @@ class RelatorioController extends Controller
 	{
 		$exibir = true;
 		$cliente = Cliente::find($request->clientes_id);
-		$ultimo_relatorio = Relatorio::orderBy('id', 'desc')
-		->where('clientes_id',$request->clientes_id)
-		->select('data')
-		->first();
-
-		$data_inicial = $request->data_inicial;
+		$data_inicial = date('Y-m-d', strtotime($request->data_inicial));
 		$data_final = date('Y-m-d', strtotime($request->data_final));
-		if ($ultimo_relatorio==null) {
-			$solicitacoes= Solicitacao::where('clientes_id',$request->clientes_id)
-			->where('data_finalizado','<=',$data_final)
-			->get();
-		}else{
-			$data_inicial = $ultimo_relatorio->data;
-			$solicitacoes = Solicitacao::where('clientes_id',$request->clientes_id)
-			->whereBetween('data_finalizado', array($data_inicial,$data_final))
-			->get();
-		}
-		//dd($solicitacoes);
+		$solicitacoes = Solicitacao::where('clientes_id',$request->clientes_id)
+		->whereBetween('data_finalizado', array($data_inicial,$data_final))
+		->where('relatorios_id', null)
+		->get();
 		$repo = new SolicitacaoRepository();
 		$solicitacoes = $repo->valorTotal($solicitacoes);
 		
@@ -214,26 +199,16 @@ class RelatorioController extends Controller
 
 	public function salvarRelatorio(Request $request)
 	{
-		//$cliente = Cliente::find($request->clientes_id);
-		$ultimo_relatorio = Relatorio::orderBy('id', 'desc')
-		->where('clientes_id',$request->clientes_id)
-		->select('data')
-		->first();
-
 		$relatorio = Relatorio::create([
 			'data' => $request->data_final,
 			'users_id' => auth()->user()->id,
 			'clientes_id' => $request->clientes_id,
 		]);
-		if ($ultimo_relatorio==null) {
-			Solicitacao::where('clientes_id',$request->clientes_id)
-			->where('data_finalizado','<=',date('Y-m-d', strtotime($request->data_final)))
-			->update(['relatorios_id' => $relatorio->id]);
-		}else{
-			Solicitacao::where('clientes_id',$request->clientes_id)
-			->whereBetween('data_finalizado',array($ultimo_relatorio,date('Y-m-d', strtotime($request->data_final))))
-			->update(['relatorios_id' => $relatorio->id]);
-		}
+		$data_inicial = date('Y-m-d', strtotime($request->data_inicial));
+		$data_final = date('Y-m-d', strtotime($request->data_final));
+		Solicitacao::where('clientes_id',$request->clientes_id)
+		->whereBetween('data_finalizado',array($data_inicial,$data_final))
+		->update(array('relatorios_id' => $relatorio->id));
 		return redirect()->route('relatorio.editar', $relatorio->id);
 	}
 	public function deletar($id)

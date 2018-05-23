@@ -134,11 +134,12 @@ class UserController extends Controller
 	{
 		$user = User::where('id',$id)->with('limites','area_atuacao','unidades')->first();
 		$clientes = Cliente::all(); 
-		$advogados = Role::with(['user' => function ($q)
-		{
-			$q->orderBy('nome');
+		// $advogados = Role::with(['user' => function ($q)
+		// {
+		// 	$q->orderBy('nome');
 			
-		}])->where('name',config('constantes.user_advogado'))->first();
+		// }])->where('name',config('constantes.user_advogado'))->get();,
+		$advogados = User::all();
 		$areas = AreaAtuacao::all();
 		$roles = Role::all(); 
 		$unidades = Unidade::all(); 

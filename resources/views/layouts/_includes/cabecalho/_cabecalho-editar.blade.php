@@ -72,7 +72,7 @@
 		<div class="col-md-2">
 			<div class="form-group">
 				<fieldset>
-					<legend style="margin: 0">Urgência</legend>
+					<legend style="margin: 0"> </legend>
 				</fieldset>
 				@if ($solicitacao->urgente == true)
 				<input name="urgente" value="1" type="radio" id="sim" checked />
@@ -96,8 +96,6 @@
 				<i class="material-icons">send</i>
 				<span>ENVIAR</span>
 			</a>
-		</div>		
-		
-
+		</div>
 	</div>			
 </div>

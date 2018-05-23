@@ -21,7 +21,7 @@
 				<div class="card">
 					<div class="header">
 						<h2>
-							Área de Busca das Solicitação								
+							Área de Busca das Solicitação						
 						</h2>
 					</div>
 					<div class="body">
@@ -31,6 +31,15 @@
 								<input type="text" id="codigo" name="codigo" class="form-control codigo" autocomplete="off" placeholder="" />
 							</div>
 						</div>
+						<!-- <div class="col-md-1">
+							<div class="demo-switch-title" style="font-weight: 900;">Finalizado</div>
+							<div class="switch">
+								<label>
+									<input type="checkbox" id="finalizado" name="finalizado" class="form-control finalizado">
+									<span class="lever switch-col-teal"></span>
+								</label>
+							</div>
+						</div> -->
 						<div class="row clearfix">
 							<div class="col-md-3">
 								<label id="label" for="cliente" class="label2">Cliente</label>

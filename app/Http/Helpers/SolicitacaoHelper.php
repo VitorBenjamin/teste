@@ -164,7 +164,6 @@ class SolicitacaoHelper
 
             }
         }
-        //dd($lista);
         return $lista;
     }
     public function guiaPrint($s,$lista)
@@ -172,12 +171,12 @@ class SolicitacaoHelper
         foreach ($s->guia as $guia) {
             $lista[] = 
             [
-                'data' => date('d-m-Y',strtotime($s->comprovante[0]->data)),
+                'data' => $s->comprovante ? date('d-m-Y',strtotime($s->comprovante[0]->data)) : 'UNKNOW',
                 'codigo' => $s->codigo,
                 'descricao' => 'GUIA - '.$guia->perfil_pagamento. ' - ' .$guia->banco. ' - ' .$guia->tipoGuia()->first()->descricao,
                 'valor' => $guia->valor,
                 'estornado' => $guia->estornado,
-                'img' => $s->comprovante[0]->anexo,
+                'img' => $guia->anexo_guia,
                 'exibir' => true,
             ];
         }

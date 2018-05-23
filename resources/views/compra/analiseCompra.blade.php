@@ -49,7 +49,7 @@
 				<div class="body">
 					@foreach ($solicitacao->compra as $compra)
 					@if ($solicitacao->status()->get()[0]->descricao == config('constantes.status_andamento_administrativo') || $solicitacao->status()->get()[0]->descricao == config('constantes.status_recorrente_financeiro'))
-					<table class="table table-bordered table-striped nowrap table-hover dataTable">
+					<table class="table table-bordered table-striped table-hover dataTable">
 						<thead>
 							<tr>
 								<th>Data Desejada</th>
@@ -69,7 +69,7 @@
 					@endif
 					<div class="row clearfix">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">				
-							<table class="table table-bordered table-striped nowrap table-hover dataTable">
+							<table class="table table-bordered table-striped table-hover dataTable">
 								<thead>
 									<tr>
 										<th>Data</th>

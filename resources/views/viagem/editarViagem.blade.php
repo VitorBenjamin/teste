@@ -62,16 +62,15 @@
 									</div>
 								</div>
 							</div>
-
 							<div class="col-md-2">
 								<div class="form-group">
 									<fieldset>
-										<legend style="margin: 0">Locação de Carro</legend>
+										<legend>Passagem</legend>
 									</fieldset>
-									<input name="locacao" value="1" type="radio" id="simL" {{$viagem->locacao == 1 ? 'checked' : ''}}/>
-									<label style="margin: 15px 15px 0px 0px" for="simL">Sim</label>
-									<input name="locacao" value="0" type="radio" id="naoL" {{$viagem->locacao == 0 ? 'checked' : ''}} />
-									<label style="margin: 15px 15px 0px 0px" for="naoL">Não</label>
+									<input name="passagem" value="1" type="radio" id="simT" {{$viagem->passagem ? 'checked' : ''}}/>
+									<label style="margin: 15px 15px 0px 0px" for="simT">Sim</label>
+									<input name="passagem" value="0" type="radio" id="naoT" {{$viagem->passagem ? '' : 'checked' }}/>
+									<label style="margin: 15px 15px 0px 0px" for="naoT">Não</label>
 								</div>
 							</div>
 							<div class="col-md-2">
@@ -79,27 +78,37 @@
 									<fieldset>
 										<legend style="margin: 0">Hospedagem</legend>
 									</fieldset>
-									<input name="hospedagem" value="1" type="radio" id="simH" {{$viagem->hospedagem == 1 ? 'checked' : ''}}/>
+									<input name="hospedagem" value="1" type="radio" id="simH" {{$viagem->hospedagem ? 'checked' : ''}}/>
 									<label style="margin: 15px 15px 0px 0px" for="simH">Sim</label>
-									<input name="hospedagem" value="0" type="radio" id="naoH" {{$viagem->hospedagem == 0 ? 'checked' : ''}} />
+									<input name="hospedagem" value="0" type="radio" id="naoH" {{$viagem->hospedagem ? '' : 'checked' }}/>
 									<label style="margin: 15px 15px 0px 0px" for="naoH">Não</label>
 								</div>
-							</div>
-
+							</div>							
 						</div>
 						<div class="row clearfix">
 							<div class="col-md-2">
 								<div class="form-group">
 									<fieldset>
-										<legend>Bagagem</legend>
+										<legend style="margin: 0">Locação de Carro</legend>
 									</fieldset>
-									<input name="bagagem" value="1" type="radio" id="simB" {{$viagem->bagagem == 1 ? 'checked' : ''}}/>
-									<label style="margin: 15px 15px 0px 0px" for="simB">Sim</label>
-									<input name="bagagem" value="0" type="radio" id="naoB" {{$viagem->bagagem == 0 ? 'checked' : ''}}/>
-									<label style="margin: 15px 15px 0px 0px" for="naoB">Não</label>
+									<input name="locacao" value="1" type="radio" id="simL" {{$viagem->locacao ? 'checked' : ''}}/>
+									<label style="margin: 15px 15px 0px 0px" for="simL">Sim</label>
+									<input name="locacao" value="0" type="radio" id="naoL" {{$viagem->locacao ? '' : 'checked' }}/>
+									<label style="margin: 15px 15px 0px 0px" for="naoL">Não</label>
 								</div>
 							</div>
 							<div class="col-md-2">
+								<div class="form-group">
+									<fieldset>
+										<legend>Bagagem</legend>
+									</fieldset>
+									<input name="bagagem" value="1" type="radio" id="simB" {{$viagem->bagagem ? 'checked' : ''}}/>
+									<label style="margin: 15px 15px 0px 0px" for="simB">Sim</label>
+									<input name="bagagem" value="0" type="radio" id="naoB" {{$viagem->bagagem ? '' : 'checked' }}/>
+									<label style="margin: 15px 15px 0px 0px" for="naoB">Não</label>
+								</div>
+							</div>
+							<div class="col-md-1">
 								<div class="form-group">
 									<div class="form-line">
 										<label for="kg">Kg</label>
@@ -107,7 +116,7 @@
 									</div>
 								</div>								
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-7">
 								<div class="form-group">
 									<div class="form-line">
 										<label for="observacao">Observação</label>

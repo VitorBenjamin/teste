@@ -196,7 +196,7 @@ class CompraController extends Controller
 			if ($cota->aprovado) {
 				if ($request->file('anexo_comprovante')) {
 					$mime = $request->file('anexo_comprovante')->getClientMimeType();
-					if ($mime == "image/jpeg" || $mime == "image/png") {
+					if ($mime == "image/jpeg" || $mime == "image/jpg") {
 						$file = Image::make($request->file('anexo_comprovante'))->encode('jpg');
 						$img_64 = (string) $file->encode('data-url');
 						$cota->anexo_comprovante = $img_64;

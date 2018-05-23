@@ -139,7 +139,7 @@
 					</h2>
 				</div>
 				<div class="body">
-					<table class="table table-bordered table-striped nowrap table-hover dataTable js-basic-example ">
+					<table class="table table-bordered table-striped table-hover dataTable js-basic-example ">
 						<thead>
 							<tr>
 								<th></th>
@@ -254,7 +254,7 @@
 				</div>
 				<div class="body">
 					@foreach ($solicitacao->compra as $compra)
-					<table class="table table-bordered table-striped nowrap table-hover dataTable">
+					<table class="table table-bordered table-striped table-hover dataTable">
 						<thead>
 							<tr>
 								<th>Data Desejada</th>
@@ -273,7 +273,7 @@
 					<h2><i class="material-icons">arrow_downward</i><span class="badge bg-cyan" style="padding: 8px 7px; font-size: 15px">COTAÇÕES</span><i class="material-icons">arrow_upward</i></h2>
 					<div class="row clearfix">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">				
-							<table class="table table-bordered table-striped nowrap table-hover dataTable">
+							<table class="table table-bordered table-striped table-hover dataTable">
 								<thead>
 									<tr>
 										<th>Data</th>

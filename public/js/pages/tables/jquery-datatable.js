@@ -1,9 +1,12 @@
 $(function () {
-    $('.js-basic-example').DataTable({
+    $('.dashboard').DataTable({
         autoWidth: false,
         language: {
             url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json" 
-        },       
+        },    
+        aaSorting: [[ 2, 'asc' ]], 
+        aoColumns: [ 
+        null, null,{ sType: "date-uk" }, null, null , null, null, null ,null,null],  
         responsive: {
             details: {
                 type: 'column',
@@ -17,37 +20,50 @@ $(function () {
             className: 'control',
             orderable: false,
             targets:   0,
-            render: function ( data, type, row ) {
-                $('.zoom-gallery').magnificPopup({
-                    delegate: 'a',
-                    type: 'image',
-                    closeOnContentClick: false,
-                    closeBtnInside: false,
-                    mainClass: 'mfp-with-zoom mfp-img-mobile',
-                    image: {
-                        verticalFit: true,
-                        titleSrc: function(item) {
-                            return item.el.attr('title');
-                        }
-                    },
-                    gallery: {
-                        enabled: true
-                    },
-                    zoom: {
-                        enabled: true,
-                        duration: 300, // don't foget to change the duration also in CSS
-                        opener: function(element) {
-                            return element.find('img');
-                        }
-                    }
-
-                });
-                return data.substr( 0, 5 );
-            }
         } ],
-        drawCallback: function(){
-
-        }
+    });
+    $('.dashboard-adv').DataTable({
+        autoWidth: false,
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json" 
+        },
+        aaSorting: [[ 2, 'asc' ]],
+        aoColumns: [ 
+        null, null,{ sType: "date-uk" }, null, null , null, null, null ,null], 
+        responsive: {
+            details: {
+                type: 'column',
+                target: 'tr',
+                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                    tableClass: 'ui table'
+                } )
+            }
+        },
+        columnDefs: [ {
+            className: 'control',
+            orderable: false,
+            targets:   0,
+        } ]
+    });
+    $('.js-basic-example').DataTable({
+        autoWidth: false,
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json" 
+        },
+        responsive: {
+            details: {
+                type: 'column',
+                target: 'tr',
+                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                    tableClass: 'ui table'
+                } )
+            }
+        },
+        columnDefs: [ {
+            className: 'control',
+            orderable: false,
+            targets:   0,
+        } ]
     });
     $('.relatorio-previa').DataTable({
         autoWidth: false,
@@ -239,9 +255,9 @@ $(function () {
         {
             text: '<i class="material-icons">picture_as_pdf</i>',
             action: function ( e, dt, node, config ) {
-             window.open(rota);
-         }
-     }
+               window.open(rota);
+           }
+       }
      // {
      //    extend: 'pdfHtml5',
      //    footer: true,
@@ -423,7 +439,7 @@ $('.table-simples-antecipacao').DataTable({
             return data.substr( 0, 5 );
         }
     } ]
-    });
+});
 $('.table-simples-guia').DataTable({
     autoWidth: false,
     searching: false,
@@ -459,7 +475,7 @@ $('.table-simples-guia').DataTable({
             };
             // Total over all pages
             total = api
-            .column( 8 )
+            .column( 7 )
             .data()
             .reduce( function (a, b) {
                 if (intVal(b) < 0) {
@@ -481,7 +497,7 @@ $('.table-simples-guia').DataTable({
             }, 0 );
 
             var numFormat = $.fn.dataTable.render.number( '\.', ',', 2, 'R$ ' ).display;
-            $( api.column( 8 ).footer() ).html(
+            $( api.column( 7 ).footer() ).html(
                 '<span style="text-align:right;">'+'TOTAL '+numFormat(total)+'</span>'
                 );
         }

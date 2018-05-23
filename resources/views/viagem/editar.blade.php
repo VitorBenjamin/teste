@@ -251,11 +251,10 @@
 														<fieldset>
 															<legend>Passagem</legend>
 														</fieldset>
+														<input name="passagem" value="1" type="radio" id="simT" />
+														<label style="margin: 15px 15px 0px 0px" for="simT">Sim</label> 
 														<input name="passagem" value="0" type="radio" id="naoT" checked/>
 														<label style="margin: 15px 15px 0px 0px" for="naoT">Não</label>
-														<input name="passagem" value="1" type="radio" id="simT" />
-														<label style="margin: 15px 15px 0px 0px" for="simT">Sim</label>
-														
 													</div>
 												</div>												
 												<div class="col-md-2">
@@ -294,7 +293,7 @@
 													</div>
 												</div>
 
-												<div class="col-md-2">
+												<div class="col-md-1">
 													<div class="form-group">
 														<div class="form-line">
 															<label for="kg">Kg</label>
@@ -302,7 +301,7 @@
 														</div>
 													</div>								
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-7">
 													<div class="form-group">
 														<div class="form-line">
 															<label for="observacao">Observação</label>
@@ -353,7 +352,7 @@
 				</div>
 				<div class="body">
 					@foreach ($solicitacao->viagem as $key => $viagem)
-					<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+					<table class="table table-bordered table-striped table-hover dataTable table-simples">
 						<thead>
 							<tr>
 								<th></th>
@@ -393,12 +392,12 @@
 								<td>{{$viagem->data_volta ? date('d/m/Y',strtotime($viagem->data_volta)) : 'SÓ IDA'}}</td>
 								<td>{{$viagem->passagem ? 'SIM' : 'NÃO'}}</td>
 								<td>
-									{{$viagem->hospedagem == 1 ? 'SIM' : 'NÃO'}}
+									{{$viagem->hospedagem ? 'SIM' : 'NÃO'}}
 								</td>
-								<td>{{$viagem->bagagem == 1 ? 'SIM' : 'NÃO'}}</td>
+								<td>{{$viagem->bagagem ? 'SIM' : 'NÃO'}}</td>
 								<td>{{$viagem->kg}}</td>
 								<td>
-									{{$viagem->locacao == 1 ? 'SIM' : 'NÃO'}}
+									{{$viagem->locacao ? 'SIM' : 'NÃO'}}
 								</td>
 
 								<td class="acoesTD">									
@@ -434,7 +433,7 @@
 							</div>
 							<div class="col-md-10">
 								@if($viagem->valor)
-								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+								<table class="table table-bordered table-striped table-hover dataTable table-simples">
 									<thead>
 										<tr>
 											<th></th>
@@ -476,7 +475,7 @@
 							<div class="col-md-10">
 								@if($viagem->hospedagens)
 
-								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+								<table class="table table-bordered table-striped table-hover dataTable table-simples">
 									<thead>
 										<tr>
 											<th></th>
@@ -517,7 +516,7 @@
 							</div>
 							<div class="col-md-10">
 								@if($viagem->locacoes)
-								<table class="table table-bordered table-striped nowrap table-hover dataTable table-simples">
+								<table class="table table-bordered table-striped table-hover dataTable table-simples">
 									<thead>
 										<tr>
 											<th></th>

@@ -25,7 +25,7 @@
 	<span>FINALIZAR</span>
 </a>
 @else
-<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-light-green waves-effect " role="button">
+<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-light-green waves-effect {{count($solicitacao->comprovante) ? '' : 'not-active'}}" role="button" {{count($solicitacao->comprovante) ? '' : 'disabled'}}>
 	<i class="material-icons">done_all</i>
 	<span>FINALIZAR</span>
 </a>
@@ -37,12 +37,6 @@
 </a>
 @endif										
 @endif
-{{-- @if($solicitacao->status()->get()[0]->descricao == config('constantes.status_finalizado'))
-<a href="{{ route('solicitacao.finalizar',$solicitacao->id) }}" class="btn bg-light-green waves-effect{{count($solicitacao->comprovante) == 0 ? 'not-active' : ''}}" role="button" {{count($solicitacao->comprovante) == 0 ? 'disabled' : ''}}>
-	<i class="material-icons">done_all</i>
-	<span>FINALIZAR</span>
-</a>
-@endif --}}
 @role(['FINANCEIRO','ADMINISTRATIVO'])
 @if($solicitacao->status()->get()[0]->descricao == config('constantes.status_finalizado'))
 <a href="{{ route('relatorio.relatorioIndividual',$solicitacao->id) }}" class="btn bg-light-green waves-effect" role="button" target="_blank">

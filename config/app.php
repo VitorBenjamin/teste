@@ -164,7 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
         Junity\Hashids\HashidsServiceProvider::class,
         /*
          * Package Service Providers...
@@ -258,7 +258,9 @@ return [
         'Locacao' => App\Locacao::class,
         'Comprovante' => App\Comprovante::class,
         'Dados' => App\Dados::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'PDF' => Barryvdh\DomPDF\Facade::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
         //HELPERS
         'SolicitacaoHelper' => App\Http\Helpers\SolicitacaoHelper::class,
 
