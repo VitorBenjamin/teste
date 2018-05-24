@@ -45,6 +45,29 @@ $(function () {
             targets:   0,
         } ]
     });
+    $('.resultado').DataTable({
+        autoWidth: false,
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json" 
+        },    
+        aaSorting: [[ 2, 'asc' ]], 
+        aoColumns: [ 
+        null, null,{ sType: "date-uk" }, null, null , null, null, null],  
+        responsive: {
+            details: {
+                type: 'column',
+                target: 'tr',
+                renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                    tableClass: 'ui table'
+                } )
+            }
+        },
+        columnDefs: [ {
+            className: 'control',
+            orderable: false,
+            targets:   0,
+        } ],
+    });
     $('.js-basic-example').DataTable({
         autoWidth: false,
         language: {

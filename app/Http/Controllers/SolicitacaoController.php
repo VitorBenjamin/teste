@@ -67,7 +67,7 @@ class SolicitacaoController extends Controller
 			]);
 			return redirect()->back();
 		}
-		return view('layouts._includes.solicitacoes.resultado',compact('solicitacoes','solicitacao'));
+		return view('layouts._includes.solicitacoes.resultado-finalizado',compact('solicitacoes','solicitacao'));
 	}
 	public function getSolicitacao(Request $request)
 	{
@@ -84,6 +84,21 @@ class SolicitacaoController extends Controller
 		// 	}
 		// 	return view('layouts._includes.solicitacoes.resultado',compact('solicitacoes','solicitacao'));
 		// }
+		//dd($request->all());
+		if ($request->data_inicial && $request->data_final) {
+			$data_inicial = date('Y-m-d', strtotime($request->data_inicial));
+			$data_final = date('Y-m-d', strtotime($request->data_final));
+			$solicitacoes = Solicitacao::whereBetween('data_finalizado', array($data_inicial,$data_final))->get();
+			//dd($solicitacoes);
+			if (!$solicitacoes) {
+				\Session::flash('flash_message',[
+					'msg'=>"Solicitação não encotrada",
+					'class'=>"alert bg-orange alert-dismissible"
+				]);
+				return redirect()->back();
+			}
+			return view('layouts._includes.solicitacoes.resultado-finalizado',compact('solicitacoes','solicitacao'));
+		}
 		if ($request->codigo) {
 			$solicitacao = Solicitacao::where('codigo',$request->codigo)->first();
 			if (!$solicitacao) {

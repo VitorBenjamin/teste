@@ -37,7 +37,7 @@ $(document).on('click', '.deleteAdmin', function (e) {
     e.preventDefault();
     var id = $(this).data('id');
     swal({
-        title: "Comfirmar Exclusão!",
+        title: "Confirmar Exclusão!",
         type: "warning",
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'Sim!',        
@@ -82,7 +82,7 @@ $(document).on('click', '.js-sweetalert', function (e) {
     e.preventDefault();
     var id = $(this).data('id');
     swal({
-        title: "Comfirmar Exclusão!",
+        title: "Confirmar Exclusão!",
         type: "warning",
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'Sim!',        

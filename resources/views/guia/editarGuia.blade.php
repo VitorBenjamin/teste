@@ -32,33 +32,32 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										<div class="form-line">
-											<label for="reclamante">Reclamante</label>
+											<label for="reclamante">Adverso</label>
 											<input type="text" value="{{$guia->reclamante}}" name="reclamante" class="form-control" placeholder="Nome do Reclamante" required/>
 										</div>
 									</div>
 								</div>
-
 								<div class="col-md-2">
 									<label for="perfil_pagamento">Perfil Pagamento</label>
 									<select id="perfil_pagamento" name="perfil_pagamento" class="form-control show-tick" required>
 										<option value="BOLETO">BOLETO</option>
-										<option value="DEPOSITO">DEPÓSITO</option>									
+										<option value="DEPOSITO">DEPÓSITO</option>
+										<option value="DAJ">DAJ</option>								
 										<option value="DAF">DAF</option>
 										<option value="DMA">DAM</option>
 										<option value="GRU">GRU</option>
 										<option value="GFIP">GFIP</option>
 									</select>
 								</div>
-
 								<div class="col-md-3">
 									<label for="banco">Banco</label>
 									<select id="banco" name="banco" class="form-control show-tick" required>
 										<option value="BANCO DO BRASIL">BANCO DO BRASIL</option>										
 										<option value="ITAU">ITAU</option>
-										<option value="BRADESCO">BRADESCO</option>								
+										<option value="BRADESCO">BRADESCO</option>
+										<option value="SICOB">SICOB</option>								
 									</select>
 								</div>
-
 								<div class="col-md-2">
 									<div class="form-group">
 										<fieldset>

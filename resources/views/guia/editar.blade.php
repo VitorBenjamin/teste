@@ -29,7 +29,6 @@
 				<div class="header">
 					<!-- <h2>Cabecalho da Viagem</h2> -->
 					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
-						@if (count($solicitacao->guia) == 0)
 						<a data-toggle="modal" data-target="#modalGuia" class="btn bg-light-green waves-effect" role="button">
 							<i class="material-icons">exposure_plus_1</i>
 							<!-- <span class="hidden-xs">ADD</span> -->
@@ -43,7 +42,6 @@
 							<i class="material-icons">send</i>
 							<span>ENVIAR</span>
 						</a> -->
-						@endif
 					</div>
 				</div>
 				<form action="{{ route('solicitacao.atualizarCabecalho',$solicitacao->id)}}" method="POST">
@@ -82,7 +80,7 @@
 								<div class="col-md-2">
 									<div class="form-group">
 										<div class="form-line">
-											<label for="reclamante">Reclamante</label>
+											<label for="reclamante">Adverso</label>
 											<input type="text" value="" name="reclamante" class="form-control" placeholder="Nome do Reclamante" required/>
 										</div>
 									</div>
@@ -92,7 +90,8 @@
 									<label for="perfil_pagamento">Perfil Pagamento</label>
 									<select id="perfil_pagamento" name="perfil_pagamento" class="form-control show-tick" required>
 										<option value="BOLETO">BOLETO</option>
-										<option value="DEPOSITO">DEPÓSITO</option>										
+										<option value="DEPOSITO">DEPÓSITO</option>
+										<option value="DAJ">DAJ</option>										
 										<option value="DAF">DAF</option>
 										<option value="DMA">DAM</option>
 										<option value="GRU">GRU</option>
@@ -106,7 +105,8 @@
 										<option value="BANCO DO BRASIL">BANCO DO BRASIL</option>										
 										<option value="ITAU">ITAU</option>
 										<option value="BRADESCO">BRADESCO</option>
-										<option value="CAIXA">CAIXA</option>								
+										<option value="CAIXA">CAIXA</option>
+										<option value="SICOB">SICOB</option>								
 									</select>
 								</div>
 								<div class="col-md-2">
@@ -206,10 +206,10 @@
 								<th>Perfil</th>
 								<th>Banco</th>
 								<th>Tipo</th>
-								<th>Valor</th>
+								<th style="min-width:120px">Valor</th>
 								<th>Observacao</th>
 								<th>Guia</th>
-								<th>Ações</th>																	
+								<th style="min-width:80px">Ações</th>																	
 							</tr>
 						</thead>
 						<tfoot>
@@ -221,10 +221,10 @@
 								<th>Perfil</th>
 								<th>Banco</th>
 								<th>Tipo</th>
-								<th>Valor</th>
+								<th style="min-width:120px">Valor</th>
 								<th>Observacao</th>
 								<th>Guia</th>
-								<th>Ações</th>
+								<th style="min-width:80px">Ações</th>
 							</tr>
 						</tfoot>
 						<tbody> 
@@ -237,7 +237,6 @@
 								<td>{{$guia->perfil_pagamento}}</td>
 								<td>{{$guia->banco}}</td>
 								<td>{{$guia->tipoGuia()->first()->descricao}}</td>
-								{{-- <td>{{ 'R$ '.number_format($guia->valor, 2, ',', '.') }}</td> --}}
 								<td>R$ {{ $guia->valor }}</td>
 								<td>{{$guia->observacao }} </td>
 								<td>

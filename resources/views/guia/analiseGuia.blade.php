@@ -47,7 +47,7 @@
 								<th>Perfil</th>
 								<th>Banco</th>
 								<th>Tipo</th>
-								<th>Valor</th>
+								<th style="min-width:120px">Valor</th>
 								<th>Observação</th>
 								<th>Guia</th>
 							</tr>
@@ -61,7 +61,7 @@
 								<th>Perfil</th>
 								<th>Banco</th>
 								<th>Tipo</th>
-								<th>Valor</th>
+								<th style="min-width:120px">Valor</th>
 								<th>Observação</th>
 								<th>Guia</th>
 							</tr>
@@ -76,7 +76,6 @@
 								<td>{{$guia->perfil_pagamento}}</td>
 								<td>{{$guia->banco}}</td>
 								<td>{{$guia->tipoGuia()->first()->descricao}}</td>
-								{{-- <td>{{ 'R$ '.number_format($guia->valor, 2, ',', '.') }}</td> --}}
 								<td>R$ {{ $guia->valor }}</td>
 								<td>{{$guia->observacao }} </td>
 								<td>

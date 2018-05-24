@@ -68,11 +68,10 @@
 									@endforeach
 								</select>
 							</div>
-
 							<div class="col-md-2" style="margin-top: 20px">
 								<button class="btn bg-green waves-effect">
 									<i class="material-icons">send</i>
-									<span>BUSCAR SOLICITAÇÔES</span> 
+									<span>BUSCAR SOLICITAÇÕES</span> 
 								</button>
 							</div> 
 						</div>
