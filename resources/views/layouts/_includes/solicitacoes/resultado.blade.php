@@ -58,7 +58,7 @@
 						</div>
 					</form>
 					<div class="row clearfix">
-						<table class="table table-bordered table-striped table-hover dataTable js-basic-example">
+						<table class="table table-bordered table-striped table-hover dataTable resultado">
 							<thead>
 								<tr> 
 									<th></th>
@@ -100,6 +100,7 @@
 								<tr>
 									<td></td>
 									<td>{{ $solicitacao->codigo }}</td>
+									<td>{{ date('d/m/Y',strtotime($solicitacao->created_at)) }}</td>
 									<td>{{ $solicitacao->user->nome }}</td>
 									<td>{{ $solicitacao->cliente == null ? 'MOSELLO LIMA' : $solicitacao->cliente->nome }}</td>
 									<td>{{ $solicitacao->tipo }}</td>
