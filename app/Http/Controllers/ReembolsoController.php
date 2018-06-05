@@ -200,7 +200,10 @@ class ReembolsoController extends Controller
         $mime = $request->file('anexo_comprovante')->getClientMimeType();
         if ($request->hasFile('anexo_comprovante'))  {
             if ($mime == "image/jpeg" || $mime == "image/jpg") {
-                $file = Image::make($request->file('anexo_comprovante'));            
+                $file = Image::make($request->file('anexo_comprovante'));
+                $file->widen(1280, function ($constraint) {
+                    $constraint->upsize();
+                });        
                 $img_64 = (string) $file->encode('data-url');
             }else{
 

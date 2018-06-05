@@ -217,7 +217,10 @@ class ViagemController extends Controller
     {   
         $despesa = Despesa::find($id);
         if ($request->hasFile('anexo_comprovante')) {
-            $file = Image::make($request->file('anexo_comprovante'));            
+            $file = Image::make($request->file('anexo_comprovante')); 
+            $file->widen(1280, function ($constraint) {
+                $constraint->upsize();
+            });           
             $img_64 = (string) $file->encode('data-url');
         }else{
             $img_64 = $despesa->anexo_comprovante;
@@ -278,10 +281,8 @@ class ViagemController extends Controller
             }else{
                 $hospedagem = Hospedagem::create($hospeda);
                 $viagem->update(['hospedagens_id' => $hospedagem->id]);
-            }
-            
+            }   
         }
-
         if ($request->custo_locacao) {
             $loca = [
                 'data_cotacao' => date('Y-m-d', strtotime($request->data_cotacao_locacao)),
@@ -297,7 +298,6 @@ class ViagemController extends Controller
                 $locacao = Locacao::create($loca);
                 $viagem->update(['locacoes_id' => $locacao->id]);
             }
-            
         }
         
         \Session::flash('flash_message',[
@@ -321,6 +321,9 @@ class ViagemController extends Controller
             ];
             if ($mime == "image/jpeg" || $mime == "image/jpg") {
                 $file = Image::make($request->file('anexo_passagem'));
+                $file->widen(1280, function ($constraint) {
+                    $constraint->upsize();
+                });
                 $anexo_passagem = (string) $file->encode('data-url');
                 $data['anexo_passagem'] = $anexo_passagem;
                 $viagem->update($data);
@@ -350,6 +353,9 @@ class ViagemController extends Controller
 
             if ($mime == "image/jpeg" || $mime == "image/jpg") {
                 $file = Image::make($request->file('anexo_hospedagem'));
+                $file->widen(1280, function ($constraint) {
+                    $constraint->upsize();
+                });
                 $anexo_hospedagem = (string) $file->encode('data-url');
                 //$data2['anexo_hospedagem'] = $anexo_hospedagem;
                 //$hospedagem = Hospedagem::create($data2);
@@ -373,6 +379,9 @@ class ViagemController extends Controller
 
             if ($mime == "image/jpeg" || $mime == "image/jpg") {
                 $file = Image::make($request->file('anexo_locacao'));
+                $file->widen(1280, function ($constraint) {
+                    $constraint->upsize();
+                });
                 $anexo_locacao = (string) $file->encode('data-url');
                 //$data3['anexo_locacao']=$anexo_locacao;
                 //$locacao = Locacao::create($data3);

@@ -115,7 +115,7 @@
 									<tbody>
 										<tr>
 											<td></td>
-											<td>{{$viagem->data_cotacao ? date('d-m-Y', strtotime($viagem->data_cotacao)) : ''}}</td>
+											<td>{{$viagem->hospedagens ? date('d-m-Y', strtotime($viagem->data_cotacao)) : ''}}</td>
 											<td>{{$viagem->observacao_comprovante ? $viagem->observacao_comprovante : 'SEM OBSERVAÇÃO'}}</td>
 											<td>{{$viagem->data_compra ? date('d-m-Y', strtotime($viagem->data_compra)) : 'ANDAMENTO'}}</td>
 											<td>R$ {{$viagem->valor}}</td>
@@ -203,7 +203,7 @@
 											<td>{{$viagem->locacoes->data_compra ? date('d-m-Y', strtotime($viagem->locacoes->data_compra)) : 'ANDAMENTO'}}
 											</td>
 											<td>R$ {{$viagem->locacoes->valor}}</td>
-											<td>
+											<td> 
 												<div class="zoom-gallery">
 													@if($viagem->locacoes->anexo_locacao)
 													<a href="{{$viagem->locacoes->anexo_locacao}}" data-source="{{$viagem->locacoes->anexo_locacao}}" title="COMPROVANTE - {{$viagem->locacoes->tipo_comprovante}} - {{date('d/m/Y',strtotime($viagem->locacoes->data_compra))}}" style="width:32px;height:32px;">

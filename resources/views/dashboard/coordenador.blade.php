@@ -82,7 +82,7 @@
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
-                                        <th>Valor</th>
+                                        <th style="min-width:70px">Valor</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -141,7 +141,7 @@
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
-                                        <th>Valor</th>
+                                        <th style="min-width:70px">Valor</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -185,7 +185,7 @@
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
-                                        <th>Valor</th>
+                                        <th style="min-width:70px">Valor</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -230,7 +230,7 @@
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
-                                        <th>Valor</th>
+                                        <th style="min-width:70px">Valor</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
@@ -285,7 +285,7 @@
                                         <th>Cliente</th>
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
-                                        <th>Valor</th>
+                                        <th style="min-width:70px">Valor</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>

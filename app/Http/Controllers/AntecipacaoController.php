@@ -73,6 +73,9 @@ class AntecipacaoController extends Controller
 		$mime = $request->file('anexo_comprovante')->getClientMimeType();
 		if ($mime == "image/jpeg" || $mime == "image/jpg") {
 			$file = Image::make($request->file('anexo_comprovante'));
+			$file->widen(1280, function ($constraint) {
+				$constraint->upsize();
+			});
 			$img_64 = (string) $file->encode('data-url');
 			$antecipacao = Antecipacao::find($request->antecipacao_id);
 		}else{

@@ -193,7 +193,19 @@ class SolicitacaoRepository
             return new Status();
         }
         $solicitacoes = $this->valorTotalCoordenador($status,$limites);
+        if ($statu == "ANDAMENTO" || $statu == "APROVADO") {
+            // MINHA VIAGEM
+            $statusMeu = Status::with(['solicitacao' => function($q)
+            {
+                $q
+                ->where('tipo','=','VIAGEM')
+                ->where('users_id',auth()->user()->id)
+                ->orderBy('created_at');
+            }])->where('descricao',$statu)->first();
 
+            $solicitacoesMeu = $this->valorTotalCoordenador($statusMeu,$limites);
+            $solicitacoes = $this->pushSolicitacao($solicitacoes,$solicitacoesMeu);
+        }
         /* INICIO ADMINISTRATIVO */
         if (auth()->user()->diretor) {
             $status2 = Status::with(['solicitacao' => function($q)
@@ -300,40 +312,29 @@ class SolicitacaoRepository
     public function getUnidadeLimites($total, $limites, $s)
     {
         $area_id = array();
+        $aux = false;
         foreach ($limites as $limite) 
         {
-            array_push($area_id,$limite->area_atuacoes_id);
-        }
-        foreach ($limites as $limite) 
-        {
-            if (empty($area_id)) 
+            if ($s->area_atuacoes_id == $limite->area_atuacoes_id) 
             {
-                if ($total <= $limite->ate) 
-                {
-                    return true;
-                }else {
-                    return false;
-                }
-            }else{
-                if ($s->area_atuacoes_id == $limite->area_atuacoes_id) 
-                {
-                    $unidades = $limite->unidades;
+                $unidades = $limite->unidades;
 
-                    if ($unidades !=null)
-                    {
-                        if (!$unidades->contains('id',$s->unidades_id)) {
-                            return false;
-                        }
-                        if ($total <= $limite->ate) 
+                if ($unidades !=null)
+                {
+                    if (!$unidades->contains('id',$s->unidades_id)) {
+                        $aux = false;
+                    }else{
+                        if ($total >= $limite->de && $total <= $limite->ate) 
                         {
                             return true;
-                        }else {
-                            return false;
+                        } else {
+                            $aux = false;
                         }
                     }
                 }
             }
         }
+        return $aux;
     }
     public function verificaLimite($s, $limites)
     {

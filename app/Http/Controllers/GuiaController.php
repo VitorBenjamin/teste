@@ -60,6 +60,9 @@ class GuiaController extends Controller
 		$mime = $request->file('anexo_guia')->getClientMimeType();
 		if ($mime == "image/jpeg" || $mime == "image/jpg") {
 			$file = Image::make($request->file('anexo_guia'));
+			$file->widen(1280, function ($constraint) {
+				$constraint->upsize();
+			});
 			$img_64 = (string) $file->encode('data-url');
 			$data['anexo_guia'] = $img_64;
 		}else{
@@ -105,9 +108,6 @@ class GuiaController extends Controller
 		->where('tipo',config('constantes.tipo_guia'))
 		->where('id',$id)
 		->first();
-		//dd($solicitacao->aprovador);
-		//dd($solicitacao);
-		//$solicitacao = Solicitacao::with('guia','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
 		if (!$solicitacao) {
 			\Session::flash('flash_message',[
 				'msg'=>"Solicitação não cadastrada!",
@@ -155,6 +155,9 @@ class GuiaController extends Controller
 			$mime = $request->file('anexo_guia')->getClientMimeType();
 			if ($mime == "image/jpeg" || $mime == "image/jpg") {
 				$file = Image::make($request->file('anexo_guia'));
+				$file->widen(1280, function ($constraint) {
+					$constraint->upsize();
+				});
 				$img_64 = (string) $file->encode('data-url');
 				$guia->anexo_guia = $img_64;
 			}else{
@@ -173,6 +176,36 @@ class GuiaController extends Controller
 			'class'=>"alert bg-green alert-dismissible"
 		]);
 		return redirect()->route('guia.editar', $guia->solicitacoes_id);
+	}
+	public function addComprovante(Request $request,$id)
+	{
+		$guia = Guia::find($id);
+		if ($request->file('anexo_comprovante')) {
+			$mime = $request->file('anexo_comprovante')->getClientMimeType();
+			if ($mime == "image/jpeg" || $mime == "image/jpg") {
+				$file = Image::make($request->file('anexo_comprovante'));
+				$file->widen(1280, function ($constraint) {
+					$constraint->upsize();
+				});
+				$img_64 = (string) $file->encode('data-url');
+				$guia->anexo_comprovante = $img_64;
+			}else{
+
+				\Session::flash('flash_message',[
+					'msg'=>"Arquivo não suportado!!!",
+					'class'=>"alert bg-orange alert-dismissible"
+				]);
+				return redirect()->back();
+			}
+		}
+		$guia->data_comprovante = date('Y-m-d',strtotime($request->data_comprovante));
+		$guia->save();
+
+		\Session::flash('flash_message',[
+			'msg'=>"Comprovante adicionado com Sucesso!!!",
+			'class'=>"alert bg-green alert-dismissible"
+		]);
+		return redirect()->back();
 	}
 
 	//Deleta ou Não uma unidade e redireciona para a tela de listagem de solicitacao

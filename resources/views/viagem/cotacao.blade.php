@@ -47,7 +47,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label for="data_cotacao_hospedagem">Data Hospedagem</label>
-										<input type="text" id="data_cotacao_hospedagem" value="{{$viagem->hospedagens ? date('d-m-Y', strtotime($viagem->hospedagens->data_cotacao)) : ''}}" name="data_cotacao_hospedagem" class="datepicker form-control" placeholder="Clique"/>
+										<input type="text" id="data_cotacao_hospedagem" value="{{$viagem->hospedagens ? date('d-m-Y', strtotime($viagem->hospedagens->data_cotacao)) : ''}}" name="data_cotacao_hospedagem" class="datepicker form-control" placeholder="Clique" required/>
 									</div>
 								</div>
 							</div>
@@ -78,7 +78,7 @@
 								<div class="form-group">
 									<div class="form-line">
 										<label for="data_cotacao">Data Locação</label>
-										<input type="text" id="data_locacao" value="{{$viagem->locacoes != null ? date('d-m-Y', strtotime($viagem->locacoes->data_cotacao)) : ''}}" name="data_cotacao_locacao" class="datepicker form-control" placeholder="Clique"/>
+										<input type="text" id="data_locacao" value="{{$viagem->locacoes != null ? date('d-m-Y', strtotime($viagem->locacoes->data_cotacao)) : ''}}" name="data_cotacao_locacao" class="datepicker form-control" placeholder="Clique" required/>
 									</div>
 								</div>
 							</div>

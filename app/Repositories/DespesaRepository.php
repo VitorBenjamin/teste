@@ -20,6 +20,9 @@ class DespesaRepository
         $data['solicitacoes_id'] = $id;
         if ($mime == "image/jpeg" || $mime == "image/jpg") {
             $file = Image::make($request->file('anexo_comprovante'));
+            $file->widen(1280, function ($constraint) {
+                $constraint->upsize();
+            });
             $img_64 = (string) $file->encode('data-url');
             $data['anexo_comprovante'] = $img_64;
         }else{
@@ -52,6 +55,9 @@ class DespesaRepository
         $data['solicitacoes_id'] = $id;
         if ($mime == "image/jpeg" || $mime == "image/jpg") {
             $file = Image::make($request->file('anexo_comprovante'))->encode('jpg');
+            $file->widen(1280, function ($constraint) {
+                $constraint->upsize();
+            });
             $anexo = (string) $file->encode('data-url');
             $data['anexo_comprovante'] = $anexo;
         }else{

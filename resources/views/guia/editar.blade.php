@@ -68,7 +68,6 @@
 						{{ method_field('PUT') }}			
 						<div class="body">
 							<div class="row clearfix">
-
 								<div class="col-md-2">
 									<div class="form-group">
 										<div class="form-line">
@@ -85,7 +84,6 @@
 										</div>
 									</div>
 								</div>
-
 								<div class="col-md-2">
 									<label for="perfil_pagamento">Perfil Pagamento</label>
 									<select id="perfil_pagamento" name="perfil_pagamento" class="form-control show-tick" required>
@@ -98,7 +96,6 @@
 										<option value="GFIP">GFIP</option>
 									</select>
 								</div>
-
 								<div class="col-md-2">
 									<label for="banco">Banco</label>
 									<select id="banco" name="banco" class="form-control show-tick" required>

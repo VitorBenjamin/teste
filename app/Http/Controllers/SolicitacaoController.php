@@ -147,7 +147,10 @@ class SolicitacaoController extends Controller
 		];
 		$mime = $request->file('anexo')->getClientMimeType();
 		if ($mime == "image/jpeg" || $mime == "image/jpg") {
-			$file = Image::make($request->file('anexo'))->encode('jpg');
+			$file = Image::make($request->file('anexo'));
+			$file->widen(1280, function ($constraint) {
+				$constraint->upsize();
+			});
 			$img_64 = (string) $file->encode('data-url');
 			$data['anexo'] = $img_64;
 		}else{
@@ -178,6 +181,9 @@ class SolicitacaoController extends Controller
 			$mime = $request->file('anexo')->getClientMimeType();
 			if ($mime == "image/jpeg" || $mime == "image/jpg") {
 				$file = Image::make($request->file('anexo'));
+				$file->widen(1280, function ($constraint) {
+					$constraint->upsize();
+				});
 				$img_64 = (string) $file->encode('data-url');
 				$data['anexo'] = $img_64;
 			}else{

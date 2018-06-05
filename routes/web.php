@@ -74,6 +74,7 @@ Route::group(['middleware' => ['check.user.role:FINANCEIRO|ADMINISTRATIVO']],fun
     Route::put('add-comprovante/{id}', ['uses' => 'AntecipacaoController@addComprovante', 'as' => 'antecipacao.addComprovante']);
     Route::put('add-viagem-comprovantes/{id}', ['uses' => 'ViagemController@addComprovante', 'as' => 'viagem.addComprovante']);
     Route::put('add-viagem-cotacao/{id}', ['uses' => 'ViagemController@addCotacao', 'as' => 'viagem.addCotacao']);
+    Route::put('add-guia-comprovante/{id}', ['uses' => 'GuiaController@addComprovante', 'as' => 'guia.addComprovante']);
 
     Route::get('set-devolvido/{id}', ['uses' => 'SolicitacaoController@devolvido', 'as' => 'solicitacao.devolvido']);
 
@@ -134,8 +135,6 @@ Route::group(['prefix' => 'solicitacao'],function()
         Route::put('atualizar-despesa/{id}', ['uses' => 'AntecipacaoController@atualizarDespesa', 'as' => 'antecipacao.atualizarDespesa']);
         Route::get('deletar-despesa/{id}', ['uses' => 'AntecipacaoController@deletarDespesa', 'as' => 'antecipacao.deletarDespesa']);
         Route::get('editar-despesa/{id}', ['uses' => 'AntecipacaoController@editarDespesa', 'as' => 'antecipacao.editarDespesa']);
-        
-
 
     });
     // FIM ROTAS DE ANTECIPAÇÃO
@@ -151,7 +150,6 @@ Route::group(['prefix' => 'solicitacao'],function()
         Route::get('editar-guia/{id}', ['uses' => 'GuiaController@verificarSolicitacao', 'as' => 'guia.editar']);
         Route::get('edicao-guia/{id}', ['uses' => 'GuiaController@editarGuia', 'as' => 'guia.editarGuia']);
         Route::put('atualizar-guia/{id}', ['uses' => 'GuiaController@atualizarGuia', 'as' => 'guia.atualizarGuia']);
-        
 
     });
     // FIM ROTAS DE GUIA    
@@ -189,7 +187,6 @@ Route::group(['prefix' => 'solicitacao'],function()
         Route::get('editar-viagem/{id}', ['uses' => 'ViagemController@editarViagem', 'as' => 'viagem.editarViagem']);
         Route::put('atualizar-viagem/{id}', ['uses' => 'ViagemController@atualizarViagem', 'as' => 'viagem.atualizarViagem']);
 
-        
         Route::put('add-despesa/{id}', ['uses' => 'ViagemController@addDespesa', 'as' => 'viagem.addDespesa']);
         Route::put('atualizar-despesa/{id}', ['uses' => 'ViagemController@atualizarDespesa', 'as' => 'viagem.atualizarDespesa']);
         Route::get('deletar-despesa/{id}', ['uses' => 'ViagemController@deletarDespesa', 'as' => 'viagem.deletarDespesa']);

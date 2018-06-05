@@ -81,12 +81,13 @@ class SolicitacaoHelper
     }
     public function reembolsoPrint($s,$lista)
     {
+        $processo = $s->processo ? $s->processo->codigo : 'SEM PROCESSO';
         foreach ($s->translado as $t) {
             $lista[] = 
             [
                 'data' => date('d-m-Y',strtotime($t->data_translado)),
                 'codigo' => $s->codigo,
-                'descricao' => 'TRANSLADO - ' .$t->origem. '-' .$t->destino. '-' .$t->distancia . 'KM - OBSERVAÇÂO - ' .$t->observacao,
+                'descricao' => 'TRANSLADO - ' .$t->origem. ' - ' .$t->destino. '-' .$t->distancia. ' KM - OBSERVAÇÂO - ' .$t->observacao.' - '.$processo,
                 'valor' => $t->distancia * ($s->cliente == null ? config('constantes.km') : $s->cliente->valor_km),
                 'estornado' => $t->estornado,
                 'img' => null,
@@ -98,7 +99,7 @@ class SolicitacaoHelper
             [
                 'data' => date('d-m-Y',strtotime($d->data_despesa)),
                 'codigo' => $s->codigo,
-                'descricao' => $d->descricao. ' - ' .$d->tipo_comprovante,
+                'descricao' => $d->descricao. ' - ' .$d->tipo_comprovante.' - '.$processo,
                 'valor' => $d->valor,
                 'estornado' => $d->estornado,
                 'img' => $d->anexo_comprovante,
@@ -110,7 +111,7 @@ class SolicitacaoHelper
     }
     public function viagemPrint($s,$lista)
     {
-
+        $processo = $s->processo ? $s->processo->codigo : 'SEM PROCESSO';
         foreach ($s->viagem as $viagem) {
             $data_volta = $viagem->data_volta ? $viagem->data_volta : 'SÓ IDA';
             $bagagem = $viagem->bagagem ? 'BAGAGEM'.$viagem->kg : '';
@@ -118,7 +119,7 @@ class SolicitacaoHelper
             [
                 'data' => $viagem->translado ? date('d-m-Y',strtotime($viagem->data_ida)) : date('d-m-Y',strtotime($viagem->data_compra)),
                 'codigo' => $s->codigo,
-                'descricao' => $viagem->origem.' <ida> '.date('d-m-Y',strtotime($viagem->data_ida)).' / '.$viagem->destino.' <volta> '.date('d-m-Y',strtotime($data_volta)).' - '.$bagagem,
+                'descricao' => $viagem->origem.' <ida> '.date('d-m-Y',strtotime($viagem->data_ida)).' / '.$viagem->destino.' <volta> '.date('d-m-Y',strtotime($data_volta)).' - '.$bagagem.' - '.$processo,
                 'valor' => $viagem->valor ? $viagem->valor : '0',
                 'estornado' => $viagem->estornado,
                 'img' => $viagem->anexo_passagem ? $viagem->anexo_passagem : null,
@@ -130,7 +131,7 @@ class SolicitacaoHelper
             [
                 'data' => date('d-m-Y',strtotime($viagem->hospedagens->data_compra)),
                 'codigo' => $s->codigo,
-                'descricao' => 'HOSPEDAGEM '.$viagem->hospedagens->observacao,
+                'descricao' => 'HOSPEDAGEM '.$viagem->hospedagens->observacao.' - '.$processo,
                 'valor' => $viagem->hospedagens->custo_hospedagem,
                 'estornado' => $viagem->hospedagens->estornado,
                 'img' => $viagem->hospedagens->anexo_hospedagem,
@@ -142,7 +143,7 @@ class SolicitacaoHelper
             [
                 'data' => date('d-m-Y',strtotime($viagem->locacoes->data_compra)),
                 'codigo' => $s->codigo,
-                'descricao' => 'LOCAÇÃO '.$viagem->locacoes->observacao,
+                'descricao' => 'LOCAÇÃO '.$viagem->locacoes->observacao.' - '.$processo,
                 'valor' => $viagem->locacoes->valor,
                 'estornado' => $viagem->locacoes->estornado,
                 'img' => $viagem->locacoes->anexo_locacao,
@@ -155,7 +156,7 @@ class SolicitacaoHelper
                 [
                     'data' => date('d-m-Y',strtotime($d->data_despesa)),
                     'codigo' => $s->codigo,
-                    'descricao' => $d->descricao. '-' .$d->tipo_comprovante,
+                    'descricao' => $d->descricao. '-' .$d->tipo_comprovante.' - '.$processo,
                     'valor' => $d->valor,
                     'estornado' => $d->estornado,
                     'img' => $d->anexo_comprovante,
@@ -168,12 +169,13 @@ class SolicitacaoHelper
     }
     public function guiaPrint($s,$lista)
     {
+        $processo = $s->processo ? $s->processo->codigo : 'SEM PROCESSO';
         foreach ($s->guia as $guia) {
             $lista[] = 
             [
                 'data' => $s->comprovante ? date('d-m-Y',strtotime($s->comprovante[0]->data)) : 'UNKNOW',
                 'codigo' => $s->codigo,
-                'descricao' => 'GUIA - '.$guia->perfil_pagamento. ' - ' .$guia->banco. ' - ' .$guia->tipoGuia()->first()->descricao,
+                'descricao' => 'GUIA - '.$guia->perfil_pagamento. ' - ' .$guia->banco. ' - ' .$guia->tipoGuia()->first()->descricao.' - '.$processo,
                 'valor' => $guia->valor,
                 'estornado' => $guia->estornado,
                 'img' => $guia->anexo_guia,
@@ -184,6 +186,7 @@ class SolicitacaoHelper
     }
     public function compraPrint($s,$lista)
     {
+        $processo = $s->processo ? $s->processo->codigo : 'SEM PROCESSO';
         foreach ($s->compra as $c) {
             foreach ($c->cotacao as $cota) {
                 if ($cota->data_compra) {
@@ -191,7 +194,7 @@ class SolicitacaoHelper
                     [
                         'data' => date('d-m-Y',strtotime($cota->data_compra)),
                         'codigo' => $s->codigo,
-                        'descricao' => $cota->descricao. ' - Fornecedor '.$cota->fornecedor.' - QUANTIDADE ' .$cota->quantidade,
+                        'descricao' => $cota->descricao. ' - Fornecedor '.$cota->fornecedor.' - QUANTIDADE ' .$cota->quantidade.' - '.$processo,
                         'valor' => $cota->valor,
                         'estornado' => $cota->estornado,
                         'img' => $cota->anexo_comprovante,
@@ -204,12 +207,13 @@ class SolicitacaoHelper
     }
     public function antecipacaoPrint($s,$lista)
     {
+        $processo = $s->processo ? $s->processo->codigo : 'SEM PROCESSO';
         foreach ($s->despesa as $d) {
             $lista[] = 
             [
                 'data' => date('d-m-Y',strtotime($d->data_despesa)),
                 'codigo' => $s->codigo,
-                'descricao' => $d->descricao. '-' .$d->tipo_comprovante,
+                'descricao' => $d->descricao. '-' .$d->tipo_comprovante.' - '.$processo,
                 'valor' => $d->valor,
                 'estornado' => $d->estornado,
                 'img' => $d->anexo_comprovante,
