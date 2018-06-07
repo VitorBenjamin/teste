@@ -34,7 +34,7 @@
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
 						<div class="row clearfix">							
-							<div class="col-md-3">
+							<div class="col-md-4">
 								<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
 									<div class="form-line">
 										<label for="nome">Nome do Cliente *</label>
@@ -48,16 +48,20 @@
 								</div>
 							</div>
 							<div class="col-md-2">
-								<div class="form-group form-float">
-									<label for="unidades_id">Unidades</label>
-									<select id="unidades_id" name="unidades_id" class="form-control show-tick" data-live-search="true" required>
-										@foreach ($unidades as $unidade)
-										<option value="{{ $unidade->id }}" {{$unidade->id == $cliente->unidades_id ? 'selected' : ''}}>{{ $unidade->localidade }}</option>
-										@endforeach
-									</select>
+								<div class="form-group{{ $errors->has('cnpj') ? ' has-error' : '' }}">
+									<div class="form-line">
+										<label for="cnpj">CNPJ</label>
+										<input id="cnpj" type="text" class="form-control" name="cnpj" value="{{$cliente->cnpj}}" required>
+									</div>
+									@if ($errors->has('cnpj'))
+									<span class="help-block">
+										<strong>{{ $errors->first('cnpj') }}</strong>
+									</span>
+									@endif
 								</div>
 							</div>
-							<div class="col-md-2">
+							
+							<div class="col-md-4">
 								<div class="form-group{{ $errors->has('logradouro') ? ' has-error' : '' }}">
 									<div class="form-line">
 										<label for="logradouro">Logradrouro</label>
@@ -70,7 +74,7 @@
 									@endif
 								</div>
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-2">
 								<div class="form-group{{ $errors->has('cep') ? ' has-error' : '' }}">
 									<div class="form-line">
 										<label for="cep">CEP</label>
@@ -83,8 +87,20 @@
 									@endif
 								</div>
 							</div>
+						</div>
+						<div class="row clearfix">
 							<div class="col-md-2">
-								<b>Valor do KM</b>
+								<div class="form-group form-float">
+									<label for="unidades_id">Unidades</label>
+									<select id="unidades_id" name="unidades_id" class="form-control show-tick" data-live-search="true" required>
+										@foreach ($unidades as $unidade)
+										<option value="{{ $unidade->id }}" {{$unidade->id == $cliente->unidades_id ? 'selected' : ''}}>{{ $unidade->localidade }}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<b>KM</b>
 								<div class="input-group">
 									<span class="input-group-addon">
 										R$

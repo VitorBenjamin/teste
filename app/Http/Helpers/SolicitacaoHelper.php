@@ -86,11 +86,14 @@ class SolicitacaoHelper
             $lista[] = 
             [
                 'data' => date('d-m-Y',strtotime($t->data_translado)),
+                'tipo' => $s->tipo,
+                'cliente' => $s->cliente,
                 'codigo' => $s->codigo,
                 'descricao' => 'TRANSLADO - ' .$t->origem. ' - ' .$t->destino. '-' .$t->distancia. ' KM - OBSERVAÇÂO - ' .$t->observacao.' - '.$processo,
                 'valor' => $t->distancia * ($s->cliente == null ? config('constantes.km') : $s->cliente->valor_km),
                 'estornado' => $t->estornado,
                 'img' => null,
+                'imgC' => null,
                 'exibir' => false,
             ];
         }
@@ -98,11 +101,14 @@ class SolicitacaoHelper
             $lista[] = 
             [
                 'data' => date('d-m-Y',strtotime($d->data_despesa)),
+                'tipo' => $s->tipo,
+                'cliente' => $s->cliente,
                 'codigo' => $s->codigo,
                 'descricao' => $d->descricao. ' - ' .$d->tipo_comprovante.' - '.$processo,
                 'valor' => $d->valor,
                 'estornado' => $d->estornado,
                 'img' => $d->anexo_comprovante,
+                'imgC' => null,
                 'exibir' => true,
             ];
 
@@ -118,11 +124,14 @@ class SolicitacaoHelper
             $lista[] = 
             [
                 'data' => $viagem->translado ? date('d-m-Y',strtotime($viagem->data_ida)) : date('d-m-Y',strtotime($viagem->data_compra)),
+                'tipo' => $s->tipo,
+                'cliente' => $s->cliente,
                 'codigo' => $s->codigo,
                 'descricao' => $viagem->origem.' <ida> '.date('d-m-Y',strtotime($viagem->data_ida)).' / '.$viagem->destino.' <volta> '.date('d-m-Y',strtotime($data_volta)).' - '.$bagagem.' - '.$processo,
                 'valor' => $viagem->valor ? $viagem->valor : '0',
                 'estornado' => $viagem->estornado,
                 'img' => $viagem->anexo_passagem ? $viagem->anexo_passagem : null,
+                'imgC' => null,
                 'exibir' => true,
             ];
         }
@@ -130,11 +139,14 @@ class SolicitacaoHelper
             $lista[] = 
             [
                 'data' => date('d-m-Y',strtotime($viagem->hospedagens->data_compra)),
+                'tipo' => $s->tipo,
+                'cliente' => $s->cliente,
                 'codigo' => $s->codigo,
                 'descricao' => 'HOSPEDAGEM '.$viagem->hospedagens->observacao.' - '.$processo,
                 'valor' => $viagem->hospedagens->custo_hospedagem,
                 'estornado' => $viagem->hospedagens->estornado,
                 'img' => $viagem->hospedagens->anexo_hospedagem,
+                'imgC' => null,
                 'exibir' => true,
             ];
         }
@@ -142,11 +154,14 @@ class SolicitacaoHelper
             $lista[] = 
             [
                 'data' => date('d-m-Y',strtotime($viagem->locacoes->data_compra)),
+                'tipo' => $s->tipo,
+                'cliente' => $s->cliente,
                 'codigo' => $s->codigo,
                 'descricao' => 'LOCAÇÃO '.$viagem->locacoes->observacao.' - '.$processo,
                 'valor' => $viagem->locacoes->valor,
                 'estornado' => $viagem->locacoes->estornado,
                 'img' => $viagem->locacoes->anexo_locacao,
+                'imgC' => null,
                 'exibir' => true,
             ];
         }
@@ -155,11 +170,14 @@ class SolicitacaoHelper
                 $lista[] = 
                 [
                     'data' => date('d-m-Y',strtotime($d->data_despesa)),
+                    'tipo' => $s->tipo,
+                    'cliente' => $s->cliente,
                     'codigo' => $s->codigo,
                     'descricao' => $d->descricao. '-' .$d->tipo_comprovante.' - '.$processo,
                     'valor' => $d->valor,
                     'estornado' => $d->estornado,
                     'img' => $d->anexo_comprovante,
+                    'imgC' => null,
                     'exibir' => true,
                 ];
 
@@ -174,11 +192,14 @@ class SolicitacaoHelper
             $lista[] = 
             [
                 'data' => $s->comprovante ? date('d-m-Y',strtotime($s->comprovante[0]->data)) : 'UNKNOW',
+                'tipo' => $s->tipo,
+                'cliente' => $s->cliente,
                 'codigo' => $s->codigo,
                 'descricao' => 'GUIA - '.$guia->perfil_pagamento. ' - ' .$guia->banco. ' - ' .$guia->tipoGuia()->first()->descricao.' - '.$processo,
                 'valor' => $guia->valor,
                 'estornado' => $guia->estornado,
                 'img' => $guia->anexo_guia,
+                'imgC' => $guia->anexo_comprovante,
                 'exibir' => true,
             ];
         }
@@ -193,11 +214,14 @@ class SolicitacaoHelper
                     $lista[] = 
                     [
                         'data' => date('d-m-Y',strtotime($cota->data_compra)),
+                        'tipo' => $s->tipo,
+                        'cliente' => $s->cliente,
                         'codigo' => $s->codigo,
                         'descricao' => $cota->descricao. ' - Fornecedor '.$cota->fornecedor.' - QUANTIDADE ' .$cota->quantidade.' - '.$processo,
                         'valor' => $cota->valor,
                         'estornado' => $cota->estornado,
                         'img' => $cota->anexo_comprovante,
+                        'imgC' => null,
                         'exibir' => true,
                     ];
                 }
@@ -212,11 +236,14 @@ class SolicitacaoHelper
             $lista[] = 
             [
                 'data' => date('d-m-Y',strtotime($d->data_despesa)),
+                'tipo' => $s->tipo,
+                'cliente' => $s->cliente,
                 'codigo' => $s->codigo,
                 'descricao' => $d->descricao. '-' .$d->tipo_comprovante.' - '.$processo,
                 'valor' => $d->valor,
                 'estornado' => $d->estornado,
                 'img' => $d->anexo_comprovante,
+                'imgC' => null,
                 'exibir' => true,
             ];
         }

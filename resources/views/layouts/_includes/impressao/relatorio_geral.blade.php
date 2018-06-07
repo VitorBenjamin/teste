@@ -24,7 +24,7 @@
 				<div class="divTableCell2">
 				</div>
 				<div class="divTableCell2" style="text-align:right">
-					Valor Km: {{$solicitacoes[0]->cliente ? 'R$ '.$solicitacoes[0]->cliente->valor_km : 'R$ 1.00' }}
+					<h4>Valor Km: {{$solicitacoes[0]->cliente ? 'R$ '.$solicitacoes[0]->cliente->valor_km : 'R$ 1.00' }}</h4>
 				</div>
 			</div>
 		</div>
@@ -36,7 +36,13 @@
 					<h3>RELÁTORIO GERAL {{$solicitacoes[0]->cliente ? $solicitacoes[0]->cliente->nome : 'Mosello Lima' }}</h3>
 				</div>
 				<div class="divTableCell2" style="text-align:right">
-					Período: {{ date('d-m-Y',strtotime($data_inicial)) }} - {{ date('d-m-Y',strtotime($solicitacoes[0]->relatorio->data)) }}
+					<h3>
+						<?php 
+						setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+						date_default_timezone_set('America/Sao_Paulo'); 
+						Período: echo strtoupper(strftime('%B de %Y', strtotime($solicitacoes[0]->relatorio->data)));
+						?>
+					</h3>
 				</div>
 			</div>
 		</div>
@@ -115,7 +121,39 @@
 		<img src="{{$li['img']}}" alt="" class="img">
 		@endif
 	</div>
-	
+	@if($li[tipo] == "GUIA")
+	<div class="page-break"></div>
+	<table class="table2">
+		<caption>
+			Relátorio Geral - {{$solicitacoes[0]->cliente->nome}}
+		</caption>
+		<thead>
+			<tr>
+				<th scope="col">DATA</th>
+				<th scope="col">CÓDIGO</th>
+				<th scope="col">DESCRIÇÃO</th>
+				<th scope="col">VALORES</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					{{$li['data']}}
+				</td>
+				<td>
+					{{$li['codigo']}}
+				</td>
+				<td>{{$li['descricao']}}</td>
+				<td>R$ {{$li['valor']}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div style="text-align:center">
+		@if ($li['imgC'])
+		<img src="{{$li['imgC']}}" alt="" class="img">
+		@endif
+	</div>
+	@endif
 	@endif
 	@endforeach
 </body>

@@ -27,7 +27,7 @@
 					<form action="{{ route('cliente.salvar') }}" method="POST">
 						{{ csrf_field() }}
 						<div class="row clearfix">							
-							<div class="col-md-3">
+							<div class="col-md-4">
 								<div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
 									<div class="form-line">
 										<label for="nome">Nome do Cliente *</label>
@@ -36,6 +36,19 @@
 									@if ($errors->has('nome'))
 									<span class="help-block">
 										<strong>{{ $errors->first('nome') }}</strong>
+									</span>
+									@endif
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group{{ $errors->has('cnpj') ? ' has-error' : '' }}">
+									<div class="form-line">
+										<label for="cnpj">CNPJ</label>
+										<input id="cnpj" type="text" class="form-control" name="cnpj" value="" required>
+									</div>
+									@if ($errors->has('cnpj'))
+									<span class="help-block">
+										<strong>{{ $errors->first('cnpj') }}</strong>
 									</span>
 									@endif
 								</div>
@@ -63,7 +76,7 @@
 									@endif
 								</div>
 							</div>
-							<div class="col-md-1">
+							<div class="col-md-2">
 								<div class="form-group{{ $errors->has('cep') ? ' has-error' : '' }}">
 									<div class="form-line">
 										<label for="cep">CEP</label>
@@ -76,10 +89,10 @@
 									@endif
 								</div>
 							</div>
-						{{-- </div>
-							<div class="row clearfix"> --}}
+						</div>
+						<div class="row clearfix">
 							<div class="col-md-2">
-								<b>Valor do KM</b>
+								<b>Valor KM</b>
 								<div class="input-group">
 									<span class="input-group-addon">
 										R$

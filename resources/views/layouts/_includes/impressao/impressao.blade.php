@@ -24,17 +24,21 @@
 	<div class="container">
 		<div class="top-left">Solicitante : {{ $solicitacao->user->nome }}</div>
 	</div>
-	<div class="divTable" style="width: 100%; margin-bottom: 50px;">
+	<div class="divTable" style="width: 100%;">
 		<div class="divTableBody">
 			<div class="divTableRow" style="background-color: #fff !important">
 				<div class="divTableCell2">{{ $solicitacao->origem_despesa }}</div>
-				<div class="divTableCell2">Cliente: {{$solicitacao->cliente == null ? 'Mosello Lima' : $solicitacao->cliente->nome }} - Km - R$ {{ $solicitacao->cliente->valor_km }}</div>
-				<div class="divTableCell2">Solicitante: {{$solicitacao->solicitante == null ? 'Desconhecido' : $solicitacao->solicitante->nome }}</div>
+				<div class="divTableCell2"><strong>Cliente:</strong> {{$solicitacao->cliente == null ? 'Mosello Lima' : $solicitacao->cliente->nome }} - Km R$ {{ $solicitacao->cliente->valor_km }}</div>
+				<div class="divTableCell2"><strong>Solicitante:</strong> {{$solicitacao->solicitante == null ? 'Desconhecido' : $solicitacao->solicitante->nome }}</div>
 			</div>
+		</div>
+	</div>
+	<div class="divTable" style="width: 100%; margin-bottom: 50px;">
+		<div class="divTableBody">
 			<div class="divTableRow" style="background-color: #fff !important">
-				<div class="divTableCell2">{{$solicitacao->processo == null ? 'Sem Processo' : 'N° de Processo: '.$solicitacao->processo->codigo }}</div>
-				<div class="divTableCell2">Área : {{$solicitacao->area_atuacao->tipo}}</div>
-				<div class="divTableCell2">Contrato: {{ $solicitacao->contrato ? $solicitacao->contrato : 'Desconhecido'}}</div>
+				<div class="divTableCell2"><strong>N° de Processo: </strong>{{$solicitacao->processo == null ? 'Sem Processo' : $solicitacao->processo->codigo }}</div>
+				<div class="divTableCell2"><strong>Área :</strong> {{$solicitacao->area_atuacao->tipo}}</div>
+				<div class="divTableCell2"><strong>Contrato:</strong> {{ $solicitacao->contrato ? $solicitacao->contrato : 'Desconhecido'}}</div>
 
 			</div>
 		</div>
@@ -111,6 +115,39 @@
 		<img src="{{$li['img']}}" alt="" class="img">
 		@endif
 	</div>
+	@if($solicitacao->tipo == "GUIA")
+	<div class="page-break"></div>
+	<table class="table2">
+		<caption>
+			Comprovantes - {{$solicitacao->tipo}} - {{$solicitacao->codigo}}
+		</caption>
+		<thead>
+			<tr>
+				<th scope="col">DATA</th>
+				{{-- <th scope="col">CÓDIGO</th> --}}
+				<th scope="col">DESCRIÇÃO</th>
+				<th scope="col">VALORES</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					{{$li['data']}}
+				</td>
+				{{-- <td>
+					{{$solicitacao->codigo}}
+				</td> --}}
+				<td>{{$li['descricao']}}</td>
+				<td>R$ {{$li['valor']}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div style="text-align:center">
+		@if ($li['imgC'])
+		<img src="{{$li['imgC']}}" alt="" class="img">
+		@endif
+	</div>
+	@endif
 	@endif
 	@endforeach
 </body>

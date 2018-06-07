@@ -24,6 +24,20 @@
 	<i class="material-icons">done_all</i>
 	<span>FINALIZAR</span>
 </a>
+@elseif($solicitacao->tipo == "GUIA")
+<?php foreach ($solicitacao->guia as $guia): ?>
+	@if($guia->anexo_comprovante == null)
+	<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-light-green waves-effect not-active" role="button" disabled>
+		<i class="material-icons">done_all</i>
+		<span>FINALIZAR</span>
+	</a>
+	@break
+	@endif
+	<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-light-green waves-effect" role="button">
+		<i class="material-icons">done_all</i>
+		<span>FINALIZAR</span>
+	</a>
+<?php endforeach ?>
 @else
 <a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-light-green waves-effect {{count($solicitacao->comprovante) ? '' : 'not-active'}}" role="button" {{count($solicitacao->comprovante) ? '' : 'disabled'}}>
 	<i class="material-icons">done_all</i>

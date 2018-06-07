@@ -159,7 +159,7 @@ class ReembolsoController extends Controller
         //$solicitantes = Solicitante::where('id',$solicitacao->solicitantes_id)->select('id','nome')->get();
         $clientes = Cliente::all('id','nome');
         //$solicitantes = Solicitante::all('id','nome');
-
+        
         return view('reembolso.editar', compact('solicitacao','clientes','areas'));
     }
 
@@ -263,6 +263,7 @@ class ReembolsoController extends Controller
             ]);
             return redirect()->route('user.index'); 
         }
+
         return view('reembolso.analiseReembolso', compact('solicitacao'));
 
     }
