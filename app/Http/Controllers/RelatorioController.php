@@ -25,6 +25,14 @@ class RelatorioController extends Controller
 		$lista = array();
 		$solicitacaoHelper = new SolicitacaoHelper();
 		$solicitacao = Solicitacao::find($id);
+		if (!$solicitacao) {
+			\Session::flash('flash_message',[
+				'msg'=>"Solicitação Inexistente!!!",
+				'class'=>"alert bg-red alert-dismissible"
+			]);
+
+			return redirect()->route('user.index');
+		}
 		$lista = $solicitacaoHelper->impressao($solicitacao,$lista);
 		usort($lista, function($a, $b) {
 			return $a['data'] <=> $b['data'];
@@ -50,6 +58,14 @@ class RelatorioController extends Controller
 	{
 		$lista = array();
 		$solicitacaoHelper = new SolicitacaoHelper();
+		if (!Relatorio::find($id)) {
+			\Session::flash('flash_message',[
+				'msg'=>"Relátorio Inexistente!!!",
+				'class'=>"alert bg-red alert-dismissible"
+			]);
+
+			return redirect()->route('relatorio.listar');
+		}
 		$solicitacoes = Solicitacao::where('relatorios_id',$id)->get();
 		foreach ($solicitacoes as $s) {
 			$lista = $solicitacaoHelper->impressao($s,$lista);

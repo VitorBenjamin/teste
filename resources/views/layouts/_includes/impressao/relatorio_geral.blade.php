@@ -121,7 +121,7 @@
 		<img src="{{$li['img']}}" alt="" class="img">
 		@endif
 	</div>
-	@if($li[tipo] == "GUIA")
+	@if($li['tipo'] == "GUIA")
 	<div class="page-break"></div>
 	<table class="table2">
 		<caption>

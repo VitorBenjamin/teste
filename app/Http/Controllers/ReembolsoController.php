@@ -197,8 +197,8 @@ class ReembolsoController extends Controller
     public function atualizarDespesa(Request $request,$id)
     {   
         $despesa = Despesa::find($id);
-        $mime = $request->file('anexo_comprovante')->getClientMimeType();
         if ($request->hasFile('anexo_comprovante'))  {
+            $mime = $request->file('anexo_comprovante')->getClientMimeType();
             if ($mime == "image/jpeg" || $mime == "image/jpg") {
                 $file = Image::make($request->file('anexo_comprovante'));
                 $file->widen(1280, function ($constraint) {

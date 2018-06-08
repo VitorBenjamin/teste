@@ -15,7 +15,7 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<div class="form-line">
-										<label for="data_compra">Data</label>
+										<label for="data_compra">Compra Passagem</label>
 										<input type="text" id="data_compra" value="{{old('data_compra')}}" name="data_compra" class="datepicker form-control" placeholder="Clique" required/>
 									</div>
 								</div>
@@ -46,7 +46,7 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<div class="form-line">
-										<label for="data_hospedagem">Data Hospedagem</label>
+										<label for="data_hospedagem">Compra Hospedagem</label>
 										<input type="text" id="data_hospedagem" value="{{old('data_hospedagem')}}" name="data_hospedagem" class="datepicker form-control" placeholder="Clique" required />
 									</div>
 								</div>
@@ -77,8 +77,8 @@
 							<div class="col-md-2">
 								<div class="form-group">
 									<div class="form-line">
-										<label for="data_locacao">Data Locação</label>
-										<input type="text" id="data_locacao" value="{{old('data_locacao')}}"name="data_locacao" class="datepicker form-control" placeholder="Clique" required />
+										<label for="data_locacao">Compra Locação</label>
+										<input type="text" id="data_locacao" value="{{old('data_locacao')}}" name="data_locacao" class="datepicker form-control" placeholder="Clique" required />
 									</div>
 								</div>
 							</div>

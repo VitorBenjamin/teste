@@ -39,7 +39,6 @@
 				<div class="divTableCell2"><strong>N° de Processo: </strong>{{$solicitacao->processo == null ? 'Sem Processo' : $solicitacao->processo->codigo }}</div>
 				<div class="divTableCell2"><strong>Área :</strong> {{$solicitacao->area_atuacao->tipo}}</div>
 				<div class="divTableCell2"><strong>Contrato:</strong> {{ $solicitacao->contrato ? $solicitacao->contrato : 'Desconhecido'}}</div>
-
 			</div>
 		</div>
 	</div>

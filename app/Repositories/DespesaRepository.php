@@ -50,22 +50,24 @@ class DespesaRepository
     public function update($request,$id)
     {
         $despesa = Despesa::find($id);
-        $mime = $request->file('anexo_comprovante')->getClientMimeType();
         $data = self::montaData($request);
         $data['solicitacoes_id'] = $id;
-        if ($mime == "image/jpeg" || $mime == "image/jpg") {
-            $file = Image::make($request->file('anexo_comprovante'))->encode('jpg');
-            $file->widen(1280, function ($constraint) {
-                $constraint->upsize();
-            });
-            $anexo = (string) $file->encode('data-url');
-            $data['anexo_comprovante'] = $anexo;
-        }else{
-            \Session::flash('flash_message',[
-                'msg'=>"Arquivo tipo (".$mime.") não suportado!!!",
-                'class'=>"alert bg-orange alert-dismissible"
-            ]);
-            return redirect()->back();
+        if ($request->hasFile('anexo_comprovante'))  {
+            $mime = $request->file('anexo_comprovante')->getClientMimeType();
+            if ($mime == "image/jpeg" || $mime == "image/jpg") {
+                $file = Image::make($request->file('anexo_comprovante'))->encode('jpg');
+                $file->widen(1280, function ($constraint) {
+                    $constraint->upsize();
+                });
+                $anexo = (string) $file->encode('data-url');
+                $data['anexo_comprovante'] = $anexo;
+            }else{
+                \Session::flash('flash_message',[
+                    'msg'=>"Arquivo tipo (".$mime.") não suportado!!!",
+                    'class'=>"alert bg-orange alert-dismissible"
+                ]);
+                return redirect()->back();
+            }
         }
         $despesa->update($data);
         return $despesa;
