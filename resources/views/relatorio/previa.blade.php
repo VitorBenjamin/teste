@@ -17,6 +17,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
 				<div class="header">
+
 					<a style="margin-bottom: 10px;" href="{{ route('relatorio.listar')}}" class="btn bg-grey waves-effect" role="button">
 						<i class="material-icons">keyboard_backspace</i>
 						<span>VOLTAR</span>
@@ -26,10 +27,25 @@
 						<span class="badge bg-teal" style="padding: 8px 7px; font-size: 15px">PRÉVIO</span>
 					</h2>
 					<br>
+					<form id="relatorioForm2" action="{{ route('relatorio.salvar')}}" method="POST">
+						{{ csrf_field() }}
+						{{ method_field('PUT') }}
+						<input type="hidden" name="data_inicial" value="{{$data_inicial}}">
+						<input type="hidden" name="data_final" value="{{$data_final}}">
+						<input type="hidden" name="clientes_id" value="{{$cliente->id}}">
+						<div class="col-md-6">
+							<div class="form-group">
+								<div class="form-line">
+									<label for="observacao">Observação</label>
+									<input type="text" name="observacao" class="form-control" placeholder=""/>
+								</div>
+							</div>
+						</div>
+					</form>
 					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
 						<a class="btn bg-orange waves-effect submit" role="button">
 							<i class="material-icons">money_off</i>
-							<span>EXTORNAR GASTOS SELECIONADOS</span>
+							<span>ESTORNAR GASTOS SELECIONADOS</span>
 						</a>
 						<a class="btn bg-blue waves-effect submit2" role="button">
 							<i class="material-icons">save</i>
@@ -41,13 +57,7 @@
 						</a> -->
 					</div>
 				</div>
-				<form id="relatorioForm2" action="{{ route('relatorio.salvar')}}" method="POST">
-					{{ csrf_field() }}
-					{{ method_field('PUT') }}
-					<input type="hidden" name="data_inicial" value="{{$data_inicial}}">
-					<input type="hidden" name="data_final" value="{{$data_final}}">
-					<input type="hidden" name="clientes_id" value="{{$cliente->id}}">
-				</form>
+
 				<div class="body">
 					<form id="relatorioForm" action="{{ route('relatorio.extornar')}}" method="POST">
 						{{ csrf_field() }}

@@ -46,7 +46,6 @@ class SolicitacaoHelper
             }   
         }
     }
-
     public  function solicitacaoExist($solicitacao, $tipo)
     {
 
@@ -94,7 +93,7 @@ class SolicitacaoHelper
                 'estornado' => $t->estornado,
                 'img' => null,
                 'imgC' => null,
-                'exibir' => false,
+                'exibir' => true,
             ];
         }
         foreach ($s->despesa as $d) {
@@ -189,13 +188,17 @@ class SolicitacaoHelper
     {
         $processo = $s->processo ? $s->processo->codigo : 'SEM PROCESSO';
         foreach ($s->guia as $guia) {
+            $observacao = "SEM OBERSERVAÇÃO";
+            if ($guia->observacao) {
+                $observacao =" - ".$guia->observacao; 
+            }
             $lista[] = 
             [
-                'data' => $s->comprovante ? date('d-m-Y',strtotime($s->comprovante[0]->data)) : 'UNKNOW',
+                'data' => $guia->data_comprovante ? date('d-m-Y',strtotime($guia->data_comprovante)) : 'UNKNOW',
                 'tipo' => $s->tipo,
                 'cliente' => $s->cliente,
                 'codigo' => $s->codigo,
-                'descricao' => 'GUIA - '.$guia->perfil_pagamento. ' - ' .$guia->banco. ' - ' .$guia->tipoGuia()->first()->descricao.' - '.$processo,
+                'descricao' => 'GUIA - '.$guia->perfil_pagamento. ' - ' .$guia->banco. ' - ' .$guia->tipoGuia()->first()->descricao. ' - ' .$processo.''.$observacao,
                 'valor' => $guia->valor,
                 'estornado' => $guia->estornado,
                 'img' => $guia->anexo_guia,

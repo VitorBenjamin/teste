@@ -10,7 +10,7 @@
 					{{ method_field('PUT') }}
 					<input type="hidden" name="viagem_id" value="{{$viagem->id}}">
 					<div class="col-md-12">
-						@if(!$viagem->translado)
+						@if($viagem->passagem)
 						<div class="row clearfix">
 							<div class="col-md-2">
 								<div class="form-group">

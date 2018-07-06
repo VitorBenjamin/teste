@@ -72,7 +72,7 @@
 			@endforeach
 		</div>
 	</div>
-	<div style="float:right;">
+	<div style="text-align: right;">
 		<p style="font-size:10px; margin: 2;" >
 			Total Estornos R$ {{number_format($estornos, 2, ',', '.')}} <br>
 			Total Geral R$ {{number_format($geral, 2, ',', '.')}} <br>
@@ -81,8 +81,11 @@
 			Total Final R$ {{number_format($total, 2, ',', '.')}}
 		</h4>
 	</div>
+	<div style="text-align:center;display:block">
+		<img src="{{asset('/images/assinatura.jpeg')}}" alt="" class="img" width="150">
+	</div>
 	@foreach ($lista as $key => $li)
-	@if ($li['exibir'] && !$li['estornado'] && $li['img'])
+	@if ($li['exibir'] && !$li['estornado'])
 	<div class="page-break"></div>
 	<table class="table2">
 		<caption>

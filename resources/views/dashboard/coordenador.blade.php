@@ -83,7 +83,7 @@
                                         <th>Tipo</th>
                                         <th>Solicitante</th>
                                         <th style="min-width:70px">Valor</th>
-                                        <th>Ações</th>
+                                        <th >Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,13 +105,12 @@
                                                 <a href="{{ route(strtolower($aberto->tipo == 'ANTECIPAÇÃO' ? 'antecipacao' : $aberto->tipo).'.analisar', $aberto->id)}}" class="btn bg-blue-grey btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="VISUALIZAR {{$aberto->tipo}}">
                                                     <i class="material-icons">search</i>
                                                 </a>
-                                                <a style="margin:0px 5px" href="{{ route('solicitacao.aprovar',$aberto->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="APROVAR {{$aberto->tipo}}">
+                                                <!-- <a style="margin:0px 5px" href="{{ route('solicitacao.aprovar',$aberto->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="APROVAR {{$aberto->tipo}}">
                                                     <i class="material-icons">done_all</i>
-                                                    <!-- <span class="hidden-xs">ADD</span> -->
-                                                </a>
-                                                <a href="{{ route('solicitacao.reprovar',$aberto->id) }}" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="REPROVAR {{$aberto->tipo}}">
+                                                </a> -->
+                                                <!-- <a href="{{ route('solicitacao.reprovar',$aberto->id) }}" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="REPROVAR {{$aberto->tipo}}">
                                                     <i class="material-icons">cancel</i>
-                                                </a>
+                                                </a> -->
                                                 <!-- <span data-toggle="modal" data-target="#modalDevolver">
                                                     <a class="btn bg-amber btn-circle waves-effect waves-circle waves-float" data-placement="top" title="DEVOLVER {{$aberto->tipo}}" data-toggle="tooltip">
                                                         <i class="material-icons">report_problem</i>
@@ -315,13 +314,12 @@
                                                     <i class="material-icons">mode_edit</i>
                                                 </a>
                                                 @endif
-                                                <a href="{{ route('solicitacao.aprovar',$recorrente->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="APROVAR {{$recorrente->tipo}}">
+                                                <!-- <a href="{{ route('solicitacao.aprovar',$recorrente->id) }}" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="APROVAR {{$recorrente->tipo}}">
                                                     <i class="material-icons">done_all</i>
-                                                    <!-- <span class="hidden-xs">ADD</span> -->
                                                 </a>
                                                 <a href="{{ route('solicitacao.reprovar',$recorrente->id) }}" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="REPROVAR {{$recorrente->tipo}}">
                                                     <i class="material-icons">cancel</i>
-                                                </a>                                                
+                                                </a> -->                                                
                                             </div>
                                         </td>
                                     </tr>

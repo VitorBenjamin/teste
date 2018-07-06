@@ -28,11 +28,12 @@
 						RELÁTORIO GERAL PRÉVIO DOS GASTOS DA <span class="badge bg-blue-grey" style="padding: 8px 7px; font-size: 15px">{{$relatorio->cliente->nome}} DE {{date('d/m/Y',strtotime($data_inicial))}} ATÉ {{date('d/m/Y',strtotime($relatorio->data))}}</span>
 						<span class="badge bg-light-green" style="padding: 8px 7px; font-size: 15px">EM ABERTO</span>
 					</h2>
+					<p>{{$relatorio->observacao}}</p>
 					<br>
 					<div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
 						<a class="btn bg-orange waves-effect submit" role="button">
 							<i class="material-icons">money_off</i>
-							<span>EXTORNAR GASTOS SELECIONADOS</span>
+							<span>ESTORNAR GASTOS SELECIONADOS</span>
 						</a>
 						<a href="{{ route('relatorio.finalizar', $relatorio->id)}}" class="btn bg-green waves-effect" role="button">
 							<i class="material-icons">save</i>

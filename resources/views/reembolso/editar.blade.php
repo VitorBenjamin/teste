@@ -11,19 +11,10 @@
 		var total_km = km.value*valor_km;
 		$(".total").val("R$ " + total_km);
 	}
-	// function formatReal( int )
-	// {
-	// 	var tmp = int+'';
-	// 	tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
-	// 	if( tmp.length > 6 )
-	// 		tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
-	// 	console.log(tmp);
-	// 	return tmp;
-	// }
 </script>
 <section class="content">
 	<div class="block-header">
-		<h2>Dados da Solicitação</h2>
+		<h2>Dados da Solicitação {{$solicitacao->codigo}}</h2>
 	</div>
 	<!-- COMEÇO CABEÇALHO PADRÃO -->
 	<div class="row clearfix">

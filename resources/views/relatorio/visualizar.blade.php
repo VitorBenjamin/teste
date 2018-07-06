@@ -28,7 +28,9 @@
 						RELÁTORIO GERAL DOS GASTOS DA <span class="badge bg-cyan" style="padding: 8px 7px; font-size: 15px">{{$relatorio->cliente->nome}} DE {{date('d/m/Y',strtotime($data_inicial))}} ATÉ {{date('d/m/Y',strtotime($relatorio->data))}}</span>
 						<span class="badge bg-green" style="padding: 8px 7px; font-size: 15px">FINAL</span>
 					</h2>
+					<p>{{$relatorio->observacao}}</p>
 				</div>
+
 				<div class="body">
 					<table id="tableTeste" class="table table-bordered table-striped table-hover dataTable relatorio-final">
 						<thead>

@@ -67,6 +67,8 @@ class RelatorioController extends Controller
 			return redirect()->route('relatorio.listar');
 		}
 		$solicitacoes = Solicitacao::where('relatorios_id',$id)->get();
+		$relatorio = Relatorio::where('id',$id)->select('observacao')->first();
+		//dd($observacao);
 		foreach ($solicitacoes as $s) {
 			$lista = $solicitacaoHelper->impressao($s,$lista);
 		}
@@ -93,7 +95,7 @@ class RelatorioController extends Controller
 			$data_inicial = $ultimo_relatorio->data;
 		}
 		$loop = count($lista)/20;
-		$pdf = PDF::loadView('layouts._includes.impressao.relatorio_geral',compact('solicitacoes','lista','total','geral','estornos','data_inicial','loop'));
+		$pdf = PDF::loadView('layouts._includes.impressao.relatorio_geral',compact('solicitacoes','relatorio','lista','total','geral','estornos','data_inicial','loop'));
 		return $pdf->stream('Relátorio Geral.pdf');
 		//return view('layouts._includes.impressao.relatorio_geral', compact('solicitacoes','lista'));
 	}
@@ -218,6 +220,7 @@ class RelatorioController extends Controller
 	{
 		$relatorio = Relatorio::create([
 			'data' => $request->data_final,
+			'observacao' => $request->observacao,
 			'users_id' => auth()->user()->id,
 			'clientes_id' => $request->clientes_id,
 		]);

@@ -71,6 +71,40 @@ class CompraController extends Controller
 	{
 
 		$solicitacao = Solicitacao::with('compra','cliente','solicitante','processo','area_atuacao')->where('id',$id)->first();
+		$i = false;
+		$out = false;
+		$aprovado = false;
+		foreach ($solicitacao->compra as $compra) {
+			foreach ($compra->cotacao as $cotacao) {
+				if ($cotacao->aprovado) {
+					if ($cotacao->anexo_comprovante) {
+						$i = true;
+					} else {
+						$out = true;
+					}
+				} 				
+			}
+			if ($out) {
+				$i = false;
+			}
+		}
+		foreach ($solicitacao->compra as $compra) {
+			foreach ($compra->cotacao as $cotacao) {
+				if ($cotacao->aprovado) {
+					$aprovado = true;
+					break;
+				}else{
+					$aprovado = false;
+				} 				
+			}
+			if (!$aprovado) {
+				break;
+			}
+		}
+		$solicitacao['cotacao'] = $i;
+		$solicitacao['aprovado'] = $aprovado;
+		//dd($solicitacao['aprovado']);
+		//dd($solicitacao['cotacao']);
 		if ($solicitacao == null) {
 			\Session::flash('flash_message',[
 				'msg'=>"Solicitação não cadastrada!",

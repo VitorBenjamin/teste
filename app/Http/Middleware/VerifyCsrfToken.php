@@ -12,8 +12,6 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
-        '/cadastro','/user-cadastro','/ajax/solicitantes','/ajax/relatorio-data'
-
+        '/cadastro','/user-cadastro','/ajax/solicitantes','/ajax/relatorio-data','logout'
     ];
 }

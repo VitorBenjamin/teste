@@ -7,7 +7,7 @@
 </script>
 <section class="content">
 	<div class="block-header">
-		<h2>Dados da Solicitação</h2>			
+		<h2>Dados da Solicitação {{$solicitacao->codigo}}</h2>			
 	</div>
 	<!-- INCIO CABEÇALHO PADRAO -->
 	@include('layouts._includes.cabecalho._cabecalho_analise')

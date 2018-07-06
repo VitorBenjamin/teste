@@ -2,7 +2,7 @@
 @section('content')
 <section class="content">
 	<div class="block-header">
-		<h2>Dados da Solicitação</h2>			
+		<h2>Dados da Solicitação {{$solicitacao->codigo}}</h2>			
 	</div>
 	
 	<!-- INCIO CABEÇALHO PADRAO -->

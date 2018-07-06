@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -44,6 +45,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // if ($exception instanceof ModelNotFoundException) {
+        //     $exception = new NotFoundHttpException($exception->getMessage(), $exception);
+        // }
+
+        // if ($exception instanceof TokenMismatchException) {
+        //     return redirect()->back()->withInput($request->except('password'))->withErrors(['Validation Token was expired. Please try again']);
+        // }
+
+        // You can add your own exception here
+        // so redirect to the home route
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            return redirect()->route('user.index');
+        }
+        
         return parent::render($request, $exception);
     }
 

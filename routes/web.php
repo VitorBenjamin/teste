@@ -1,5 +1,5 @@
 <?php
-Route::post('cadastro', ['uses' => 'ClienteController@index','as' => 'user.index']);
+//Route::post('cadastro', ['uses' => 'ClienteController@index','as' => 'user.index']);
 //Route::post('/user-cadastro', ['uses' => 'UserController@createDados','as' => 'user.index']);
 
 Route::get('/', ['uses' => 'UserController@index','middleware' => 'auth', 'as' => 'user.index']);

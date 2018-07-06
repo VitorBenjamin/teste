@@ -192,7 +192,6 @@ class ViagemController extends Controller
                 'passagem' => $request->passagem,
                 'bagagem' => $request->bagagem, 
                 'kg' => $request->kg,
-                'translado' => $request->translado,
                 'solicitacoes_id' => $id,                
 
             ]

@@ -59,6 +59,19 @@
 				<span>FINALIZAR</span>
 			</a>
 	<?php endforeach ?>
+	@elseif($solicitacao->tipo == "COMPRA")
+		@if($solicitacao['cotacao'])
+			<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-light-green waves-effect" role="button" >
+				<i class="material-icons">done_all</i>
+				<span>FINALIZAR</span>
+			</a>
+		@else
+			<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-light-green waves-effect not-active" role="button"disabled>
+				<i class="material-icons">done_all</i>
+				<span>FINALIZAR</span>
+			</a>
+
+		@endif	
 	@else
 		<a href="{{ route('solicitacao.finalizar', $solicitacao->id) }}" class="btn bg-light-green waves-effect {{count($solicitacao->comprovante) ? '' : 'not-active'}}" role="button" {{count($solicitacao->comprovante) ? '' : 'disabled'}}>
 			<i class="material-icons">done_all</i>

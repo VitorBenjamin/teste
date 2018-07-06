@@ -16,9 +16,9 @@
 </head>
 <body>	
 	<div style="text-align:center" class="head">
-		<img src="{{ asset('images/LOGO-01.png') }}" alt="" class="img-topo" style="margin: 10px; 0 50px 0">
+		<img src="{{ asset('images/LOGO-01.png') }}" alt="" class="img-topo" style="margin: 10px 0 0 0 ">
 	</div>
-	<div class="divTable" style="width: 100%; margin:15px 0">
+	<div class="divTable" style="width: 100%; margin:15px 0 0 0">
 		<div class="divTableBody">
 			<div class="divTableRow">
 				<div class="divTableCell2">
@@ -29,7 +29,18 @@
 			</div>
 		</div>
 	</div>
-	<div class="divTable" style="width: 100%; margin:15px 0">
+	<div class="divTable" style="width: 100%;">
+		<div class="divTableBody">
+			<div class="divTableRow">
+				<div class="divTableCell2">
+				</div>
+				<div class="divTableCell2" style="text-align:right">
+					<p>{{$relatorio->observacao}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="divTable" style="width: 100%; margin:0 0 15px 0">
 		<div class="divTableBody">
 			<div class="divTableRow">
 				<div class="divTableCell2">
@@ -40,7 +51,7 @@
 						<?php 
 						setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 						date_default_timezone_set('America/Sao_Paulo'); 
-						Período: echo strtoupper(strftime('%B de %Y', strtotime($solicitacoes[0]->relatorio->data)));
+						echo strftime('Eunápolis, %d de %B de %Y', strtotime($solicitacoes[0]->relatorio->data));
 						?>
 					</h3>
 				</div>
@@ -79,7 +90,7 @@
 			@endforeach
 		</div>
 	</div>
-	<div style="float:right;">
+	<div style="text-align: right;">
 		<p style="font-size:10px; margin: 2px;" >
 			Total Estornos R$ {{number_format($estornos, 2, ',', '.')}} <br>
 			Total Geral R$ {{number_format($geral, 2, ',', '.')}} <br>
@@ -88,8 +99,11 @@
 			Total Final R$ {{number_format($total, 2, ',', '.')}}
 		</h4>
 	</div>
+	<div style="text-align:center;display:block">
+		<img src="{{asset('/images/assinatura.jpeg')}}" alt="" class="img" width="150">
+	</div>
 	@foreach ($lista as $k => $li)
-	@if ($li['exibir'] && !$li['estornado'] && $li['img'])
+	@if ($li['exibir'] && !$li['estornado'])
 	<div class="page-break"></div>
 	<table class="table2">
 		<caption>

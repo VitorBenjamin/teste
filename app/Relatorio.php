@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Relatorio extends Model
 {
-    protected $fillable = ['data','finalizado','users_id','clientes_id'];
+    protected $fillable = ['data','observacao','finalizado','users_id','clientes_id'];
 
     /** Consulta o usuário do Relárotio
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
