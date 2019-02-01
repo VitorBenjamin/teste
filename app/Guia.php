@@ -12,7 +12,7 @@ class Guia extends Model
      * @var array
      */
     protected $fillable = [
-    	'data_limite','data_comprovante',  'estornado', 'prioridade', 'observacao','reclamante','perfil_pagamento','banco','anexo_comprovante','anexo_guia','valor','solicitacoes_id','tipo_guias_id'
+    	'data_limite','data_comprovante','estornado','prioridade','observacao','reclamante','perfil_pagamento','banco','anexo_comprovante','anexo_guia','valor','solicitacoes_id','tipo_guias_id'
     ];
     
     /** Consulta a Solicitação da Guia

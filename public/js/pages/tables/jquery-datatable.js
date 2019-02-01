@@ -15,7 +15,7 @@ $(function () {
                     tableClass: 'ui table'
                 } )
             }
-        },
+        }, 
         columnDefs: [ {
             className: 'control',
             orderable: false,

@@ -104,10 +104,16 @@ class GuiaController extends Controller
 
 	public function analisar($id)
 	{
-		$solicitacao = Solicitacao::with('guia')
-		->where('tipo',config('constantes.tipo_guia'))
+		// $solicitacao = Solicitacao::with('guia')
+		// ->where('tipo',config('constantes.tipo_guia'))
+		// ->where('id',$id)
+		// ->first();
+		$solicitacao = Solicitacao::with(['guia' => function($q){
+			$q->with(['tipoGuia'])->select('id','prioridade','observacao','reclamante','perfil_pagamento','banco','valor','tipo_guias_id','solicitacoes_id')->get();
+		}])->where('tipo',config('constantes.tipo_guia'))
 		->where('id',$id)
 		->first();
+		//dd($solicitacao);
 		if (!$solicitacao) {
 			\Session::flash('flash_message',[
 				'msg'=>"Solicitação não cadastrada!",
@@ -118,7 +124,7 @@ class GuiaController extends Controller
 		return view('guia.analiseGuia', compact('solicitacao'));
 
 	}
-
+	
     //Retorna a View de edição da unidade
 	public function editar($soli)
 	{
